@@ -24,3 +24,16 @@ magicTypesDict = {
 	c512 = 'fire_ultra',
 	c1024 = 'life_ultra'
 }
+
+magicNamesDict = {
+	air = 'c2',
+	water = 'c4',
+	tree = 'c8',
+	fire = 'c16',
+	life = 'c32',
+	air_ultra = 'c64',
+	water_ultra = 'c128',
+	tree_ultra = 'c256',
+	fire_ultra = 'c512',
+	life_ultra = 'c1024'
+}

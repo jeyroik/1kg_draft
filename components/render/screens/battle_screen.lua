@@ -1,26 +1,30 @@
 BattleScreen = Screen:extend()
 
 function BattleScreen:new(config)
-	self.cfg_battle = {}
-	self.cfg_board = {}
-
 	BattleScreen.super.new(self, config)
 
-	self.battle = Battle(self.cfg_battle)
-	self.board = Board(self.cfg_board)
+	self:addViewLayers({
+		BattleLayerViewBackground(),
+		BattleLayerViewBoard(),
+		BattleLayerViewPlayers()
+	})
+	self:setDataLayer(BattleLayerData(config))
 end
 
 function BattleScreen:init()
-	self.board:init()
-	self.battle:init()
+	self.layers.data:init()
+end
+
+function BattleScreen:getCurrentPlayer()
+	return self.layers.data:getCurrentPlayer()
+end
+
+function BattleScreen:getNextPlayer()
+	return self.layers.data:getNextPlayer()
 end
 
 function BattleScreen:render(game)
-	self:renderBackground(game)
-	self.board:render(game)	
-	self.battle:renderMagic(game)
-	self.battle:frameCurrentPlayer()
-	self.battle:showPlayersInfo()
+
 	self:renderTip(game)
 	
 	if self.board.theEndFlag then

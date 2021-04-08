@@ -6,8 +6,31 @@ function Screen:new(config)
 	self.theEnd = 'theEnd'
 	self.tip = {}
 	self.center = {x = love.graphics.getWidth()/2, y = love.graphics.getHeight()/2}
+	self.layers = {
+		view = {},
+		data = {}
+	}
 
 	Screen.super.new(self, config)
+
+	self:addViewLayers({ LayerViewTip() })
+end
+
+function Screen:addViewLayers(layers)
+	for i=1,#layers do
+		table.insert(self.layers.view, layers[i])
+	end
+end
+
+function Screen:setDataLayer(layer)
+	self.layers.data = layer
+end
+
+function Screen:render(game)
+	for i = 1, #self.layers.view do
+		local layer = self.layers.view[i]
+		layer:render(game, self.layer.data)
+	end
 end
 
 function Screen:renderBackground(game)

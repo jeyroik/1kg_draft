@@ -34,7 +34,7 @@ function Game:new(config)
 	self.char = Character({health=100})
 end
 
-function Game:init(basePath)
+function Game:init()
 	self:loadMagicTypes()
 	self.assets:init()
 	
@@ -43,6 +43,10 @@ function Game:init(basePath)
 	end
 	
 	love.window.setFullscreen(true, "desktop")
+end
+
+function Game:getScreen(name)
+	return self.screens[name] or nil
 end
 
 function Game:render()

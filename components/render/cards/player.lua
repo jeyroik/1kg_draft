@@ -59,3 +59,28 @@ function Player:addCard(card)
 	
 	return false
 end
+
+function Player:isEnoughMagic(game, card)
+	local screen = game:getScreen('battle')
+
+	return screen.battle:isEnoughMagic(self, card)
+end
+
+function Player:spendMagic(game, card)
+	local screen = game:getScreen('battle')
+
+	return screen.battle:spendMagic(self, card)
+end
+
+function Player:useCard(game, card)
+	if self.cardsAdded[card.name] then
+		game.assets:playFx('skill')
+
+		local skill = card.skill.active
+		for name, context in pairs(skill.mutators) do
+			local mutator = MutatorCollection.getMutator(name)
+			mutator:apply(game, context)
+		end
+		self:spendMagic(game, card)
+	end
+end

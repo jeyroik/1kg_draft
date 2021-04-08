@@ -31,98 +31,38 @@ function Battle:init()
 	end
 end
 
-function Battle:renderMagic(game, dx, dy)
-	self:renderPlayer1Magic(game)
-	self:renderPlayer2magic(game)
+function Battle:isEnoughMagic(player, card)
+	local isEnough = true
+
+	for magicName, amount in pairs(card.skill.active.cost) do
+		if self:getMagic(player, magicName) < amount then
+			isEnough = false
+			break
+		end
+	end
+
+	return isEnough
 end
 
-function Battle:renderPlayer1Magic(game)
-	local magicX = 270
-	local magicXDelta = 150
-	local magicY = 750
-	local magicYDelta = 50
-	local perRow = 3
-	local onRow = 0
-	local current = self.players[1]
-	
-	for i=0,10 do
-		local id = 'c'..math.pow(2,i)
-		value = self.magic[current.id][id]
-		--plm1 = plm1 .. magicTypes[color].name..': '..value..'\n'
-		if game.assets.images.gems[id] then
-			
-			if onRow == perRow then
-				magicX = 270
-				magicY = magicY + magicYDelta
-				onRow = 0
-			end
-			
-			love.graphics.draw(game.assets.images.gems[id], magicX, magicY, 0, 0.5,0.5)
-			love.graphics.print(value, magicX+40, magicY, 0, 2,2)
-			magicX = magicX + magicXDelta
-			onRow = onRow + 1
-		end
+function Battle:getMagic(player, magic)
+	local magicId = magicNamesDict[magic]
+
+	return self.magic[player.id][magicId]
+end
+
+function Battle:spendMagic(player, card)
+	for magicName, amount in pairs(card.skill.active.cost) do
+		local magicId = magicNamesDict[magicName]
+		self.magic[player.id][magicId] = self.magic[player.id][magicId] - amount
 	end
 end
 
-function Battle:renderPlayer2magic(game)
-	local magicX = 1270
-	local magicXDelta = 150
-	local magicY = 750
-	local magicYDelta = 50
-	local perRow = 3
-	local onRow = 0
-	local enemy = self.players[2]
-	
-	for i=0,10 do
-		local id = 'c'..math.pow(2,i)
-		value = self.magic[enemy.id][id]
-		--plm1 = plm1 .. magicTypes[color].name..': '..value..'\n'
-		if game.assets.images.gems[id] then
-			
-			if onRow == perRow then
-				magicX = 1270
-				magicY = magicY + magicYDelta
-				onRow = 0
-			end
-			
-			love.graphics.draw(game.assets.images.gems[id], magicX, magicY, 0, 0.5,0.5)
-			love.graphics.print(value, magicX+40, magicY, 0, 2,2)
-			magicX = magicX + magicXDelta
-			onRow = onRow + 1
-		end
-	end
+function Battle:changeMagic(player, magic, amount)
+	local magicId = magicNamesDict[magic]
+	self.magic[player.id][magicId] = self.magic[player.id][magicId] + amount
 end
 
-function Battle:showPlayersInfo()
-	local p1 = self.players[1]
-	local p2 = self.players[2]
-	
-	love.graphics.print('\nPlayer 1:'..'\n\nHealth: '.. p1.health, p1.x, 100, 0, 2,2)
-	love.graphics.print('\nPlayer 2:'..'\n\nHealth: '.. p2.health, p2.x, 100, 0,2,2)
-end
 
-function Battle:frameCurrentPlayer()
-	local current = self.players[self.current]
-	local frameX, frameY = current:getCoordsFrame(5)
-	
-	love.graphics.rectangle('line', frameX, 120, 200, 40)
-end
 
--- @return Player
-function Battle:getCurrentPlayer()
-	return self.players[self.current]
-end
 
--- @return Player
-function Battle:getNextPlayer()
-	return self.players[self.next]
-end
 
--- Changes current and next player with each other
--- @return void
-function Battle:nextTurn()
-	local c = self.current
-	self.current = self.next
-	self.next = c
-end

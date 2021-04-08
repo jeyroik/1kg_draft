@@ -7,8 +7,8 @@ function love.load()
 		state = 'battle', -- choose start screen
 		screens = {
 			battle = {
-				cfg_board = {size = 5},
-				cfg_battle = {
+				data = {
+					boardSize = 5,
 					players = {
 						Player({name = 'Player1', x = 270, y = 250, health = 100, attack = 2, defense = 1}),
 						Player({name = 'Player2', x = 1540, y = 250, health = 100, attack = 2, defense = 1})
@@ -61,26 +61,15 @@ end
 
 function love.mousepressed(x,y,button,isTouch,presses)
 	if not game.screens.battle.board.theEndFlag then
-		local enemy = game.screens.battle.battle:getNextPlayer()
-		local current = game.screens.battle.battle:getCurrentPlayer()
+		local battle = game:getScreen('battle')
+		-- local layer = battle:getLayer('data')
+		-- local currentPlayer = layer:getCurrentPlayer()
+		local currentPlayer = battle:getCurrentPlayer()
 		
 		for name, card in pairs(currentPlayer.cards) do
-			if x >= card.x
-			and x <= card.x + card.width 
-			and y >= card.y 
-			and y <= card.y+card.height then
-				target = card.skill.toEnemy and enemy or currentPlayer
-				local isEnough = isEnoughMana(card, currentPlayer.id)
-				
-				if isEnough then
-					love.audio.stop(skillFx)
-					love.audio.play(skillFx)
-					for magicName, amount in pairs(card.skill.cost) do
-						game.screens.battle.battle.magic[currentPlayer.id][magicName] = game.screens.battle.battle.magic[currentPlayer.id][magicName] - amount
-					end
-					for mutatorName, context in pairs(card.skill.mutators) do
-						card:mutate(target, context)
-					end
+			if card:isMouseOn(x,y) then
+				if currentPlayer:isEnoughMagic(game, card) then
+					currentPlayer:useCard(game, card)
 				else
 					game.assets:playFx('skill_not')
 				end
@@ -137,6 +126,7 @@ function createAirElemental(x,y)
 	local cards = {}
 	
 	skillSample = Skill('Add health')
+	--skillSample = Skill({name = 'Add health', mutators = {}})
 	skillSample:addMutator('health_change', {amount=1})
 	skillSample.description = 'Add 1 health';
 	skillSample:addCost('c2', 5)
