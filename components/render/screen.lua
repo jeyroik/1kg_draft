@@ -1,4 +1,4 @@
-Screen = Renderable:extend()
+Screen = Render:extend()
 Screen:implement(Printer)
 
 function Screen:new(config)

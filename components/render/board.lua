@@ -1,6 +1,6 @@
-require "magic_stone"
+require "components/render/magic_stone"
 
-Board = Renderable:extend()
+Board = Render:extend()
 
 -- @param number size
 -- @return void

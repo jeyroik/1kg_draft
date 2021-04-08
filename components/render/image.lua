@@ -1,4 +1,4 @@
-Image = Renderable:extend()
+Image = Render:extend()
 
 -- @param image source
 -- @return void

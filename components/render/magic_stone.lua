@@ -1,4 +1,4 @@
-MagicStone = Renderable:extend{}
+MagicStone = Render:extend{}
 MagicStone:implement(Uuid)
 
 function MagicStone:new(row, column)

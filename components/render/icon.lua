@@ -1,4 +1,4 @@
-Icon = Renderable:extend()
+Icon = Render:extend()
 
 -- @param Image image
 -- @param Text text

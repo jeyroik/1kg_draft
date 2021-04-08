@@ -1,4 +1,4 @@
-Card = Renderable:extend{}
+Card = Render:extend{}
 Card:implement(Uuid)
 
 function Card:new(name, x, y)

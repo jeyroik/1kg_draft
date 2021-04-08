@@ -1,5 +1,6 @@
 function love.load()
-	require "game"
+    Object = require "vendor/rxi/classic"
+	require "components/game"
 	
 	game = Game({
 		assets = {base_path = 'assets/'},

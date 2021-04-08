@@ -1,4 +1,4 @@
-Text = Renderable:extend()
+Text = Render:extend()
 
 -- @param string body
 -- @param number x
