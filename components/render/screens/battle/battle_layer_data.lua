@@ -1,4 +1,4 @@
-BattleLayerData = ScreenLayer:extend()
+BattleLayerData = LayerData:extend()
 
 function BattleLayerData:new(config)
     self.players = {}
@@ -7,10 +7,9 @@ function BattleLayerData:new(config)
     self.magic = {}
     self.boardSize = 5
     self.cells = {}
+    self.theEndFlag = false
 
     BattleLayerData.super.new(self, config)
-
-    self.mode = 'data'
 end
 
 function BattleLayerData:init()

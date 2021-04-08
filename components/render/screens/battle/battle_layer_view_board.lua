@@ -1,4 +1,4 @@
-BattleLayerViewBoard = View:extend()
+BattleLayerViewBoard = LayerView:extend()
 
 function BattleLayerViewBoard:render(game, data)
     for _, columns in pairs(data.cells) do

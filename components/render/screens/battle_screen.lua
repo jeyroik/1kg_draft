@@ -6,7 +6,8 @@ function BattleScreen:new(config)
 	self:addViewLayers({
 		BattleLayerViewBackground(),
 		BattleLayerViewBoard(),
-		BattleLayerViewPlayers()
+		BattleLayerViewPlayers(),
+		BattleLayerViewTheEnd()
 	})
 	self:setDataLayer(BattleLayerData(config))
 end
@@ -21,13 +22,4 @@ end
 
 function BattleScreen:getNextPlayer()
 	return self.layers.data:getNextPlayer()
-end
-
-function BattleScreen:render(game)
-
-	self:renderTip(game)
-	
-	if self.board.theEndFlag then
-		self:renderTheEnd(game)
-	end
 end

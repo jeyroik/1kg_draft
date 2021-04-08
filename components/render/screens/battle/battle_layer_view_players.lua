@@ -1,4 +1,4 @@
-BattleLayerViewPlayers = View:extend()
+BattleLayerViewPlayers = LayerView:extend()
 
 function BattleLayerViewPlayers:render(game, data)
     self:renderMagic(game)

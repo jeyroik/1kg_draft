@@ -1,4 +1,4 @@
-BattleLayerViewBackground = View:extend()
+BattleLayerViewBackground = LayerView:extend()
 
 function BattleLayerViewBackground:render(game, data)
     background = game.assets:getImage(self.background)
