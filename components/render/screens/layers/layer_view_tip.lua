@@ -1,6 +1,6 @@
 LayerViewTip = LayerView:extend()
 
-function LayerViewtip:render(game, data)
+function LayerViewTip:render(game, data)
     if data.tip.x then
         local tipImg = game.assets:getImage('tip')
 

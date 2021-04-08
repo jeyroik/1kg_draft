@@ -1,6 +1,8 @@
 Screen = Render:extend()
 Screen:implement(Printer)
 
+-- @param table config
+-- @return void
 function Screen:new(config)
 	self.background = 'background'
 	self.theEnd = 'theEnd'
@@ -16,16 +18,22 @@ function Screen:new(config)
 	self:addViewLayers({ LayerViewTip() })
 end
 
+-- @param LayerView[] layers
+-- @return void
 function Screen:addViewLayers(layers)
 	for i=1,#layers do
 		table.insert(self.layers.view, layers[i])
 	end
 end
 
+-- @param LayerData layer
+-- @return void
 function Screen:setDataLayer(layer)
 	self.layers.data = layer
 end
 
+-- @param Game game
+-- @return void
 function Screen:render(game)
 	for i = 1, #self.layers.view do
 		local layer = self.layers.view[i]
@@ -35,8 +43,7 @@ function Screen:render(game)
 	end
 end
 
-function Screen:renderTheEnd(game)
-	local noticeImg = game.assets:getImage(self.theEnd)
-	love.graphics.draw(noticeImg, self.center.x-noticeImg:getWidth()/2, 120)
-	love.graphics.print('The end', self.center.x-noticeImg:getWidth()/2+150, 140, 0,4,4)
+-- @return LayerData
+function Screen:getData()
+	return self.layers.data
 end

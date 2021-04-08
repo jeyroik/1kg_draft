@@ -52,7 +52,6 @@ end
 function Game:render()
 	self.screens[self.state]:render(self)
 	self:addDbg(self:printObject(self.char, ''))
-	self:printDbg()
 end
 
 function Game:loadMagicTypes()

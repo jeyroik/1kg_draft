@@ -7,12 +7,10 @@ function love.load()
 		state = 'battle', -- choose start screen
 		screens = {
 			battle = {
-				data = {
-					boardSize = 5,
-					players = {
-						Player({name = 'Player1', x = 270, y = 250, health = 100, attack = 2, defense = 1}),
-						Player({name = 'Player2', x = 1540, y = 250, health = 100, attack = 2, defense = 1})
-					}
+				boardSize = 5,
+				players = {
+					Player({ name = 'Player1', x = 270, y = 250, health = 100, attack = 2, defense = 1 }),
+					Player({ name = 'Player2', x = 1540, y = 250, health = 100, attack = 2, defense = 1 })
 				}
 			}
 		}
@@ -23,6 +21,10 @@ function love.load()
 end
 
 function love.update(dt)
+	-- local battle = game:getScreen('battle')
+	-- local data = battle:getData()
+	-- data:boardMove()
+	-- data:boardAddStone()
 	game.screens.battle.board:move(game)
 	game.screens.battle.board:addStone(game)
 end
