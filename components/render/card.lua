@@ -1,20 +1,21 @@
 Card = Render:extend{}
 Card:implement(Uuid)
 
-function Card:new(name, x, y)
+function Card:new(config)
 	self.id = self:getId()
-	self.name = name
+	self.name = ''
 	self.description = ''
 	self.health = 1
 	self.attack = 0
 	self.defense = 0
 	self.skill = {}
 	self.avatar = 3
-	
-	self.x = x or 0
-	self.y = y or 0
+	self.x = 0
+	self.y = 0
 	self.width = charWidth
 	self.height = charHeight
+
+	Card.super.new(self, config)
 end
 
 function Card:addSkill(skill)

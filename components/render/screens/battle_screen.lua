@@ -1,13 +1,16 @@
 BattleScreen = Screen:extend()
 
 function BattleScreen:new(config)
+	self.cfg_battle = {}
+	self.cfg_board = {}
+
 	BattleScreen.super.new(self, config)
-	
-	self.board = Board(config.board.size)
-	self.battle = Battle(config.players.first, config.players.second)
+
+	self.battle = Battle(self.cfg_battle)
+	self.board = Board(self.cfg_board)
 end
 
-function BattleScreen:init(basePath)
+function BattleScreen:init()
 	self.board:init()
 	self.battle:init()
 end

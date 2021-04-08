@@ -1,9 +1,11 @@
 Assets = Object:extend()
+Assets:implement(Config)
 
 -- @param string basePath base path for assets
 -- @return void
-function Assets:new(basePath)
-	self.basePath = basePath or 'assets/'
+function Assets:new(config)
+	self.basePath = 'assets/'
+	self:applyConfig(config)
 end
 
 -- @return void
@@ -79,7 +81,7 @@ end
 -- @return Image|nil image, nil|string error
 function Assets:getImage(name)
 	if self.images[name] then
-		return Image(self.images[name]), il
+		return Image({source = self.images[name]}), nil
 	end
 	
 	return nil, 'Unknown image "' .. name .. '"'

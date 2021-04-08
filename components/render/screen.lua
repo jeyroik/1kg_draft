@@ -2,10 +2,12 @@ Screen = Render:extend()
 Screen:implement(Printer)
 
 function Screen:new(config)
-	self.background = config.background or 'background'
-	self.theEnd = config.theEnd or 'theEnd'
-	self.tip = config.tip or nil
+	self.background = 'background'
+	self.theEnd = 'theEnd'
+	self.tip = {}
 	self.center = {x = love.graphics.getWidth()/2, y = love.graphics.getHeight()/2}
+
+	Screen.super.new(self, config)
 end
 
 function Screen:renderBackground(game)
@@ -23,7 +25,7 @@ function Screen:renderTheEnd(game)
 end
 
 function Screen:renderTip(game)
-	if self.tip then
+	if self.tip.x then
 		local tipImg = game.assets:getImage('tip')
 		
 		if tipImg:getWidth() + self.tip.x > love.graphics.getWidth() then

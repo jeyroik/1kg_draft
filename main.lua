@@ -7,10 +7,12 @@ function love.load()
 		state = 'battle', -- choose start screen
 		screens = {
 			battle = {
-				board = {size = 5},
-				players = {
-					first = Player('Player1', 270, 250),
-					second = Player('Player2', 1540, 250)
+				cfg_board = {size = 5},
+				cfg_battle = {
+					players = {
+						Player({name = 'Player1', x = 270, y = 250, health = 100, attack = 2, defense = 1}),
+						Player({name = 'Player2', x = 1540, y = 250, health = 100, attack = 2, defense = 1})
+					}
 				}
 			}
 		}

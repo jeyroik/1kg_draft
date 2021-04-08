@@ -2,10 +2,10 @@ Image = Render:extend()
 
 -- @param image source
 -- @return void
-function Image:new(source)
-	self.source = source or nil
-	Image.super.new(self)
-	self:setSize(source:getWidth(), source:getHeight())
+function Image:new(config)
+	self.source = {}
+	Image.super.new(self, config)
+	self:setSize(self.source:getWidth(), self.source:getHeight())
 end
 
 -- @param number dx delta for the x

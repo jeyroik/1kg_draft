@@ -3,9 +3,11 @@ Icon = Render:extend()
 -- @param Image image
 -- @param Text text
 -- @return void
-function Icon:new(image, text)
+function Icon:new(config)
 	self.image = image
 	self.text = text
+
+	Icon.super.new(self, config)
 end
 
 -- @param number dx delta for the x

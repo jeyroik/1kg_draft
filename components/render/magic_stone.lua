@@ -1,18 +1,20 @@
 MagicStone = Render:extend{}
 MagicStone:implement(Uuid)
 
-function MagicStone:new(row, column)
-	self.row = row
-	self.column = column
-	
+function MagicStone:new(config)
+	self.row = 1
+	self.column = 1
 	self.deltaX = 570
 	self.deltaY = 0
 	self.size = 122
-	self.x = column*self.size+self.deltaX
-	self.y = row*self.size
 	self.volume = 1
 	self.state = 0
 	self.id = self:getId()
+
+	MagicStone.super.new(self, config)
+
+	self.x = self.column * self.size + self.deltaX
+	self.y = self.row * self.size
 end
 
 function MagicStone:render(game, dx, dy)
@@ -23,7 +25,7 @@ function MagicStone:update(dt, game)
 	local nextRow = self.row
 	local nextColumn = self.column
 
-	game.screens.battle.board.cells[self.row][self.column] = MagicStone(self.row, self.column)
+	game.screens.battle.board.cells[self.row][self.column] = MagicStone({row = self.row, column = self.column})
 	
 	if game.screens.battle.board.gravity == 'down' then
 		nextRow = self.row == game.screens.battle.board.size and self.row or self.row + 1

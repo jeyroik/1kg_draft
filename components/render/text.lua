@@ -4,8 +4,10 @@ Text = Render:extend()
 -- @param number x
 -- @param number y
 -- @return void
-function Text:new(body, x, y)
-	self.body = body or ''
+function Text:new(config)
+	self.body = ''
+
+	Text.super.new(self, config)
 end
 
 -- @param number dx delta for the x

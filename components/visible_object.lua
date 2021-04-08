@@ -1,15 +1,15 @@
 VisibleObject = Object:extend()
+VisibleObject:implement(Config)
 
--- @param number x
--- @param number y
--- @param number width
--- @param number height
+-- @param table config
 -- @return void
-function VisibleObject:new(x, y, width, height)
-	self.x = x or 0
-	self.y = y or 0
-	self.width = width or 0
-	self.height = height or 0
+function VisibleObject:new(config)
+	self.x = 0
+	self.y = 0
+	self.width = 0
+	self.height = 0
+
+	self:applyConfig(config)
 end
 
 -- Checks is mouse currently point to the current object

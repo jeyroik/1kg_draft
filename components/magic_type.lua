@@ -1,11 +1,14 @@
 MagicType = Object:extend{}
+MagicType:implement(Config)
 
-function MagicType:new(name, volume, isCanBeMerged, isDestroyable, giveScore)
-	self.volume = volume
-	self.name = name
-	self.isCanBeMerged = isCanBeMerged
-	self.isDestroyable = isDestroyable
-	self.giveScore = giveScore and giveScore or volume
+function MagicType:new(config)
+	self.volume = 0
+	self.name = ''
+	self.isCanBeMerged = true
+	self.isDestroyable = true
+	self.giveScore = self.volume
+
+	self:applyConfig(config)
 end
 
 magicTypesDict = {

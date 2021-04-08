@@ -1,11 +1,6 @@
 Player = Card:extend{}
 
-function Player:new(name, x, y)
-	Player.super.new(self, name, x, y)
-	
-	self.health = 100
-	self.attack = 2
-	self.defense = 1
+function Player:new(config)
 	self.cards = {}
 	self.cardsAdded = {}
 	self.cardsCount = 0
@@ -51,6 +46,7 @@ function Player:new(name, x, y)
 			mana = 1
 		}
 	}
+	Player.super.new(self, config)
 end
 
 function Player:addCard(card)

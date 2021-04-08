@@ -1,11 +1,12 @@
 Render = VisibleObject:extend()
 
 -- @return void
-function Render:new()
+function Render:new(config)
 	self.radian = 0
 	self.sx = 1
 	self.sy = 1
-	Render.super.new(self)
+
+	Render.super.new(self, config)
 end
 
 -- @param number sx scale x

@@ -1,11 +1,14 @@
 Skill = Object:extend{}
+Skill:implement(Config)
 
-function Skill:new(name, config)
-	self.name = name
-	self.description = config.description or ''
-	self.cost = config.cost  or {}
-	self.mutators = config.mutators or {}
-	self.toEnemy = config.toEenemy or false
+function Skill:new(config)
+	self.name = ''
+	self.description = ''
+	self.cost = {}
+	self.mutators = {}
+	self.toEnemy = false
+
+	self:applyConfig(config)
 end
 
 function Skill:addMutator(name, context)

@@ -4,14 +4,16 @@ Board = Render:extend()
 
 -- @param number size
 -- @return void
-function Board:new(size)
-	self.size = size or 5
+function Board:new(config)
+	self.size = 5
 	self.cells = {}
 	self.gravity = 'none'
 	self.existed = 0
 	self.deathPerc = 10
 	self.ultraDeathPerc = 20
 	self.theEndFlag = false
+
+	Board.super.new(self, config)
 end
 
 -- @param number dx delta for the x
@@ -34,7 +36,7 @@ function Board:init()
 		self.cells[i] = {}
 		
 		for j=1,self.size do
-			local stone = MagicStone(i, j, 'c1')
+			local stone = MagicStone({row = i, column = j})
 			
 			if love.math.random(1,8) == 3 then
 				stone.volume = love.math.random(1,9) == 3 and 4 or 2
@@ -98,7 +100,7 @@ function Board:merge(game, stone, nextRow, nextColumn)
 	local currentType = game.magicTypes[stone:getMask()]
 	local source = 'merge'
 
-	self.cells[nextRow][nextColumn] = MagicStone(nextRow, nextColumn, 'c1')
+	self.cells[nextRow][nextColumn] = MagicStone({row = nextRow, column = nextColumn})
 	local currentPlayer = game.screens.battle.battle:getCurrentPlayer()
 	local nextPlayer = game.screens.battle.battle:getNextPlayer()
 
@@ -130,7 +132,7 @@ function Board:merge(game, stone, nextRow, nextColumn)
 	if currentType.isCanBeMerged then
 		self.cells[stone.row][stone.column]:upgrade()
 	else
-		self.cells[stone.row][stone.column] = MagicStone(stone.row, stone.column, 'c1')
+		self.cells[stone.row][stone.column] = MagicStone({row = stone.row, column = stone.column})
 		self:removeExisted()
 	end
 	self:removeExisted()

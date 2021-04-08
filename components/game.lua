@@ -1,5 +1,6 @@
 require "components/printer"
 require "components/uuid"
+require "components/config"
 require "components/visible_object"
 
 require "components/render"
@@ -7,6 +8,7 @@ require "components/render/image"
 require "components/render/text"
 require "components/render/icon"
 require "components/render/card"
+require "components/render/cards/character"
 require "components/render/cards/player"
 require "components/render/board"
 require "components/render/screen"
@@ -29,6 +31,7 @@ function Game:new(config)
 		battle = BattleScreen(config.screens.battle)
 	}
 	self.state = config.state or 'auth'
+	self.char = Character({health=100})
 end
 
 function Game:init(basePath)
@@ -44,6 +47,8 @@ end
 
 function Game:render()
 	self.screens[self.state]:render(self)
+	self:addDbg(self:printObject(self.char, ''))
+	self:printDbg()
 end
 
 function Game:loadMagicTypes()

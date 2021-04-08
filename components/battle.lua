@@ -1,33 +1,35 @@
 Battle = Object:extend()
+Battle:implement(Config)
 
 -- @param Player player1
 -- @param Player player2
 -- @return void
-function Battle:new(player1, player2)
+function Battle:new(config)
 	self.players = {}
-	table.insert(self.players, player1)
-	table.insert(self.players, player2)
 	self.current = 1
 	self.next = 2
 	self.magic = {}
 	self.deathPerc = 10
 	self.ultraDeathPerc = 20
+
+	self:applyConfig(config)
 end
 
 function Battle:init()
-	self.magic = {}
 	local current = self:getCurrentPlayer()
 	local enemy = self:getNextPlayer()
-	
-	self.magic[current.id] = {}
-	self.magic[enemy.id] = {}
-	
-	for i=0, 10 do
-		self.magic[current.id]['c'..math.pow(2,i)] = 0
-		self.magic[enemy.id]['c'..math.pow(2,i)] = 0
+
+	if not self.magic[current.id] then
+
+		self.magic[current.id] = {}
+		self.magic[enemy.id] = {}
+
+		for i=0, 10 do
+			self.magic[current.id]['c'..math.pow(2,i)] = 0
+			self.magic[enemy.id]['c'..math.pow(2,i)] = 0
+		end
 	end
 end
-
 
 function Battle:renderMagic(game, dx, dy)
 	self:renderPlayer1Magic(game)
