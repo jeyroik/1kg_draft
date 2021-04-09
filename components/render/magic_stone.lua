@@ -17,43 +17,43 @@ function MagicStone:new(config)
 	self.y = self.row * self.size
 end
 
-function MagicStone:render(game, dx, dy)
+function MagicStone:render(game)
 	love.graphics.draw(game.assets.images.gems[self:getMask()], self.x, self.y, 0, 2,2)
 end
 
-function MagicStone:update(dt, game)
+function MagicStone:update(board)
 	local nextRow = self.row
 	local nextColumn = self.column
 
-	game.screens.battle.board.cells[self.row][self.column] = MagicStone({row = self.row, column = self.column})
+	board:setFree(self.row, self.column)
 	
-	if game.screens.battle.board.gravity == 'down' then
-		nextRow = self.row == game.screens.battle.board.size and self.row or self.row + 1
-		if (self.row ~= nextRow and game.screens.battle.board.cells[nextRow][nextColumn].volume > 1) or self.row == 5 then
-			self.state = 1
+	if board:isGravity('down') then
+		nextRow = board:isOnEdge('down', self) and self.row or self.row + 1
+		if (self.row ~= nextRow and board:isReserved(nextRow, nextColumn)) or board:isOnEdge('down', self) then
+			self:setStopped()
 		end
 		
-	elseif game.screens.battle.board.gravity == 'up' then
-		nextRow = self.row == 1 and 1 or self.row - 1
-		if (self.row ~= nextRow and game.screens.battle.board.cells[nextRow][nextColumn].volume > 1) or self.row == 1 then
-			self.state = 1
+	elseif board:isGravity('up') then
+		nextRow = board:isOnEdge('up', self) and 1 or self.row - 1
+		if (self.row ~= nextRow and board:isReserved(nextRow, nextColumn)) or board:isOnEdge('up', self) then
+			self:setStopped()
 		end
 		
-	elseif game.screens.battle.board.gravity == 'right' then
-		nextColumn = self.column == game.screens.battle.board.size and self.column or self.column + 1
-		if (self.column ~= nextColumn and game.screens.battle.board.cells[nextRow][nextColumn].volume > 1) or self.column == 5 then
-			self.state = 1
+	elseif board:isGravity('right') then
+		nextColumn = board:isOnEdge('right', self) and self.column or self.column + 1
+		if (self.column ~= nextColumn and board:isReserved(nextRow, nextColumn)) or board:isOnEdge('right', self) then
+			self:setStopped()
 		end
 		
-	elseif game.screens.battle.board.gravity == 'left' then
-		nextColumn = self.column == 1 and 1 or self.column - 1
-		if (self.column ~= nextColumn and game.screens.battle.board.cells[nextRow][nextColumn].volume > 1) or self.column == 1 then
-			self.state = 1
+	elseif board:isGravity('left') then
+		nextColumn = board:isOnEdge('left', self) and 1 or self.column - 1
+		if (self.column ~= nextColumn and board:isReserved(nextRow, nextColumn)) or board:isOnEdge('left', self) then
+			self:setStopped()
 		end
 	else
 	end
 
-	if game.screens.battle.board.cells[nextRow][nextColumn].volume > 1 then
+	if board:isReserved(nextRow, nextColumn) then
 		nextRow = self.row
 		nextColumn = self.column
 	end
@@ -63,8 +63,8 @@ function MagicStone:update(dt, game)
 	
 	self.x = self.column * self.size + self.deltaX
 	self.y = self.row * self.size + self.deltaY
-	
-	game.screens.battle.board.cells[self.row][self.column] = self
+
+	board:setStone(self)
 end
 
 function MagicStone:getMask()
@@ -73,6 +73,30 @@ end
 
 function MagicStone:upgrade()
 	self.volume = self.volume * 2
+end
+
+function MagicStone:setInAction()
+	self.state = 0
+end
+
+function MagicStone:setStopped()
+	self.state = 1
+end
+
+function MagicStone:isStopped()
+	return self.state == 1
+end
+
+function MagicStone:isInAction()
+	return self.state == 0
+end
+
+function MagicStone:isDeathStone()
+	return self.volume == 2048
+end
+
+function MagicStone:isUltraDeathStone()
+	return self.volume == 4096
 end
 
 function MagicStone:applyDeathMagic(deathPerc, ultraDeathPerc)

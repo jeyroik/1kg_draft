@@ -21,3 +21,10 @@ function Card:new(config)
 	Card.super.new(self, config)
 end
 
+function Card:takeDamage(damage)
+	self.health = (self.health >= damage) and (self.health - damage) or 0
+end
+
+function Card:isDead()
+	return self.health == 0
+end

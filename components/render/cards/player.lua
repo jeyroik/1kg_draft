@@ -72,6 +72,18 @@ function Player:spendMagic(game, card)
 	return screen.battle:spendMagic(self, card)
 end
 
+function Player:getMagic(layerData, magicType)
+	return self.magic[layerData:translateMagicType(magicType)] or 'missed magic type "'..magicType ..'"'
+end
+
+function Player:getMagicPower(layerData, magicType)
+	return self.magic[layerData:translateMagicType(magicType)].power
+end
+
+function Player:getMagicMana(layerData, magicType)
+	return self.magic[layerData:translateMagicType(magicType)].mana
+end
+
 function Player:useCard(game, card)
 	if self.cardsAdded[card.name] then
 		game.assets:playFx('skill')

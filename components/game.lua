@@ -31,7 +31,6 @@ function Game:new(config)
 		battle = BattleScreen(config.screens.battle)
 	}
 	self.state = config.state or 'auth'
-	self.char = Character({health=100})
 end
 
 function Game:init()
@@ -55,9 +54,12 @@ function Game:getScreenData(screenName)
 	return screen and screen:getData() or nil
 end
 
-function Game:render()
-	self.screens[self.state]:render(self)
-	self:addDbg(self:printObject(self.char, ''))
+function Game:getCurrentScreen()
+	return self:getScreen(self.state)
+end
+
+function Game:getCurrentScreenLayerData()
+	return self:getScreenData(self.state)
 end
 
 function Game:loadMagicTypes()

@@ -1,7 +1,7 @@
 BattleLayerViewPlayers = LayerView:extend()
 
 function BattleLayerViewPlayers:render(game, data)
-    self:renderMagic(game)
+    self:renderMagic(game, data)
     self:renderFrameCurrentPlayer(data)
     self:renderPlayersInfo(data)
 end
@@ -21,23 +21,23 @@ function BattleLayerViewPlayers:renderFrameCurrentPlayer(data)
     love.graphics.rectangle('line', frameX, 120, 200, 40)
 end
 
-function BattleLayerViewPlayers:renderMagic(game)
-    self:renderPlayer1Magic(game)
-    self:renderPlayer2magic(game)
+function BattleLayerViewPlayers:renderMagic(game, data)
+    self:renderPlayer1Magic(game, data)
+    self:renderPlayer2magic(game, data)
 end
 
-function BattleLayerViewPlayers:renderPlayer1Magic(game)
+function BattleLayerViewPlayers:renderPlayer1Magic(game, data)
     local magicX = 270
     local magicXDelta = 150
     local magicY = 750
     local magicYDelta = 50
     local perRow = 3
     local onRow = 0
-    local current = self.players[1]
+    local current = data.players[1]
 
     for i=0,10 do
         local id = 'c'..math.pow(2,i)
-        value = self.magic[current.id][id]
+        value = data.magic[current.id][id]
 
         if game.assets.images.gems[id] then
             if onRow == perRow then
@@ -54,18 +54,18 @@ function BattleLayerViewPlayers:renderPlayer1Magic(game)
     end
 end
 
-function BattleLayerViewPlayers:renderPlayer2magic(game)
+function BattleLayerViewPlayers:renderPlayer2magic(game, data)
     local magicX = 1270
     local magicXDelta = 150
     local magicY = 750
     local magicYDelta = 50
     local perRow = 3
     local onRow = 0
-    local enemy = self.players[2]
+    local enemy = data.players[2]
 
     for i=0,10 do
         local id = 'c'..math.pow(2,i)
-        value = self.magic[enemy.id][id]
+        value = data.magic[enemy.id][id]
 
         if game.assets.images.gems[id] then
             if onRow == perRow then

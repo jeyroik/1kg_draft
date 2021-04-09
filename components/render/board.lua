@@ -11,24 +11,11 @@ function Board:new(config)
 	self.existed = 0
 	self.deathPerc = 10
 	self.ultraDeathPerc = 20
-	self.theEndFlag = false
+	self.stonesPerRound = 3
+	self.deathStoneDamage = 1
+	self.ultraDeathStoneDamage = 5
 
 	Board.super.new(self, config)
-end
-
--- @param number dx delta for the x
--- @param number dy delta for the y
--- @return void
-function Board:render(game, dx, dy)
-	for row, columns in pairs(self.cells) do
-		for column,stone in pairs(columns) do
-			if stone.volume > -1 then
-				if game.assets.images.gems[stone:getMask()] then
-					stone:render(game, dx, dy)
-				end
-			end
-		end
-	end
 end
 
 function Board:init()
@@ -41,7 +28,7 @@ function Board:init()
 			if love.math.random(1,8) == 3 then
 				stone.volume = love.math.random(1,9) == 3 and 4 or 2
 				stone:applyDeathMagic(self.deathPerc, self.ultraDeathPerc)
-				self:addExisted()
+				self:incExisted()
 			end
 			
 			self.cells[i][j] = stone
@@ -49,202 +36,216 @@ function Board:init()
 	end
 end
 
-function Board:addExisted()
-	self.existed = self.existed + 1
-end
+function Board:addStone(layerData)
+	local stopped = 0
+	for _, columns in pairs(self.cells) do
+		for _, stone in pairs(columns) do
+			if stone:isStopped() then stopped = stopped + 1 end
+		end
+	end
+	layerData:addDbg('Board:addStone() : stopped = '.. stopped)
+	if stopped == self.existed then
+		self.gravity = 'none'
+		layerData:nextTurn()
+		for _=1, self.stonesPerRound do
+			local row = love.math.random(1,5)
+			local column = love.math.random(1,5)
 
-function Board:removeExisted()
-	self.existed = self.existed - 1
-end
+			if self.cells[row][column].volume < 2 then
+				self.cells[row][column].volume = love.math.random(1,8) == 3 and 4 or 2
+				self.cells[row][column]:applyDeathMagic(self.deathPerc, self.ultraDeathPerc)
 
-function Board:addStone(game)
-	if not self.theEndFlag then
-		local stoped = 0
-		for row, columns in pairs(self.cells) do
-			for column, stone in pairs(columns) do
-				if stone.state == 1 then stoped = stoped + 1 end
+				self:incExisted()
+				--return 'created'
 			end
 		end
-		game:addDbg('Board:addStone() : stoped = '..stoped)
-		if stoped == self.existed then
-			self.gravity = 'none'
-			game.screens.battle.battle:nextTurn()
-			for i=1, 3 do
-				local row = love.math.random(1,5)
-				local column = love.math.random(1,5)
-		
-				if not self.cells[row][column] then
-					msg = '\nMissed '..row..','..column
-				else
-					if self.cells[row][column].volume < 2 then
-						self.cells[row][column].volume = love.math.random(1,5) == 3 and 4 or 2
-						
-						self.cells[row][column]:applyDeathMagic(self.deathPerc, self.ultraDeathPerc)
-				
-						self:addExisted()
-					end
-				end
-			end
-			
-			for row, columns in pairs(self.cells) do
-				for column, stone in pairs(columns) do
-					stone.state = 0
-				end
+
+		for _, columns in pairs(self.cells) do
+			for _, stone in pairs(columns) do
+				stone:setInAction()
 			end
 		end
 	end
+
+	return nil
 end
 
-function Board:merge(game, stone, nextRow, nextColumn)
+function Board:merge(game, layerData, stone, nextRow, nextColumn)
 
-	local currentType = game.magicTypes[stone:getMask()]
+	local currentType = layerData:getMagicType(stone:getMask())
 	local source = 'merge'
 
-	self.cells[nextRow][nextColumn] = MagicStone({row = nextRow, column = nextColumn})
-	local currentPlayer = game.screens.battle.battle:getCurrentPlayer()
-	local nextPlayer = game.screens.battle.battle:getNextPlayer()
+	self:setFree(nextRow, nextColumn)
 
-	if stone.volume == 2048 then
-		damage = currentPlayer.attack - nextPlayer.defense
-		if nextPlayer.health >= damage then
-			nextPlayer.health = nextPlayer.health - damage
-		else
-			nextPlayer.health = 0
-		end
+	local currentPlayer = layerData:getCurrentPlayer()
+	local nextPlayer = layerData:getNextPlayer()
+
+	if stone:isDeathStone() then
+		local damage = self.deathStoneDamage * currentPlayer.attack - nextPlayer.defense
+		nextPlayer:takeDamage(damage)
 		source = 'damage'
-	elseif stone.volume == 4096 then
-		damage = 5*currentPlayer.attack - nextPlayer.defense
-		if nextPlayer.health >= damage then
-			nextPlayer.health = nextPlayer.health - damage
-		else
-			nextPlayer.health = 0
-		end
+	elseif stone:isUltraDeathStone() then
+		local damage = self.ultraDeathStoneDamage * currentPlayer.attack - nextPlayer.defense
+		nextPlayer:takeDamage(damage)
 		source = 'damage'
 	else
-		local currentMana = game.screens.battle.battle.magic[currentPlayer.id][stone:getMask()]
-		local magicPower = currentPlayer.magic[magicTypesDict[stone:getMask()]].power
-		
-		if currentPlayer.magic[magicTypesDict[stone:getMask()]].mana >= currentMana + magicPower then
-			game.screens.battle.battle.magic[currentPlayer.id][stone:getMask()] = currentMana + magicPower
+		local currentMana = layerData:getMagicAmount(currentPlayer, stone:getMask())
+		local magic = currentPlayer:getMagic(layerData, stone:getMask())
+
+		if magic.mana >= currentMana + magic.power then
+			layerData:incMagicAmount(currentPlayer, stone:getMask(), magic.power)
 		end
 	end
 	
 	if currentType.isCanBeMerged then
 		self.cells[stone.row][stone.column]:upgrade()
 	else
-		self.cells[stone.row][stone.column] = MagicStone({row = stone.row, column = stone.column})
-		self:removeExisted()
+		self:setFree(stone.row, stone.column)
+		self:decExisted()
 	end
-	self:removeExisted()
+	self:decExisted()
 	
-	if nextPlayer.health == 0 then
-		source = 'the_end'
-		self.theEndFlag = true
-	end
-	
-	game.assets:playFx(source)
+	return source
 end
 
-function Board:move(game)
+function Board:move(game, layerData)
+	local fx = 'move'
+
 	if self.gravity == 'down' then
-		self:moveDown(game)
+		fx = self:moveDown(game, layerData) or fx
 	elseif self.gravity == 'up' then
-		self:moveUp(game)
+		fx = self:moveUp(game, layerData) or fx
 	elseif self.gravity == 'left' then
-		self:moveLeft(game)
+		fx = self:moveLeft(game, layerData) or fx
 	elseif self.gravity == 'right' then
-		self:moveRight(game)
+		fx = self:moveRight(game, layerData) or fx
 	end
+
+	return fx
 end
 
-function Board:moveDown(game)
+function Board:moveDown(game, layerData)
 	for row=5,1,-1 do
 		columns = self.cells[row]
-		for column,stone in pairs(columns) do
+		for _,stone in pairs(columns) do
 			if stone.volume > 1 then
-				stone:update(dt, game)
+				stone:update(self)
 			end
 		end
 	end
 	
 	for row=5,1,-1 do
 		columns = self.cells[row]
-		for column,stone in pairs(columns) do
+		for _,stone in pairs(columns) do
 			if stone.volume > 1 and stone.row > 1 and self.cells[stone.row-1][stone.column].volume == stone.volume then
-				-- надо смержить
-				self:merge(game, stone, stone.row-1, stone.column)
+				return self:merge(game, layerData, stone, stone.row-1, stone.column)
 			end
 		end
 	end
+
+	return nil
 end
 
-function Board:moveUp(game)
+function Board:moveUp(game, layerData)
 	for row=1,5 do
 		columns = self.cells[row]
-		for column,stone in pairs(columns) do
+		for _,stone in pairs(columns) do
 			if stone.volume > 1 then
-				stone:update(dt, game)
+				stone:update(self)
 			end
 		end
 	end
 	
 	for row=1,4 do
 		columns = self.cells[row]
-		for column,stone in pairs(columns) do
+		for _,stone in pairs(columns) do
 			if stone.volume > 1 and stone.row < 5 and self.cells[stone.row+1][stone.column].volume == stone.volume then
-				-- надо смержить
-				self:merge(game, stone, stone.row+1, stone.column)
+				return self:merge(game, layerData, stone, stone.row+1, stone.column)
 			end
 		end
 	end
+
+	return nil
 end
 
-function Board:moveLeft(game)
-	for row,columns in pairs(self.cells) do
+function Board:moveLeft(game, layerData)
+	for _,columns in pairs(self.cells) do
 		for column=1,5 do
-			if not columns[column] then
-				msg = msg .. '\nMissed ' .. row .. ',' .. column 
-			else
-				local stone = columns[column]
-					if stone.volume > 1 then
-					stone:update(dt, game)
-				end
+			local stone = columns[column]
+			if stone.volume > 1 then
+				stone:update(self)
 			end
 		end
 	end
 
-	for row,columns in pairs(self.cells) do
+	for _,columns in pairs(self.cells) do
 		for column=1,4 do
-			if not columns[column] then
-				msg = msg .. '\nMissed ' .. row .. ',' .. column 
-			else
-				local stone = columns[column]
-				if stone.volume > 1 and stone.column < 5 and self.cells[stone.row][stone.column+1].volume == stone.volume then
-					-- надо смержить
-					self:merge(game, stone, stone.row, stone.column+1)
-				end
+			local stone = columns[column]
+			if stone.volume > 1 and stone.column < 5 and self.cells[stone.row][stone.column+1].volume == stone.volume then
+				return self:merge(game, layerData, stone, stone.row, stone.column+1)
 			end
 		end
 	end
+
+	return nil
 end
 
-function Board:moveRight(game)
-	for row,columns in pairs(self.cells) do
+function Board:moveRight(game, layerData)
+	for _,columns in pairs(self.cells) do
 		for column=5,1,-1 do
 			local stone = columns[column]
 			if stone.volume > 1 then
-				stone:update(dt, game)
+				stone:update(self)
 			end
 		end
 	end
 	
-	for row,columns in pairs(self.cells) do
+	for _,columns in pairs(self.cells) do
 		for column=5,1,-1 do
 			local stone = columns[column]
 			if stone.volume > 1 and stone.column > 1 and self.cells[stone.row][stone.column-1].volume == stone.volume then
-				-- надо смержить
-				self:merge(game, stone, stone.row, stone.column-1)
+				return self:merge(game, layerData, stone, stone.row, stone.column-1)
 			end
 		end
 	end
+
+	return nil
+end
+
+function Board:setFree(row, column)
+	self.cells[row][column] = MagicStone({row = row, column = column})
+end
+
+function Board:setStone(stone)
+	self.cells[stone.row][stone.column] = stone
+end
+
+function Board:isGravity(direction)
+	return self.gravity == direction
+end
+
+function Board:isOnEdge(edge, stone)
+	if edge == 'top' then
+		return stone.row == 1
+	elseif edge == 'down' then
+		return stone.row == self.size
+	elseif edge == 'left' then
+		return stone.column == 1
+	elseif edge == 'right' then
+		return stone.column == self.size
+	end
+
+	return false
+end
+
+function Board:isReserved(row, column)
+	return self.cells[row][column].volume > 1
+end
+
+function Board:incExisted()
+	self.existed = self.existed + 1
+end
+
+function Board:decExisted()
+	self.existed = self.existed - 1
 end

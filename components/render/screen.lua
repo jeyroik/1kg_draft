@@ -42,8 +42,8 @@ end
 function Screen:render(game)
 	for i = 1, #self.layers.view do
 		local layer = self.layers.view[i]
-		if layer:needRender(game, data) then
-			layer:render(game, self.layer.data)
+		if layer:needRender(game, self.layers.data) then
+			layer:render(game, self.layers.data)
 		end
 	end
 end

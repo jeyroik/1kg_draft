@@ -10,7 +10,7 @@ function BattleScreen:new(config)
 	BattleScreen.super.new(self, config)
 
 	self:addViewLayers({
-		BattleLayerViewBackground(),
+		BattleLayerViewBackground({image = 'background'}),
 		BattleLayerViewBoard(),
 		BattleLayerViewPlayers(),
 		BattleLayerViewTheEnd()
