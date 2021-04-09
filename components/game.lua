@@ -49,6 +49,12 @@ function Game:getScreen(name)
 	return self.screens[name] or nil
 end
 
+function Game:getScreenData(screenName)
+	local screen = self:getScreen(screenName)
+	
+	return screen and screen:getData() or nil
+end
+
 function Game:render()
 	self.screens[self.state]:render(self)
 	self:addDbg(self:printObject(self.char, ''))

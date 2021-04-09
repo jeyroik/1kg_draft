@@ -1,5 +1,5 @@
 ScreenLayer = Object:extend()
-ScreenLayer:implement(config)
+ScreenLayer:implement(Config)
 
 function ScreenLayer:new(config)
     self.mode = ''

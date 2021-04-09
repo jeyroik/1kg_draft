@@ -7,6 +7,10 @@ function BattleLayerData:new(config)
     self.magic = {}
     self.boardSize = 5
     self.cells = {}
+	self.gravity = 'none'
+	self.existed = 0
+	self.deathPerc = 10
+	self.ultraDeathPerc = 20
     self.theEndFlag = false
 
     BattleLayerData.super.new(self, config)
@@ -52,19 +56,27 @@ function BattleLayerData:initBoard()
 end
 
 -- @return Player
-function Battle:getCurrentPlayer()
+function BattleLayerData:getCurrentPlayer()
     return self.players[self.current]
 end
 
 -- @return Player
-function Battle:getNextPlayer()
+function BattleLayerData:getNextPlayer()
     return self.players[self.next]
 end
 
 -- Changes current and next player with each other
 -- @return void
-function Battle:nextTurn()
+function BattleLayerData:nextTurn()
     local c = self.current
     self.current = self.next
     self.next = c
+end
+
+function BattleLayerData:addExisted()
+	self.existed = self.existed + 1
+end
+
+function BattleLayerData:removeExisted()
+	self.existed = self.existed - 1
 end

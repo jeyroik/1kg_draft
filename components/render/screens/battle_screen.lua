@@ -1,3 +1,9 @@
+require "components/render/screens/battle/battle_layer_view_background"
+require "components/render/screens/battle/battle_layer_view_board"
+require "components/render/screens/battle/battle_layer_view_players"
+require "components/render/screens/battle/battle_layer_view_the_end"
+require "components/render/screens/battle/battle_layer_data"
+
 BattleScreen = Screen:extend()
 
 function BattleScreen:new(config)

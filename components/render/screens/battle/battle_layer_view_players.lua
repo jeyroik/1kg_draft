@@ -6,7 +6,7 @@ function BattleLayerViewPlayers:render(game, data)
     self:renderPlayersInfo(data)
 end
 
-function Battle:renderPlayersInfo(data)
+function BattleLayerViewPlayers:renderPlayersInfo(data)
     local p1 = data.players[1]
     local p2 = data.players[2]
 

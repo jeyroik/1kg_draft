@@ -1,3 +1,8 @@
+require "components/render/screens/screen_layer"
+require "components/render/screens/layers/layer_view"
+require "components/render/screens/layers/layer_data"
+require "components/render/screens/layers/layer_view_tip"
+
 Screen = Render:extend()
 Screen:implement(Printer)
 
