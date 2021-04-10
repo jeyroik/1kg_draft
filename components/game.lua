@@ -21,9 +21,6 @@ require "components/render/screen"
 require "components/render/screens/battle_screen"
 require "components/magic_type"
 
-require "components/battle"
-
-
 Game = Object:extend()
 Game:implement(Printer)
 

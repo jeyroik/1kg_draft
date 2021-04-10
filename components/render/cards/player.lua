@@ -4,6 +4,7 @@ function Player:new(config)
 	self.cards = {}
 	self.cardsAdded = {}
 	self.cardsCount = 0
+	self.isHuman = false
 	self.magic = {
 		air = {
 			power = 1,

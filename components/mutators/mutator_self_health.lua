@@ -15,4 +15,8 @@ function MutatorSelfHealth:apply(game, context)
     self:applyConfig(context)
 
     target.health = target.health + self.amount
+
+    if target.health < 0 then
+        target.health = 0
+    end
 end

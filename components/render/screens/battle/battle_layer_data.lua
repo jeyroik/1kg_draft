@@ -14,7 +14,6 @@ function BattleLayerData:new(config)
     self.magicNamesDict = {}
     self.theEndFlag = false
     self.fx = 'none'
-    self.selection = {}
 
     BattleLayerData.super.new(self, config)
 end
@@ -65,12 +64,21 @@ function BattleLayerData:getNextPlayer()
     return self.players[self.next]
 end
 
+function BattleLayerData:isCurrentPlayer(player)
+    return player.id == self:getCurrentPlayer().id
+end
+
 -- Changes current and next player with each other
 -- @return void
 function BattleLayerData:nextTurn()
     local c = self.current
     self.current = self.next
     self.next = c
+
+    if not self:getCurrentPlayer().isHuman then
+        local gr = {'down', 'up', 'left', 'right'}
+        love.event.push('keypressed', gr[love.math.random(1, 4)])
+    end
 end
 
 function BattleLayerData:addStone()
@@ -91,8 +99,28 @@ function BattleLayerData:mouseMoved(game, x, y, dx, dy, isTouch)
                 for magicType, amount in pairs(cost) do
                     table.insert(icons, {image=game.assets.images.gems[magicType], text=amount, xd=100, yd=200})
                 end
-                self.tip = {x=x, y=y, text='Player: ' ..i..'\n'..'Title: '..card.name .. '\n\nDescription:\n'..card.skill.active.description..'\n\nCost: ', icons=icons}
-                self.selection = {x = top.left.x, y = top.left.y, width = top.width, height = top.height}
+
+                local canUse = ''
+                local selectionColor = {0.5, 0.5, 0.5}
+
+                if self:isCurrentPlayer(pl) then
+                    if not pl:isEnoughMagic(self, card) then
+                        canUse = 'Not enough magic'
+                        selectionColor = {1, 0, 0}
+                    else
+                        selectionColor = {0, 0.5, 0}
+                    end
+                else
+                    canUse = 'Can not use. Please, wait your turn'
+                    selectionColor = {0.5, 0.5, 0.5}
+                end
+
+                self.tip = {x=x, y=y, text=canUse .. '\n'..'Title: '..card.name .. '\n\nDescription:\n'..card.skill.active.description..'\n\nCost: ', icons=icons}
+                self.selection = {
+                    x = top.left.x, y = top.left.y, width = top.width, height = top.height,
+                    color = selectionColor,
+                    line_width = 5
+                }
                 love.mouse.setCursor(game.assets:getCursor('hand'))
                 return
             else

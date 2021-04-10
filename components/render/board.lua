@@ -44,6 +44,16 @@ function Board:addStone(layerData)
 		end
 	end
 
+	if stopped == math.pow(self.size, 2) then
+		for row, columns in pairs(self.cells) do
+			for column, stone in pairs(columns) do
+				self:setFree(row, column)
+				self:decExisted()
+				stopped = stopped - 1
+			end
+		end
+	end
+
 	if stopped == self.existed then
 		self.gravity = 'none'
 		layerData:nextTurn()

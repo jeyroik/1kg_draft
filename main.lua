@@ -14,7 +14,7 @@ function love.load()
 					stonesPerRound = 3
 				},
 				players = {
-					Player({ name = 'Player1', x = 270, y = 250, health = 100, attack = 2, defense = 1 }),
+					Player({ name = 'Player1', x = 270, y = 250, health = 100, attack = 2, defense = 1, isHuman = true }),
 					Player({ name = 'Player2', x = 1540, y = 250, health = 100, attack = 2, defense = 1 })
 				}
 			}
