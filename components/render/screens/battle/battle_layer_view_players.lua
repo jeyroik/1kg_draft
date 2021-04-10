@@ -4,6 +4,7 @@ function BattleLayerViewPlayers:render(game, data)
     self:renderMagic(game, data)
     self:renderFrameCurrentPlayer(data)
     self:renderPlayersInfo(data)
+    self:renderCards(game, data)
 end
 
 function BattleLayerViewPlayers:renderPlayersInfo(data)
@@ -19,6 +20,17 @@ function BattleLayerViewPlayers:renderFrameCurrentPlayer(data)
     local frameX = current:getCoordsFrame(5)
 
     love.graphics.rectangle('line', frameX, 120, 200, 40)
+end
+
+function BattleLayerViewPlayers:renderCards(game, data)
+    for i=1,2 do
+        local player = data.players[i]
+        for i=1,#player.cards do
+            local card = player.cards[i]
+            local avatar = game.assets:getImage('chars')
+            love.graphics.draw(avatar.source, game.assets.quads.chars[card.avatar], card.x, card.y)
+        end
+    end
 end
 
 function BattleLayerViewPlayers:renderMagic(game, data)

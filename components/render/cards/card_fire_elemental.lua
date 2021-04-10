@@ -1,21 +1,24 @@
+require "components/skills/skill_enemy_health_dec"
+
 CardFireElemental = Card:extend()
 
-function CardFireElemental:new()
-    CardFireElemental.super.new(self, {
-        name = 'Fire elemental',
-        description = 'In the age of Tratabor fury fire elemental was born',
-        health = 5,
-        attack = 1,
-        defense = 0,
-        skill = {
-            active = SkillEnemyHealthDec({
-                amount = 1,
-                cost = {
-                    fire = 2
-                }
-            }),
-            passive = {}
-        },
-        avatar = 3
-    })
+function CardFireElemental:new(config)
+    config = config or {}
+    config.name = 'Fire elemental'
+    config.description = 'In the age of Tratabor fury fire elemental was born'
+    config.health = 5
+    config.attack = 1
+    config.defense = 0
+    config.skill = {
+        active = SkillEnemyHealthDec({
+            amount = 5,
+            cost = {
+                fire = 2
+            }
+        }),
+        passive = {}
+    }
+    config.avatar = config.avatar or 31
+
+    CardFireElemental.super.new(self, config)
 end

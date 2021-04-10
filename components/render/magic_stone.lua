@@ -15,6 +15,8 @@ function MagicStone:new(config)
 
 	self.x = self.column * self.size + self.deltaX
 	self.y = self.row * self.size
+	self.width = self.size
+	self.height = self.size
 end
 
 function MagicStone:render(game)

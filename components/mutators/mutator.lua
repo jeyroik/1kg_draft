@@ -1,5 +1,6 @@
 Mutator = Object:extend()
 Mutator:implement(Config)
+Mutator:implement(Printer)
 
 function Mutator:new(config)
     self.toEnemy = false
@@ -9,7 +10,6 @@ function Mutator:new(config)
 end
 
 function Mutator:getTarget(game)
-    return self.toEnemy
-            and game.screens.battle.battle:getNextPlayer()
-            or game.screens.battle.battle:getCurrentPlayer()
+    local layer = game:getCurrentScreenLayerData()
+    return self.toEnemy and layer:getNextPlayer() or layer:getCurrentPlayer()
 end

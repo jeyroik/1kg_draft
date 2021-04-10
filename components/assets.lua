@@ -66,6 +66,15 @@ function Assets:init()
 			height = charHeight
 		}
 	}
+
+	self.cursors = {
+		hand = love.mouse.getSystemCursor("hand")
+	}
+
+	self.mutators = {
+		self_health = MutatorSelfHealth(),
+		enemy_health = MutatorEnemyHealth()
+	}
 end
 
 -- @param string name alias of a fx 
@@ -85,4 +94,16 @@ function Assets:getImage(name)
 	end
 	
 	return nil, 'Unknown image "' .. name .. '"'
+end
+
+function Assets:getMisc(name)
+	return self.misc[name]
+end
+
+function Assets:getCursor(name)
+	return self.cursors[name]
+end
+
+function Assets:getMutator(name)
+	return self.mutators[name]
 end

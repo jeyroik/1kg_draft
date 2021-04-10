@@ -43,7 +43,7 @@ function Board:addStone(layerData)
 			if stone:isStopped() then stopped = stopped + 1 end
 		end
 	end
-	layerData:addDbg('Board:addStone() : stopped = '.. stopped)
+
 	if stopped == self.existed then
 		self.gravity = 'none'
 		layerData:nextTurn()
@@ -225,7 +225,7 @@ function Board:isGravity(direction)
 end
 
 function Board:isOnEdge(edge, stone)
-	if edge == 'top' then
+	if edge == 'up' then
 		return stone.row == 1
 	elseif edge == 'down' then
 		return stone.row == self.size

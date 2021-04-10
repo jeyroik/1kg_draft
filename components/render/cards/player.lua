@@ -50,26 +50,16 @@ function Player:new(config)
 end
 
 function Player:addCard(card)
-	if  not self.cardsAdded[card.name] then
+	if  not self.cardsAdded[card.id] then
+		card.x = self.x
+		card.y = self.y + card.height * (1.2*#self.cards)
 		table.insert(self.cards, card)
-		self.cardsAdded[card.name] = true
+		self.cardsAdded[card.id] = true
 		self.cardsCount = self.cardsCount + 1
 		return true
 	end
 	
 	return false
-end
-
-function Player:isEnoughMagic(game, card)
-	local screen = game:getScreen('battle')
-
-	return screen.battle:isEnoughMagic(self, card)
-end
-
-function Player:spendMagic(game, card)
-	local screen = game:getScreen('battle')
-
-	return screen.battle:spendMagic(self, card)
 end
 
 function Player:getMagic(layerData, magicType)
@@ -84,15 +74,42 @@ function Player:getMagicMana(layerData, magicType)
 	return self.magic[layerData:translateMagicType(magicType)].mana
 end
 
-function Player:useCard(game, card)
-	if self.cardsAdded[card.name] then
+function Player:isEnoughMagic(layerData, card)
+	local isEnough = true
+
+	for magicName, amount in pairs(card.skill.active.cost) do
+		if layerData:getMagicAmount(self, layerData:translateMagicName(magicName)) < amount then
+			isEnough = false
+			break
+		end
+	end
+
+	return isEnough
+end
+
+function Player:useCard(game, layerData, card)
+	if self.cardsAdded[card.id] then
+		self:addDbg('card found')
 		game.assets:playFx('skill')
 
 		local skill = card.skill.active
 		for name, context in pairs(skill.mutators) do
-			local mutator = MutatorCollection.getMutator(name)
-			mutator:apply(game, context)
+			local mutator, err = game.assets:getMutator(name)
+			if err then
+				self:addDbg(err)
+			else
+				mutator:apply(game, context)
+			end
 		end
-		self:spendMagic(game, card)
+		self:spendMagic(layerData, card)
+	else
+		self:addDbg('card not found')
+	end
+end
+
+function Player:spendMagic(layerData, card)
+	local cost = card.skill.active:getCost(layerData)
+	for magicType, amount in pairs(cost) do
+		layerData:decMagicAmount(self, magicType, amount)
 	end
 end

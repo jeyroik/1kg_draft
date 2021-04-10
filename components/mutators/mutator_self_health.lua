@@ -1,16 +1,12 @@
 MutatorSelfHealth = Mutator:extend()
 
-MutatorCollection.registerMutator(
-    'self_health',
-    MutatorSelfHealth({
-        name = 'self_health',
-        toEnemy = false
-    })
-)
+
 
 function MutatorSelfHealth:new(config)
     self.amount = 0
     MutatorSelfHealth.super.new(self, config)
+
+    self.toEnemy = false
 end
 
 function MutatorSelfHealth:apply(game, context)

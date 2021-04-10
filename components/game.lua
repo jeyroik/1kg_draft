@@ -3,6 +3,11 @@ require "components/uuid"
 require "components/config"
 require "components/visible_object"
 
+require "components/mutators/mutator"
+require "components/mutators/mutator_enemy_health"
+require "components/mutators/mutator_self_health"
+
+require "components/skill"
 require "components/render"
 require "components/render/image"
 require "components/render/text"
@@ -10,11 +15,12 @@ require "components/render/icon"
 require "components/render/card"
 require "components/render/cards/character"
 require "components/render/cards/player"
+require "components/assets"
 require "components/render/board"
 require "components/render/screen"
 require "components/render/screens/battle_screen"
 require "components/magic_type"
-require "components/assets"
+
 require "components/battle"
 
 
@@ -38,7 +44,7 @@ function Game:init()
 	self.assets:init()
 	
 	for i, screen in pairs(self.screens) do
-		screen:init()
+		screen:init(self)
 	end
 	
 	love.window.setFullscreen(true, "desktop")

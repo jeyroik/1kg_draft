@@ -18,10 +18,6 @@ function BattleScreen:new(config)
 	self:setDataLayer(BattleLayerData(config))
 end
 
-function BattleScreen:init()
-	self.layers.data:init()
-end
-
 function BattleScreen:getCurrentPlayer()
 	return self.layers.data:getCurrentPlayer()
 end

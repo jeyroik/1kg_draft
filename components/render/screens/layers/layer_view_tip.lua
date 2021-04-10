@@ -4,10 +4,12 @@ function LayerViewTip:render(game, data)
     if data.tip.x then
         local tipImg = game.assets:getImage('tip')
 
+        --self:addDbg(self:printObject(tipImg, ''))
+
         if tipImg:getWidth() + data.tip.x > love.graphics.getWidth() then
             data.tip.x = data.tip.x-tipImg:getWidth()
         end
-        love.graphics.draw(tipImg, data.tip.x, data.tip.y)
+        tipImg:render(data.tip.x, data.tip.y)
         love.graphics.print(data.tip.text, data.tip.x+30, data.tip.y+30, 0,2,2)
         if data.tip.icons then
 
@@ -16,5 +18,6 @@ function LayerViewTip:render(game, data)
                 love.graphics.print(icon.text, data.tip.x+icon.xd+5+icon.image:getWidth()/2, data.tip.y+icon.yd, 0,2,2)
             end
         end
+
     end
 end
