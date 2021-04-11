@@ -1,6 +1,4 @@
-VisibleObject = Object:extend()
-VisibleObject:implement(Config)
-VisibleObject:implement(Printer)
+VisibleObject = GameObject:extend()
 
 -- @param table config
 -- @return void

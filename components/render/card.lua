@@ -1,5 +1,4 @@
 Card = Render:extend{}
-Card:implement(Uuid)
 
 function Card:new(config)
 	self.id = self:getId()

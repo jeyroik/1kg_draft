@@ -1,13 +1,13 @@
-BattleLayerViewPlayers = LayerView:extend()
+BattleFightViewPlayers = LayerView:extend()
 
-function BattleLayerViewPlayers:render(game, data)
+function BattleFightViewPlayers:render(game, data)
     self:renderMagic(game, data)
     self:renderFrameCurrentPlayer(data)
     self:renderPlayersInfo(data)
     self:renderCards(game, data)
 end
 
-function BattleLayerViewPlayers:renderPlayersInfo(data)
+function BattleFightViewPlayers:renderPlayersInfo(data)
     local p1 = data.players[1]
     local p2 = data.players[2]
 
@@ -15,14 +15,14 @@ function BattleLayerViewPlayers:renderPlayersInfo(data)
     love.graphics.print('\nPlayer 2:'..'\n\nHealth: '.. p2.health, p2.x, 100, 0,2,2)
 end
 
-function BattleLayerViewPlayers:renderFrameCurrentPlayer(data)
+function BattleFightViewPlayers:renderFrameCurrentPlayer(data)
     local current = data.players[data.current]
     local frameX = current:getCoordsFrame(5)
 
     love.graphics.rectangle('line', frameX, 120, 200, 40)
 end
 
-function BattleLayerViewPlayers:renderCards(game, data)
+function BattleFightViewPlayers:renderCards(game, data)
     for i=1,2 do
         local player = data.players[i]
         for i=1,#player.cards do
@@ -33,12 +33,12 @@ function BattleLayerViewPlayers:renderCards(game, data)
     end
 end
 
-function BattleLayerViewPlayers:renderMagic(game, data)
+function BattleFightViewPlayers:renderMagic(game, data)
     self:renderPlayer1Magic(game, data)
     self:renderPlayer2magic(game, data)
 end
 
-function BattleLayerViewPlayers:renderPlayer1Magic(game, data)
+function BattleFightViewPlayers:renderPlayer1Magic(game, data)
     local magicX = 270
     local magicXDelta = 150
     local magicY = 750
@@ -66,7 +66,7 @@ function BattleLayerViewPlayers:renderPlayer1Magic(game, data)
     end
 end
 
-function BattleLayerViewPlayers:renderPlayer2magic(game, data)
+function BattleFightViewPlayers:renderPlayer2magic(game, data)
     local magicX = 1270
     local magicXDelta = 150
     local magicY = 750

@@ -1,6 +1,7 @@
 require "components/printer"
 require "components/uuid"
 require "components/config"
+require "components/game_object"
 require "components/visible_object"
 
 require "components/mutators/mutator"
@@ -18,7 +19,7 @@ require "components/render/cards/player"
 require "components/assets"
 require "components/render/board"
 require "components/render/screen"
-require "components/render/screens/battle_screen"
+require "components/render/screens/screen_battle"
 require "components/magic_type"
 
 Game = Object:extend()

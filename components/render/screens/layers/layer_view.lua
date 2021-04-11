@@ -1,4 +1,4 @@
-LayerView = ScreenLayer:extend()
+LayerView = Layer:extend()
 
 function LayerView:new(config)
     LayerView.super.new(self, config)
