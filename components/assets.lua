@@ -107,3 +107,11 @@ end
 function Assets:getMutator(name)
 	return self.mutators[name]
 end
+
+function Assets:addImage(alias, path)
+	self.images[alias] = love.graphics.newImage(self.basePath .. path)
+end
+
+function Assets:removeImage(alias)
+	self.images[alias] = nil
+end

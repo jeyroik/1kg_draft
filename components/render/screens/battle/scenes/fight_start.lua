@@ -9,3 +9,8 @@ function SceneFightStart:new(config)
 
     }
 end
+
+function SceneFightStart:init(game, screen)
+    game.assets:addImage('fs__btn', 'menu_btn')
+    game.assets:addImage('fs__btn_pressed', 'menu_btn_pressed')
+end
