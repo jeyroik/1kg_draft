@@ -3,20 +3,22 @@ function love.load()
 	require "components/game"
 	
 	game = Game({
-		assets = {base_path = 'assets/'},
+		assets = {
+			base_path = 'assets/',
+			importers = {
+				{path = 'components/magic/importer'},
+				{path = 'components/mutators/importer'},
+				{path = 'components/render/screens/battle/scenes/fight_before/importer'},
+				{path = 'components/render/screens/battle/scenes/fight/importer'},
+				{path = 'components/render/screens/battle/scenes/fight_after/importer'}
+			}
+		},
 		state = 'battle', -- choose start screen
 		screens = {
 			battle = {
-				scene = 'fight_start',
-				board = {
-					size = 5,
-					deathPerc = 10,
-					ultraDeathPerc = 20,
-					stonesPerRound = 3
-				},
 				players = {
-					Player({ name = 'Player1', x = 270, y = 250, health = 50, attack = 2, defense = 1, isHuman = true }),
-					Player({ name = 'Player2', x = 1540, y = 250, health = 50, attack = 2, defense = 1 })
+					{ name = 'Player1', x = 270, y = 250, health = 50, attack = 2, defense = 1, isHuman = true },
+					{ name = 'Player2', x = 1540, y = 250, health = 50, attack = 2, defense = 1 }
 				}
 			}
 		}

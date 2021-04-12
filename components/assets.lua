@@ -1,80 +1,29 @@
 Assets = Object:extend()
 Assets:implement(Config)
+Assets:implement(Printer)
+Assets:implement(Initializer)
 
 -- @param string basePath base path for assets
 -- @return void
 function Assets:new(config)
 	self.basePath = 'assets/'
+	self.importers = {}
+	self.fxs = {}
+	self.images = {}
+	self.quads = {}
+	self.misc = {}
+	self.cursors = {}
+	self.mutators = {}
+
 	self:applyConfig(config)
 end
 
 -- @return void
 function Assets:init()
-	-- Инициализация всех необходимых ресурсов
-	self.fx = {
-		-- alias = fx
-		merge = love.audio.newSource(self.basePath .. "merge.wav", "static"),
-		damage = love.audio.newSource(self.basePath .. "damage.wav", "static"),
-		move = love.audio.newSource(self.basePath .. "move.wav", "static"),
-		skill = love.audio.newSource(self.basePath .. "skill.wav", "static"),
-		skill_not = love.audio.newSource(self.basePath .. "skill_not.wav", "static"),
-		the_end = love.audio.newSource(self.basePath .. "the_end.wav", "static"),
-		chars = love.graphics.newImage(self.basePath .. "chars.jpg"),
-		gems = {}
-	}
-	
-	self.fx.move:setVolume(0.1)
-	self.fx.skill_not:setVolume(0.5)
-	
-	self.images = {
-		-- alias = image
-		notice = love.graphics.newImage(self.basePath .. "notice.png"),
-		tip = love.graphics.newImage(self.basePath .. "tip.png"),
-		background = love.graphics.newImage(self.basePath .. "board.png"),
-		chars = love.graphics.newImage(self.basePath .. "chars.jpg"),
-		gems = {}
-	}
-	
-	self.quads = {
-		chars = {}
-	}
-	
-	for i=1, 12 do
-		self.images.gems['c'..math.pow(2, i)] = love.graphics.newImage(self.basePath .. "gem"..math.pow(2, i)..".png")
+	self:initializeMany('importers')
+	for _, importer in pairs(self.importers) do
+		importer:importAssets(self)
 	end
-	
-	charsQuads = {}
-
-    --We need the full image width and height for creating the quads
-    local imageWidth = self.images.chars:getWidth()
-    local imageHeight = self.images.chars:getHeight()
-
-    charWidth = (imageWidth / 7) - 2
-    charHeight = (imageHeight / 5) - 2
-
-    for i=0,5 do
-        for j=0,7 do
-            table.insert(self.quads.chars, love.graphics.newQuad(1 + j * (charWidth + 4), 1 + i * (charHeight + 2), charWidth, charHeight, imageWidth, imageHeight))
-        end
-    end
-	
-	
-	self.misc = {
-		-- alias = table
-		card = {
-			width = charWidth,
-			height = charHeight
-		}
-	}
-
-	self.cursors = {
-		hand = love.mouse.getSystemCursor("hand")
-	}
-
-	self.mutators = {
-		self_health = MutatorSelfHealth(),
-		enemy_health = MutatorEnemyHealth()
-	}
 end
 
 -- @param string name alias of a fx 
@@ -108,10 +57,59 @@ function Assets:getMutator(name)
 	return self.mutators[name]
 end
 
-function Assets:addImage(alias, path)
-	self.images[alias] = love.graphics.newImage(self.basePath .. path)
+function Assets:addFx(alias, fx)
+	self.fxs[alias] = love.audio.newSource(self.basePath .. 'fxs/'..fx.path, fx.mode)
+
+	if fx.volume then
+		self.fxs[alias]:setVolume(fx.volume)
+	end
 end
 
-function Assets:removeImage(alias)
-	self.images[alias] = nil
+function Assets:addImage(alias, path)
+	self.images[alias] = love.graphics.newImage(self.basePath ..'images/'.. path)
+end
+
+function Assets:addImagePack(alias, pack)
+	self.images[alias] = {}
+
+	for elAlias, path in pairs(pack) do
+		self.images[alias][elAlias] = love.graphics.newImage(self.basePath ..'images/'.. alias .. '/' .. path)
+
+	end
+end
+
+function Assets:addQuads(alias, path, columnsCount, rowsCount)
+	self:addImage(alias, path)
+
+	self.quads[alias] = {}
+
+	local imageWidth = self.images[alias]:getWidth()
+	local imageHeight = self.images[alias]:getHeight()
+
+	local qWidth = (imageWidth / columnsCount) - 2
+	local qHeight = (imageHeight / rowsCount) - 2
+
+	for i=0,rowsCount do
+		for j=0,columnsCount do
+			table.insert(self.quads[alias], love.graphics.newQuad(1 + j * (qWidth + 4), 1 + i * (qHeight + 2), qWidth, qHeight, imageWidth, imageHeight))
+		end
+	end
+
+	self.misc[alias] = {
+		width = qWidth,
+		height = qHeight
+	}
+end
+
+function Assets:addCursor(alias, name)
+	self.cursors[alias] = love.mouse.getSystemCursor(name)
+end
+
+function Assets:addMutator(alias, path)
+	local mutator = require(path)
+	self.mutators[alias] = mutator()
+end
+
+function Assets:addMisc(alias, misc)
+	self.misc[alias] = misc
 end

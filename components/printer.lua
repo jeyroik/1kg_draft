@@ -30,7 +30,7 @@ end
 
 function Printer:printDbg()
 	local info = ''
-	for msg in pairs(Printer.debugInfo) do
+	for _,msg in pairs(Printer.debugInfo) do
 		info = info .. '\n'..msg
 	end
 	love.graphics.print(info, 0, 10)
@@ -40,7 +40,7 @@ function Printer:addDbg(msg)
 	if type(msg) == 'table' then
 		msg = self:printObject(msg, '')
 	end
-	Printer.debugInfo[msg] = true
+	table.insert(Printer.debugInfo, msg)
 end
 
 function Printer:flushDbg()

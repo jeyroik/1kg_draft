@@ -18,10 +18,10 @@ function SceneFight:init(game, screen)
     self:addSceneAfterViews(screen)
 
     local layerData = screen:getData()
-    layerData.board = Board(self.board)
+    layerData.board = Board(layerData.board)
     layerData.board:init()
 
-    local cardDefault = game.assets:getMisc('card')
+    local cardDefault = game.assets:getMisc('chars')
 
     local current = layerData:getCurrentPlayer()
     current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))

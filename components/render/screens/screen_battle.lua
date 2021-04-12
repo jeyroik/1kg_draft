@@ -1,24 +1,20 @@
-require "components/render/screens/battle/battle_layer_view_background"
 require "components/render/screens/battle/battle_layer_data"
-require "components/render/screens/battle/scenes/fight_start"
+require "components/render/screens/battle/scenes/fight_before"
 require "components/render/screens/battle/scenes/fight"
-require "components/render/screens/battle/scenes/fight_the_end"
+require "components/render/screens/battle/scenes/fight_after"
 
 BattleScreen = Screen:extend()
 
 function BattleScreen:new(config)
 	BattleScreen.super.new(self, config)
 
+	self.scene = 'fight_before'
 	self.scenes = {
-		fight_start = SceneFightStart(),
+		fight_before = SceneFightBefore(),
 		fight = SceneFight(),
-		fight_the_end = SceneFightTheEnd()
+		fight_the_end = SceneFightAfter()
 	}
 
-	self:addViewLayers(
-			{ BattleLayerViewBackground( {image = 'background'} ) },
-			'scene_before'
-	)
 	self:setDataLayer(BattleLayerData(config))
 end
 

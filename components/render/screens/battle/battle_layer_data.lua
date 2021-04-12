@@ -6,7 +6,12 @@ BattleLayerData = LayerData:extend()
 -- @param table config
 -- @return void
 function BattleLayerData:new(config)
-    self.board = {}
+    self.board = {
+        size = 5,
+        deathPerc = 10,
+        ultraDeathPerc = 20,
+        stonesPerRound = 3
+    }
     self.players = {}
     self.current = 1
     self.next = 2
@@ -15,6 +20,10 @@ function BattleLayerData:new(config)
     self.fx = 'none'
 
     BattleLayerData.super.new(self, config)
+
+    for i=1,2 do
+        self.players[i] = Player(self.players[i])
+    end
 end
 
 -- @param Game game
