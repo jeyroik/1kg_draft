@@ -29,9 +29,9 @@ end
 -- @param string name alias of a fx 
 -- @return void
 function Assets:playFx(name)
-	if self.fx[name] then
-		love.audio.stop(self.fx[name])
-		love.audio.play(self.fx[name])
+	if self.fxs[name] then
+		love.audio.stop(self.fxs[name])
+		love.audio.play(self.fxs[name])
 	end
 end
 

@@ -26,6 +26,7 @@ function SceneFight:init(game, screen)
     local current = layerData:getCurrentPlayer()
     current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
     current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
+    current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
 
     local next = layerData:getNextPlayer()
     next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
@@ -51,9 +52,18 @@ function SceneFight:mouseMoved(game, screen, x, y, dx, dy, isTouch)
                 local icons = {}
                 local cost = card.skill.active:getCost(layerData)
                 local top = card:getEdgesFrame(3)
-
+                local iconCounter = 0
                 for magicType, amount in pairs(cost) do
-                    table.insert(icons, {image=game.assets.images.gems[magicType], text=amount, xd=100, yd=200})
+                    table.insert(
+                            icons,
+                            {
+                                image=game.assets.images.gems[magicType],
+                                text=amount,
+                                xd=100 + iconCounter*60,
+                                yd=200
+                            }
+                    )
+                    iconCounter = iconCounter+1
                 end
 
                 local canUse = ''

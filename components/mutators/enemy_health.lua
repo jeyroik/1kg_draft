@@ -7,7 +7,7 @@ function MutatorEnemyHealth:new(config)
     self.toEnemy = true
 end
 
-function MutatorEnemyHealth:apply(game, context)
+function MutatorEnemyHealth:apply(game, layerData, context)
     local target = self:getTarget(game)
 
     self:applyConfig(context)

@@ -8,7 +8,7 @@ BattleScreen = Screen:extend()
 function BattleScreen:new(config)
 	BattleScreen.super.new(self, config)
 
-	self.scene = 'fight_before'
+	self.scene = 'fight'
 	self.scenes = {
 		fight_before = SceneFightBefore(),
 		fight = SceneFight(),

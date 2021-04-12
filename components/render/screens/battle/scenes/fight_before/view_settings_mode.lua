@@ -7,8 +7,9 @@ function BattleFightBeforeViewSettingsMode:new(config)
 end
 
 function BattleFightBeforeViewSettingsMode:render(game, data)
-    local noticeImg = game.assets:getImage(self.theEnd)
-
-    noticeImg:render(self.center.x-noticeImg:getWidth()/2, 120)
-    love.graphics.print('The end', self.center.x-noticeImg:getWidth()/2+150, 140, 0,4,4)
+    local btn = game.assets:getImage('fs__btn')
+    local text = Text({body = 'Choose mode', x = self.center.x-50, y = 140})
+    text:render()
+    btn:render(100, 140)
+    btn:render(200, 140)
 end

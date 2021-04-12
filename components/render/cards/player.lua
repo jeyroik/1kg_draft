@@ -99,7 +99,7 @@ function Player:useCard(game, layerData, card)
 			if err then
 				self:addDbg(err)
 			else
-				mutator:apply(game, context)
+				mutator:apply(game, layerData, context)
 			end
 		end
 		self:spendMagic(layerData, card)
