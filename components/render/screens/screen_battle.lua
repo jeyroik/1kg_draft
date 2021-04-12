@@ -1,4 +1,4 @@
-require "components/render/screens/battle/battle_layer_data"
+require "components/render/screens/battle/data"
 require "components/render/screens/battle/scenes/fight_before"
 require "components/render/screens/battle/scenes/fight"
 require "components/render/screens/battle/scenes/fight_after"

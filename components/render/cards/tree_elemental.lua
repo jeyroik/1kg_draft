@@ -1,4 +1,4 @@
-require "components/skills/skill_self_health_inc"
+require "components/skills/self_health_inc"
 
 CardTreeElemental = Card:extend()
 

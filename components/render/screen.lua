@@ -35,56 +35,56 @@ function Screen:new(config)
 	)
 end
 
-function Screen:init(game)
-	self.layers.data:init(game)
+function Screen:init()
+	self.layers.data:init()
 
 	local currentScene = self:getCurrentScene()
 
-	currentScene:init(game, self)
+	currentScene:init(self)
 	self:setViewLayers(currentScene:getViews(), 'scene_current')
 end
 
-function Screen:update(game, dt)
+function Screen:update(dt)
 	local currentScene = self:getCurrentScene()
-	currentScene:update(game, self, dt)
+	currentScene:update(self, dt)
 end
 
-function Screen:mouseMoved(game, x, y, dx, dy, isTouch)
+function Screen:mouseMoved(x, y, dx, dy, isTouch)
 	local currentScene = self:getCurrentScene()
-	currentScene:mouseMoved(game, self, x, y, dx, dy, isTouch)
+	currentScene:mouseMoved(self, x, y, dx, dy, isTouch)
 end
 
-function Screen:mousePressed(game, x, y, button, isTouch, presses)
+function Screen:mousePressed(x, y, button, isTouch, presses)
 	local currentScene = self:getCurrentScene()
-	currentScene:mousePressed(game, self, x, y, button, isTouch, presses)
+	currentScene:mousePressed(self, x, y, button, isTouch, presses)
 end
 
-function Screen:keyPressed(game, key)
+function Screen:keyPressed(key)
 	local currentScene = self:getCurrentScene()
-	currentScene:keyPressed(game, self, key)
+	currentScene:keyPressed(self, key)
 end
 
 -- @param Game game
 -- @return void
-function Screen:render(game)
+function Screen:render()
 	for i = 1, #self.layers.views.scene_before do
 		local layer = self.layers.views.scene_before[i]
-		layer:render(game, self.layers.data)
+		layer:render(self.layers.data)
 	end
 
 	for i = 1, #self.layers.views.scene_current do
 		local layer = self.layers.views.scene_current[i]
-		layer:render(game, self.layers.data)
+		layer:render(self.layers.data)
 	end
 
 	for i = 1, #self.layers.views.scene_after do
 		local layer = self.layers.views.scene_after[i]
-		layer:render(game, self.layers.data)
+		layer:render(self.layers.data)
 	end
 
 	for i = 1, #self.layers.views.system do
 		local layer = self.layers.views.system[i]
-		layer:render(game, self.layers.data)
+		layer:render(self.layers.data)
 	end
 end
 

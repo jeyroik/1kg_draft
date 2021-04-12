@@ -6,7 +6,7 @@ function BattleFightBeforeViewBackground:new(config)
     BattleFightBeforeViewBackground.super.new(self, config)
 end
 
-function BattleFightBeforeViewBackground:render(game)
+function BattleFightBeforeViewBackground:render()
     local background = game.assets:getImage(self.image)
     background:setScale(self.scale)
     background:render(80, 0)

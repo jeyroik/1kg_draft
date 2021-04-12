@@ -14,7 +14,7 @@ function SceneFight:new(config)
     }
 end
 
-function SceneFight:init(game, screen)
+function SceneFight:init(screen)
     self:addSceneAfterViews(screen)
 
     local layerData = screen:getData()
@@ -42,7 +42,7 @@ function SceneFight:addSceneAfterViews(screen)
     )
 end
 
-function SceneFight:mouseMoved(game, screen, x, y, dx, dy, isTouch)
+function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
     local layerData = screen:getData()
 
     for i=1,2 do
@@ -106,7 +106,7 @@ function SceneFight:mouseMoved(game, screen, x, y, dx, dy, isTouch)
     end
 end
 
-function SceneFight:mousePressed(game, screen, x, y, button, isTouch, presses)
+function SceneFight:mousePressed(screen, x, y, button, isTouch, presses)
     local layerData = screen:getData()
     local currentPlayer = layerData:getCurrentPlayer()
 
@@ -114,7 +114,7 @@ function SceneFight:mousePressed(game, screen, x, y, button, isTouch, presses)
         if card:isMouseOn(x,y) then
             if currentPlayer:isEnoughMagic(layerData, card) then
                 self:addDbg('Magic is enough')
-                currentPlayer:useCard(game, layerData, card)
+                currentPlayer:useCard(layerData, card)
             else
                 game.assets:playFx('skill_not')
             end
@@ -122,7 +122,7 @@ function SceneFight:mousePressed(game, screen, x, y, button, isTouch, presses)
     end
 end
 
-function SceneFight:keyPressed(game, screen, key)
+function SceneFight:keyPressed(screen, key)
     local gr = {down = true, up=true, left=true, right=true}
 
     if gr[key] then
@@ -131,9 +131,9 @@ function SceneFight:keyPressed(game, screen, key)
     end
 end
 
-function SceneFight:update(game, screen)
+function SceneFight:update(screen)
     local layerData = screen:getData()
-    self.fx = layerData.board:move(game, layerData)
+    self.fx = layerData.board:move(layerData)
 
     local current = layerData:getCurrentPlayer()
     local nextPlayer = layerData:getNextPlayer()

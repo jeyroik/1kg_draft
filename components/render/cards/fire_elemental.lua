@@ -1,4 +1,4 @@
-require "components/skills/skill_enemy_health_dec"
+require "components/skills/enemy_health_dec"
 
 CardFireElemental = Card:extend()
 

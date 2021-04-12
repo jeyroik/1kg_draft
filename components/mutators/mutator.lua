@@ -9,7 +9,7 @@ function Mutator:new(config)
     self:applyConfig(config)
 end
 
-function Mutator:getTarget(game)
+function Mutator:getTarget()
     local layer = game:getCurrentScreenLayerData()
     return self.toEnemy and layer:getNextPlayer() or layer:getCurrentPlayer()
 end

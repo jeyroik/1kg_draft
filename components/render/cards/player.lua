@@ -88,7 +88,7 @@ function Player:isEnoughMagic(layerData, card)
 	return isEnough
 end
 
-function Player:useCard(game, layerData, card)
+function Player:useCard(layerData, card)
 	if self.cardsAdded[card.id] then
 		self:addDbg('card found')
 		game.assets:playFx('skill')
@@ -99,7 +99,7 @@ function Player:useCard(game, layerData, card)
 			if err then
 				self:addDbg(err)
 			else
-				mutator:apply(game, layerData, context)
+				mutator:apply(layerData, context)
 			end
 		end
 		self:spendMagic(layerData, card)

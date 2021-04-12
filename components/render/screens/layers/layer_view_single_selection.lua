@@ -8,7 +8,7 @@ function LayerViewSingleSelection:new(config)
     LayerViewSingleSelection.super.new(self, config)
 end
 
-function LayerViewSingleSelection:render(game, data)
+function LayerViewSingleSelection:render(data)
     if data.selection and data.selection.x then
         local color = data.selection.color or self.default.color
         local lineWidth = data.selection.line_width or self.default.line_width

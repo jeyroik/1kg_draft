@@ -29,8 +29,8 @@ end
 
 -- @param Game game
 -- @return void
-function BattleLayerData:init(game)
-    BattleLayerData.super.init(self, game)
+function BattleLayerData:init()
+    BattleLayerData.super.init(self)
 
     self:initMagic()
 end

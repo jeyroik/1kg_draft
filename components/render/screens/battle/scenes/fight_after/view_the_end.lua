@@ -7,7 +7,7 @@ function BattleFightAfterViewTheEnd:new(config)
     self.center = {x = love.graphics.getWidth()/2, y = love.graphics.getHeight()/2}
 end
 
-function BattleFightAfterViewTheEnd:render(game, data)
+function BattleFightAfterViewTheEnd:render(data)
     local noticeImg = game.assets:getImage(self.theEnd)
 
     noticeImg:render(self.center.x-noticeImg:getWidth()/2, 120)

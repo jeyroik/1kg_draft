@@ -29,27 +29,23 @@ function love.load()
 end
 
 function love.update(dt)
-	local screen = game:getCurrentScreen()
-	screen:update(game, dt)
+	game:update(dt)
 end
 
 function love.draw()
-	local screen = game:getCurrentScreen()
-	screen:render(game)
+	game:render()
 
 	love.graphics.print(mouse.x..', '..mouse.y, mouse.x + 3, mouse.y-10)
 end
 
-function love.mousemoved( x, y, dx, dy, istouch )
+function love.mousemoved( x, y, dx, dy, isTouch )
 	mouse.x, mouse.y = x,y
 
-	local screen = game:getCurrentScreen()
-	screen:mouseMoved(game, x, y, dx, dy, istouch)
+	game:mouseMoved(x, y, dx, dy, isTouch)
 end
 
 function love.mousepressed(x,y,button,isTouch,presses)
-	local screen = game:getCurrentScreen()
-	screen:mousePressed(game, x, y, button, isTouch, presses)
+	game:mousePressed(x, y, button, isTouch, presses)
 end
 
 function love.keypressed(key)
@@ -57,8 +53,7 @@ function love.keypressed(key)
 		love.event.quit() 
 	end
 
-	local screen = game:getCurrentScreen()
-	screen:keyPressed(game, key)
+	game:keyPressed(key)
 end
 
 

@@ -12,7 +12,7 @@ function SceneFightBefore:new(config)
     }
 end
 
-function SceneFightBefore:init(game, screen)
+function SceneFightBefore:init(screen)
     screen:addViewLayers(
         { BattleFightBeforeViewBackground( {image = 'board_background'} ) },
         'scene_before'

@@ -19,7 +19,7 @@ function MagicStone:new(config)
 	self.height = self.size
 end
 
-function MagicStone:render(game)
+function MagicStone:render()
 	love.graphics.draw(game.assets.images.gems[self:getMask()], self.x, self.y, 0, 2,2)
 end
 

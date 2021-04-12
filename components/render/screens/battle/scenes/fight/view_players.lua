@@ -1,10 +1,10 @@
 BattleFightViewPlayers = LayerView:extend()
 
-function BattleFightViewPlayers:render(game, data)
-    self:renderMagic(game, data)
+function BattleFightViewPlayers:render(data)
+    self:renderMagic(data)
     self:renderFrameCurrentPlayer(data)
     self:renderPlayersInfo(data)
-    self:renderCards(game, data)
+    self:renderCards(data)
 end
 
 function BattleFightViewPlayers:renderPlayersInfo(data)
@@ -22,7 +22,7 @@ function BattleFightViewPlayers:renderFrameCurrentPlayer(data)
     love.graphics.rectangle('line', frameX, 120, 200, 40)
 end
 
-function BattleFightViewPlayers:renderCards(game, data)
+function BattleFightViewPlayers:renderCards(data)
     for i=1,2 do
         local player = data.players[i]
         for i=1,#player.cards do
@@ -33,12 +33,12 @@ function BattleFightViewPlayers:renderCards(game, data)
     end
 end
 
-function BattleFightViewPlayers:renderMagic(game, data)
-    self:renderPlayer1Magic(game, data)
-    self:renderPlayer2magic(game, data)
+function BattleFightViewPlayers:renderMagic(data)
+    self:renderPlayer1Magic(data)
+    self:renderPlayer2magic(data)
 end
 
-function BattleFightViewPlayers:renderPlayer1Magic(game, data)
+function BattleFightViewPlayers:renderPlayer1Magic(data)
     local magicX = 270
     local magicXDelta = 150
     local magicY = 750
@@ -66,7 +66,7 @@ function BattleFightViewPlayers:renderPlayer1Magic(game, data)
     end
 end
 
-function BattleFightViewPlayers:renderPlayer2magic(game, data)
+function BattleFightViewPlayers:renderPlayer2magic(data)
     local magicX = 1270
     local magicXDelta = 150
     local magicY = 750

@@ -80,7 +80,7 @@ function Board:addStone(layerData)
 	return nil
 end
 
-function Board:merge(game, layerData, stone, nextRow, nextColumn)
+function Board:merge(layerData, stone, nextRow, nextColumn)
 
 	local currentType = layerData:getMagicType(stone:getMask())
 	local source = 'merge'
@@ -118,23 +118,23 @@ function Board:merge(game, layerData, stone, nextRow, nextColumn)
 	return source
 end
 
-function Board:move(game, layerData)
+function Board:move(layerData)
 	local fx = 'move'
 
 	if self.gravity == 'down' then
-		fx = self:moveDown(game, layerData) or fx
+		fx = self:moveDown(layerData) or fx
 	elseif self.gravity == 'up' then
-		fx = self:moveUp(game, layerData) or fx
+		fx = self:moveUp(layerData) or fx
 	elseif self.gravity == 'left' then
-		fx = self:moveLeft(game, layerData) or fx
+		fx = self:moveLeft(layerData) or fx
 	elseif self.gravity == 'right' then
-		fx = self:moveRight(game, layerData) or fx
+		fx = self:moveRight(layerData) or fx
 	end
 
 	return fx
 end
 
-function Board:moveDown(game, layerData)
+function Board:moveDown(layerData)
 	for row=5,1,-1 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
@@ -148,7 +148,7 @@ function Board:moveDown(game, layerData)
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
 			if stone.volume > 1 and stone.row > 1 and self.cells[stone.row-1][stone.column].volume == stone.volume then
-				return self:merge(game, layerData, stone, stone.row-1, stone.column)
+				return self:merge(layerData, stone, stone.row-1, stone.column)
 			end
 		end
 	end
@@ -156,7 +156,7 @@ function Board:moveDown(game, layerData)
 	return nil
 end
 
-function Board:moveUp(game, layerData)
+function Board:moveUp(layerData)
 	for row=1,5 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
@@ -170,7 +170,7 @@ function Board:moveUp(game, layerData)
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
 			if stone.volume > 1 and stone.row < 5 and self.cells[stone.row+1][stone.column].volume == stone.volume then
-				return self:merge(game, layerData, stone, stone.row+1, stone.column)
+				return self:merge(layerData, stone, stone.row+1, stone.column)
 			end
 		end
 	end
@@ -178,7 +178,7 @@ function Board:moveUp(game, layerData)
 	return nil
 end
 
-function Board:moveLeft(game, layerData)
+function Board:moveLeft(layerData)
 	for _,columns in pairs(self.cells) do
 		for column=1,5 do
 			local stone = columns[column]
@@ -192,7 +192,7 @@ function Board:moveLeft(game, layerData)
 		for column=1,4 do
 			local stone = columns[column]
 			if stone.volume > 1 and stone.column < 5 and self.cells[stone.row][stone.column+1].volume == stone.volume then
-				return self:merge(game, layerData, stone, stone.row, stone.column+1)
+				return self:merge(layerData, stone, stone.row, stone.column+1)
 			end
 		end
 	end
@@ -200,7 +200,7 @@ function Board:moveLeft(game, layerData)
 	return nil
 end
 
-function Board:moveRight(game, layerData)
+function Board:moveRight(layerData)
 	for _,columns in pairs(self.cells) do
 		for column=5,1,-1 do
 			local stone = columns[column]
@@ -214,7 +214,7 @@ function Board:moveRight(game, layerData)
 		for column=5,1,-1 do
 			local stone = columns[column]
 			if stone.volume > 1 and stone.column > 1 and self.cells[stone.row][stone.column-1].volume == stone.volume then
-				return self:merge(game, layerData, stone, stone.row, stone.column-1)
+				return self:merge(layerData, stone, stone.row, stone.column-1)
 			end
 		end
 	end

@@ -10,22 +10,22 @@ function Scene:getViews()
     return self.views
 end
 
-function Scene:init(game, screen)
+function Scene:init(screen)
 
 end
 
-function Scene:update(game, screen, dt)
+function Scene:update(screen, dt)
 
 end
 
-function Scene:mouseMoved(game, screen, x, y, dx, dy, isTouch)
+function Scene:mouseMoved(screen, x, y, dx, dy, isTouch)
 
 end
 
-function Scene:mousePressed(game, screen, x, y, button, isTouch, presses)
+function Scene:mousePressed(screen, x, y, button, isTouch, presses)
 
 end
 
-function Scene:keyPressed(game, screen, key)
+function Scene:keyPressed(screen, key)
 
 end

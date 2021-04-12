@@ -7,7 +7,7 @@ function MutatorStoneConverter:new(config)
     MutatorStoneConverter.super.new(self, config)
 end
 
-function MutatorStoneConverter:apply(game, layerData, context)
+function MutatorStoneConverter:apply(layerData, context)
     self:applyConfig(context)
 
     for _, columns in pairs(layerData.board) do

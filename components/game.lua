@@ -1,12 +1,12 @@
-require "components/game_object"
+require "components/game/object"
 require "components/visible_object"
 require "components/mutators/mutator"
-require "components/skill"
+require "components/skills/skill"
 require "components/render"
 require "components/render/image"
 require "components/render/text"
 require "components/render/icon"
-require "components/render/card"
+require "components/render/cards/card"
 require "components/render/cards/player"
 require "components/assets/importers/importer"
 require "components/assets"
@@ -33,15 +33,35 @@ function Game:init()
 	self.assets:init()
 
 	local currentScreen = self:getCurrentScreen()
-	currentScreen:init(self)
+	currentScreen:init()
 	
 	love.window.setFullscreen(true, "desktop")
+end
+
+function Game:update(dt)
+	self:getCurrentScreen():update(dt)
+end
+
+function Game:render()
+	self:getCurrentScreen():render()
+end
+
+function Game:mouseMoved(x, y, dx, dy, isTouch)
+	game:getCurrentScreen():mouseMoved(x, y, dx, dy, isTouch)
+end
+
+function Game:mousePressed(x, y, button, isTouch, presses)
+	game:getCurrentScreen():mousePressed(x, y, button, isTouch, presses)
+end
+
+function Game:keyPressed(key)
+	game:getCurrentScreen():keyPressed(key)
 end
 
 function Game:changeStateTo(stateName)
 	self.state = stateName
 	local currentScreen = self:getCurrentScreen()
-	currentScreen:init(self)
+	currentScreen:init()
 end
 
 function Game:getScreen(name)

@@ -6,6 +6,6 @@ function LayerView:new(config)
     self.mode = 'view'
 end
 
-function LayerView:needRender(game, data)
+function LayerView:needRender(data)
     return true
 end
