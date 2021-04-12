@@ -1,6 +1,16 @@
 function love.load()
     Object = require "vendor/rxi/classic"
+	json = require "vendor/rxi/json"
 	require "components/game"
+	
+	local config = love.filesystem.load('config.json')
+	
+	if not config then
+		config = require "resources/game"
+	else
+		config = json.decode(config)
+	end
+	
 	
 	game = Game({
 		assets = {

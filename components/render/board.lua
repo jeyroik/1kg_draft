@@ -1,4 +1,4 @@
-require "components/render/magic_stone"
+require "components/render/stone"
 
 Board = Render:extend()
 
