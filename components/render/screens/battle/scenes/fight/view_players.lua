@@ -45,19 +45,22 @@ function BattleFightViewPlayers:renderPlayer1Magic(data)
     local perRow = 3
     local onRow = 0
     local current = data.players[1]
+    local gemsPack = game.assets:getImagePack('gems')
 
     for i=0,10 do
         local id = 'c'..math.pow(2,i)
         value = data.magic[current.id][id]
 
-        if game.assets.images.gems[id] then
+        if gemsPack:get(id) then
             if onRow == perRow then
                 magicX = 270
                 magicY = magicY + magicYDelta
                 onRow = 0
             end
 
-            love.graphics.draw(game.assets.images.gems[id], magicX, magicY, 0, 0.5,0.5)
+            local gem = gemsPack:get(id)
+            gem:render(magicX, magicY, 0, 0.5, 0.5)
+            --love.graphics.draw(game.assets.images.gems[id], magicX, magicY, 0, 0.5,0.5)
             love.graphics.print(value, magicX+40, magicY, 0, 2,2)
             magicX = magicX + magicXDelta
             onRow = onRow + 1
@@ -73,19 +76,22 @@ function BattleFightViewPlayers:renderPlayer2magic(data)
     local perRow = 3
     local onRow = 0
     local enemy = data.players[2]
+    local gemsPack = game.assets:getImagePack('gems')
 
     for i=0,10 do
         local id = 'c'..math.pow(2,i)
         value = data.magic[enemy.id][id]
 
-        if game.assets.images.gems[id] then
+        local img = gemsPack:get(id)
+        if img then
             if onRow == perRow then
                 magicX = 1270
                 magicY = magicY + magicYDelta
                 onRow = 0
             end
 
-            love.graphics.draw(game.assets.images.gems[id], magicX, magicY, 0, 0.5,0.5)
+            img:render(magicX, magicY, 0, 0.5, 0.5)
+            --love.graphics.draw(game.assets.images.gems[id], magicX, magicY, 0, 0.5,0.5)
             love.graphics.print(value, magicX+40, magicY, 0, 2,2)
             magicX = magicX + magicXDelta
             onRow = onRow + 1

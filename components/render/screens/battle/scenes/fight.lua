@@ -57,7 +57,7 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
                     table.insert(
                             icons,
                             {
-                                image=game.assets.images.gems[magicType],
+                                image=game.assets:getImagePack('gems'):get(magicType),
                                 text=amount,
                                 xd=100 + iconCounter*60,
                                 yd=200

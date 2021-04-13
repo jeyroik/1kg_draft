@@ -1,4 +1,4 @@
-ImagePack = Image:extend()
+ImagePack = Source:extend()
 
 function ImagePack:new(config)
     config.source_type = 'image_pack'

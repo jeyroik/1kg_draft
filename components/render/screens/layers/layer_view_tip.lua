@@ -14,7 +14,7 @@ function LayerViewTip:render(data)
         if data.tip.icons then
 
             for i,icon in pairs(data.tip.icons) do
-                love.graphics.draw(icon.image, data.tip.x+icon.xd, data.tip.y+icon.yd, 0, 0.5, 0.5)
+                love.graphics.draw(icon.image.source, data.tip.x+icon.xd, data.tip.y+icon.yd, 0, 0.5, 0.5)
                 love.graphics.print(icon.text, data.tip.x+icon.xd+5+icon.image:getWidth()/2, data.tip.y+icon.yd, 0,2,2)
             end
         end

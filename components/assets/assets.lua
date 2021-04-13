@@ -84,13 +84,13 @@ end
 
 function Assets:addImagePack(alias, paths)
 	for _, image in pairs(paths) do
-		image.path = self.basePath .. 'images/' .. image.path
+		image.path = self.basePath .. 'images/' .. alias .. '/' .. image.path
 	end
 	self.imagesPacks[alias] = ImagePack({ path = paths })
 end
 
 function Assets:addQuads(alias, path, columnsCount, rowsCount)
-	self.quads[alias] = Quads({ path = path, columns = columnsCount, rows = rowsCount })
+	self.quads[alias] = Quads({ path = self.basePath .. 'images/' .. path, columns = columnsCount, rows = rowsCount })
 end
 
 function Assets:addCursor(alias, name)

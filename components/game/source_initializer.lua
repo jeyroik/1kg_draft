@@ -23,8 +23,8 @@ function SourceInitializer:initializeSource()
                     local qWidth = (imageWidth / self.columns) - 2
                     local qHeight = (imageHeight / self.rows) - 2
 
-                    for i=0,rows do
-                        for j=0,columns do
+                    for i=0,self.rows do
+                        for j=0,self.columns do
                             table.insert(
                                 self.source,
                                 love.graphics.newQuad(

@@ -20,7 +20,7 @@ require "components/sources/icon"
 require "components/sources/cursor"
 
 require "components/assets/importers/importer"
-require "components/assets/collection"
+require "components/assets/assets"
 
 require "components/magic/magic_type"
 

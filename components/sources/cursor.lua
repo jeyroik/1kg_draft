@@ -3,7 +3,7 @@ Cursor = Source:extend()
 function Cursor:new(config)
     config.source_type = 'cursor'
 
-    Cursor.super.new(config)
+    Cursor.super.new(self, config)
 end
 
 function Cursor:setOn()

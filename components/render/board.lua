@@ -77,7 +77,7 @@ function Board:addStone(layerData)
 		end
 	end
 
-	return nil
+	return 'move'
 end
 
 function Board:merge(layerData, stone, nextRow, nextColumn)
