@@ -1,4 +1,4 @@
-Text = Render:extend()
+Text = Source:extend()
 
 -- @param string body
 -- @param number x
@@ -6,6 +6,8 @@ Text = Render:extend()
 -- @return void
 function Text:new(config)
 	self.body = ''
+
+	config.source_type = 'text'
 
 	Text.super.new(self, config)
 end

@@ -1,38 +1,7 @@
 function love.load()
-    Object = require "vendor/rxi/classic"
-	json = require "vendor/rxi/json"
-	require "components/game"
+	require "bootstrap"
 	
-	local config = love.filesystem.load('config.json')
-	
-	if not config then
-		config = require "resources/game"
-	else
-		config = json.decode(config)
-	end
-	
-	
-	game = Game({
-		assets = {
-			base_path = 'assets/',
-			importers = {
-				{path = 'components/magic/importer'},
-				{path = 'components/mutators/importer'},
-				{path = 'components/render/screens/battle/scenes/fight_before/importer'},
-				{path = 'components/render/screens/battle/scenes/fight/importer'},
-				{path = 'components/render/screens/battle/scenes/fight_after/importer'}
-			}
-		},
-		state = 'battle', -- choose start screen
-		screens = {
-			battle = {
-				players = {
-					{ name = 'Player1', x = 270, y = 250, health = 50, attack = 2, defense = 1, isHuman = true },
-					{ name = 'Player2', x = 1540, y = 250, health = 50, attack = 2, defense = 1 }
-				}
-			}
-		}
-	})
+	game = Game(getGameConfig())
 	game:init()
 	
 	mouse = {x=0,y=0}
@@ -66,4 +35,15 @@ function love.keypressed(key)
 	game:keyPressed(key)
 end
 
-
+function getGameConfig()
+	local config = love.filesystem.read('config.json')
+	
+	if not config then
+		config = require "resources/game"
+		love.filesystem.write('config.json', json.encode(config))
+	else
+		config = json.decode(config)
+	end
+	
+	return config
+end

@@ -7,7 +7,7 @@ function BattleFightAfterImporter:new()
         the_end = { path = "the_end.wav", mode = "static"}
     }
     self.images = {
-        theEnd = 'notice.png'
+        theEnd = { path = 'notice.png' }
     }
 end
 

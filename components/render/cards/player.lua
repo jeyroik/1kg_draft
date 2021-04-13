@@ -91,7 +91,7 @@ end
 function Player:useCard(layerData, card)
 	if self.cardsAdded[card.id] then
 		self:addDbg('card found')
-		game.assets:playFx('skill')
+		game.assets:getFx('skill'):play()
 
 		local skill = card.skill.active
 		for name, context in pairs(skill.mutators) do

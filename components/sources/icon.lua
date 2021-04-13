@@ -1,4 +1,4 @@
-Icon = Render:extend()
+Icon = Source:extend()
 
 -- @param Image image
 -- @param Text text
@@ -6,6 +6,8 @@ Icon = Render:extend()
 function Icon:new(config)
 	self.image = image
 	self.text = text
+
+	config.source_type = 'icon'
 
 	Icon.super.new(self, config)
 end

@@ -1,4 +1,4 @@
-require "components/recombine"
+require "components/game/recombine"
 
 Config = Object:extend()
 Config:implement(Recombine)

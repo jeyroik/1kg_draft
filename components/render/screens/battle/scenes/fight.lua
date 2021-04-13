@@ -21,7 +21,7 @@ function SceneFight:init(screen)
     layerData.board = Board(layerData.board)
     layerData.board:init()
 
-    local cardDefault = game.assets:getMisc('chars')
+    local cardDefault = game.assets:getQuads('chars')
 
     local current = layerData:getCurrentPlayer()
     current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
@@ -95,12 +95,12 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
                     color = selectionColor,
                     line_width = 5
                 }
-                love.mouse.setCursor(game.assets:getCursor('hand'))
+                game.assets:getCursor('hand'):setOn()
                 return
             else
                 layerData.tip = {}
                 layerData.selection = {}
-                love.mouse.setCursor()
+                game.assets:getCursor('hand'):reset()
             end
         end
     end
@@ -116,7 +116,7 @@ function SceneFight:mousePressed(screen, x, y, button, isTouch, presses)
                 self:addDbg('Magic is enough')
                 currentPlayer:useCard(layerData, card)
             else
-                game.assets:playFx('skill_not')
+                game.assets:getFx('skill_not'):play()
             end
         end
     end
@@ -126,7 +126,7 @@ function SceneFight:keyPressed(screen, key)
     local gr = {down = true, up=true, left=true, right=true}
 
     if gr[key] then
-        game.assets:playFx('move')
+        game.assets:getFx('move'):play()
         screen:getData().board.gravity = key
     end
 end
@@ -144,11 +144,11 @@ function SceneFight:update(screen)
         screen:changeSceneTo('fight_the_end')
     end
 
-    game.assets:playFx(self.fx)
+    game.assets:getFx(self.fx):play()
 
     self:addStone(layerData)
 
-    game.assets:playFx(self.fx)
+    game.assets:getFx(self.fx):play()
 end
 
 function SceneFight:addStone(layerData)

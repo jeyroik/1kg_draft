@@ -2,17 +2,26 @@ require "components/game/object"
 require "components/game/visible_object"
 require "components/mutators/mutator"
 require "components/skills/skill"
+
 require "components/render/render"
-require "components/render/basics/image"
-require "components/render/basics/text"
-require "components/render/basics/icon"
 require "components/render/cards/card"
 require "components/render/cards/player"
-require "components/assets/importers/importer"
-require "components/assets"
 require "components/render/board"
 require "components/render/screen"
 require "components/render/screens/screen_battle"
+
+require "components/sources/source"
+require "components/sources/fx"
+require "components/sources/image"
+require "components/sources/image_pack"
+require "components/sources/quads"
+require "components/sources/text"
+require "components/sources/icon"
+require "components/sources/cursor"
+
+require "components/assets/importers/importer"
+require "components/assets/collection"
+
 require "components/magic/magic_type"
 
 Game = GameObject:extend()

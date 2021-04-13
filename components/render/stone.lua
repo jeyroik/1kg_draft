@@ -20,6 +20,7 @@ function MagicStone:new(config)
 end
 
 function MagicStone:render()
+	game.assets:getImagePack('gems'):get(self:getMask()):render(self.x, self.y, 0, 2,2)
 	love.graphics.draw(game.assets.images.gems[self:getMask()], self.x, self.y, 0, 2,2)
 end
 

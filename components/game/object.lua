@@ -1,7 +1,7 @@
-require "components/initializer"
-require "components/printer"
-require "components/uuid"
-require "components/config"
+require "components/game/initializer"
+require "components/game/printer"
+require "components/game/uuid"
+require "components/game/config"
 
 GameObject = Object:extend()
 GameObject:implement(Config)
@@ -28,4 +28,21 @@ end
 
 function GameObject:getCurrentState()
     return self.__states__[self.__state__]
+end
+
+function GameObject:export(obj)
+    obj = obj or self
+    local result = {}
+
+    for k,v in pairs(obj) do
+        if type(v) == 'table' then
+            if v:is(GameObject) then
+                v = v:export()
+            end
+        end
+
+        result[k] = v
+    end
+
+    return result
 end

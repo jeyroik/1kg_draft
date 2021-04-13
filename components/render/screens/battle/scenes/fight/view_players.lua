@@ -27,8 +27,7 @@ function BattleFightViewPlayers:renderCards(data)
         local player = data.players[i]
         for i=1,#player.cards do
             local card = player.cards[i]
-            local avatar = game.assets:getImage('chars')
-            love.graphics.draw(avatar.source, game.assets.quads.chars[card.avatar], card.x, card.y)
+            game.assets:getQuads('chars'):render(card.avatar, card.x, card.y)
         end
     end
 end

@@ -8,7 +8,7 @@ function VisibleObject:new(config)
 	self.width = 0
 	self.height = 0
 
-	self:applyConfig(config)
+	VisibleObject.super.new(self, config)
 end
 
 -- Checks is mouse currently point to the current object

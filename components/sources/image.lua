@@ -1,10 +1,12 @@
-Image = Render:extend()
+Image = Source:extend()
 
 -- @param image source
 -- @return void
 function Image:new(config)
-	self.source = {}
+	config.source_type = 'image'
+
 	Image.super.new(self, config)
+
 	self:setSize(self.source:getWidth(), self.source:getHeight())
 end
 
