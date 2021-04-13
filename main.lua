@@ -35,6 +35,12 @@ function love.keypressed(key)
 	game:keyPressed(key)
 end
 
+function love.quit()
+	local exported = game:export()
+	
+	love.filesystem.write('config.json', json.encode(exported))
+end
+
 function getGameConfig()
 	local config = love.filesystem.read('config.json')
 	

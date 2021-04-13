@@ -4,6 +4,7 @@ CardFireElemental = Card:extend()
 
 function CardFireElemental:new(config)
     config = config or {}
+    config.path = 'components/render/cards/fire_elemental'
     config.name = 'Fire elemental'
     config.description = 'In the age of Tratabor fury fire elemental was born'
     config.health = 5
@@ -22,3 +23,5 @@ function CardFireElemental:new(config)
 
     CardFireElemental.super.new(self, config)
 end
+
+return CardFireElemental

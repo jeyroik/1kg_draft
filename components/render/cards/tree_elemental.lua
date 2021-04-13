@@ -4,6 +4,7 @@ CardTreeElemental = Card:extend()
 
 function CardTreeElemental:new(config)
     config = config or {}
+    config.path = 'components/render/cards/tree_elemental'
     config.name = 'Tree elemental'
     config.description = 'In the age of Tratabor fury tree elemental was born'
     config.health = 6
@@ -22,3 +23,5 @@ function CardTreeElemental:new(config)
 
     CardFireElemental.super.new(self, config)
 end
+
+return CardTreeElemental

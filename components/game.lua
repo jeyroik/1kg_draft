@@ -27,19 +27,20 @@ require "components/magic/magic_type"
 Game = GameObject:extend()
 
 function Game:new(config)
-	self.config = config
-	self.assets = Assets(config.assets)
-	self.idIncrementer = 1
-	self.screens = {
-		battle = BattleScreen(config.screens.battle)
-	}
+	Game.super.new(self, config)
+	self.assets = config.assets
+	self.screens = config.screens
 	self.state = config.state or 'auth'
-
-	--Game.super.new(self, config)
 end
 
 function Game:init()
+
+	self:initializeOne('assets')
 	self.assets:init()
+
+	self.screens = {
+		battle = BattleScreen(self.screens.battle)
+	}
 
 	local currentScreen = self:getCurrentScreen()
 	currentScreen:init()
@@ -74,7 +75,7 @@ function Game:changeStateTo(stateName)
 end
 
 function Game:getScreen(name)
-	return self.screens[name] or nil
+	return self.screens[name]
 end
 
 function Game:getScreenData(screenName)
@@ -89,4 +90,18 @@ end
 
 function Game:getCurrentScreenLayerData()
 	return self:getScreenData(self.state)
+end
+
+function Game:export()
+	local cfg = {
+		state = self.state,
+		assets = self.assets__config,
+		screens = {}
+	}
+
+	for alias, screen in pairs(self.screens) do
+		cfg.screens[alias] = screen:export()
+	end
+
+	return cfg
 end

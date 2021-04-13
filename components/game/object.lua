@@ -10,6 +10,7 @@ GameObject:implement(Uuid)
 GameObject:implement(Initializer)
 
 function GameObject:new(config)
+    self.can_be_exported = true
     self.__state__ = ''
     self.__states__ = {}
 
@@ -36,7 +37,7 @@ function GameObject:export(obj)
 
     for k,v in pairs(obj) do
         if type(v) == 'table' then
-            if v:is(GameObject) then
+            if v.can_be_exported then
                 v = v:export()
             end
         end

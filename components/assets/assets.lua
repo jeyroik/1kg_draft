@@ -105,3 +105,5 @@ end
 function Assets:addMisc(alias, misc)
 	self.misc[alias] = misc
 end
+
+return Assets

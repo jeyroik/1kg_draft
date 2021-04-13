@@ -47,7 +47,10 @@ function Player:new(config)
 			mana = 1
 		}
 	}
+	config.path = 'components/render/cards/player'
 	Player.super.new(self, config)
+
+	self:initializeMany('cards')
 end
 
 function Player:addCard(card)
@@ -114,3 +117,5 @@ function Player:spendMagic(layerData, card)
 		layerData:decMagicAmount(self, magicType, amount)
 	end
 end
+
+return Player

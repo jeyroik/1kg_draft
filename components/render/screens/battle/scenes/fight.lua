@@ -5,6 +5,7 @@ SceneFight = Scene:extend()
 
 function SceneFight:new(config)
     self.fx = ''
+    self.ready = false
 
     SceneFight.super.new(self, config)
 
@@ -15,21 +16,25 @@ function SceneFight:new(config)
 end
 
 function SceneFight:init(screen)
-    self:addSceneAfterViews(screen)
+    if not self.ready then
+        self:addSceneAfterViews(screen)
 
-    local layerData = screen:getData()
-    layerData.board = Board(layerData.board)
-    layerData.board:init()
+        local layerData = screen:getData()
+        layerData.board = Board(layerData.board)
+        layerData.board:init()
 
-    local cardDefault = game.assets:getQuads('chars')
+        local cardDefault = game.assets:getQuads('chars')
 
-    local current = layerData:getCurrentPlayer()
-    current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
-    current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
-    current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
+        local current = layerData:getCurrentPlayer()
+        current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
+        current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
+        current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
 
-    local next = layerData:getNextPlayer()
-    next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
+        local next = layerData:getNextPlayer()
+        next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
+
+        self.ready = true
+    end
 end
 
 function SceneFight:addSceneAfterViews(screen)

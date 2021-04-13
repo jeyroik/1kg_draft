@@ -10,6 +10,7 @@ function MagicStone:new(config)
 	self.volume = 1
 	self.state = 0
 	self.id = self:getId()
+	self.path = 'components/render/stone'
 
 	MagicStone.super.new(self, config)
 
@@ -118,3 +119,5 @@ function MagicStone:applyDeathMagic(deathPerc, ultraDeathPerc)
 		self.volume = 4096
 	end
 end
+
+return MagicStone

@@ -1,5 +1,6 @@
 return {
     assets = {
+        path = 'components/assets/assets',
         base_path = 'assets/',
         importers = {
             {path = 'components/magic/importer'},

@@ -12,6 +12,7 @@ function Card:new(config)
 		passive = {}
 	}
 	self.avatar = 1
+	self.path = 'components/render/cards/card'
 
 	Card.super.new(self, config)
 end
@@ -23,3 +24,5 @@ end
 function Card:isDead()
 	return self.health == 0
 end
+
+return Card

@@ -4,6 +4,7 @@ CardLifeElemental = Card:extend()
 
 function CardLifeElemental:new(config)
     config = config or {}
+    config.path = 'components/render/cards/life_elemental'
     config.name = 'Life elemental'
     config.description = 'In the age of Tratabor fury life elemental was born'
     config.health = 7
@@ -24,3 +25,5 @@ function CardLifeElemental:new(config)
 
     CardLifeElemental.super.new(self, config)
 end
+
+return CardLifeElemental

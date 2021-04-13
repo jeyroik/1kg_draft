@@ -129,3 +129,7 @@ function Screen:changeSceneTo(sceneName)
 	local currentScene = self:getCurrentScene()
 	self.layers.views.scene_current = currentScene:getViews()
 end
+
+function Screen:export()
+	return self.layers.data
+end

@@ -14,25 +14,31 @@ function Board:new(config)
 	self.stonesPerRound = 3
 	self.deathStoneDamage = 1
 	self.ultraDeathStoneDamage = 5
+	self.ready = false
 
 	Board.super.new(self, config)
 end
 
 function Board:init()
-	for i=1,self.size do
-		self.cells[i] = {}
-		
-		for j=1,self.size do
-			local stone = MagicStone({row = i, column = j})
-			
-			if love.math.random(1,8) == 3 then
-				stone.volume = love.math.random(1,9) == 3 and 4 or 2
-				stone:applyDeathMagic(self.deathPerc, self.ultraDeathPerc)
-				self:incExisted()
+	if not self.ready then
+		for i=1,self.size do
+			self.cells[i] = {}
+
+			for j=1,self.size do
+				local stone = MagicStone({row = i, column = j})
+
+				if love.math.random(1,8) == 3 then
+					stone.volume = love.math.random(1,9) == 3 and 4 or 2
+					stone:applyDeathMagic(self.deathPerc, self.ultraDeathPerc)
+					self:incExisted()
+				end
+
+				self.cells[i][j] = stone
 			end
-			
-			self.cells[i][j] = stone
 		end
+		self.ready = true
+	else
+		self:initializePack('cells')
 	end
 end
 
