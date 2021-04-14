@@ -1,4 +1,4 @@
-require "components/render/screens/layers/scenes/scene"
+require "components/render/screens/scenes/scene"
 require "components/render/screens/layers/layer"
 require "components/render/screens/layers/layer_view"
 require "components/render/screens/layers/layer_data"

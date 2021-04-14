@@ -72,7 +72,6 @@ function Board:addStone(layerData)
 				self.cells[row][column]:applyDeathMagic(self.deathPerc, self.ultraDeathPerc)
 
 				self:incExisted()
-				--return 'created'
 			end
 		end
 
