@@ -42,7 +42,7 @@ function love.quit()
 end
 
 function getGameConfig()
-	local config = love.filesystem.read('config.json')
+	local config = nil--love.filesystem.read('config.json')
 	
 	if not config then
 		config = require "resources/game"
