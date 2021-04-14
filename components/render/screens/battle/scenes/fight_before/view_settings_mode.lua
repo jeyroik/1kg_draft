@@ -15,4 +15,8 @@ function BattleFightBeforeViewSettingsMode:render(data, scene)
     for i, btn in pairs(buttons) do
         btn:render()
     end
+
+    local title = Text({ body = 'Choose mode' })
+    title:setToCenter(true)
+    title:render(0, 40)
 end

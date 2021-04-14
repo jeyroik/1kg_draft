@@ -120,11 +120,11 @@ function VisibleObject:setToCenter(xAxis, yAxis)
 
 	local sw = love.graphics.getWidth()
 	local sh = love.graphics.getHeight()
-
+	
 	local center = { x = sw/2, y = sh/2 }
 	if xAxis then
 		self.xSource = self.x
-		self.x = center.x*2 - w/2
+		self.x = center.x - w/2
 	end
 
 	if yAxis then

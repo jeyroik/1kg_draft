@@ -55,3 +55,8 @@ function SceneFightBefore:mousePressed(screen, x, y, button, isTouch, presses)
         pl2:released()
     end
 end
+
+function SceneFightBefore:update(screen)
+    game.assets:getButton('pl1'):setToCenter(true)
+    game.assets:getButton('pl2'):setToCenter(true)
+end
