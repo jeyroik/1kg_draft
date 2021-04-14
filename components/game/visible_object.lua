@@ -4,7 +4,9 @@ VisibleObject = GameObject:extend()
 -- @return void
 function VisibleObject:new(config)
 	self.x = 0
+	self.xSource = self.x
 	self.y = 0
+	self.ySource = self.y
 	self.width = 0
 	self.height = 0
 
@@ -29,6 +31,8 @@ end
 -- @param number y
 -- @return void
 function VisibleObject:setCoords(x, y)
+	self.xSource = self.x
+	self.ySource = self.y
 	self.x = x
 	self.y = y
 end
@@ -108,4 +112,66 @@ end
 
 function VisibleObject:getHeight()
 	return self.height
+end
+
+function VisibleObject:setToCenter(xAxis, yAxis)
+	local w = self.width * self.sx
+	local h = self.height * self.sy
+
+	local sw = love.graphics.getWidth()
+	local sh = love.graphics.getHeight()
+
+	local center = { x = sw/2, y = sh/2 }
+	if xAxis then
+		self.xSource = self.x
+		self.x = center.x*2 - w/2
+	end
+
+	if yAxis then
+		self.ySource = self.y
+		self.y = center.y - h/2
+	end
+end
+
+function VisibleObject:setToCenterOfObject(obj, xAxis, yAxis)
+	local w = self.width * self.sx
+	local h = self.height * self.sy
+
+	local sw = obj:getWidth()
+	local sh = obj:getHeight()
+
+	local center = { x = obj.x + sw/2, y = obj.y + sh/2 }
+
+	if xAxis then
+		self.xSource = self.x
+		self.x = center.x - w/2
+	end
+
+	if yAxis then
+		self.ySource = self.y
+		self.y = center.y - h/2
+	end
+end
+
+function VisibleObject:scaleTo(object, ds)
+	local s = object:getWidth() / self.width
+	ds = ds or 1
+
+	self.sx = s*ds
+	self.sy = self.sx
+end
+
+function VisibleObject:stepByX(dx)
+	self.xSource = self.x
+	self.x = self.x + self.width + dx
+end
+
+function VisibleObject:stepByY(dy)
+	self.xSource = self.x
+	self.y = self.y + self.height + dy
+end
+
+function VisibleObject:restoreCoords(x, y)
+	self.x = x and self.xSource or self.x
+	self.y = y and self.ySource or self.y
 end

@@ -14,6 +14,8 @@ end
 -- @param number dy delta for the y
 -- @return void
 function Image:render(dx, dy, radian, sx, sy)
+	dx = dx or 0
+	dy = dy or 0
 	radian = radian or self.radian
 	sx = sx or self.sx
 	sy = sy or self.sy

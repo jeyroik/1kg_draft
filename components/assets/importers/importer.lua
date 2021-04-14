@@ -10,6 +10,7 @@ function AssetImporter:new(config)
     self.misc = {}
     self.cursors = {}
     self.mutators = {}
+    self.buttons = {}
 
     AssetImporter.super.new(self, config)
 end
@@ -39,6 +40,10 @@ function AssetImporter:importAssets(assetsManager)
 
     for alias, cursor in pairs(self.cursors) do
         assetsManager:addCursor(alias, cursor)
+    end
+
+    for alias, button in pairs(self.buttons) do
+        assetsManager:addButton(alias, button)
     end
 
     for alias, path in pairs(self.mutators) do

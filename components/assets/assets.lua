@@ -15,6 +15,7 @@ function Assets:new(config)
 	self.misc = {}
 	self.cursors = {}
 	self.mutators = {}
+	self.buttons = {}
 
 	self:applyConfig(config)
 end
@@ -69,6 +70,12 @@ function Assets:getMutator(name)
 	return self.mutators[name]
 end
 
+-- @param string name
+-- @return Button
+function Assets:getButton(name)
+	return self.buttons[name]
+end
+
 -- @param string alias
 -- @param table fx
 function Assets:addFx(alias, fx)
@@ -104,6 +111,13 @@ end
 
 function Assets:addMisc(alias, misc)
 	self.misc[alias] = misc
+end
+
+function Assets:addButton(alias, button)
+	for name,path in pairs(button.path) do
+		button.path[name] = self.basePath .. 'images/' .. path
+	end
+	self.buttons[alias] = Button(button)
 end
 
 return Assets

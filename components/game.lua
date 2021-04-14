@@ -18,6 +18,7 @@ require "components/sources/quads"
 require "components/sources/text"
 require "components/sources/icon"
 require "components/sources/cursor"
+require "components/sources/button"
 
 require "components/assets/importers/importer"
 require "components/assets/assets"

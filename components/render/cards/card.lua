@@ -1,7 +1,6 @@
 Card = Render:extend{}
 
 function Card:new(config)
-	self.id = self:getId()
 	self.name = ''
 	self.description = ''
 	self.health = 1

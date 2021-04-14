@@ -67,24 +67,26 @@ end
 -- @param Game game
 -- @return void
 function Screen:render()
+	local currentScene = self:getCurrentScene()
+
 	for i = 1, #self.layers.views.scene_before do
 		local layer = self.layers.views.scene_before[i]
-		layer:render(self.layers.data)
+		layer:render(self.layers.data, currentScene)
 	end
 
 	for i = 1, #self.layers.views.scene_current do
 		local layer = self.layers.views.scene_current[i]
-		layer:render(self.layers.data)
+		layer:render(self.layers.data, currentScene)
 	end
 
 	for i = 1, #self.layers.views.scene_after do
 		local layer = self.layers.views.scene_after[i]
-		layer:render(self.layers.data)
+		layer:render(self.layers.data, currentScene)
 	end
 
 	for i = 1, #self.layers.views.system do
 		local layer = self.layers.views.system[i]
-		layer:render(self.layers.data)
+		layer:render(self.layers.data, currentScene)
 	end
 end
 

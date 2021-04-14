@@ -55,7 +55,33 @@ function SourceInitializer:initializeSource()
         icon = function ()
                     self.image = Image(self.image)
                 end,
-        text = function () end
+        button = function ()
+                    self.source.images = {}
+
+                    self.source.images.default = Image({
+                        path = self.path.default,
+                        x = self.x, y = self.y, radian = self.radian, sx = self.sx, sy = self.sy
+                    })
+                    self.source.images.hovered = Image({
+                        path = self.path.hovered or self.path.default,
+                        x = self.x, y = self.y, radian = self.radian, sx = self.sx, sy = self.sy
+                    })
+                    self.source.images.clicked = Image({
+                        path = self.path.clicked or self.path.default,
+                        x = self.x, y = self.y, radian = self.radian, sx = self.sx, sy = self.sy
+                    })
+                    self.source.images.disabled = Image({
+                        path = self.path.disabled or self.path.default,
+                        x = self.x, y = self.y, radian = self.radian, sx = self.sx, sy = self.sy
+                    })
+                    self.source.text = Text({ body = self.text })
+                    self.source.text:scaleTo(self.source.images.default, self.text_scale)
+                    self.source.text:setToCenterOfObject(self.source.images.default)
+                end,
+        text = function ()
+                    self.source = love.graphics.newText(love.graphics.getFont())
+                    self.source:set(self.body)
+                end
     }
 
     if initializers[self.source_type] then

@@ -10,6 +10,7 @@ GameObject:implement(Uuid)
 GameObject:implement(Initializer)
 
 function GameObject:new(config)
+    self.id = self:getId()
     self.can_be_exported = true
     self.__state__ = ''
     self.__states__ = {}

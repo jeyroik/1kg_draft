@@ -12,6 +12,31 @@ function BattleFightBeforeImporter:new()
     self.cursors = {
         hand = "hand"
     }
+
+    self.buttons = {
+        pl1 = {
+            path = {
+                default = 'menu_btn.png',
+                clicked = 'menu_btn_pressed.png'
+            },
+            text = '1 player',
+            text_scale = 0.7,
+            border = 15,
+            effect = 'color',
+            color = {0, 0.5, 0}
+        },
+        pl2 = {
+            path = {
+                default = 'menu_btn.png',
+                clicked = 'menu_btn_pressed.png'
+            },
+            text = '2 players',
+            text_scale = 0.7,
+            border = 15,
+            effect = 'color',
+            color = {0, 0.5, 0}
+        }
+    }
 end
 
 return BattleFightBeforeImporter
