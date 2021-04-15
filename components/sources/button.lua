@@ -11,7 +11,7 @@ function Button:new(config)
     }
     self.color = {1,1,1}
 
-    config.source_type = 'button'
+    config.initializer = 'components/sources/initializers/button'
 
     Button.super.new(self, config)
 

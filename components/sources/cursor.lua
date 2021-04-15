@@ -1,7 +1,7 @@
 Cursor = Source:extend()
 
 function Cursor:new(config)
-    config.source_type = 'cursor'
+    config.initializer = 'components/sources/initializers/cursor'
 
     Cursor.super.new(self, config)
 end

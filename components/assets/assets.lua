@@ -79,25 +79,19 @@ end
 -- @param string alias
 -- @param table fx
 function Assets:addFx(alias, fx)
-	fx.path = self.basePath .. 'fxs/' .. fx.path
-
 	self.fxs[alias] = Fx(fx)
 end
 
 function Assets:addImage(alias, image)
-	image.path = self.basePath .. 'images/' .. image.path
 	self.images[alias] = Image(image)
 end
 
 function Assets:addImagePack(alias, paths)
-	for _, image in pairs(paths) do
-		image.path = self.basePath .. 'images/' .. alias .. '/' .. image.path
-	end
-	self.imagesPacks[alias] = ImagePack({ path = paths })
+	self.imagesPacks[alias] = ImagePack({ path = paths , name = alias})
 end
 
 function Assets:addQuads(alias, path, columnsCount, rowsCount)
-	self.quads[alias] = Quads({ path = self.basePath .. 'images/' .. path, columns = columnsCount, rows = rowsCount })
+	self.quads[alias] = Quads({ path = path, columns = columnsCount, rows = rowsCount })
 end
 
 function Assets:addCursor(alias, name)
@@ -114,9 +108,6 @@ function Assets:addMisc(alias, misc)
 end
 
 function Assets:addButton(alias, button)
-	for name,path in pairs(button.path) do
-		button.path[name] = self.basePath .. 'images/' .. path
-	end
 	self.buttons[alias] = Button(button)
 end
 

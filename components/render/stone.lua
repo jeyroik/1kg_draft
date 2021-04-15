@@ -4,9 +4,9 @@ MagicStone:implement(Uuid)
 function MagicStone:new(config)
 	self.row = 1
 	self.column = 1
-	self.deltaX = 570
+	self.deltaX = 285--570
 	self.deltaY = 0
-	self.size = 122
+	self.size = 61 --122
 	self.volume = 1
 	self.state = 0
 	self.id = self:getId()
@@ -25,7 +25,7 @@ function MagicStone:render()
 	local image = pack:get(self:getMask())
 
 	if image then
-		image:render(self.x, self.y, 0, 2,2)
+		image:render(self.x, self.y, 0, 1,1)
 	end
 end
 

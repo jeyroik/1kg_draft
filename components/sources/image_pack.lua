@@ -1,7 +1,8 @@
 ImagePack = Source:extend()
 
 function ImagePack:new(config)
-    config.source_type = 'image_pack'
+    self.name = ''
+    config.initializer = 'components/sources/initializers/image_pack'
 
     ImagePack.super.new(self, config)
 end

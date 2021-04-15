@@ -1,17 +1,19 @@
-require "components/game/source_initializer"
+require "components/sources/initializers/has_initializer"
+require "components/sources/initializers/initializer"
 
 Source = Render:extend()
-Source:implement(SourceInitializer)
+Source:implement(SourceHasInitializer)
 
 function Source:new(config)
-    self.source_type = ''
     self.path = ''
+    self.initializer = ''
 
     Source.super.new(self, config)
 
     self.source = {}
 
-    self:initializeSource()
+    love.filesystem.append('log.txt', '\nSource:new() - run sourceInit()')
+    self:sourceInit()
 end
 
 function Source:export()

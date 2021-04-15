@@ -3,7 +3,7 @@ Image = Source:extend()
 -- @param image source
 -- @return void
 function Image:new(config)
-	config.source_type = 'image'
+	config.initializer = 'components/sources/initializers/image'
 
 	Image.super.new(self, config)
 

@@ -7,7 +7,7 @@ function Icon:new(config)
 	self.image = image
 	self.text = text
 
-	config.source_type = 'icon'
+	config.initializer = 'components/sources/initializers/icon'
 
 	Icon.super.new(self, config)
 end

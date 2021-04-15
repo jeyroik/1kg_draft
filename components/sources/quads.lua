@@ -4,7 +4,7 @@ function Quads:new(config)
     self.columns = 0
     self.rows = 0
 
-    config.source_type = 'quads'
+    config.initializer = 'components/sources/initializers/quads'
 
     Quads.super.new(self, config)
 end

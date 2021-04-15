@@ -4,7 +4,7 @@ function Fx:new(config)
     self.volume = 0
     self.mode = 'static'
 
-    config.source_type = 'fx'
+    config.initializer = 'components/sources/initializers/fx'
 
     Fx.super.new(self, config)
 end
