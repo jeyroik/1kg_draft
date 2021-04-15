@@ -12,7 +12,6 @@ function Source:new(config)
 
     self.source = {}
 
-    love.filesystem.append('log.txt', '\nSource:new() - run sourceInit()')
     self:sourceInit()
 end
 

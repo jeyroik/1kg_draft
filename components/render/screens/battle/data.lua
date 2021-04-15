@@ -12,7 +12,11 @@ function BattleLayerData:new(config)
         deathPerc = 10,
         ultraDeathPerc = 20,
         stonesPerRound = 3,
-        path = 'components/render/board'
+        path = 'components/render/board',
+        width = 400,
+        height = 400,
+        x = 270,
+        y = 270
     }
     self.players = {}
     self.current = 1

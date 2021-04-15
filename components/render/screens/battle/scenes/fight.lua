@@ -21,7 +21,7 @@ function SceneFight:init(screen)
 
         local layerData = screen:getData()
         layerData.board = Board(layerData.board)
-        layerData.board:init()
+        --layerData.board:setToCenter(true)
 
         local cardDefault = game.assets:getQuads('chars')
 

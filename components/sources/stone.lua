@@ -1,5 +1,4 @@
-MagicStone = Render:extend{}
-MagicStone:implement(Uuid)
+MagicStone = Source:extend{}
 
 function MagicStone:new(config)
 	self.row = 1
@@ -9,15 +8,13 @@ function MagicStone:new(config)
 	self.size = 61 --122
 	self.volume = 1
 	self.state = 0
-	self.id = self:getId()
 	self.path = 'components/render/stone'
+	self.boardSize = 5
+	self.scale = 1
+
+	config.initializer = 'components/sources/initializers/stone'
 
 	MagicStone.super.new(self, config)
-
-	self.x = self.column * self.size + self.deltaX
-	self.y = self.row * self.size
-	self.width = self.size
-	self.height = self.size
 end
 
 function MagicStone:render()
@@ -25,7 +22,7 @@ function MagicStone:render()
 	local image = pack:get(self:getMask())
 
 	if image then
-		image:render(self.x, self.y, 0, 1,1)
+		image:render(self.x, self.y, 0, self.sx, self.sy)
 	end
 end
 
@@ -69,8 +66,8 @@ function MagicStone:update(board)
 	self.row = nextRow
 	self.column = nextColumn
 	
-	self.x = self.column * self.size + self.deltaX
-	self.y = self.row * self.size + self.deltaY
+	self.x = self.column * self.width + self.deltaX
+	self.y = self.row * self.height + self.deltaY
 
 	board:setStone(self)
 end
@@ -110,12 +107,12 @@ end
 function MagicStone:applyDeathMagic(deathPerc, ultraDeathPerc)
 	deathPerc = deathPerc or 10
 	ultraDeathPerc = ultraDeathPerc or 20
-	
-	if love.math.random(1,10) == 1 then
+
+	if love.math.random(1,deathPerc) == 1 then
 		self.volume = 2048
 	end
-	
-	if love.math.random(1,20) == 1 then
+
+	if love.math.random(1,ultraDeathPerc) == 1 then
 		self.volume = 4096
 	end
 end
