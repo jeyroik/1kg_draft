@@ -133,6 +133,38 @@ function VisibleObject:setToCenter(xAxis, yAxis)
 	end
 end
 
+function VisibleObject:stickToTop(obj)
+	self.xSource = self.x
+	self.x = obj.x
+
+	self.ySource = self.y
+	self.y = obj.y - self.height
+end
+
+function VisibleObject:stickToBottom(obj)
+	self.xSource = self.x
+	self.x = obj.x
+
+	self.ySource = self.y
+	self.y = obj.y + obj.height
+end
+
+function VisibleObject:stickToLeft(obj)
+	self.xSource = self.x
+	self.x = obj.x-self.width
+
+	self.ySource = self.y
+	self.y = obj.y
+end
+
+function VisibleObject:stickToRight(obj)
+	self.xSource = self.x
+	self.x = obj.x+obj.width
+
+	self.ySource = self.y
+	self.y = obj.y
+end
+
 function VisibleObject:setToCenterOfObject(obj, xAxis, yAxis)
 	local w = self.width * self.sx
 	local h = self.height * self.sy

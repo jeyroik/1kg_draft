@@ -37,11 +37,7 @@ end
 
 function Screen:init()
 	self.layers.data:init()
-
-	local currentScene = self:getCurrentScene()
-
-	currentScene:init(self)
-	self:setViewLayers(currentScene:getViews(), 'scene_current')
+	self:changeSceneTo(self.scene)
 end
 
 function Screen:update(dt)
@@ -57,6 +53,11 @@ end
 function Screen:mousePressed(x, y, button, isTouch, presses)
 	local currentScene = self:getCurrentScene()
 	currentScene:mousePressed(self, x, y, button, isTouch, presses)
+end
+
+function Screen:mouseReleased(x, y, button, isTouch, presses)
+	local currentScene = self:getCurrentScene()
+	currentScene:mouseReleased(self, x, y, button, isTouch, presses)
 end
 
 function Screen:keyPressed(key)
@@ -129,7 +130,8 @@ function Screen:changeSceneTo(sceneName)
 	self.scene = sceneName
 
 	local currentScene = self:getCurrentScene()
-	self.layers.views.scene_current = currentScene:getViews()
+	currentScene:init(self)
+	self:setViewLayers(currentScene:getViews(), 'scene_current')
 end
 
 function Screen:export()

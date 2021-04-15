@@ -26,6 +26,10 @@ function Scene:mousePressed(screen, x, y, button, isTouch, presses)
 
 end
 
+function Scene:mouseReleased(screen, x, y, button, isTouch, presses)
+
+end
+
 function Scene:keyPressed(screen, key)
 
 end

@@ -65,6 +65,10 @@ function Game:mousePressed(x, y, button, isTouch, presses)
 	game:getCurrentScreen():mousePressed(x, y, button, isTouch, presses)
 end
 
+function Game:mouseReleased(x, y, button, isTouch, presses)
+	game:getCurrentScreen():mouseReleased(x, y, button, isTouch, presses)
+end
+
 function Game:keyPressed(key)
 	game:getCurrentScreen():keyPressed(key)
 end

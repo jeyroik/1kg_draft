@@ -71,7 +71,6 @@ end
 
 function Button:released()
     self.state = 'default'
-    game.assets:getCursor('hand'):reset()
     self.pressed = false
 end
 

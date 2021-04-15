@@ -11,7 +11,8 @@ function BattleLayerData:new(config)
         size = 5,
         deathPerc = 10,
         ultraDeathPerc = 20,
-        stonesPerRound = 3
+        stonesPerRound = 3,
+        path = 'components/render/board'
     }
     self.players = {}
     self.current = 1
@@ -31,7 +32,6 @@ end
 -- @return void
 function BattleLayerData:init()
     BattleLayerData.super.init(self)
-
     self:initMagic()
 end
 

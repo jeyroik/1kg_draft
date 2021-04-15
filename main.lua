@@ -28,6 +28,10 @@ function love.mousepressed(x,y,button,isTouch,presses)
 	game:mousePressed(x, y, button, isTouch, presses)
 end
 
+function love.mousereleased( x, y, button, istouch, presses )
+	game:mouseReleased(x, y, button, isTouch, presses)
+end
+
 function love.keypressed(key)
 	if key == 'escape' then
 		love.event.quit() 
