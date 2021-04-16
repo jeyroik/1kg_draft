@@ -76,6 +76,11 @@ function MagicStone:getMask()
 	return 'c' .. self.volume
 end
 
+-- @return Magic
+function MagicStone:getMagic()
+	return game.assets:getMisc('magic'):getByType(self:getMask())
+end
+
 function MagicStone:upgrade()
 	self.volume = self.volume * 2
 end

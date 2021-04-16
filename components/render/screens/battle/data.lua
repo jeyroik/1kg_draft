@@ -12,7 +12,6 @@ function BattleLayerData:new(config)
         deathPerc = 10,
         ultraDeathPerc = 20,
         stonesPerRound = 3,
-        path = 'components/render/board',
         width = love.graphics.getHeight()*0.6,
         height = love.graphics.getHeight()*0.6,
         x = 270,
@@ -36,24 +35,6 @@ end
 -- @return void
 function BattleLayerData:init()
     BattleLayerData.super.init(self)
-    self:initMagic()
-end
-
--- @return void
-function BattleLayerData:initMagic()
-    local current = self:getCurrentPlayer()
-    local enemy = self:getNextPlayer()
-
-    if not self.magic[current.id] then
-
-        self.magic[current.id] = {}
-        self.magic[enemy.id] = {}
-
-        for i=0, 10 do
-            self.magic[current.id]['c'..math.pow(2,i)] = 0
-            self.magic[enemy.id]['c'..math.pow(2,i)] = 0
-        end
-    end
 end
 
 -- @return Player
@@ -83,27 +64,4 @@ function BattleLayerData:nextTurn()
         local gr = {'down', 'up', 'left', 'right'}
         love.event.push('keypressed', gr[love.math.random(1, 4)])
     end
-end
-
--- @param Player player
--- @param string magicType magic type like 'c32'
--- @return number
-function BattleLayerData:getMagicAmount(player, magicType)
-    return self.magic[player.id][magicType]
-end
-
--- @param Player player
--- @param string magicType magic type like 'c32'
--- @param number amount
--- @return void
-function BattleLayerData:incMagicAmount(player, magicType, amount)
-    self.magic[player.id][magicType] = self.magic[player.id][magicType] + amount
-end
-
--- @param Player player
--- @param string magicType magic type like 'c32'
--- @param number amount
--- @return void
-function BattleLayerData:decMagicAmount(player, magicType, amount)
-    self:incMagicAmount(player, magicType, -amount)
 end

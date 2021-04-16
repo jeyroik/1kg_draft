@@ -1,10 +1,13 @@
 Player = Card:extend{}
 
 function Player:new(config)
-	self.cards = {}
+	self.cards_registry = config.cards
 	self.cardsAdded = {}
 	self.cardsCount = 0
 	self.isHuman = false
+	self.battle_magic = {
+
+	}
 	self.magic = {
 		air = {
 			power = 1,
@@ -50,7 +53,7 @@ function Player:new(config)
 	config.path = 'components/render/cards/player'
 	Player.super.new(self, config)
 
-	self:initializeMany('cards')
+	self.cards = {}
 end
 
 function Player:addCard(card)
@@ -66,23 +69,30 @@ function Player:addCard(card)
 	return false
 end
 
-function Player:getMagic(layerData, magicType)
-	return self.magic[layerData:translateMagicType(magicType)] or 'missed magic type "'..magicType ..'"'
+function Player:getMagic(magicType)
+	return self.magic[game.assets:getMisc('magic'):getByType(magicType):getName()]
 end
 
-function Player:getMagicPower(layerData, magicType)
-	return self.magic[layerData:translateMagicType(magicType)].power
+function Player:getMagicPower(magicType)
+	return self:getMagic(magicType).power
 end
 
-function Player:getMagicMana(layerData, magicType)
-	return self.magic[layerData:translateMagicType(magicType)].mana
+function Player:getMagicMana(magicType)
+	return self:getMagic(magicType).mana
+end
+
+-- @param Player player
+-- @param string magicType magic type like 'c32'
+-- @return number
+function Player:getMagicAmount(magicType)
+	return self.battle_magic[magicType]
 end
 
 function Player:isEnoughMagic(layerData, card)
 	local isEnough = true
 
 	for magicName, amount in pairs(card.skill.active.cost) do
-		if layerData:getMagicAmount(self, layerData:translateMagicName(magicName)) < amount then
+		if self:getMagicAmount(game.assets:getMisc('magic'):getByName(magicName):getType()) < amount then
 			isEnough = false
 			break
 		end
@@ -109,6 +119,20 @@ function Player:useCard(layerData, card)
 	else
 		self:addDbg('card not found')
 	end
+end
+
+-- @param string magicType magic type like 'c32'
+-- @param number amount
+-- @return void
+function Player:incMagicAmount(magicType, amount)
+	self.battle_magic[magicType] = self.battle_magic[magicType] + amount
+end
+
+-- @param string magicType magic type like 'c32'
+-- @param number amount
+-- @return void
+function Player:decMagicAmount(magicType, amount)
+	self:incMagicAmount(magicType, -amount)
 end
 
 function Player:spendMagic(layerData, card)

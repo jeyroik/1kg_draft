@@ -1,58 +1,17 @@
 Player = Source:extend{}
 
 function Player:new(config)
+	config.cards = {} -- todo: reset it on the upper level
+
 	self.cards = {}
 	self.cardsAdded = {}
 	self.cardsCount = 0
 	self.isHuman = false
-	self.magic = {
-		air = {
-			power = 1,
-			mana = 5
-		},	
-		water = {
-			power = 1,
-			mana = 5
-		},
-		tree = {
-			power = 1,
-			mana = 5
-		},
-		fire = {
-			power = 1,
-			mana = 5
-		},
-		life = {
-			power = 1,
-			mana = 5
-		},
-		air_ultra = {
-			power = 1,
-			mana = 2
-		},
-		water_ultra = {
-			power = 1,
-			mana = 2
-		},
-		tree_ultra = {
-			power = 1,
-			mana = 2
-		},
-		fire_ultra = {
-			power = 1,
-			mana = 2
-		},
-		life_ultra = {
-			power = 1,
-			mana = 1
-		}
-	}
-	config.path = 'components/render/cards/player'
+	self.battle_magic = {}
+	self.magic = {}
 	config.initializer = 'components/sources/initializers/player'
 
 	Player.super.new(self, config)
-
-	self:initializeMany('cards')
 end
 
 function Player:addCard(card)
@@ -60,6 +19,7 @@ function Player:addCard(card)
 		card.x = self.x
 		card.y = self.y + card.height * (1.2*#self.cards)
 		table.insert(self.cards, card)
+
 		self.cardsAdded[card.id] = true
 		self.cardsCount = self.cardsCount + 1
 		return true
@@ -68,23 +28,32 @@ function Player:addCard(card)
 	return false
 end
 
-function Player:getMagic(layerData, magicType)
-	return self.magic[layerData:translateMagicType(magicType)] or 'missed magic type "'..magicType ..'"'
+function Player:getMagic(magicName)
+	return self.magic[magicName]
 end
 
-function Player:getMagicPower(layerData, magicType)
-	return self.magic[layerData:translateMagicType(magicType)].power
+function Player:getMagicPower(magicName)
+	return self:getMagic(magicName).power
 end
 
-function Player:getMagicMana(layerData, magicType)
-	return self.magic[layerData:translateMagicType(magicType)].mana
+function Player:getMagicMana(magicName)
+	return self:getMagic(magicName).mana
 end
 
-function Player:isEnoughMagic(layerData, card)
+-- @param Player player
+-- @param string magicName magic name like 'air'
+-- @return number
+function Player:getMagicAmount(magicName)
+	return self.battle_magic[magicName]
+end
+
+-- @param Card card
+-- @return void
+function Player:isEnoughMagic(card)
 	local isEnough = true
 
 	for magicName, amount in pairs(card.skill.active.cost) do
-		if layerData:getMagicAmount(self, layerData:translateMagicName(magicName)) < amount then
+		if self:getMagicAmount(magicName) < amount then
 			isEnough = false
 			break
 		end
@@ -93,6 +62,9 @@ function Player:isEnoughMagic(layerData, card)
 	return isEnough
 end
 
+-- @param LayerData layerData
+-- @param Card
+-- @return void
 function Player:useCard(layerData, card)
 	if self.cardsAdded[card.id] then
 		self:addDbg('card found')
@@ -107,16 +79,29 @@ function Player:useCard(layerData, card)
 				mutator:apply(layerData, context)
 			end
 		end
-		self:spendMagic(layerData, card)
+		self:spendMagic(card)
 	else
 		self:addDbg('card not found')
 	end
 end
 
-function Player:spendMagic(layerData, card)
-	local cost = card.skill.active:getCost(layerData)
-	for magicType, amount in pairs(cost) do
-		layerData:decMagicAmount(self, magicType, amount)
+-- @param string magicType magic name like 'air'
+-- @param number amount
+-- @return void
+function Player:incMagicAmount(magicName, amount)
+	self.battle_magic[magicName] = self.battle_magic[magicName] + amount
+end
+
+-- @param string magicName magic name like 'air'
+-- @param number amount
+-- @return void
+function Player:decMagicAmount(magicName, amount)
+	self:incMagicAmount(magicName, -amount)
+end
+
+function Player:spendMagic(card)
+	for magicName, amount in pairs(card.skill.active.cost) do
+		self:decMagicAmount(magicName, amount)
 	end
 end
 

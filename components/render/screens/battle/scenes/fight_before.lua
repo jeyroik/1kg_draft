@@ -78,11 +78,17 @@ end
 
 function  SceneFightBefore:prepare1Player(layerData)
     local cardDefault = game.assets:getQuads('chars')
+
+    layerData.players[1] = Player(game.profile)
+
     local current = layerData:getCurrentPlayer()
 
+    current.isHuman = true
     current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
     current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
     current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
+
+    layerData.players[2] = Player(game.profile)
 
     local next = layerData:getNextPlayer()
     next.isHuman = false
@@ -91,12 +97,14 @@ end
 function  SceneFightBefore:prepare2Players(layerData)
     local cardDefault = game.assets:getQuads('chars')
 
+    layerData.players[1] = Player(game.profile)
     local current = layerData:getCurrentPlayer()
     current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
     current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
     current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
     current.isHuman = true
 
+    layerData.players[2] = Player(game.profile)
     local next = layerData:getNextPlayer()
     next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
     next:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))

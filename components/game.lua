@@ -2,6 +2,7 @@ require "components/game/object"
 require "components/game/visible_object"
 require "components/mutators/mutator"
 require "components/skills/skill"
+require "components/game/profile"
 
 require "components/render/render"
 require "components/render/cards/card"
@@ -21,17 +22,18 @@ require "components/sources/cursor"
 require "components/sources/button"
 
 require "components/assets/importers/importer"
+require "components/assets/asset_magic"
 require "components/assets/assets"
-
-require "components/magic/magic_type"
 
 Game = GameObject:extend()
 
 function Game:new(config)
-	Game.super.new(self, config)
+	self.profile = Profile(config.profile)
 	self.assets = config.assets
 	self.screens = config.screens
-	self.state = config.state or 'auth'
+	self.state = 'auth'
+
+	Game.super.new(self, config)
 end
 
 function Game:init()

@@ -65,7 +65,7 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
                 local selectionColor = {0.5, 0.5, 0.5}
 
                 if layerData:isCurrentPlayer(pl) then
-                    if not pl:isEnoughMagic(layerData, card) then
+                    if not pl:isEnoughMagic(card) then
                         canUse = 'Not enough magic'
                         selectionColor = {1, 0, 0}
                     else
@@ -107,7 +107,7 @@ function SceneFight:mousePressed(screen, x, y, button, isTouch, presses)
 
     for _, card in pairs(currentPlayer.cards) do
         if card:isMouseOn(x,y) then
-            if currentPlayer:isEnoughMagic(layerData, card) then
+            if currentPlayer:isEnoughMagic(card) then
                 self:addDbg('Magic is enough')
                 currentPlayer:useCard(layerData, card)
             else

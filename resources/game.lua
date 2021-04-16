@@ -10,6 +10,7 @@ return {
             {path = 'components/render/screens/battle/scenes/fight_after/importer'}
         }
     },
+    profile = { name = 'Player1', health = 50, attack = 2, defense = 1 },
     state = 'battle', -- choose start screen
     screens = {
         battle = {

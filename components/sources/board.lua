@@ -96,7 +96,7 @@ end
 
 function Board:merge(layerData, stone, nextRow, nextColumn)
 
-	local currentType = layerData:getMagicType(stone:getMask())
+	local currentMagic = stone:getMagic()
 	local source = 'merge'
 
 	self:setFree(nextRow, nextColumn)
@@ -113,15 +113,15 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 		nextPlayer:takeDamage(damage)
 		source = 'damage'
 	else
-		local currentMana = layerData:getMagicAmount(currentPlayer, stone:getMask())
-		local magic = currentPlayer:getMagic(layerData, stone:getMask())
+		local currentMana = currentPlayer:getMagicAmount(currentMagic:getName())
+		local magic = currentPlayer:getMagic(currentMagic:getName())
 
 		if magic.mana >= currentMana + magic.power then
-			layerData:incMagicAmount(currentPlayer, stone:getMask(), magic.power)
+			currentPlayer:incMagicAmount(currentMagic:getName(), magic.power)
 		end
 	end
 	
-	if currentType.isCanBeMerged then
+	if currentMagic.isCanBeMerged then
 		self.cells[stone.row][stone.column]:upgrade()
 	else
 		self:setFree(stone.row, stone.column)

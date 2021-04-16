@@ -35,6 +35,7 @@ function BattleFightViewPlayers:renderCards(data)
         local player = data.players[i]
         for i=1,#player.cards do
             local card = player.cards[i]
+            -- card:render()
             game.assets:getQuads('chars'):render(card.avatar, card.x, card.y)
         end
     end
@@ -56,19 +57,19 @@ function BattleFightViewPlayers:renderPlayer1Magic(data)
     local onRow = 0
     local current = data.players[1]
     local gemsPack = game.assets:getImagePack('gems')
+    local magics = game.assets:getMisc('magic').items
 
-    for i=0,10 do
-        local id = 'c'..math.pow(2,i)
-        value = data.magic[current.id][id]
+    for _, magic in pairs(magics) do
+        local value = current:getMagicAmount(magic:getName())
 
-        if gemsPack:get(id) then
+        if gemsPack:get(magic:getType()) then
             if onRow == perRow then
                 magicX = player.x - 80
                 magicY = magicY + magicYDelta
                 onRow = 0
             end
 
-            local gem = gemsPack:get(id)
+            local gem = gemsPack:get(magic:getType())
             gem:render(magicX, magicY, 0, 0.5, 0.5)
             love.graphics.print(value, magicX+40, magicY, 0, 2,2)
             magicX = magicX + magicXDelta

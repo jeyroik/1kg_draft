@@ -6,12 +6,12 @@ function SkillStoneConvert:new(config)
 
     SkillSelfHealthInc.super.new(self, config)
 
-    local magic = game.assets:getMisc('magicTypes')
-    local targetType = 'c'..self.target
-    local mustBeType = 'c'..self.mustBe
+    local magic = game.assets:getMisc('magic')
+    local target = magic:getByType('c'..self.target)
+    local mustBe = magic:getByType('c'..self.mustBe)
 
     self.name = 'skill_stone_convert'
-    self.description = 'Convert all stones '..magic[targetType].name..' to '..magic[mustBeType].name
+    self.description = 'Convert all stones '..target.name..' to '..mustBe.name
     self.mutators = {
         stone_converter = {target = self.target, mustBe = self.mustBe}
     }
