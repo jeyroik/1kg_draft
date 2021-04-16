@@ -95,15 +95,21 @@ function VisibleObject:getEdgesFrame(dx, dy)
 	local top = {
 		left = {x=self.x-dx, y=self.y-dy},
 		right = {x=self.x+self.width+dx, y=self.y-dy},
-		width = self.width + dx*2, height = self.height + dy*2
+		width = self.width + dx*2,
+		height = self.height + dy*2
 	}
 	local bottom = {
 		left = {x=self.x-dx, y=self.y+self.height+dy},
 		right = {x=self.x+self.width+dx, y=self.y+self.height+dy},
-		width = self.width + dx*2, height = self.height + dy*2
+		width = self.width + dx*2,
+		height = self.height + dy*2
+	}
+	local size = {
+		width = self.width + dx*2,
+		height = self.height + dy*2
 	}
 	
-	return top, bottom
+	return top, bottom, size
 end
 
 function VisibleObject:getWidth()

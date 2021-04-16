@@ -13,8 +13,8 @@ function BattleLayerData:new(config)
         ultraDeathPerc = 20,
         stonesPerRound = 3,
         path = 'components/render/board',
-        width = love.graphics.getHeight()*0.8,
-        height = love.graphics.getHeight()*0.8,
+        width = love.graphics.getHeight()*0.6,
+        height = love.graphics.getHeight()*0.6,
         x = 270,
         y = 20
     }

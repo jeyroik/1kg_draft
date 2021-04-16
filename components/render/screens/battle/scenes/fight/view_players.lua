@@ -11,15 +11,23 @@ function BattleFightViewPlayers:renderPlayersInfo(data)
     local p1 = data.players[1]
     local p2 = data.players[2]
 
-    love.graphics.print('\nPlayer 1:'..'\n\nHealth: '.. p1.health, p1.x, 100, 0, 2,2)
+    p1.x = love.graphics.getWidth()*0.1
+    p1.y = love.graphics.getHeight()*0.1
+    p1.width = love.graphics.getWidth()*0.2
+    p1.height = love.graphics.getHeight()*0.2
+    p1.sx = love.graphics.getWidth()/960
+    p1.sy = love.graphics.getHeight()/540
+
+    love.graphics.print('\nw:'..love.graphics.getWidth()..', h:'.. love.graphics.getHeight(), p1.x, 50, 0, 1,1)
+    love.graphics.print('\nPlayer 1:'..'\n\nHealth: '.. p1.health, p1.x, p1.y, 0, p1.sx,p1.sy)
     love.graphics.print('\nPlayer 2:'..'\n\nHealth: '.. p2.health, p2.x, 100, 0,2,2)
 end
 
 function BattleFightViewPlayers:renderFrameCurrentPlayer(data)
     local current = data.players[data.current]
-    local frameX = current:getCoordsFrame(5)
+    local top, _, size = current:getEdgesFrame(5)
 
-    love.graphics.rectangle('line', frameX, 120, 200, 40)
+    love.graphics.rectangle('line', top.left.x, top.left.y, size.width, size.height)
 end
 
 function BattleFightViewPlayers:renderCards(data)

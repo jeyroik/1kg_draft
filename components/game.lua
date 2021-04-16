@@ -45,8 +45,6 @@ function Game:init()
 
 	local currentScreen = self:getCurrentScreen()
 	currentScreen:init()
-	
-	love.window.setFullscreen(true, "desktop")
 end
 
 function Game:update(dt)
