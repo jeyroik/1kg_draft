@@ -21,8 +21,8 @@ function SceneFight:init(screen)
 
         local layerData = screen:getData()
         layerData.board = Board(layerData.board)
-        layerData.board:setToCenter(true)
-        
+        layerData.board:setToCenter(true, true)
+
         self.ready = true
     end
 end

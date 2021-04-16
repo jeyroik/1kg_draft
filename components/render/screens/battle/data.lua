@@ -13,10 +13,10 @@ function BattleLayerData:new(config)
         ultraDeathPerc = 20,
         stonesPerRound = 3,
         path = 'components/render/board',
-        width = love.graphics.getHeight()*0.4,
-        height = love.graphics.getHeight()*0.4,
+        width = love.graphics.getHeight()*0.8,
+        height = love.graphics.getHeight()*0.8,
         x = 270,
-        y = 270
+        y = 20
     }
     self.players = {}
     self.current = 1
