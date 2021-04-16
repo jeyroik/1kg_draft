@@ -75,11 +75,11 @@ end
 function VisibleObject:getEdges()
 	local top = {
 		left = {x=self.x, y=self.y},
-		right = {x=self.x+self.width, y=self.y}
+		right = {x=self.x+self.width*self.sx, y=self.y}
 	}
 	local bottom = {
-		left = {x=self.x, y=self.y+self.height},
-		right = {x=self.x+self.width, y=self.y+self.height}
+		left = {x=self.x, y=self.y+self.height*self.sy},
+		right = {x=self.x+self.width*self.sx, y=self.y+self.height*self.sy}
 	}
 	
 	return top, bottom

@@ -8,6 +8,7 @@ require "components/render/screen"
 
 
 require "components/sources/source"
+require "components/sources/rectangle"
 require "components/sources/card"
 require "components/sources/player"
 require "components/sources/board"
