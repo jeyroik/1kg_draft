@@ -54,8 +54,8 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
                             {
                                 image=game.assets:getImagePack('gems'):get(magic:getType()),
                                 text=amount,
-                                xd=100 + iconCounter*60,
-                                yd=200
+                                xd=120*card.sx + iconCounter*60*card.sx,
+                                yd=220*card.sy
                             }
                     )
                     iconCounter = iconCounter+1
@@ -79,14 +79,16 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
                 layerData.tip = {
                     x = x,
                     y = y,
+                    sx = card.sx,
+                    sy = card.sy,
                     text = canUse .. '\n'..'Title: '..card.name .. '\n\nDescription:\n'..card.skill.active.description..'\n\nCost: ',
                     icons = icons
                 }
                 layerData.selection = {
                     x = top.left.x,
                     y = top.left.y,
-                    width = top.width,
-                    height = top.height,
+                    width = top.width*card.sx,
+                    height = top.height*card.sy,
                     color = selectionColor,
                     line_width = 5
                 }
