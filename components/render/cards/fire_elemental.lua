@@ -19,7 +19,10 @@ function CardFireElemental:new(config)
         }),
         passive = {}
     }
-    config.avatar = config.avatar or 31
+    config.avatar = config.avatar or {
+        path = 'chars',
+        frame = 31
+    }
 
     CardFireElemental.super.new(self, config)
 end

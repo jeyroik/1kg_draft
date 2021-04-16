@@ -41,15 +41,13 @@ function love.keypressed(key)
 end
 
 function love.quit()
-	local exported = game:export()
 	
-	love.filesystem.write('config.json', json.encode(exported))
 end
 
 function getGameConfig()
 	local config = nil--love.filesystem.read('config.json')
 	
-	love.filesystem.append('log.txt', '\n[Start]\n')
+	--love.filesystem.append('log.txt', '\n[Start]\n')
 	
 	if not config then
 		config = require "resources/game"

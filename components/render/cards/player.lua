@@ -8,6 +8,10 @@ function Player:new(config)
 	self.battle_magic = {
 
 	}
+	self.avatar = {
+		path = 'chars',
+		frame = 1
+	}
 	self.magic = {
 		air = {
 			power = 1,

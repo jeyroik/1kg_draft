@@ -144,7 +144,7 @@ function VisibleObject:stickToTop(obj)
 	self.x = obj.x
 
 	self.ySource = self.y
-	self.y = obj.y - self.height
+	self.y = obj.y - self.height*self.sy
 end
 
 function VisibleObject:stickToBottom(obj)
@@ -152,12 +152,12 @@ function VisibleObject:stickToBottom(obj)
 	self.x = obj.x
 
 	self.ySource = self.y
-	self.y = obj.y + obj.height
+	self.y = obj.y + obj.height*obj.sy
 end
 
 function VisibleObject:stickToLeft(obj)
 	self.xSource = self.x
-	self.x = obj.x-self.width
+	self.x = obj.x-self.width*self.sx
 
 	self.ySource = self.y
 	self.y = obj.y
@@ -165,7 +165,7 @@ end
 
 function VisibleObject:stickToRight(obj)
 	self.xSource = self.x
-	self.x = obj.x+obj.width
+	self.x = obj.x+obj.width*obj.sx
 
 	self.ySource = self.y
 	self.y = obj.y
@@ -175,8 +175,8 @@ function VisibleObject:setToCenterOfObject(obj, xAxis, yAxis)
 	local w = self.width * self.sx
 	local h = self.height * self.sy
 
-	local sw = obj:getWidth()
-	local sh = obj:getHeight()
+	local sw = obj:getWidth() * obj.sx
+	local sh = obj:getHeight() * obj.sy
 
 	local center = { x = obj.x + sw/2, y = obj.y + sh/2 }
 

@@ -3,6 +3,10 @@ BattleFightImporter = AssetImporter:extend()
 function BattleFightImporter:new()
     BattleFightImporter.super.new(self)
 
+    self.images = {
+        turn = { path = "turn.png" },
+        turn_enemy = { path = "turn_enemy.png" }
+    }
     self.fxs = {
         merge = { path = "merge.wav", mode = "static" },
         damage = { path = "damage.wav", mode = "static" },

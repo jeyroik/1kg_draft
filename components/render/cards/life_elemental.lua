@@ -21,7 +21,10 @@ function CardLifeElemental:new(config)
         }),
         passive = {}
     }
-    config.avatar = config.avatar or 5
+    config.avatar = config.avatar or {
+        path = 'chars',
+        frame = 5
+    }
 
     CardLifeElemental.super.new(self, config)
 end

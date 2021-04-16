@@ -10,12 +10,21 @@ function Card:new(config)
 		active = {},
 		passive = {}
 	}
-	self.avatar = 1
+	self.avatar = {
+		path = 'chars',
+		frame = 1
+	}
 	self.path = 'components/render/cards/card'
 
-	config.initializer = 'components/sources/initializers/card'
+	config.initializer = config.initializer or 'components/sources/initializers/card'
 
 	Card.super.new(self, config)
+end
+
+function Card:render(dx, dy)
+	dx = dx or 0
+	dy = dy or 0
+	game.assets:getQuads(self.avatar.path):render(self.avatar.frame, self.x+dx, self.y+dy, 0, self.sx, self.sy)
 end
 
 function Card:takeDamage(damage)

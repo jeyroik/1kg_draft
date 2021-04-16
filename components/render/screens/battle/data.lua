@@ -25,10 +25,6 @@ function BattleLayerData:new(config)
     self.fx = 'none'
 
     BattleLayerData.super.new(self, config)
-
-    for i=1,2 do
-        self.players[i] = Player(self.players[i])
-    end
 end
 
 -- @param Game game

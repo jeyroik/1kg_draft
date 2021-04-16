@@ -43,16 +43,16 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
     for i=1,2 do
         pl = layerData.players[i]
         for _, card in pairs(pl.cards) do
-            if card:isMouseOn(x, y) then
+            if card:isMouseOn(x, y) and card.skill.active.cost then
                 local icons = {}
-                local cost = card.skill.active:getCost(layerData)
                 local top = card:getEdgesFrame(3)
                 local iconCounter = 0
-                for magicType, amount in pairs(cost) do
+                for magicName, amount in pairs(card.skill.active.cost) do
+                    local magic = game.assets:getMisc('magic'):getByName(magicName)
                     table.insert(
                             icons,
                             {
-                                image=game.assets:getImagePack('gems'):get(magicType),
+                                image=game.assets:getImagePack('gems'):get(magic:getType()),
                                 text=amount,
                                 xd=100 + iconCounter*60,
                                 yd=200

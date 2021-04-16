@@ -79,37 +79,63 @@ end
 function  SceneFightBefore:prepare1Player(layerData)
     local cardDefault = game.assets:getQuads('chars')
 
-    layerData.players[1] = Player(game.profile)
+    layerData.players[1] = Player({
+        name = game.profile.name,
+        isHuman = true,
+        magic = game.profile.magic,
+        number = 1,
+        health = game.profile.health,
+        attack = game.profile.attack,
+        defense = game.profile.defense
+    })
 
     local current = layerData:getCurrentPlayer()
 
-    current.isHuman = true
-    current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
-    current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
-    current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
+    current:addCard(CardFireElemental())
+    current:addCard(CardTreeElemental())
+    current:addCard(CardLifeElemental())
 
-    layerData.players[2] = Player(game.profile)
-
-    local next = layerData:getNextPlayer()
-    next.isHuman = false
+    layerData.players[2] = Player({
+        name = 'Computer',
+        isHuman = false,
+        magic = game.profile.magic,
+        number = 2,
+        health = game.profile.health,
+        attack = game.profile.attack,
+        defense = game.profile.defense
+    })
 end
 
 function  SceneFightBefore:prepare2Players(layerData)
     local cardDefault = game.assets:getQuads('chars')
 
-    layerData.players[1] = Player(game.profile)
+    layerData.players[1] = Player({
+        name = game.profile.name,
+        isHuman = true,
+        magic = game.profile.magic,
+        number = 1,
+        health = game.profile.health,
+        attack = game.profile.attack,
+        defense = game.profile.defense
+    })
     local current = layerData:getCurrentPlayer()
-    current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
-    current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
-    current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
-    current.isHuman = true
+    current:addCard(CardFireElemental())
+    current:addCard(CardTreeElemental())
+    current:addCard(CardLifeElemental())
 
-    layerData.players[2] = Player(game.profile)
+    layerData.players[2] = Player({
+        name = game.profile.name .. ' (2)',
+        isHuman = true,
+        magic = game.profile.magic,
+        number = 2,
+        health = game.profile.health,
+        attack = game.profile.attack,
+        defense = game.profile.defense
+    })
     local next = layerData:getNextPlayer()
     next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
     next:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
     next:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
-    next.isHuman = true
 end
 
 function SceneFightBefore:mouseReleased(screen, x, y, button, isTouch, presses)

@@ -1,16 +1,14 @@
 require "components/game/object"
 require "components/game/visible_object"
-require "components/mutators/mutator"
-require "components/skills/skill"
+
 require "components/game/profile"
 
 require "components/render/render"
-require "components/render/cards/card"
-
 require "components/render/screen"
-require "components/render/screens/screen_battle"
+
 
 require "components/sources/source"
+require "components/sources/card"
 require "components/sources/player"
 require "components/sources/board"
 require "components/sources/fx"
@@ -22,9 +20,14 @@ require "components/sources/icon"
 require "components/sources/cursor"
 require "components/sources/button"
 
+require "components/mutators/mutator"
+require "components/skills/skill"
+
 require "components/assets/importers/importer"
 require "components/assets/asset_magic"
 require "components/assets/assets"
+
+require "components/render/screens/screen_battle"
 
 Game = GameObject:extend()
 

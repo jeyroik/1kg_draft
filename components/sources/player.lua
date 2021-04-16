@@ -1,14 +1,14 @@
-Player = Source:extend{}
+Player = Card:extend{}
 
 function Player:new(config)
-	config.cards = {} -- todo: reset it on the upper level
-
 	self.cards = {}
 	self.cardsAdded = {}
 	self.cardsCount = 0
 	self.isHuman = false
 	self.battle_magic = {}
 	self.magic = {}
+	self.number = 1
+
 	config.initializer = 'components/sources/initializers/player'
 
 	Player.super.new(self, config)
@@ -17,7 +17,7 @@ end
 function Player:addCard(card)
 	if  not self.cardsAdded[card.id] then
 		card.x = self.x
-		card.y = self.y + card.height * (1.2*#self.cards)
+		card.y = self.y + card.height * card.sx * (1.2*#self.cards)
 		table.insert(self.cards, card)
 
 		self.cardsAdded[card.id] = true
