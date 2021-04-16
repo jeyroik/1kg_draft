@@ -5,7 +5,8 @@ function BattleFightImporter:new()
 
     self.images = {
         turn = { path = "turn.png" },
-        turn_enemy = { path = "turn_enemy.png" }
+        turn_enemy = { path = "turn_enemy.png" },
+        board_big = { path = "board_big.png" }
     }
     self.fxs = {
         merge = { path = "merge.wav", mode = "static" },

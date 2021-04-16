@@ -3,7 +3,7 @@ BattleFightAfterViewTheEnd = LayerView:extend()
 function BattleFightAfterViewTheEnd:new(config)
     BattleFightAfterViewTheEnd.super.new(self, config)
 
-    self.theEnd = 'notice'
+    self.theEnd = 'theEnd'
     self.center = {x = love.graphics.getWidth()/2, y = love.graphics.getHeight()/2}
 end
 

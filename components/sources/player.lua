@@ -67,7 +67,6 @@ end
 -- @return void
 function Player:useCard(layerData, card)
 	if self.cardsAdded[card.id] then
-		self:addDbg('card found')
 		game.assets:getFx('skill'):play()
 
 		local skill = card.skill.active
@@ -80,8 +79,6 @@ function Player:useCard(layerData, card)
 			end
 		end
 		self:spendMagic(card)
-	else
-		self:addDbg('card not found')
 	end
 end
 

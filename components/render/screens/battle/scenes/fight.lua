@@ -108,9 +108,9 @@ function SceneFight:mousePressed(screen, x, y, button, isTouch, presses)
     local currentPlayer = layerData:getCurrentPlayer()
 
     for _, card in pairs(currentPlayer.cards) do
-        if card:isMouseOn(x,y) then
+        if card:isMouseOn(x,y) and card.skill.active.cost then
             if currentPlayer:isEnoughMagic(card) then
-                self:addDbg('Magic is enough')
+                layerData.statistics[layerData.current].spells = layerData.statistics[layerData.current].spells + 1
                 currentPlayer:useCard(layerData, card)
             else
                 game.assets:getFx('skill_not'):play()

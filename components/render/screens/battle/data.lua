@@ -17,6 +17,20 @@ function BattleLayerData:new(config)
         x = 270,
         y = 20
     }
+    self.statistics = {
+        {
+            damage_taken = 0,
+            damaged = 0,
+            stones = 0,
+            spells = 0
+        },
+        {
+            damage_taken = 0,
+            damaged = 0,
+            stones = 0,
+            spells = 0
+        }
+    }
     self.players = {}
     self.current = 1
     self.next = 2
