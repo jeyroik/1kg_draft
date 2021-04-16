@@ -21,18 +21,8 @@ function SceneFight:init(screen)
 
         local layerData = screen:getData()
         layerData.board = Board(layerData.board)
-        --layerData.board:setToCenter(true)
-
-        local cardDefault = game.assets:getQuads('chars')
-
-        local current = layerData:getCurrentPlayer()
-        current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
-        current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
-        current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
-
-        local next = layerData:getNextPlayer()
-        next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
-
+        layerData.board:setToCenter(true)
+        
         self.ready = true
     end
 end

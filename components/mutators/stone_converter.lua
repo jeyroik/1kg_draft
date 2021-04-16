@@ -10,7 +10,7 @@ end
 function MutatorStoneConverter:apply(layerData, context)
     self:applyConfig(context)
 
-    for _, columns in pairs(layerData.board) do
+    for _, columns in pairs(layerData.board.cells) do
         for _, stone in pairs(columns) do
             if stone.volume == self.target then
                 stone.volume = self.mustBe

@@ -5,13 +5,13 @@ function InitializerBoard:initSource(board)
         self:generate(board)
     end
 
-    local s = self:calculateStoneParameters(board)
+    local s = board:calculateStoneParameters()
 
     for i=1,board.rows do
         for j=1,board.columns do
             local stone = MagicStone({
-                deltaX = 270,--board.x,
-                --deltaY = board.y,
+                deltaX = board.x,
+                deltaY = board.y,
                 row = i,
                 column = j,
                 volume = board.cells[i][j],
@@ -26,26 +26,6 @@ function InitializerBoard:initSource(board)
             board.cells[i][j] = stone
         end
     end
-end
-
-function InitializerBoard:calculateStoneParameters(board)
-    -- нужна картинка камня для понимания его исходных размеров
-    local stoneImg = game.assets:getImagePack('gems'):get('c2')
-    local stoneOriginW = stoneImg:getWidth()
-    local stoneOriginH = stoneImg:getHeight()
-
-    local stonesW = board.width / board.columns
-    local stonesH = board.height / board.rows
-
-    local wScale = stonesW / stoneOriginW
-    local hScale = stonesH / stoneOriginH
-
-    return {
-        sx = wScale,
-        sy = hScale,
-        width = stonesW,
-        height = stonesH
-    }
 end
 
 function InitializerBoard:generate(board)

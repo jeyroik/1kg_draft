@@ -66,8 +66,8 @@ function MagicStone:update(board)
 	self.row = nextRow
 	self.column = nextColumn
 	
-	self.x = self.column * self.width + self.deltaX
-	self.y = self.row * self.height + self.deltaY
+	self.x = (self.column-1) * self.width + self.deltaX
+	self.y = (self.row-1) * self.height + self.deltaY
 
 	board:setStone(self)
 end

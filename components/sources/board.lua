@@ -23,6 +23,21 @@ function Board:new(config)
 	Board.super.new(self, config)
 end
 
+function Board:render(dx, dy)
+	dx = dx or 0
+	dy = dy or 0
+
+	love.graphics.rectangle('line', self.x+dx, self.y+dy, self.width, self.height)
+
+	for _, columns in pairs(self.cells) do
+		for _,stone in pairs(columns) do
+			if stone.volume > -1 then
+				stone:render()
+			end
+		end
+	end
+end
+
 function Board:setToCenter(xAxis, yAxis)
 	Board.super.setToCenter(self, xAxis, yAxis)
 
@@ -30,6 +45,8 @@ function Board:setToCenter(xAxis, yAxis)
 		for _, stone in pairs(columns) do
 			stone.deltaX = self.x
 			stone.deltaY = self.y
+			stone.x = (stone.column-1)*stone.width + self.x
+			stone.y = (stone.row-1)*stone.width + self.y
 		end
 	end
 end
@@ -219,8 +236,43 @@ function Board:moveRight(layerData)
 	return nil
 end
 
+function Board:calculateStoneParameters()
+	-- нужна картинка камня для понимания его исходных размеров
+	local stoneImg = game.assets:getImagePack('gems'):get('c2')
+	local stoneOriginW = stoneImg:getWidth()
+	local stoneOriginH = stoneImg:getHeight()
+
+	local stonesW = self.width / self.columns
+	local stonesH = self.height / self.rows
+
+	local wScale = stonesW / stoneOriginW
+	local hScale = stonesH / stoneOriginH
+
+	return {
+		sx = wScale,
+		sy = hScale,
+		width = stonesW,
+		height = stonesH
+	}
+end
+
 function Board:setFree(row, column)
-	self.cells[row][column] = MagicStone({row = row, column = column})
+	local s = self:calculateStoneParameters()
+
+	self.cells[row][column] = MagicStone({
+		row = row,
+		column = column,
+
+		deltaX = self.x,
+		deltaY = self.y,
+		boardSize = self.rows,
+		sx = s.sx,
+		sy = s.sy,
+		x = (column-1) * s.width + self.x,
+		y = (row-1) * s.height + self.y,
+		width = s.width,
+		height = s.height
+	})
 end
 
 function Board:setStone(stone)

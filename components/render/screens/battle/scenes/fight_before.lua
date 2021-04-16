@@ -63,16 +63,45 @@ function SceneFightBefore:mousePressed(screen, x, y, button, isTouch, presses)
         pl1:click()
         data.mode = 1
         modeIsChosen = true
-        data.players[2].isHuman = false
+        self:prepare1Player(data)
     elseif pl2:isMouseOn(x, y) then
         pl2:click()
         data.mode = 2
         modeIsChosen = true
+        self:prepare2Players(data)
     end
 
     if modeIsChosen then
         screen:changeSceneTo('fight')
     end
+end
+
+function  SceneFightBefore:prepare1Player(layerData)
+    local cardDefault = game.assets:getQuads('chars')
+    local current = layerData:getCurrentPlayer()
+
+    current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
+    current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
+    current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
+
+    local next = layerData:getNextPlayer()
+    next.isHuman = false
+end
+
+function  SceneFightBefore:prepare2Players(layerData)
+    local cardDefault = game.assets:getQuads('chars')
+
+    local current = layerData:getCurrentPlayer()
+    current:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
+    current:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
+    current:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
+    current.isHuman = true
+
+    local next = layerData:getNextPlayer()
+    next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
+    next:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
+    next:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
+    next.isHuman = true
 end
 
 function SceneFightBefore:mouseReleased(screen, x, y, button, isTouch, presses)
