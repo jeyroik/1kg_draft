@@ -6,11 +6,12 @@ require "components/game/profile"
 
 require "components/render/render"
 require "components/render/cards/card"
-require "components/render/cards/player"
+
 require "components/render/screen"
 require "components/render/screens/screen_battle"
 
 require "components/sources/source"
+require "components/sources/player"
 require "components/sources/board"
 require "components/sources/fx"
 require "components/sources/image"
