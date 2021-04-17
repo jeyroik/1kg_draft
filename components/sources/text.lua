@@ -7,7 +7,7 @@ Text = Source:extend()
 function Text:new(config)
 	self.body = ''
 
-	config.initializer = 'components/sources/initializers/text'
+	config.initializer = config.initializer or 'components/sources/initializers/text'
 
 	Text.super.new(self, config)
 

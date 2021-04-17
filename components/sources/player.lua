@@ -14,6 +14,16 @@ function Player:new(config)
 	Player.super.new(self, config)
 end
 
+function Player:update()
+	InitializerPlayer:initSource(self)
+	for i, card in pairs(self.cards) do
+		card.x = self.x
+		card.y = self.y + card.height * card.sx * (1.2*(i-1))
+		card.sx = love.graphics.getHeight()/1080
+		card.sy = card.sx
+	end
+end
+
 function Player:addCard(card)
 	if  not self.cardsAdded[card.id] then
 		card.x = self.x

@@ -3,15 +3,7 @@ BattleFightViewPlayers = LayerView:extend()
 function BattleFightViewPlayers:render(data)
     self:renderMagic(data)
     self:renderFrameCurrentPlayer(data)
-    self:renderPlayersInfo(data)
     self:renderCards(data)
-end
-
-function BattleFightViewPlayers:renderPlayersInfo(data)
-    local p1 = data.players[1]
-    local p2 = data.players[2]
-
-    love.graphics.print('\nw:'..love.graphics.getWidth()..', h:'.. love.graphics.getHeight(), p1.x, 50, 0, 1,1)
 end
 
 function BattleFightViewPlayers:renderFrameCurrentPlayer(data)

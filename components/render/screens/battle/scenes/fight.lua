@@ -130,6 +130,11 @@ end
 
 function SceneFight:update(screen)
     local layerData = screen:getData()
+    layerData.board:setToCenter(true, true)
+    layerData.board:update()
+    for _, player in pairs(layerData.players) do
+        player:update()
+    end
     self.fx = layerData.board:move(layerData)
 
     local current = layerData:getCurrentPlayer()

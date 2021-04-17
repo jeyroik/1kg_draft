@@ -1,7 +1,7 @@
 require "components/game/object"
 require "components/game/visible_object"
-require "components/game/profile"
 
+require "components/game/profile"
 require "components/sources/source"
 require "components/sources/screen"
 require "components/sources/rectangle"
@@ -13,10 +13,12 @@ require "components/sources/image"
 require "components/sources/image_pack"
 require "components/sources/quads"
 require "components/sources/text"
+require "components/sources/text_overlay"
 require "components/sources/icon"
 require "components/sources/cursor"
 require "components/sources/button"
 
+require "components/hooks/hook"
 require "components/mutators/mutator"
 require "components/skills/skill"
 
@@ -51,6 +53,7 @@ function Game:init()
 end
 
 function Game:update(dt)
+	VisibleObject.updateGlobals(self)
 	self:getCurrentScreen():update(dt)
 end
 

@@ -17,6 +17,10 @@ function VisibleObject:new(config)
 	VisibleObject.super.new(self, config)
 end
 
+function VisibleObject:updateGlobals()
+	VisibleObject.globalScale = love.graphics.getWidth()/1920
+end
+
 -- Checks is mouse currently point to the current object
 -- @param number mouseX
 -- @param number mouseY
@@ -172,33 +176,41 @@ function VisibleObject:setToPart(xNum, yNum, slice)
 	end
 end
 
-function VisibleObject:stickToTop(obj)
+function VisibleObject:stickToTop(obj, inside)
+	inside = inside or false
+
 	self.xSource = self.x
 	self.x = obj.x
 
 	self.ySource = self.y
-	self.y = obj.y - self.height*self.sy
+	self.y = obj.y + (inside and self.height*self.sy or -self.height*self.sy)
 end
 
-function VisibleObject:stickToBottom(obj)
+function VisibleObject:stickToBottom(obj, inside)
+	inside = inside or false
+
 	self.xSource = self.x
 	self.x = obj.x
 
 	self.ySource = self.y
-	self.y = obj.y + obj.height*obj.sy
+	self.y = obj.y + (inside and obj.height*obj.sy-self.height*self.sx or obj.height*obj.sy)
 end
 
-function VisibleObject:stickToLeft(obj)
+function VisibleObject:stickToLeft(obj, inside)
+	inside = inside or false
+
 	self.xSource = self.x
-	self.x = obj.x-self.width*self.sx
+	self.x = obj.x+(inside and 0 or -self.width*self.sx)
 
 	self.ySource = self.y
 	self.y = obj.y
 end
 
-function VisibleObject:stickToRight(obj)
+function VisibleObject:stickToRight(obj, inside)
+	inside = inside or false
+
 	self.xSource = self.x
-	self.x = obj.x+obj.width*obj.sx
+	self.x = obj.x+(inside and obj.width*obj.sx-self.width*self.sx or obj.width*obj.sx)
 
 	self.ySource = self.y
 	self.y = obj.y

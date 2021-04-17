@@ -23,6 +23,25 @@ function Board:new(config)
 	Board.super.new(self, config)
 end
 
+function Board:update()
+	self.width = love.graphics.getHeight()*0.6
+	self.height = love.graphics.getHeight()*0.6
+	local s = self:calculateStoneParameters()
+
+	for i, columns in pairs(self.cells) do
+		for j,stone in pairs(columns) do
+			stone.deltaX = self.x
+			stone.deltaY = self.y
+			stone.sx = s.sx
+			stone.sy = s.sy
+			stone.x = (j-1) * s.width + self.x
+			stone.y = (i-1) * s.height + self.y
+			stone.width = s.width
+			stone.height = s.height
+		end
+	end
+end
+
 function Board:render(dx, dy)
 	dx = dx or 0
 	dy = dy or 0
