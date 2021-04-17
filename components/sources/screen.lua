@@ -6,7 +6,7 @@ require "components/render/screens/layers/layer_view_tip"
 require "components/render/screens/layers/layer_view_debug"
 require "components/render/screens/layers/layer_view_single_selection"
 
-Screen = Render:extend()
+Screen = Source:extend()
 Screen:implement(Printer)
 
 -- @param table config
@@ -26,6 +26,8 @@ function Screen:new(config)
 		},
 		data = {}
 	}
+
+	config.autoInit = false
 
 	Screen.super.new(self, config)
 

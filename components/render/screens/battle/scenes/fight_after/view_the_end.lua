@@ -8,8 +8,15 @@ function BattleFightAfterViewTheEnd:new(config)
 end
 
 function BattleFightAfterViewTheEnd:render(data)
-    local noticeImg = game.assets:getImage(self.theEnd)
+    local endImg = game.assets:getImage(self.theEnd)
+    endImg:setScale(VisibleObject.globalScale, VisibleObject.globalScale)
+    endImg:setToPart(3, 2)
+    endImg:render()
 
-    noticeImg:render(self.center.x-noticeImg:getWidth()/2, 120)
-    love.graphics.print('The end', self.center.x-noticeImg:getWidth()/2+150, 140, 0,4,4)
+    local won = data.statistics[1].win and 1 or 2
+
+    local text = Text({ body = 'Player '..won..' won', sx = 4*VisibleObject.globalScale, sy = 4*VisibleObject.globalScale})
+    text:setToCenterOfObject(endImg, true, true)
+    text:render()
+    --love.graphics.print(, self.center.x-endImg:getWidth()/2+150, 140, 0,4*VisibleObject.globalScale,4*VisibleObject.globalScale)
 end

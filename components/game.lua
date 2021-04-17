@@ -1,13 +1,9 @@
 require "components/game/object"
 require "components/game/visible_object"
-
 require "components/game/profile"
 
-require "components/render/render"
-require "components/render/screen"
-
-
 require "components/sources/source"
+require "components/sources/screen"
 require "components/sources/rectangle"
 require "components/sources/card"
 require "components/sources/player"

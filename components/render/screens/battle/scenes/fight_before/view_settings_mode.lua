@@ -18,5 +18,5 @@ function BattleFightBeforeViewSettingsMode:render(data, scene)
 
     local title = Text({ body = 'Choose mode', sx = 4, sy = 4 })
     title:stickToTop(buttons[1])
-    title:render(0, -80)
+    title:render(0, -40)
 end

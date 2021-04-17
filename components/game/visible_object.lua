@@ -1,4 +1,5 @@
 VisibleObject = GameObject:extend()
+VisibleObject.globalScale = love.graphics.getWidth()/1920
 
 -- @param table config
 -- @return void
@@ -9,6 +10,9 @@ function VisibleObject:new(config)
 	self.ySource = self.y
 	self.width = 0
 	self.height = 0
+	self.radian = 0
+	self.sx = 1
+	self.sy = 1
 
 	VisibleObject.super.new(self, config)
 end
@@ -25,6 +29,23 @@ function VisibleObject:isMouseOn(mouseX, mouseY)
 	end
 	
 	return false
+end
+
+-- @param number sx scale x
+-- @param number sy scale y
+-- @return void
+function VisibleObject:setScale(sx, sy)
+	sx = sx or 1
+	sy = sy or sx
+
+	self.sx = sx
+	self.sy = sy
+end
+
+-- @param number radian angle radian
+-- @return void
+function VisibleObject:setAngle(radian)
+	self.radian = radian
 end
 
 -- @param number x
@@ -121,21 +142,33 @@ function VisibleObject:getHeight()
 end
 
 function VisibleObject:setToCenter(xAxis, yAxis)
+	self:setToPart(xAxis and 3 or nil, yAxis and 3 or nil, 4)
+end
+
+function VisibleObject:setToPart(xNum, yNum, slice)
 	local w = self.width * self.sx
 	local h = self.height * self.sy
 
 	local sw = love.graphics.getWidth()
 	local sh = love.graphics.getHeight()
 
-	local center = { x = sw/2, y = sh/2 }
-	if xAxis then
-		self.xSource = self.x
-		self.x = center.x - w/2
+	slice = slice or 4
+	local parts = {}
+	for i=0,slice do
+		table.insert(parts, {
+			x = sw * (1/slice * i),
+			y = sh * (1/slice * i)
+		})
 	end
 
-	if yAxis then
+	if xNum then
+		self.xSource = self.x
+		self.x = parts[xNum].x - w/2
+	end
+
+	if yNum then
 		self.ySource = self.y
-		self.y = center.y - h/2
+		self.y = parts[yNum].y - h/2
 	end
 end
 

@@ -247,8 +247,8 @@ function Board:calculateStoneParameters()
 	local stoneOriginW = stoneImg:getWidth()
 	local stoneOriginH = stoneImg:getHeight()
 
-	local stonesW = self.width / self.columns
-	local stonesH = self.height / self.rows
+	local stonesW = self:getWidth() / self.columns
+	local stonesH = self:getHeight() / self.rows
 
 	local wScale = stonesW / stoneOriginW
 	local hScale = stonesH / stoneOriginH

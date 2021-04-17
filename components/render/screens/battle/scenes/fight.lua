@@ -137,6 +137,8 @@ function SceneFight:update(screen)
 
     if nextPlayer:isDead() or current:isDead() then
         self.fx = 'the_end'
+        layerData.statistics[current.number].win = not current:isDead()
+        layerData.statistics[nextPlayer.number].win = not nextPlayer:isDead()
         screen:setViewLayers({}, 'scene_after')
         screen:changeSceneTo('fight_the_end')
     end

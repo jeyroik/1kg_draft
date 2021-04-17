@@ -22,13 +22,15 @@ function BattleLayerData:new(config)
             damage_taken = 0,
             damaged = 0,
             stones = 0,
-            spells = 0
+            spells = 0,
+            win = false
         },
         {
             damage_taken = 0,
             damaged = 0,
             stones = 0,
-            spells = 0
+            spells = 0,
+            win = false
         }
     }
     self.players = {}
