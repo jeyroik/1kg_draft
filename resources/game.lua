@@ -12,7 +12,7 @@ return {
         }
     },
     profile = {
-        name = 'Player1', health = 1, attack = 2, defense = 1,
+        name = 'Player1', health = 50, attack = 2, defense = 1,
         magic = {
             air = { power = 1, mana = 5 },
             water = { power = 1, mana = 5 },

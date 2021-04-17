@@ -126,14 +126,14 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 	if stone:isDeathStone() then
 		local damage = self.deathStoneDamage * currentPlayer.attack - nextPlayer.defense
 		nextPlayer:takeDamage(damage)
-		layerData.statistics[currentPlayer.number].damaged = layerData.statistics[currentPlayer.number].damaged + 1
-		layerData.statistics[nextPlayer.number].damage_taken = layerData.statistics[nextPlayer.number].damage_taken + 1
+		layerData.statistics[currentPlayer.number].damaged = layerData.statistics[currentPlayer.number].damaged + damage
+		layerData.statistics[nextPlayer.number].damage_taken = layerData.statistics[nextPlayer.number].damage_taken + damage
 		source = 'damage'
 	elseif stone:isUltraDeathStone() then
 		local damage = self.ultraDeathStoneDamage * currentPlayer.attack - nextPlayer.defense
 		nextPlayer:takeDamage(damage)
-		layerData.statistics[currentPlayer.number].damaged = layerData.statistics[currentPlayer.number].damaged + 1
-		layerData.statistics[nextPlayer.number].damage_taken = layerData.statistics[nextPlayer.number].damage_taken + 1
+		layerData.statistics[currentPlayer.number].damaged = layerData.statistics[currentPlayer.number].damaged + damage
+		layerData.statistics[nextPlayer.number].damage_taken = layerData.statistics[nextPlayer.number].damage_taken + damage
 		source = 'damage'
 	else
 		local currentMana = currentPlayer:getMagicAmount(currentMagic:getName())

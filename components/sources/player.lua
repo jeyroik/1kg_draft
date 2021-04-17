@@ -15,7 +15,7 @@ function Player:new(config)
 end
 
 function Player:update()
-	InitializerPlayer:initSource(self)
+	InitializerPlayer:initCoords(self)
 	for i, card in pairs(self.cards) do
 		card.x = self.x
 		card.y = self.y + card.height * card.sx * (1.2*(i-1))
