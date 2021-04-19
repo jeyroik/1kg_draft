@@ -12,7 +12,7 @@ function CardTreeElemental:new(config)
     config.defense = 2
     config.skill = {
         active = SkillSelfHealthInc({
-            amount = 1,
+            amount = 3,
             cost = {
                 tree = 2
             }

@@ -12,10 +12,10 @@ function MutatorEnemyHealth:apply(layerData, context)
 
     self:applyConfig(context)
 
-    target.health = target.health + self.amount
-
-    if target.health < 0 then
-        target.health = 0
+    if self.amount < 0 then
+        target:takeDamage(-self.amount)
+    else
+        target.health = target.health + self.amount
     end
 end
 

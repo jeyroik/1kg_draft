@@ -82,7 +82,16 @@ function Card:renderHealth(top)
 end
 
 function Card:takeDamage(damage)
-	self.health = (self.health >= damage) and (self.health - damage) or 0
+	local data = game:getCurrentScreen():getData()
+	local c = data:getCurrentPlayer()
+	local n = data:getNextPlayer()
+
+	local realDamage = (self.health >= damage) and damage or self.health
+
+	data.statistics[c.number].damaged = data.statistics[c.number].damaged + realDamage
+	data.statistics[n.number].damage_taken = data.statistics[n.number].damage_taken + realDamage
+
+	self.health = self.health - realDamage
 end
 
 function Card:isDead()
