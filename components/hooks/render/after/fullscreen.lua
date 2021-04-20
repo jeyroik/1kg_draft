@@ -2,7 +2,10 @@ HookFullscreen = Hook:extend()
 
 function HookFullscreen:new(config)
     self.tip = {}
+
     HookFullscreen.super.new(self, config)
+
+    self.alias = 'fullscreen'
 end
 
 function HookFullscreen:catch(screen, args, event, stage)

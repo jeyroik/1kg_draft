@@ -79,15 +79,7 @@ function Player:useCard(layerData, card)
 	if self.cardsAdded[card.id] then
 		game.assets:getFx('skill'):play()
 
-		local skill = card.skill.active
-		for name, context in pairs(skill.mutators) do
-			local mutator, err = game.assets:getMutator(name)
-			if err then
-				self:addDbg(err)
-			else
-				mutator:apply(layerData, context)
-			end
-		end
+		card.skill.active:use(layerData)
 		self:spendMagic(card)
 	end
 end

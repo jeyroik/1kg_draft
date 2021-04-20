@@ -4,8 +4,11 @@ Hook:implement(Printer)
 
 function Hook:new(config)
     self.alias = ''
+    self:applyConfig(self, config)
+end
 
-    Hook:applyConfig(self, config)
+function Hook:getAlias()
+    return self.alias
 end
 
 function Hook:catch(screen, args, event, stage)

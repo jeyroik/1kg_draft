@@ -1,6 +1,7 @@
 require "components/render/cards/fire_elemental"
 require "components/render/cards/tree_elemental"
 require "components/render/cards/life_elemental"
+require "components/render/cards/water_elemental"
 
 BattleLayerData = LayerData:extend()
 

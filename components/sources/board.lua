@@ -57,6 +57,14 @@ function Board:render(dx, dy)
 	end
 end
 
+function Board:forEachStone(dispatcher)
+	for _, columns in pairs(self.cells) do
+		for _, stone in pairs(columns) do
+			dispatcher(stone)
+		end
+	end
+end
+
 function Board:setToCenter(xAxis, yAxis)
 	Board.super.setToCenter(self, xAxis, yAxis)
 

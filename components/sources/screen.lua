@@ -17,6 +17,12 @@ function Screen:new(config)
 	self.tip = {}
 	self.scenes = {}
 	self.scene = ''
+	self.freeze = {
+		mouseMoved = false,
+		mousePressed = false,
+		mouseReleased = false,
+		keyPressed = false
+	}
 	self.layers = {
 		views = {
 			scene_before = {},
@@ -104,13 +110,16 @@ function Screen:initHooks()
 end
 
 function Screen:catchEvent(event, stage, hook)
-	self.hooks[hook:getAlias()] = hook
+	if not self.hooks[hook:getAlias()] then
+		love.filesystem.append('log.txt', '\ncatch event: '..hook:getAlias()..'\n:'..json.encode(self.hooks))
+		self.hooks[hook:getAlias()] = hook
+	end
 	self.events[event][stage][hook:getAlias()] = true
 end
 
 function Screen:releaseEvent(event, stage, hookAlias)
-	if self.hooks[event][stage][hookAlias] then
-		self.hooks[event][stage][hookAlias] = nil
+	if self.events[event][stage][hookAlias] then
+		self.events[event][stage][hookAlias] = false
 	end
 end
 
@@ -130,6 +139,10 @@ function Screen:update(dt)
 end
 
 function Screen:mouseMoved(x, y, dx, dy, isTouch)
+	if self.freeze.mouseMoved then
+		return
+	end
+
 	self:runHooks('mouseMoved', 'before', {x=x, y=y, dx=dx, dy=dy, isTouch=isTouch})
 
 	local currentScene = self:getCurrentScene()
@@ -139,6 +152,10 @@ function Screen:mouseMoved(x, y, dx, dy, isTouch)
 end
 
 function Screen:mousePressed(x, y, button, isTouch, presses)
+	if self.freeze.mousePressed then
+		return
+	end
+
 	self:runHooks('mousePressed', 'before', {x=x, y=y, button=button, isTouch=isTouch, presses=presses})
 
 	local currentScene = self:getCurrentScene()
@@ -148,6 +165,10 @@ function Screen:mousePressed(x, y, button, isTouch, presses)
 end
 
 function Screen:mouseReleased(x, y, button, isTouch, presses)
+	if self.freeze.mouseReleased then
+		return
+	end
+
 	self:runHooks('mouseReleased', 'before', {x=x, y=y, button=button, isTouch=isTouch, presses=presses})
 
 	local currentScene = self:getCurrentScene()
@@ -157,6 +178,10 @@ function Screen:mouseReleased(x, y, button, isTouch, presses)
 end
 
 function Screen:keyPressed(key)
+	if self.freeze.keyPressed then
+		return
+	end
+
 	self:runHooks('keyPressed', 'before', {key=key})
 
 	local currentScene = self:getCurrentScene()
@@ -244,4 +269,12 @@ end
 
 function Screen:export()
 	return self.layers.data
+end
+
+function Screen:freezeEvent(eventName)
+	self.freeze[eventName] = true
+end
+
+function Screen:unfreezeEvent(eventName)
+	self.freeze[eventName] = false
 end

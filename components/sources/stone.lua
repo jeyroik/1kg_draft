@@ -76,6 +76,10 @@ function MagicStone:getMask()
 	return 'c' .. self.volume
 end
 
+function MagicStone:getMagic()
+	return game.assets:getMisc('magic'):getByType(self:getMask())
+end
+
 -- @return Magic
 function MagicStone:getMagic()
 	return game.assets:getMisc('magic'):getByType(self:getMask())

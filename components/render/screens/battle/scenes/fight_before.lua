@@ -77,8 +77,6 @@ function SceneFightBefore:mousePressed(screen, x, y, button, isTouch, presses)
 end
 
 function  SceneFightBefore:prepare1Player(layerData)
-    local cardDefault = game.assets:getQuads('chars')
-
     layerData.players[1] = Player({
         name = game.profile.name,
         isHuman = true,
@@ -94,6 +92,7 @@ function  SceneFightBefore:prepare1Player(layerData)
     current:addCard(CardFireElemental())
     current:addCard(CardTreeElemental())
     current:addCard(CardLifeElemental())
+    current:addCard(CardWaterElemental())
 
     layerData.players[2] = Player({
         name = 'Computer',
