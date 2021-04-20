@@ -38,6 +38,12 @@ function Player:addCard(card)
 	return false
 end
 
+function Player:addCards(cards)
+	for _, card in pairs(cards) do
+		self:addCard(card)
+	end
+end
+
 function Player:getMagic(magicName)
 	return self.gems[magicName]
 end

@@ -29,6 +29,7 @@ require "components/assets/asset_magic"
 require "components/assets/assets"
 
 require "components/render/screens/screen_battle"
+require "components/render/screens/screen_landscape"
 
 Game = GameObject:extend()
 

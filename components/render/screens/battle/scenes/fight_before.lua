@@ -106,8 +106,6 @@ function  SceneFightBefore:prepare1Player(layerData)
 end
 
 function  SceneFightBefore:prepare2Players(layerData)
-    local cardDefault = game.assets:getQuads('chars')
-
     layerData.players[1] = Player({
         name = game.profile.name,
         isHuman = true,
@@ -118,9 +116,7 @@ function  SceneFightBefore:prepare2Players(layerData)
         defense = game.profile.defense
     })
     local current = layerData:getCurrentPlayer()
-    current:addCard(CardFireElemental())
-    current:addCard(CardTreeElemental())
-    current:addCard(CardLifeElemental())
+    current:addCards({ CardFireElemental(), CardTreeElemental(), CardLifeElemental() })
 
     layerData.players[2] = Player({
         name = game.profile.name .. ' (2)',
@@ -132,9 +128,7 @@ function  SceneFightBefore:prepare2Players(layerData)
         defense = game.profile.defense
     })
     local next = layerData:getNextPlayer()
-    next:addCard(CardFireElemental({width = cardDefault.width, height = cardDefault.height}))
-    next:addCard(CardTreeElemental({width = cardDefault.width, height = cardDefault.height}))
-    next:addCard(CardLifeElemental({width = cardDefault.width, height = cardDefault.height}))
+    next:addCards({ CardFireElemental(), CardTreeElemental(), CardLifeElemental() })
 end
 
 function SceneFightBefore:mouseReleased(screen, x, y, button, isTouch, presses)
