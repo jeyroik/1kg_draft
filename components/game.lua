@@ -48,7 +48,8 @@ function Game:init()
 	self.assets:init()
 
 	self.screens = {
-		battle = BattleScreen(self.screens.battle)
+		battle = BattleScreen(self.screens.battle),
+		landscape = LandscapeScreen(self.screens.landscape)
 	}
 
 	local currentScreen = self:getCurrentScreen()

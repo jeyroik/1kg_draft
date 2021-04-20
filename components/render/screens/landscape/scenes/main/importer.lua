@@ -8,7 +8,11 @@ function LandscapeMainImporter:new()
     }
 
     self.quads = {
-        
+        map = {
+            path = 'map_0.png',
+            columns = 20,
+            rows = 8
+        }
     }
 
     self.cursors = {
