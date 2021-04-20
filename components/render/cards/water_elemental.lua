@@ -16,7 +16,7 @@ function CardWaterElemental:new(config)
             magicParameter = 'mana',
             toEnemy = false,
             cost = {
-                air = 1
+                water = 3
             }
         }),
         passive = {}
