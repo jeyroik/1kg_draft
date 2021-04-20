@@ -5,9 +5,9 @@ function Player:new(config)
 	self.cardsAdded = {}
 	self.cardsCount = 0
 	self.isHuman = false
-	self.battle_magic = {}
 	self.magic = {}
 	self.number = 1
+	self.gems = {}
 
 	config.initializer = 'components/sources/initializers/player'
 
@@ -39,22 +39,46 @@ function Player:addCard(card)
 end
 
 function Player:getMagic(magicName)
-	return self.magic[magicName]
+	return self.gems[magicName]
 end
 
 function Player:getMagicPower(magicName)
 	return self:getMagic(magicName).power
 end
 
+function Player:incMagicPower(magicName, inc)
+	self:incMagicParameter(magicName, 'power', inc)
+end
+
+function Player:decMagicPower(magicName, dec)
+	self:incMagicPower(magicName, -dec)
+end
+
 function Player:getMagicMana(magicName)
 	return self:getMagic(magicName).mana
+end
+
+function Player:incMagicMana(magicName, inc)
+	self:incMagicParameter(magicName, 'mana', inc)
+end
+
+function Player:decMagicMana(magicName, dec)
+	self:incMagicMana(magicName, -dec)
+end
+
+function Player:incMagicParameter(magicName, parameter, inc)
+	self.gems[magicName]:incMagicParameter(parameter, inc)
+end
+
+function Player:decMagicParameter(magicName, parameter, dec)
+	self:incMagicParameter(magicName, parameter, -dec)
 end
 
 -- @param Player player
 -- @param string magicName magic name like 'air'
 -- @return number
 function Player:getMagicAmount(magicName)
-	return self.battle_magic[magicName]
+	return self.gems[magicName].amount
 end
 
 -- @param Card card
@@ -88,7 +112,7 @@ end
 -- @param number amount
 -- @return void
 function Player:incMagicAmount(magicName, amount)
-	self.battle_magic[magicName] = self.battle_magic[magicName] + amount
+	self.gems[magicName].amount = self.gems[magicName].amount + amount
 end
 
 -- @param string magicName magic name like 'air'

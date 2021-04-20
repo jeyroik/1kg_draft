@@ -1,9 +1,9 @@
 BattleFightViewPlayers = LayerView:extend()
 
 function BattleFightViewPlayers:render(data)
-    self:renderMagic(data)
-    self:renderFrameCurrentPlayer(data)
     self:renderCards(data)
+    self:renderFrameCurrentPlayer(data)
+    self:renderMagic(data)
 end
 
 function BattleFightViewPlayers:renderFrameCurrentPlayer(data)
@@ -37,68 +37,18 @@ function BattleFightViewPlayers:renderCards(data)
 end
 
 function BattleFightViewPlayers:renderMagic(data)
-    self:renderPlayer1Magic(data)
-    self:renderPlayer2magic(data)
+    self:renderPlayerGems(data.players[1])
+    self:renderPlayerGems(data.players[2])
 end
 
-function BattleFightViewPlayers:renderPlayer1Magic(data)
-    local player = data.players[1]
-    local sx = player.cards[1].sx
-    local magicX = player.x - 80*sx
-    local magicY = player.y
-    local magicYDelta = 50*sx
-    local perRow = 1
-    local onRow = 0
-    local gemsPack = game.assets:getImagePack('gems')
-    local magics = game.assets:getMisc('magic').items
+function BattleFightViewPlayers:renderPlayerGems(player)
+    local order = game.assets:getMisc('magic').namesOrder
+    for _,name in pairs(order) do
+        local gem = player.gems[name]
 
-    for i=0,10 do
-        local id = 'c'..math.pow(2, i)
-        local magic = magics[id]
-        local value = player:getMagicAmount(magic:getName())
-
-        if gemsPack:get(magic:getType()) then
-            if onRow == perRow then
-                magicX = player.x - 80*sx
-                magicY = magicY + magicYDelta
-                onRow = 0
-            end
-
-            local gem = gemsPack:get(magic:getType())
-            gem:render(magicX, magicY, 0, 0.5*sx, 0.5*sx)
-            love.graphics.print(value, magicX+40*sx, magicY, 0, 2*sx,2*sx)
-            onRow = onRow + 1
-        end
-    end
-end
-
-function BattleFightViewPlayers:renderPlayer2magic(data)
-    local player = data.players[2]
-    local sx = player.cards[1].sx
-    local magicX = player.x + player.cards[1].width*sx + 20*sx
-    local magicY = player.y
-    local magicYDelta = 50*sx
-    local perRow = 1
-    local onRow = 0
-    local gemsPack = game.assets:getImagePack('gems')
-    local magics = game.assets:getMisc('magic').items
-
-    for i=0,10 do
-        local id = 'c'..math.pow(2, i)
-        local magic = magics[id]
-        local value = player:getMagicAmount(magic:getName())
-
-        if gemsPack:get(magic:getType()) then
-            if onRow == perRow then
-                magicX = player.x + player.cards[1].width*sx + 20*sx
-                magicY = magicY + magicYDelta
-                onRow = 0
-            end
-
-            local gem = gemsPack:get(magic:getType())
-            gem:render(magicX, magicY, 0, 0.5*sx, 0.5*sx)
-            love.graphics.print(value, magicX+40*sx, magicY, 0, 2*sx,2*sx)
-            onRow = onRow + 1
+        gem:render('image+amount')
+        if gem.isHovered then
+            gem:render('title')
         end
     end
 end

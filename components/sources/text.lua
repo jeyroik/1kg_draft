@@ -26,3 +26,8 @@ function Text:render(dx, dy, radian, sx, sy)
 
 	love.graphics.draw(self.source, dx + self.x, dy + self.y, radian, sx, sy)
 end
+
+function Text:setBody(text)
+	self.body = text
+	self.source:set(text)
+end

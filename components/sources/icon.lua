@@ -4,8 +4,8 @@ Icon = Source:extend()
 -- @param Text text
 -- @return void
 function Icon:new(config)
-	self.image = image
-	self.text = text
+	self.image = {}
+	self.text = {}
 
 	config.initializer = 'components/sources/initializers/icon'
 

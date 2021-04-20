@@ -150,6 +150,5 @@ function SceneFightBefore:mouseReleased(screen, x, y, button, isTouch, presses)
 end
 
 function SceneFightBefore:update(screen)
-    --game.assets:getButton('pl1'):setToCenter(true)
-    --game.assets:getButton('pl2'):setToCenter(true)
+
 end

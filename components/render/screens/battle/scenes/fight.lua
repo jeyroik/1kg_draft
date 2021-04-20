@@ -42,6 +42,13 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
 
     for i=1,2 do
         pl = layerData.players[i]
+        for _,magicGem in pairs(pl.gems) do
+            if magicGem:isMouseOn(x,y) then
+                magicGem.isHovered = true
+            else
+                magicGem.isHovered = false
+            end
+        end
         for _, card in pairs(pl.cards) do
             if card:isMouseOn(x, y) and card.skill.active.cost then
                 local icons = {}

@@ -35,6 +35,19 @@ function MagicAsset:new()
         death = 'c2048',
         death_ultra = 'c4096'
     }
+
+    self.namesOrder = {
+        'air',
+        'water',
+        'tree',
+        'fire',
+        'life',
+        'air_ultra',
+        'water_ultra',
+        'tree_ultra',
+        'fire_ultra',
+        'life_ultra'
+    }
 end
 
 function MagicAsset:getByType(typeName)
