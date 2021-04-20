@@ -38,11 +38,12 @@ function HookMagicSelect:render()
         sx = 2,
         sy = 2,
         overlay_mode = 'fill',
-        overlay_color = {1,1,1,0.7},
+        overlay_color = {0,0,0,0.5},
         overlay_offset = 15
     })
     --text:setToCenter(true)
-    text:setToPart(3, 2, 4)
+    text:setToPart(5, 2, 8)
+    text:resetOverlay()
     text:render()
 
     if self.stoneTip.x then
