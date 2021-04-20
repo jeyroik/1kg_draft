@@ -27,9 +27,9 @@ function SkillMagicChange:use(layerData)
     local hook = HookMagicSelect()
     layerData.magic_select_skill = self
     screen:freezeEvent('keyPressed')
-    screen:catchEvent('mousePressed', 'before', hook)
-    screen:catchEvent('mouseMoved', 'before', hook)
-    screen:catchEvent('render', 'before', hook)
+    screen:catchEvent('mousePressed', 'after', hook)
+    screen:catchEvent('mouseMoved', 'after', hook)
+    screen:catchEvent('render', 'after', hook)
 end
 
 function SkillMagicChange:magicSelected(layerData, magic)
@@ -37,12 +37,13 @@ function SkillMagicChange:magicSelected(layerData, magic)
     self.mutators.magic_change.magicName = self.magicName
 
     local hook = HookMagicSelect()
+    local screen = game:getCurrentScreen()
 
-    screen:releaseEvent('mousePressed', 'before', hook:getAlias())
-    screen:releaseEvent('mouseMoved', 'before', hook:getAlias())
-    screen:releaseEvent('render', 'before', hook:getAlias())
+    screen:releaseEvent('mousePressed', 'after', hook:getAlias())
+    screen:releaseEvent('mouseMoved', 'after', hook:getAlias())
+    screen:releaseEvent('render', 'after', hook:getAlias())
     screen:unfreezeEvent('keyPressed')
 
-    SkillMagicChange.super.use(layerData)
     layerData.magic_select_skill = nil
+    SkillMagicChange.super.use(self, layerData)
 end

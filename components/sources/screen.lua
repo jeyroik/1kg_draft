@@ -111,7 +111,6 @@ end
 
 function Screen:catchEvent(event, stage, hook)
 	if not self.hooks[hook:getAlias()] then
-		love.filesystem.append('log.txt', '\ncatch event: '..hook:getAlias()..'\n:'..json.encode(self.hooks))
 		self.hooks[hook:getAlias()] = hook
 	end
 	self.events[event][stage][hook:getAlias()] = true
@@ -124,8 +123,10 @@ function Screen:releaseEvent(event, stage, hookAlias)
 end
 
 function Screen:runHooks(event, stage, args)
-	for alias in pairs(self.events[event][stage]) do
-		self.hooks[alias]:catch(self, args, event, stage)
+	for alias,available in pairs(self.events[event][stage]) do
+		if available then
+			self.hooks[alias]:catch(self, args, event, stage)
+		end
 	end
 end
 

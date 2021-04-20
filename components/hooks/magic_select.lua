@@ -19,11 +19,12 @@ function HookMagicSelect:catch(screen, args, event, stage)
 end
 
 function HookMagicSelect:mousePressed(screen, args)
-    local board = screen:getData().board
+    local data = screen:getData()
+    local board = data.board
     board:forEachStone(function(stone)
         if stone:isMouseOn(args.x, args.y) then
             self.stoneTip = {}
-            self.magicName = stone:getMagic():getName()
+            data.magic_select_skill:magicSelected(data, stone:getMagic())
         end
     end)
 end
@@ -37,15 +38,20 @@ end
 function HookMagicSelect:mouseMoved(screen, args)
     local board = screen:getData().board
     board:forEachStone(function(stone)
-        if stone:isMouseOn(args.x, args.y) then
+        if stone:isMouseOn(args.x, args.y) and (stone.volume > 1) then
+            game.assets:getCursor('hand'):setOn()
             self.stoneTip = TextOverlay({
                 body = game.assets:getMisc('magic'):getByType(stone:getMask()):getTitle(),
                 x = args.x,
                 y = args.y,
                 overlay_mode = 'fill',
-                overlay_color = {1,1,1,0.3},
+                overlay_color = {1,1,1,0.5},
                 overlay_offset = 5
             })
+            self.stoneTip.x = self.stoneTip.x-self.stoneTip:getWidth()-10
+            self.stoneTip:resetOverlay()
+        else
+            game.assets:getCursor('hand'):reset()
         end
     end)
 end
