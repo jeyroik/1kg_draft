@@ -58,11 +58,18 @@ function Board:render(dx, dy)
 end
 
 function Board:forEachStone(dispatcher)
-	for _, columns in pairs(self.cells) do
-		for _, stone in pairs(columns) do
-			dispatcher(stone)
+	local loop = function(func)
+		for _, columns in pairs(self.cells) do
+			for _, stone in pairs(columns) do
+				local continue = func(stone)
+				if not continue then
+					return
+				end
+			end
 		end
 	end
+
+	loop(dispatcher)
 end
 
 function Board:setToCenter(xAxis, yAxis)

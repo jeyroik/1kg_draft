@@ -22,14 +22,29 @@ function HookMagicSelect:mousePressed(screen, args)
     local data = screen:getData()
     local board = data.board
     board:forEachStone(function(stone)
-        if stone:isMouseOn(args.x, args.y) then
+        if stone:isMouseOn(args.x, args.y) and (stone.volume > 1) and (stone.volume < 2048) then
             self.stoneTip = {}
             data.magic_select_skill:magicSelected(data, stone:getMagic())
+            return false
+        else
+            return true
         end
     end)
 end
 
 function HookMagicSelect:render()
+    local text = TextOverlay({
+        body = 'Please, choose gem',
+        sx = 2,
+        sy = 2,
+        overlay_mode = 'fill',
+        overlay_color = {1,1,1,0.7},
+        overlay_offset = 15
+    })
+    --text:setToCenter(true)
+    text:setToPart(3, 2, 4)
+    text:render()
+
     if self.stoneTip.x then
         self.stoneTip:render()
     end
@@ -37,8 +52,9 @@ end
 
 function HookMagicSelect:mouseMoved(screen, args)
     local board = screen:getData().board
+
     board:forEachStone(function(stone)
-        if stone:isMouseOn(args.x, args.y) and (stone.volume > 1) then
+        if stone:isMouseOn(args.x, args.y) and (stone.volume > 1) and (stone.volume < 2048) then
             game.assets:getCursor('hand'):setOn()
             self.stoneTip = TextOverlay({
                 body = game.assets:getMisc('magic'):getByType(stone:getMask()):getTitle(),
@@ -50,8 +66,12 @@ function HookMagicSelect:mouseMoved(screen, args)
             })
             self.stoneTip.x = self.stoneTip.x-self.stoneTip:getWidth()-10
             self.stoneTip:resetOverlay()
+
+            return false
         else
             game.assets:getCursor('hand'):reset()
+            self.stoneTip = {}
+            return true
         end
     end)
 end

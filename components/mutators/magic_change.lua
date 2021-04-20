@@ -14,9 +14,6 @@ function MutatorMagicChange:apply(layerData, context)
 
     self:applyConfig(context)
 
-    love.filesystem.append('log.txt', '\nMutatorMagicChange:apply() - change '
-            ..self.magicName..' '..self.magicParameter..' by '..self.amount
-    )
     target:incMagicParameter(self.magicName, self.magicParameter, self.amount)
 end
 
