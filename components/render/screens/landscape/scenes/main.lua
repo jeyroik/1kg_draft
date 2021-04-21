@@ -32,6 +32,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
         self.translate.y = self.translate.y + (self.translate.start.y - y)
         self.translate.start.y = self.translate.start.y-(self.translate.start.y - y)
     end
+
     local map = game.assets:getMap('main')
 
     map:forEach('characters', function (char)
@@ -77,6 +78,18 @@ end
 
 function SceneMain:mouseReleased(screen, x, y, button, isTouch, presses)
     self.translate.move = false
+end
+
+function SceneMain:keyPressed(screen, key)
+    if key == 'left' then
+        self.translate.x = self.translate.x+10
+    elseif key == 'right' then
+        self.translate.x = self.translate.x-10
+    elseif key == 'up' then
+        self.translate.y = self.translate.y+10
+    elseif key == 'down' then
+        self.translate.y = self.translate.y-10
+    end
 end
 
 function SceneMain:update(screen)
