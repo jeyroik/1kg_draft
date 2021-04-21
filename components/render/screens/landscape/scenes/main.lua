@@ -21,9 +21,11 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 
     map:forEach('characters', function (char)
         if (char.number > 0) and char:isMouseOn(x, y) then
+            char:changeNumberTo(46)
             game.assets:getCursor('hand'):setOn()
             return false
         else
+            char:restoreNumber()
             game.assets:getCursor('hand'):reset()
             return true
         end
