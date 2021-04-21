@@ -17,7 +17,17 @@ function SceneMain:init(screen)
 end
 
 function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
+    local map = game.assets:getMap('main')
 
+    map:forEach('characters', function (char)
+        if (char.number > 0) and char:isMouseOn(x, y) then
+            game.assets:getCursor('hand'):setOn()
+            return false
+        else
+            game.assets:getCursor('hand'):reset()
+            return true
+        end
+    end)
 
 end
 

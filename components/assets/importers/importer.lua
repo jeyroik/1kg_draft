@@ -11,6 +11,7 @@ function AssetImporter:new(config)
     self.cursors = {}
     self.mutators = {}
     self.buttons = {}
+    self.maps = {}
 
     AssetImporter.super.new(self, config)
 end
@@ -32,6 +33,10 @@ function AssetImporter:importAssets(assetsManager)
 
     for alias, config in pairs(self.quads) do
         assetsManager:addQuads(alias, config.path, config.columns, config.rows)
+    end
+
+    for alias, config in pairs(self.maps) do
+        assetsManager:addMap(alias, config)
     end
 
     for alias, misc in pairs(self.misc) do

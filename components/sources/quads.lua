@@ -4,7 +4,7 @@ function Quads:new(config)
     self.columns = 0
     self.rows = 0
 
-    config.initializer = 'components/sources/initializers/quads'
+    config.initializer = config.initializer or 'components/sources/initializers/quads'
 
     Quads.super.new(self, config)
 end
@@ -16,5 +16,9 @@ function Quads:render(num, dx, dy, radian, sx, sy)
     sx = sx or self.sx
     sy = sy or self.sy
 
-    love.graphics.draw(self.image.source, self.source[num], self.x+dx, self.y+dy, radian, sx, sy)
+    if num > 0 then
+        love.graphics.draw(
+                self.image.source,
+                self.source[num], self.x+dx, self.y+dy, radian, sx, sy)
+    end
 end

@@ -16,6 +16,7 @@ function Assets:new(config)
 	self.cursors = {}
 	self.mutators = {}
 	self.buttons = {}
+	self.maps = {}
 
 	self:applyConfig(config)
 end
@@ -50,6 +51,10 @@ end
 -- @return Quads
 function Assets:getQuads(name)
 	return self.quads[name]
+end
+
+function Assets:getMap(name)
+	return self.maps[name]
 end
 
 -- @param string name
@@ -92,6 +97,10 @@ end
 
 function Assets:addQuads(alias, path, columnsCount, rowsCount)
 	self.quads[alias] = Quads({ path = path, columns = columnsCount, rows = rowsCount })
+end
+
+function Assets:addMap(alias, config)
+	self.maps[alias] = Map(config)
 end
 
 function Assets:addCursor(alias, name)
