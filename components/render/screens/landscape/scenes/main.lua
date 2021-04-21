@@ -11,6 +11,12 @@ function SceneMain:new(config)
         LandscapeMainViewMap()
     }
     self.label = {}
+    self.translate = {
+        x=0,
+        y=0,
+        start = {x=0,y=0},
+        move = false
+    }
 end
 
 function SceneMain:init(screen)
@@ -18,6 +24,14 @@ function SceneMain:init(screen)
 end
 
 function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
+
+    if self.translate.move then
+        self.translate.x = self.translate.x + (self.translate.start.x - x)
+        self.translate.start.x = self.translate.start.x-(self.translate.start.x - x)
+
+        self.translate.y = self.translate.y + (self.translate.start.y - y)
+        self.translate.start.y = self.translate.start.y-(self.translate.start.y - y)
+    end
     local map = game.assets:getMap('main')
 
     map:forEach('characters', function (char)
@@ -50,16 +64,19 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
     else
         self.label = {}
     end
+
+    map = nil
+    farm = nil
 end
 
 function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
-
-
+    self.translate.move = true
+    self.translate.start.x = x
+    self.translate.start.y = y
 end
 
 function SceneMain:mouseReleased(screen, x, y, button, isTouch, presses)
-
-
+    self.translate.move = false
 end
 
 function SceneMain:update(screen)

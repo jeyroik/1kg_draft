@@ -42,7 +42,6 @@ function InitializerMapObject:initSource(mapObject)
     mapObject.y = y
     mapObject.width = width
     mapObject.height = height+mapObject.map.height
-    mapObject.map = nil
 end
 
 return InitializerMapObject
