@@ -34,7 +34,9 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
         end
     end)
 
-    if map:isMouseOnObject(x, y, 'farm') then
+    local farm = map:getObject('farm')
+
+    if farm:isMouseOn(x, y) then
         self.label = TextOverlay({
             body = 'This is a farm',
             x = x+5,

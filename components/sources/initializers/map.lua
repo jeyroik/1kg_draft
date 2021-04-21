@@ -22,6 +22,19 @@ function InitializerMap:initSource(map)
             end
         end
     end
+
+    self:initObjects(map)
+end
+
+function InitializerMap:initObjects(map)
+    for name, mapObject in pairs(map.objects) do
+        map.mapObjects[name] = MapObject({
+            name = name,
+            schema = mapObject.schema,
+            layer = mapObject.layer,
+            map = map
+        })
+    end
 end
 
 return InitializerMap

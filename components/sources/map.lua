@@ -1,12 +1,18 @@
+require "components/sources/map/cell"
+require "components/sources/map/object"
+
 Map = Quads:extend()
 
 function Map:new(config)
     self.layers = {}
-    self.renderPath = {}
     self.map = {}
+
+    self.objects = {}
+    self.mapObjects = {}
+
+    self.renderPath = {}
     self.totalWidth = 0
     self.totalHeight = 0
-    self.objects = {}
 
     config.initializer = 'components/sources/initializers/map'
     Map.super.new(self, config)
@@ -47,6 +53,10 @@ function Map:forEach(layerName, dispatcher)
     loop()
 end
 
+function Map:getObject(name)
+    return self.mapObjects[name]
+end
+
 function Map:isMouseOnObject(x, y, objectName)
     local object = self.objects[objectName]
 
@@ -54,13 +64,11 @@ function Map:isMouseOnObject(x, y, objectName)
         return false
     end
 
-    for layerName, parts in pairs(object) do
-        for _, part in pairs(parts) do
-            local row, column = part[1], part[2]
-            local cell = self.map[layerName][row][column]
-            if cell and cell:isMouseOn(x, y) then
-                return true
-            end
+    for _, part in pairs(object.schema) do
+        local row, column = part[1], part[2]
+        local cell = self.map[object.layer][row][column]
+        if cell and cell:isMouseOn(x, y) then
+            return true
         end
     end
 
