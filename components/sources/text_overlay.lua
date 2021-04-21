@@ -12,6 +12,8 @@ function TextOverlay:new(config)
 end
 
 function TextOverlay:render(dx, dy, radian, sx, sy)
+    dx, dy, radian, sx, sy = self:validateParams(dx, dy, radian, sx, sy)
+
     self.overlay:render(dx, dy)
     TextOverlay.super.render(self, dx, dy, radian, sx, sy)
 end

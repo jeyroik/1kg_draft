@@ -18,6 +18,16 @@ function Source:new(config)
     end
 end
 
+function Source:validateParams(dx, dy, radian, sx, sy)
+    dx = dx or 0
+    dy = dy or 0
+    radian = radian or 0
+    sx = sx or 1
+    sy = sy  or 1
+
+    return dx, dy, radian, sx, sy
+end
+
 function Source:export()
     local this = self
     this.source = {}

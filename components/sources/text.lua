@@ -21,8 +21,8 @@ function Text:render(dx, dy, radian, sx, sy)
 	dx = dx or 0
 	dy = dy or 0
 	radian = radian or 0
-	sx = sx or self.sx
-	sy = sy or self.sy
+	sx = sx and sx*self.sx or self.sx
+	sy = sy and sy*self.sy or self.sy
 
 	love.graphics.draw(self.source, dx + self.x, dy + self.y, radian, sx, sy)
 end

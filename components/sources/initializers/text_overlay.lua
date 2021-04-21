@@ -6,8 +6,8 @@ function InitializerTextOverlay:initSource(text)
         mode = text.overlay_mode,
         x = text.x - text.overlay_offset,
         y = text.y - text.overlay_offset,
-        width = text:getWidth() * text.sx + text.overlay_offset*2,
-        height = text:getHeight() * text.sy + text.overlay_offset*2,
+        width = text.source:getWidth() * text.sx + text.overlay_offset*2,
+        height = text.source:getHeight() * text.sy + text.overlay_offset*2,
         color = text.overlay_color
     })
 end

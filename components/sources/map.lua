@@ -6,6 +6,7 @@ function Map:new(config)
     self.map = {}
     self.totalWidth = 0
     self.totalHeight = 0
+    self.objects = {}
 
     config.initializer = 'components/sources/initializers/map'
     Map.super.new(self, config)
@@ -44,4 +45,24 @@ function Map:forEach(layerName, dispatcher)
     end
 
     loop()
+end
+
+function Map:isMouseOnObject(x, y, objectName)
+    local object = self.objects[objectName]
+
+    if not object then
+        return false
+    end
+
+    for layerName, parts in pairs(object) do
+        for _, part in pairs(parts) do
+            local row, column = part[1], part[2]
+            local cell = self.map[layerName][row][column]
+            if cell and cell:isMouseOn(x, y) then
+                return true
+            end
+        end
+    end
+
+    return false
 end

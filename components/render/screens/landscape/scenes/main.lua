@@ -10,6 +10,7 @@ function SceneMain:new(config)
     self.views = {
         LandscapeMainViewMap()
     }
+    self.label = {}
 end
 
 function SceneMain:init(screen)
@@ -21,7 +22,9 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 
     map:forEach('characters', function (char)
         if (char.number > 0) and char:isMouseOn(x, y) then
-            char:changeNumberTo(46)
+            if char.number ~= 46 then
+                char:changeNumberTo(46)
+            end
             game.assets:getCursor('hand'):setOn()
             return false
         else
@@ -31,6 +34,20 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
         end
     end)
 
+    if map:isMouseOnObject(x, y, 'farm') then
+        self.label = TextOverlay({
+            body = 'This is a farm',
+            x = x+5,
+            y = y+5,
+            overlay_mode = 'fill',
+            overlay_color = {0,0,0,0.3},
+            overlay_offset = 5,
+            sx = 2,
+            sy = 2
+        })
+    else
+        self.label = {}
+    end
 end
 
 function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
