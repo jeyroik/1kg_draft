@@ -20,6 +20,18 @@ function TextOverlay:render(dx, dy, radian, sx, sy)
         dx = self.love.width - (top.right.x+dx)
     end
 
+    if top.left.x+dx < 0 then
+        dx = 0 - (top.left.x+dx)
+    end
+
+    if top.left.y+dy > self.love.height then
+        dy = self.love.height - (top.left.y+dy)
+    end
+
+    if top.left.y+dy < 0 then
+        dy = 0 - (top.left.y+dy)
+    end
+
     self.overlay:render(dx, dy)
     TextOverlay.super.render(self, dx, dy, radian, sx, sy)
 end

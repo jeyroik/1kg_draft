@@ -32,11 +32,6 @@ end
 function VisibleObject:isMouseOn(mouseX, mouseY)
 	local top, bottom = self:getEdges()
 
-	top.left.x = top.left.x + game.translate.x
-	top.right.x = top.right.x + game.translate.x
-	top.left.y = top.left.y + game.translate.y
-	bottom.left.y = bottom.left.y + game.translate.y
-
 	if mouseX >= top.left.x and mouseX <= top.right.x and mouseY >= top.left.y and mouseY <= bottom.left.y then
 		return true
 	end
@@ -108,12 +103,12 @@ end
 -- @return {left={x,y}, right={x,y}} top, {left={x,y}, right={x,y}} bottom
 function VisibleObject:getEdges()
 	local top = {
-		left = {x=self.x, y=self.y},
-		right = {x=self.x+self.width*self.sx, y=self.y}
+		left = {x=self.x+ game.translate.x, y=self.y+game.translate.y},
+		right = {x=self.x+ game.translate.x+self.width*self.sx, y=self.y+game.translate.y}
 	}
 	local bottom = {
-		left = {x=self.x, y=self.y+self.height*self.sy},
-		right = {x=self.x+self.width*self.sx, y=self.y+self.height*self.sy}
+		left = {x=self.x+ game.translate.x, y=self.y+game.translate.y+self.height*self.sy},
+		right = {x=self.x+ game.translate.x+self.width*self.sx, y=self.y+game.translate.y+self.height*self.sy}
 	}
 	
 	return top, bottom
@@ -125,7 +120,6 @@ end
 -- @return {left={x,y}, right={x,y}} top, {left={x,y}, right={x,y}} bottom
 function VisibleObject:getEdgesFrame(dx, dy)
 	dy = dy or dx
-	
 	local top = {
 		left = {x=self.x-dx, y=self.y-dy},
 		right = {x=self.x+self.width+dx, y=self.y-dy},

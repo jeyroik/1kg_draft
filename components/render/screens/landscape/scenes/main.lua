@@ -50,8 +50,8 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
         if mapObject:isMouseOn(x, y) then
             self.label = TextOverlay({
                 body = mapObject.title..'\n'..mapObject.description,
-                x = x+5,
-                y = y+5,
+                x = x+5-game.translate.x,
+                y = y+5-game.translate.y,
                 overlay_mode = 'fill',
                 overlay_color = {0,0,0,0.3},
                 overlay_offset = 5,

@@ -14,14 +14,8 @@ function LandscapeMainViewMap:render(data, scene)
         scene.label:render()
         local selectedObject = map:getObject(scene.selected)
         selectedObject:drawSelection()
-        love.graphics.print(selectedObject.x..','..selectedObject.y, selectedObject.x-5, selectedObject.y-5)
     else
         game.assets:getCursor('hand'):reset()
     end
     love.graphics.translate(-game.translate.x, -game.translate.y)
-
-    love.graphics.print(
-        'translate.x = '..game.translate.x,
-        100,100
-    )
 end
