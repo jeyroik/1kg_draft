@@ -14,6 +14,12 @@ end
 function TextOverlay:render(dx, dy, radian, sx, sy)
     dx, dy, radian, sx, sy = self:validateParams(dx, dy, radian, sx, sy)
 
+    local top = self.overlay:getEdges()
+
+    if top.right.x+dx > self.love.width then
+        dx = self.love.width - (top.right.x+dx)
+    end
+
     self.overlay:render(dx, dy)
     TextOverlay.super.render(self, dx, dy, radian, sx, sy)
 end

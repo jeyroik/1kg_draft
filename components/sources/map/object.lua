@@ -2,6 +2,8 @@ MapObject = Source:extend()
 
 function MapObject:new(config)
     self.name = ''
+    self.title = ''
+    self.description = ''
     self.schema = {}
     self.map = {}
     self.layer = ''

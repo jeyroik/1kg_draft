@@ -85,6 +85,8 @@ function LandscapeMainImporter:new()
             },
             objects = {
                 paddock = {
+                    title = 'Paddock',
+                    description = 'Small, but pretty cute paddock.',
                     layer = 'terrain',
                     schema = {
                         { 1,2 },{ 1,3 },{ 1,4 },{ 1,5 },{ 1,6 },{ 1,7 },{ 1,8 },
@@ -96,6 +98,8 @@ function LandscapeMainImporter:new()
                     }
                 },
                 city1 = {
+                    title = 'Pervograd',
+                    description = 'This is the first city you will see entering this lands',
                     layer = 'terrain',
                     schema = {
                         {  5,18 },{  5,19 },{  5,20 },{  5,21 },{  5,22 },{  5,23 },{  5,24 },

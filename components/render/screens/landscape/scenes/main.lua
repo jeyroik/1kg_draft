@@ -52,40 +52,24 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 
     self.label = {}
 
-    local paddock = map:getObject('paddock')
-
-    if paddock:isMouseOn(x, y) then
-        self.label = TextOverlay({
-            body = 'This is a paddock',
-            x = x+5,
-            y = y+5,
-            overlay_mode = 'fill',
-            overlay_color = {0,0,0,0.3},
-            overlay_offset = 5,
-            sx = 2,
-            sy = 2
-        })
-        self.selected = 'paddock'
-    end
-
-    local city1 = map:getObject('city1')
-
-    if city1:isMouseOn(x, y) then
-        self.label = TextOverlay({
-            body = 'This is a City1',
-            x = x+5,
-            y = y+5,
-            overlay_mode = 'fill',
-            overlay_color = {0,0,0,0.3},
-            overlay_offset = 5,
-            sx = 2,
-            sy = 2
-        })
-        self.selected = 'city1'
-    end
-
-    map = nil
-    paddock = nil
+    map:forEachObject(function(mapObject)
+        if mapObject:isMouseOn(x, y) then
+            self.label = TextOverlay({
+                body = mapObject.title..'\n'..mapObject.description,
+                x = x+5,
+                y = y+5,
+                overlay_mode = 'fill',
+                overlay_color = {0,0,0,0.3},
+                overlay_offset = 5,
+                sx = 2,
+                sy = 2
+            })
+            self.selected = mapObject.name
+            return false
+        else
+            return true
+        end
+    end)
 end
 
 function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)

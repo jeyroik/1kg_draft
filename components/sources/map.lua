@@ -57,6 +57,19 @@ function Map:getObject(name)
     return self.mapObjects[name]
 end
 
+function Map:forEachObject(dispatcher)
+    local loop = function()
+        for _, mapObject in pairs(self.mapObjects) do
+            local continue = dispatcher(mapObject)
+            if not continue then
+                return
+            end
+        end
+    end
+
+    loop()
+end
+
 function Map:isMouseOnObject(x, y, objectName)
     local object = self.objects[objectName]
 

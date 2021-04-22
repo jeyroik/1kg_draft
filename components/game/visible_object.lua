@@ -13,6 +13,10 @@ function VisibleObject:new(config)
 	self.radian = 0
 	self.sx = 1
 	self.sy = 1
+	self.love = {
+		width = love.graphics.getWidth(),
+		height = love.graphics.getHeight()
+	}
 
 	VisibleObject.super.new(self, config)
 end
