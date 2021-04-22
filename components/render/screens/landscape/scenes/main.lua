@@ -11,6 +11,7 @@ function SceneMain:new(config)
         LandscapeMainViewMap()
     }
     self.label = {}
+    self.selected = ''
     self.translate = {
         x=0,
         y=0,
@@ -49,6 +50,8 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
         end
     end)
 
+    self.label = {}
+
     local paddock = map:getObject('paddock')
 
     if paddock:isMouseOn(x, y) then
@@ -62,12 +65,27 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
             sx = 2,
             sy = 2
         })
-    else
-        self.label = {}
+        self.selected = 'paddock'
+    end
+
+    local city1 = map:getObject('city1')
+
+    if city1:isMouseOn(x, y) then
+        self.label = TextOverlay({
+            body = 'This is a City1',
+            x = x+5,
+            y = y+5,
+            overlay_mode = 'fill',
+            overlay_color = {0,0,0,0.3},
+            overlay_offset = 5,
+            sx = 2,
+            sy = 2
+        })
+        self.selected = 'city1'
     end
 
     map = nil
-    farm = nil
+    paddock = nil
 end
 
 function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)

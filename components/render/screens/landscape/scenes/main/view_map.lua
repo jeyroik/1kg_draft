@@ -9,11 +9,13 @@ function LandscapeMainViewMap:render(data, scene)
     local map = game.assets:getMap(self.map_name)
     love.graphics.translate(scene.translate.x, scene.translate.y)
     map:render()
-    love.graphics.translate(-scene.translate.x, -scene.translate.y)
-
     if scene.label.x then
+        game.assets:getCursor('hand'):setOn()
         scene.label:render()
-        local paddock = map:getObject('paddock')
-        paddock:drawSelection()
+        local selectedObject = map:getObject(scene.selected)
+        selectedObject:drawSelection()
+    else
+        game.assets:getCursor('hand'):reset()
     end
+    love.graphics.translate(-scene.translate.x, -scene.translate.y)
 end

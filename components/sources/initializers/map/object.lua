@@ -5,7 +5,6 @@ function InitializerMapObject:initSource(mapObject)
     local y = '-'
     local width = 0
     local height = 0
-    
     local schema = mapObject.schema
 
     for _,particle in pairs(schema) do
@@ -40,8 +39,8 @@ function InitializerMapObject:initSource(mapObject)
 
     mapObject.x = x
     mapObject.y = y
-    mapObject.width = width
-    mapObject.height = height+mapObject.map.height*mapObject.map.sy
+    mapObject.width = width-x+mapObject.map.width*mapObject.map.sx
+    mapObject.height = height-y+mapObject.map.height*mapObject.map.sy
 end
 
 return InitializerMapObject
