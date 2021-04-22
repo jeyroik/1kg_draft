@@ -258,3 +258,16 @@ function VisibleObject:restoreCoords(x, y)
 	self.x = x and self.xSource or self.x
 	self.y = y and self.ySource or self.y
 end
+
+function VisibleObject:drawSelection(dx, dy, color, mode)
+	dx = dx or 5
+	dy = dy or 5
+	mode = mode or 'line'
+	color = color or {1,1,1,1}
+
+	local top, _, size = self:getEdgesFrame(dx, dy)
+
+	love.graphics.setColor(color)
+	love.graphics.rectangle(mode, top.left.x, top.left.y, size.width, size.height)
+	love.graphics.setColor({1,1,1,1})
+end

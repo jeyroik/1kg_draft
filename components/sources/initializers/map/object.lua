@@ -41,7 +41,7 @@ function InitializerMapObject:initSource(mapObject)
     mapObject.x = x
     mapObject.y = y
     mapObject.width = width
-    mapObject.height = height+mapObject.map.height
+    mapObject.height = height+mapObject.map.height*mapObject.map.sy
 end
 
 return InitializerMapObject

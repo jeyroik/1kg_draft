@@ -13,5 +13,7 @@ function LandscapeMainViewMap:render(data, scene)
 
     if scene.label.x then
         scene.label:render()
+        local paddock = map:getObject('paddock')
+        paddock:drawSelection()
     end
 end
