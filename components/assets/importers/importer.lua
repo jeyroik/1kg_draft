@@ -12,6 +12,7 @@ function AssetImporter:new(config)
     self.mutators = {}
     self.buttons = {}
     self.maps = {}
+    self.cards = {}
 
     AssetImporter.super.new(self, config)
 end
@@ -53,5 +54,9 @@ function AssetImporter:importAssets(assetsManager)
 
     for alias, path in pairs(self.mutators) do
         assetsManager:addMutator(alias, path)
+    end
+
+    for alias, path in pairs(self.cards) do
+        assetsManager:addCard(alias, path)
     end
 end

@@ -1,5 +1,6 @@
 require "components/render/screens/battle/data"
 require "components/render/screens/battle/scenes/fight_before"
+require "components/render/screens/battle/scenes/fight_cards"
 require "components/render/screens/battle/scenes/fight"
 require "components/render/screens/battle/scenes/fight_after"
 
@@ -11,6 +12,7 @@ function BattleScreen:new(config)
 	self.scene = 'fight_before'
 	self.scenes = {
 		fight_before = SceneFightBefore(),
+		fight_cards = SceneFightCards(),
 		fight = SceneFight(),
 		fight_the_end = SceneFightAfter()
 	}

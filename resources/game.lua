@@ -5,6 +5,7 @@ return {
         importers = {
             {path = 'components/magic/importer'},
             {path = 'components/mutators/importer'},
+            {path = 'components/render/cards/importer'},
             {path = 'components/render/screens/battle/scenes/fight_before/importer'},
             {path = 'components/render/screens/battle/scenes/fight/importer'},
             {path = 'components/render/screens/battle/scenes/fight_after/importer'},

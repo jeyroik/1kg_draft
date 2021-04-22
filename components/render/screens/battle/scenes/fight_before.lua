@@ -64,15 +64,17 @@ function SceneFightBefore:mousePressed(screen, x, y, button, isTouch, presses)
         data.mode = 1
         modeIsChosen = true
         self:prepare1Player(data)
+        data.mode = 'vs PC'
     elseif pl2:isMouseOn(x, y) then
         pl2:click()
         data.mode = 2
         modeIsChosen = true
         self:prepare2Players(data)
+        data.mode = 'vs Player'
     end
 
     if modeIsChosen then
-        screen:changeSceneTo('fight')
+        screen:changeSceneTo('fight_cards')
     end
 end
 

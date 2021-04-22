@@ -16,6 +16,8 @@ function love.draw()
 	game:render()
 
 	love.graphics.print(mouse.x..', '..mouse.y, mouse.x + 3, mouse.y-10)
+	
+	
 end
 
 function love.mousemoved( x, y, dx, dy, isTouch )

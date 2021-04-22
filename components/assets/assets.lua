@@ -17,6 +17,7 @@ function Assets:new(config)
 	self.mutators = {}
 	self.buttons = {}
 	self.maps = {}
+	self.cards = {}
 
 	self:applyConfig(config)
 end
@@ -81,6 +82,12 @@ function Assets:getButton(name)
 	return self.buttons[name]
 end
 
+-- @param string name
+-- @return Card
+function Assets:getCard(name)
+	return self.cards[name]
+end
+
 -- @param string alias
 -- @param table fx
 function Assets:addFx(alias, fx)
@@ -118,6 +125,11 @@ end
 
 function Assets:addButton(alias, button)
 	self.buttons[alias] = Button(button)
+end
+
+function Assets:addCard(alias, path)
+	local card = require(path)
+	self.cards[alias] = card()
 end
 
 return Assets

@@ -70,6 +70,15 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
     game.translate.move = true
     game.translate.start.x = x
     game.translate.start.y = y
+
+    game.assets:getMap('main'):forEachObject(function(mapObject)
+        if mapObject.name == 'city1' and mapObject:isMouseOn(x, y) then
+            game:changeStateTo('battle')
+            return false
+        else
+            return true
+        end
+    end)
 end
 
 function SceneMain:mouseReleased(screen, x, y, button, isTouch, presses)

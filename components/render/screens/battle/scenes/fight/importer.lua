@@ -16,13 +16,6 @@ function BattleFightImporter:new()
         skill_not = { path = "skill_not.wav", mode = "static", volume = 0.5 },
     }
     self.imagesPacks = { gems = {} }
-    self.quads = {
-        chars = {
-            path = 'chars.jpg',
-            columns = 7,
-            rows = 5
-        }
-    }
 
     for i=1, 12 do
         self.imagesPacks.gems['c'..math.pow(2, i)] = {

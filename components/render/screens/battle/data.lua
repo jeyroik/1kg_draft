@@ -38,6 +38,7 @@ function BattleLayerData:new(config)
     self.current = 1
     self.next = 2
     self.magic = {}
+    self.mode = ''
     self.theEndFlag = false
     self.fx = 'none'
 

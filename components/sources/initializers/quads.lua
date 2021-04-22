@@ -1,3 +1,5 @@
+require 'components/sources/initializers/image'
+
 InitializerQuads = InitializerImage:extend()
 
 function InitializerQuads:initSource(source)
