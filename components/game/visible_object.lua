@@ -31,7 +31,12 @@ end
 -- @return boolean
 function VisibleObject:isMouseOn(mouseX, mouseY)
 	local top, bottom = self:getEdges()
-	
+
+	top.left.x = top.left.x + game.translate.x
+	top.right.x = top.right.x + game.translate.x
+	top.left.y = top.left.y + game.translate.y
+	bottom.left.y = bottom.left.y + game.translate.y
+
 	if mouseX >= top.left.x and mouseX <= top.right.x and mouseY >= top.left.y and mouseY <= bottom.left.y then
 		return true
 	end

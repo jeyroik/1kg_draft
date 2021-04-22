@@ -12,12 +12,6 @@ function SceneMain:new(config)
     }
     self.label = {}
     self.selected = ''
-    self.translate = {
-        x=0,
-        y=0,
-        start = {x=0,y=0},
-        move = false
-    }
 end
 
 function SceneMain:init(screen)
@@ -26,12 +20,12 @@ end
 
 function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 
-    if self.translate.move then
-        self.translate.x = self.translate.x + (self.translate.start.x - x)
-        self.translate.start.x = self.translate.start.x-(self.translate.start.x - x)
+    if game.translate.move then
+        game.translate.x = game.translate.x + (game.translate.start.x - x)
+        game.translate.start.x = game.translate.start.x-(game.translate.start.x - x)
 
-        self.translate.y = self.translate.y + (self.translate.start.y - y)
-        self.translate.start.y = self.translate.start.y-(self.translate.start.y - y)
+        game.translate.y = game.translate.y + (game.translate.start.y - y)
+        game.translate.start.y = game.translate.start.y-(game.translate.start.y - y)
     end
 
     local map = game.assets:getMap('main')
@@ -73,24 +67,24 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 end
 
 function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
-    self.translate.move = true
-    self.translate.start.x = x
-    self.translate.start.y = y
+    game.translate.move = true
+    game.translate.start.x = x
+    game.translate.start.y = y
 end
 
 function SceneMain:mouseReleased(screen, x, y, button, isTouch, presses)
-    self.translate.move = false
+    game.translate.move = false
 end
 
 function SceneMain:keyPressed(screen, key)
     if key == 'left' then
-        self.translate.x = self.translate.x+10
+        game.translate.x = game.translate.x+10
     elseif key == 'right' then
-        self.translate.x = self.translate.x-10
+        game.translate.x = game.translate.x-10
     elseif key == 'up' then
-        self.translate.y = self.translate.y+10
+        game.translate.y = game.translate.y+10
     elseif key == 'down' then
-        self.translate.y = self.translate.y-10
+        game.translate.y = game.translate.y-10
     end
 end
 

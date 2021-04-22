@@ -39,6 +39,12 @@ function Game:new(config)
 	self.assets = config.assets
 	self.screens = config.screens
 	self.state = 'auth'
+	self.translate = {
+		x=0,
+		y=0,
+		start = {x=0,y=0},
+		move = false
+	}
 
 	Game.super.new(self, config)
 end
