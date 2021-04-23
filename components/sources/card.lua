@@ -28,32 +28,32 @@ function Card:render(dx, dy)
 
 	local top, bottom = self:getEdges()
 
-	self:renderHealth(top)
-	self:renderAttack(bottom)
-	self:renderDefense(bottom)
+	self:renderHealth(top, dx, dy)
+	self:renderAttack(bottom, dx, dy)
+	self:renderDefense(bottom, dx, dy)
 end
 
-function Card:renderAttack(bottom)
+function Card:renderAttack(bottom, dx, dy)
 	local attack = Text({ body = self.defense, sx = 1.5*self.sx, sy = 1.5*self.sy })
 	local overlay = Rectangle({
 		mode = 'fill',
-		x = bottom.left.x,
-		y = bottom.left.y - attack:getHeight()*1.5*self.sx,
+		x = bottom.left.x+dx,
+		y = bottom.left.y+dy - attack:getHeight()*1.5*self.sx,
 		width = attack:getWidth()*1.5*self.sx+2,
 		height = attack:getHeight()*1.5*self.sx,
 		color = {0,0,0,0.3}
 	})
 
 	overlay:render()
-	attack:render(bottom.left.x+2, bottom.left.y - attack:getHeight()*1.5*self.sx)
+	attack:render(bottom.left.x+2+dx, bottom.left.y - attack:getHeight()*1.5*self.sx+dy)
 end
 
-function Card:renderDefense(bottom)
+function Card:renderDefense(bottom, dx, dy)
 	local defense = Text({ body = self.defense, sx = 1.5*self.sx, sy = 1.5*self.sy })
 	local overlay = Rectangle({
 		mode = 'fill',
-		x = bottom.right.x- defense:getWidth()*1.5*self.sx-2,
-		y = bottom.right.y - defense:getHeight()*1.5*self.sx,
+		x = bottom.right.x - defense:getWidth()*1.5*self.sx-2 +dx,
+		y = bottom.right.y - defense:getHeight()*1.5*self.sx +dy,
 		width = defense:getWidth()*1.5*self.sx+2,
 		height = defense:getHeight()*1.5*self.sx,
 		color = {0,0,0,0.3}
@@ -61,24 +61,24 @@ function Card:renderDefense(bottom)
 
 	overlay:render()
 	defense:render(
-		bottom.right.x - defense:getWidth()*1.5*self.sx,
-		bottom.right.y - defense:getHeight()*1.5*self.sx
+		bottom.right.x - defense:getWidth()*1.5*self.sx +dx,
+		bottom.right.y - defense:getHeight()*1.5*self.sx +dy
 	)
 end
 
-function Card:renderHealth(top)
+function Card:renderHealth(top, dx, dy)
 	local health = Text({ body = self.health, sx = 1.5*self.sx, sy = 1.5*self.sy })
 	local overlay = Rectangle({
 		mode = 'fill',
-		x = top.right.x - health:getWidth()*1.5*self.sx-2,
-		y = top.right.y,
+		x = top.right.x - health:getWidth()*1.5*self.sx-2 +dx,
+		y = top.right.y +dy,
 		width = health:getWidth()*1.5*self.sx+2,
 		height = health:getHeight()*1.5*self.sx,
 		color = {0,0,0,0.3}
 	})
 
 	overlay:render()
-	health:render(top.right.x - health:getWidth()*1.5*self.sx, top.right.y)
+	health:render(top.right.x - health:getWidth()*1.5*self.sx +dx, top.right.y +dy)
 end
 
 function Card:takeDamage(damage)

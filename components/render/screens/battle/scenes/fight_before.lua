@@ -13,10 +13,10 @@ function SceneFightBefore:new(config)
 end
 
 function SceneFightBefore:init(screen)
-    screen:addViewLayers(
-        { BattleFightBeforeViewBackground( {image = 'board_background'} ) },
-        'scene_before'
-    )
+    --screen:addViewLayers(
+      --  { BattleFightBeforeViewBackground( {image = 'board_background'} ) },
+        --'scene_before'
+    --)
 
     game.assets:getButton('pl1'):setToCenter(true)
     game.assets:getButton('pl1'):stepByY(50)

@@ -20,6 +20,7 @@ require "components/sources/text_overlay"
 require "components/sources/icon"
 require "components/sources/cursor"
 require "components/sources/button"
+require "components/sources/grid"
 
 require "components/hooks/hook"
 require "components/mutators/mutator"

@@ -100,7 +100,6 @@ function VisibleObject:getCoordsFrame(dx, dy)
 	return self.x-dx, self.y-dy
 end
 
--- @return {left={x,y}, right={x,y}} top, {left={x,y}, right={x,y}} bottom
 function VisibleObject:getEdges()
 	local top = {
 		left = {x=self.x+ game.translate.x, y=self.y+game.translate.y},
