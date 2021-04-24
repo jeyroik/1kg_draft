@@ -1,8 +1,9 @@
 Button = Source:extend()
 
 function Button:new(config)
+    self.name = ''
     self.text = ''
-    self.text_scale = 0.7
+    self.text_scale = 1
     self.state = 'default'
     self.border = 0
     self.effect = 'position'
@@ -17,32 +18,32 @@ function Button:new(config)
 
     self.pressed = false
     self.effects = {
-        color = function (text)
+        color = function (text, dx, dy, radian, sx, sy)
             if self.pressed then
                 love.graphics.setColor(self.color)
             end
-            text:render()
+            text:render(dx, dy, radian, sx, sy)
             if self.pressed then
                 love.graphics.setColor({1,1,1})
             end
         end,
-        position = function (text) text:render(0, self.pressed and self.border or -self.border) end,
-        scale = function (text)
-            local sx = text.sx
-            local sy = text.sy
-            local dx = 0
-            local dy = 0
+        position = function (text, dx, dy, radian, sx, sy) text:render(dx, self.pressed and dy+self.border or dy-self.border) end,
+        scale = function (text, dx, dy, radian, sx, sy)
+            local sx = text.sx*sx
+            local sy = text.sy*sy
+            local dx = dx
+            local dy = dy
             if self.pressed then
                 if self.scale.mode == 'in' then
                     sx = text.sx*2 or text.sx
                     sy = text.sx*2 or text.sy
-                    dx = -text.width
-                    dy = -text.height
+                    dx = dx-text.width
+                    dy = dy-text.height
                 else
                     sx = text.sx/2 or text.sx
                     sy = text.sx/2 or text.sy
-                    dx = text.width/2
-                    dy = text.height/2
+                    dx = dx+text.width/2
+                    dy = dy+text.height/2
                 end
 
             end
@@ -53,9 +54,20 @@ function Button:new(config)
     self:setSize(self.source.images.default:getWidth(), self.source.images.default:getHeight())
 end
 
-function Button:render()
-    self.source.images[self.state]:render()
-    self.effects[self.effect](self.source.text)
+function Button:reload()
+    local ini = InitializerButton({})
+    ini:initSource(self)
+end
+
+function Button:render(dx, dy, radina, sx, sy)
+    dx = dx or 0
+    dy = dy or 0
+    radian = radian or 0
+    sx = sx or 1
+    sy = sy or 1
+
+    self.source.images[self.state]:render(dx, dy, radian, sx, sy)
+    self.effects[self.effect](self.source.text, dx, dy, radian, sx, sy)
 end
 
 function Button:click()
@@ -72,6 +84,7 @@ end
 function Button:released()
     self.state = 'default'
     self.pressed = false
+    game.assets:getCursor('hand'):reset()
 end
 
 function Button:setToCenter(xAxis, yAxis)

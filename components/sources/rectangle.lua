@@ -1,6 +1,8 @@
 Rectangle = Source:extend()
 
 function Rectangle:new(config)
+    config = config or {}
+
     self.color = {1,1,1,1}
     self.mode = 'line'
 

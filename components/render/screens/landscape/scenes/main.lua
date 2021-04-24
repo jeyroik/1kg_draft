@@ -73,6 +73,7 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
 
     game.assets:getMap('main'):forEachObject(function(mapObject)
         if mapObject.name == 'city1' and mapObject:isMouseOn(x, y) then
+            game.assets:getCursor('hand'):reset()
             game:changeStateTo('battle')
             return false
         else

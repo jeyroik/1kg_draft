@@ -10,46 +10,58 @@ function SceneFightBefore:new(config)
     self.views = {
         BattleFightBeforeViewSettingsMode()
     }
+    
+    self.grid = Grid({
+        width   = love.graphics.getWidth(),
+        height  = love.graphics.getHeight(),
+        columns = 1,
+        rows    = 4,
+        itemScale = 'fixed',
+		margin = {
+			top = 50,
+			left = love.graphics.getWidth()/4,
+			right = love.graphics.getWidth()/5,
+			bottom = 10
+		},
+        padding = {
+            top    = 100  * VisibleObject.globalScale,
+            bottom = 50  * VisibleObject.globalScale,
+            left   = 100 * VisibleObject.globalScale,
+            right  = 100 * VisibleObject.globalScale
+        }
+    })
+
+    
+    self.grid:addCollection({
+        Empty({height = 100}),
+        game.assets:getButton('pl1'),
+        game.assets:getButton('pl2'),
+        Empty({height = 100})
+    })
 end
 
 function SceneFightBefore:init(screen)
-    --screen:addViewLayers(
-      --  { BattleFightBeforeViewBackground( {image = 'board_background'} ) },
-        --'scene_before'
-    --)
-
-    game.assets:getButton('pl1'):setToCenter(true)
-    game.assets:getButton('pl1'):stepByY(50)
-
-    game.assets:getButton('pl2'):setToCenter(true)
-    game.assets:getButton('pl2'):stepByY(50)
-    game.assets:getButton('pl2'):stepByY(20)
+    screen:addViewLayers(
+        { BattleFightBeforeViewBackground( {image = 'board_background'} ) },
+        'scene_before'
+    )
 end
 
 function SceneFightBefore:mouseMoved(screen, x, y, dx, dy, isTouch)
 
-    local pl1 = game.assets:getButton('pl1')
-    local pl2 = game.assets:getButton('pl2')
-
-    if pl1:isMouseOn(x, y) then
-        if pl1.state == 'default' then
-            pl1:hover()
+    self.grid:forEach(function(btn, index)
+        if btn:isMouseOn(x, y) then
+            if btn.state == 'default' then
+                btn:hover()
+                return false
+            end
+        else
+            if btn.state ~= 'default' then
+                btn:released()
+            end
         end
-    elseif pl2:isMouseOn(x, y) then
-        if pl2.state == 'default' then
-            pl2:hover()
-        end
-    else
-        if pl1.state ~= 'default' then
-            pl1:released()
-        end
-
-        if pl2.state ~= 'default' then
-            pl2:released()
-        end
-
-        game.assets:getCursor('hand'):reset()
-    end
+        return true
+    end, Button)
 end
 
 function SceneFightBefore:mousePressed(screen, x, y, button, isTouch, presses)
@@ -74,6 +86,7 @@ function SceneFightBefore:mousePressed(screen, x, y, button, isTouch, presses)
     end
 
     if modeIsChosen then
+        game.assets:getCursor('hand'):reset()
         screen:changeSceneTo('fight_cards')
     end
 end
@@ -88,13 +101,6 @@ function  SceneFightBefore:prepare1Player(layerData)
         attack = game.profile.attack,
         defense = game.profile.defense
     })
-
-    local current = layerData:getCurrentPlayer()
-
-    current:addCard(CardFireElemental())
-    current:addCard(CardTreeElemental())
-    current:addCard(CardLifeElemental())
-    current:addCard(CardWaterElemental())
 
     layerData.players[2] = Player({
         name = 'Computer',
@@ -117,8 +123,6 @@ function  SceneFightBefore:prepare2Players(layerData)
         attack = game.profile.attack,
         defense = game.profile.defense
     })
-    local current = layerData:getCurrentPlayer()
-    current:addCards({ CardFireElemental(), CardTreeElemental(), CardLifeElemental() })
 
     layerData.players[2] = Player({
         name = game.profile.name .. ' (2)',
@@ -129,8 +133,6 @@ function  SceneFightBefore:prepare2Players(layerData)
         attack = game.profile.attack,
         defense = game.profile.defense
     })
-    local next = layerData:getNextPlayer()
-    next:addCards({ CardFireElemental(), CardTreeElemental(), CardLifeElemental() })
 end
 
 function SceneFightBefore:mouseReleased(screen, x, y, button, isTouch, presses)

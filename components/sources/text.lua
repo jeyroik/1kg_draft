@@ -11,6 +11,9 @@ function Text:new(config)
 
 	Text.super.new(self, config)
 
+	self.x = math.floor(self.x)
+	self.y = math.floor(self.y)
+
 	self:setSize(self.source:getWidth(), self.source:getHeight())
 end
 

@@ -1,4 +1,5 @@
 SourceInitializer = Object:extend()
+SourceInitializer:implement(Printer)
 
 -- @param Source source
 -- @return void

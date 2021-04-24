@@ -21,7 +21,7 @@ function InitializerButton:initSource(button)
     })
     button.source.text = Text({ body = button.text })
     button.source.text:scaleTo(button.source.images.default, button.text_scale)
-    button.source.text:setToCenterOfObject(button.source.images.default)
+    button.source.text:setToCenterOfObject(button.source.images.default, true, true)
 end
 
 return InitializerButton

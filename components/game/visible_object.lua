@@ -234,16 +234,17 @@ function VisibleObject:setToCenterOfObject(obj, xAxis, yAxis)
 
 	if yAxis then
 		self.ySource = self.y
-		self.y = center.y - h/2
+		self.y = center.y - h*0.75
 	end
 end
 
 function VisibleObject:scaleTo(object, ds)
-	local s = object:getWidth() / self.width
+	local sx = (object:getWidth()*object.sx) / (self.width*self.sx)
+	local sy = (object:getHeight()*object.sy) / (self.height*self.sy)
 	ds = ds or 1
 
-	self.sx = s*ds
-	self.sy = self.sx
+	self.sx = sx*ds
+	self.sy = sy*ds
 end
 
 function VisibleObject:stepByX(dx)

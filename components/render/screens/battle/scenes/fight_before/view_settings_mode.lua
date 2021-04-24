@@ -7,17 +7,31 @@ function BattleFightBeforeViewSettingsMode:new(config)
 end
 
 function BattleFightBeforeViewSettingsMode:render(data, scene)
-    local buttons = {
-        game.assets:getButton('pl1'),
-        game.assets:getButton('pl2')
-    }
+    --local dx = 0+
+    local title = Text({ body = 'Choose mode', sx = 2*VisibleObject.globalScale, sy = 2*VisibleObject.globalScale })
+    local titleGrid = Grid({
+        width   = love.graphics.getWidth(),
+        height  = love.graphics.getHeight(),
+        columns = 1,
+        rows    = 5,
+        itemScale = 'auto',
+		margin = {
+			top = 50,
+			left = love.graphics.getWidth()/4,
+			right = love.graphics.getWidth()/5,
+			bottom = 10
+		},
+        padding = {
+            top    = 100  * VisibleObject.globalScale,
+            bottom = 50  * VisibleObject.globalScale,
+            left   = 100 * VisibleObject.globalScale,
+            right  = 100 * VisibleObject.globalScale
+        }
+    })
+    titleGrid:addCollection({ title})
+    titleGrid:setToCenter(true)
+    titleGrid:render()
 
-    for i, btn in pairs(buttons) do
-        btn:setToCenter(true)
-        btn:render(0,0,0,VisibleObject.globalScale, VisibleObject.globalScale)
-    end
-
-    local title = Text({ body = 'Choose mode', sx = 4*VisibleObject.globalScale, sy = 4*VisibleObject.globalScale })
-    title:stickToTop(buttons[1])
-    title:render(0, -40)
+    scene.grid:setToCenter(true, true)
+    scene.grid:render()
 end

@@ -12,6 +12,7 @@ Screen:implement(Printer)
 -- @param table config
 -- @return void
 function Screen:new(config)
+	self.initialized = false
 	self.background = 'background'
 	self.theEnd = 'theEnd'
 	self.tip = {}
@@ -88,13 +89,16 @@ function Screen:new(config)
 end
 
 function Screen:init()
-	self:initHooks()
-	self:runHooks('init', 'before')
+	if not self.initialized then
+		self:initHooks()
+		self:runHooks('init', 'before')
 
-	self.layers.data:init()
-	self:changeSceneTo(self.scene)
+		self.layers.data:init()
+		self:changeSceneTo(self.scene)
 
-	self:runHooks('init', 'after')
+		self:runHooks('init', 'after')
+		self.initialized = true
+	end
 end
 
 function Screen:initHooks()
