@@ -8,17 +8,16 @@ function MagicStone:new(config)
 	self.size = 61 --122
 	self.volume = 1
 	self.state = 0
-	self.path = 'components/render/stone'
-	self.boardSize = 5
 	self.scale = 1
 
+	config.path = 'gems'
 	config.initializer = 'components/sources/initializers/stone'
 
 	MagicStone.super.new(self, config)
 end
 
 function MagicStone:render()
-	local pack = game.assets:getImagePack('gems')
+	local pack = game.assets:getImagePack(self.path)
 	local image = pack:get(self:getMask())
 
 	if image then

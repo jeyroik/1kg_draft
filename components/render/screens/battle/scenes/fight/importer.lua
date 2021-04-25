@@ -17,12 +17,9 @@ function BattleFightImporter:new()
     }
     self.imagesPacks = { gems = {} }
 
-    for i=1, 12 do
+    for i=0, 12 do
         self.imagesPacks.gems['c'..math.pow(2, i)] = {
-            path = "gem" .. math.pow(2, i) .. ".png",
-            radian = 0,
-            sx = 2,
-            sy = 2
+            path = "gem" .. math.pow(2, i) .. ".png"
         }
     end
 end

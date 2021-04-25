@@ -15,13 +15,10 @@ function InitializerBoard:initSource(board)
                 row = i,
                 column = j,
                 volume = board.cells[i][j],
-                boardSize = board.rows,
-                sx = s.sx,
-                sy = s.sy,
+                sx = 1,
+                sy = 1,
                 x = (j-1) * s.width + board.x,
-                y = (i-1) * s.height + board.y,
-                width = s.width,
-                height = s.height
+                y = (i-1) * s.height + board.y
             })
             board.cells[i][j] = stone
         end

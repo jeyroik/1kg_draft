@@ -36,10 +36,28 @@ function Board:update()
 			stone.sy = s.sy
 			stone.x = (j-1) * s.width + self.x
 			stone.y = (i-1) * s.height + self.y
-			stone.width = s.width
-			stone.height = s.height
 		end
 	end
+end
+
+function Board:calculateStoneParameters()
+	-- нужна картинка камня для понимания его исходных размеров
+	local stoneImg = game.assets:getImagePack('gems'):get('c2')
+	local stoneOriginW = stoneImg:getWidth()
+	local stoneOriginH = stoneImg:getHeight()
+
+	local stonesW = self:getWidth() / self.columns
+	local stonesH = self:getHeight() / self.rows
+
+	local wScale = stonesW / stoneOriginW
+	local hScale = stonesH / stoneOriginH
+
+	return {
+		sx = wScale,
+		sy = hScale,
+		width = stonesW,
+		height = stonesH
+	}
 end
 
 function Board:render(dx, dy)
@@ -50,7 +68,7 @@ function Board:render(dx, dy)
 
 	for _, columns in pairs(self.cells) do
 		for _,stone in pairs(columns) do
-			if stone.volume > -1 then
+			if stone.volume > 1 then
 				stone:render()
 			end
 		end
@@ -270,26 +288,6 @@ function Board:moveRight(layerData)
 	end
 
 	return nil
-end
-
-function Board:calculateStoneParameters()
-	-- нужна картинка камня для понимания его исходных размеров
-	local stoneImg = game.assets:getImagePack('gems'):get('c2')
-	local stoneOriginW = stoneImg:getWidth()
-	local stoneOriginH = stoneImg:getHeight()
-
-	local stonesW = self:getWidth() / self.columns
-	local stonesH = self:getHeight() / self.rows
-
-	local wScale = stonesW / stoneOriginW
-	local hScale = stonesH / stoneOriginH
-
-	return {
-		sx = wScale,
-		sy = hScale,
-		width = stonesW,
-		height = stonesH
-	}
 end
 
 function Board:setFree(row, column)
