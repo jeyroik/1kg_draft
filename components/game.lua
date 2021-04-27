@@ -1,5 +1,6 @@
 require "components/game/object"
 require "components/game/visible_object"
+require "components/game/render"
 
 require "components/game/profile"
 require "components/sources/source"

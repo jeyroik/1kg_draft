@@ -31,7 +31,7 @@ function Map:draw(dx, dy, radian, sx, sy)
     for i=1,#self.renderPath do
         local layerName = self.renderPath[i]
         self:forEach(layerName, function(cell)
-            Map.super.draw(self, cell.number, cell.x+dx, cell.y+dy, radian, sx, sy)
+            Map.super.draw(self, cell.x+dx, cell.y+dy, radian, sx, sy, cell.number)
             return true
         end)
     end

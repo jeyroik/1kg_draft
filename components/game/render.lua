@@ -17,9 +17,10 @@ function Render:new(config)
 end
 
 function Render:draw(object, ...)
+    local args = {...}
     local scale = {
         size = function ()
-            object:draw(0, 0, 0, self.windowWidth/self.origin.w, self.windowHeight/self.origin.h, {...})
+            object:draw(0, 0, 0, self.windowWidth/self.origin.w, self.windowHeight/self.origin.h, args)
         end,
         position = function ()
             local sx = self.windowWidth/self.origin.w
@@ -27,18 +28,18 @@ function Render:draw(object, ...)
             local dx = sx * self.origin.x
             local dy = sy * self.origin.y
 
-            object:draw(dx, dy, 0, sx, sy, {...})
+            object:draw(dx, dy, 0, sx, sy, args)
         end,
         none = function()
-            object:draw(0, 0, 0, 1, 1, {...})
+            object:draw(0, 0, 0, 1, 1, args)
         end
     }
 
     if scale[self.scale] then
         scale[self.scale]()
     elseif object.renderConfig.render then
-        object.renderConfig.render({...})
+        object.renderConfig.render(args)
     else
-        object:draw(0, 0, 0, 1, 1, {...})
+        object:draw(0, 0, 0, 1, 1, args)
     end
 end
