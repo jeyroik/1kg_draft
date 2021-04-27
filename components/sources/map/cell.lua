@@ -10,6 +10,10 @@ function MapCell:new(config)
     MapCell.super.new(self, config)
 end
 
+function MapCell:draw(dx, dy, radian, sx, sy)
+    game.assets:getQuads(self.path):draw(dx, dy, radian, sx, sy, self.number)
+end
+
 function MapCell:changeNumberTo(number)
     self.previous = self.number
     self.number = number

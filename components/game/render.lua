@@ -10,7 +10,8 @@ function Render:new(config)
         w = 800,
         h = 600
     }
-    Render.super.new(self, config)
+
+    self:applyConfig(config)
 
     self.windowWidth  = love.graphics.getWidth()
     self.windowHeight = love.graphics.getHeight()
@@ -23,6 +24,14 @@ function Render:draw(object, ...)
             object:draw(0, 0, 0, self.windowWidth/self.origin.w, self.windowHeight/self.origin.h, args)
         end,
         position = function ()
+            local sx = self.windowWidth/self.origin.w
+            local sy = self.windowHeight/self.origin.h
+            local dx = sx * self.origin.x
+            local dy = sy * self.origin.y
+
+            object:draw(dx, dy, 0, 0, 0, args)
+        end,
+        size_position = function ()
             local sx = self.windowWidth/self.origin.w
             local sy = self.windowHeight/self.origin.h
             local dx = sx * self.origin.x

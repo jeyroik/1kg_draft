@@ -3,14 +3,21 @@ LandscapeMainImporter = AssetImporter:extend()
 function LandscapeMainImporter:new()
     LandscapeMainImporter.super.new(self)
 
+    self.quads = {
+        main_map = {
+            path = 'map_0.png',
+            columns = 20,
+            rows = 8
+        }
+    }
     self.maps = {
         main = {
+            alias = 'main_map',
             path = 'map_0.png',
             columns = 20,
             rows = 8,
-            scale = 2,
-            sx = 2,
-            sy = 2,
+            sx = 1,
+            sy = 1,
             layers = {
                 terrain = {
                     { 72,  72,  72,  72,  72,  72,  72,  72,  85,  88,  88,  87,  72,  72,  72,  72,  72,  72,  72,  72,  72,  72,  72,  72,  72},

@@ -70,8 +70,6 @@ function Game:update(dt)
 end
 
 function Game:render()
-	VisibleObject.updateGlobals()
-	love.graphics.scale(VisibleObject.globalSX, VisibleObject.globalSY)
 	self:getCurrentState():render()
 end
 

@@ -15,6 +15,15 @@ function Map:new(config)
     self.totalHeight = 0
 
     config.initializer = 'components/sources/initializers/map'
+    config.renderConfig = {
+        scale = 'size_position',
+        origin = {
+            x = 1,
+            y = 1,
+            w = 200,
+            h = 150
+        }
+    }
     Map.super.new(self, config)
 
     self.totalWidth = self.width * self.columns
@@ -31,10 +40,14 @@ function Map:draw(dx, dy, radian, sx, sy)
     for i=1,#self.renderPath do
         local layerName = self.renderPath[i]
         self:forEach(layerName, function(cell)
-            Map.super.draw(self, cell.x+dx, cell.y+dy, radian, sx, sy, cell.number)
+            cell:render()
+            --Map.super.draw(self, cell.x+dx, cell.y+dy, radian, sx, sy, cell.number)
             return true
         end)
     end
+
+    love.graphics.print('dx = '..dx..', dy = '..dy..', sx = '..sx..', sy = '..sy, 50, 50)
+    love.graphics.print('dx = '..dx..', dy = '..dy..', sx = '..self.sx..', sy = '..self.sy, 50, 80)
 end
 
 function Map:forEach(layerName, dispatcher)

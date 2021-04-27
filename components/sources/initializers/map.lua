@@ -9,15 +9,25 @@ function InitializerMap:initSource(map)
             map.map[layerName][row] = {}
             for column, number in pairs(columns) do
                 map.map[layerName][row][column] = MapCell({
-                    x = (column-1)*(map.width*map.sx),
-                    y = (row-1)*(map.width*map.sy),
+                    path = map.alias,
+                    x = (column-1)*map.width,
+                    y = (row-1)*map.width,
                     width = map.width,
                     height = map.height,
                     sx = map.sx,
                     sy = map.sy,
                     number = number,
                     row = row,
-                    column = column
+                    column = column,
+                    renderConfig = {
+                        scale = 'size_position',
+                        origin = {
+                            x = (column-1)*map.width,
+                            y = (row-1)*map.width,
+                            w = 400,
+                            h = 300
+                        }
+                    }
                 })
             end
         end
