@@ -22,6 +22,8 @@ function VisibleObject:new(config)
 	self.renderConfig = {
 		scale = 'scale', -- size | position | none
 		origin = {
+			x = 0,
+			y = 0,
 			w = 800,
 			h = 600
 		}
