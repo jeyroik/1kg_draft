@@ -11,7 +11,7 @@ function Scene:getViews()
 end
 
 function Scene:init(screen)
-
+    Scene.super.init(self)
 end
 
 function Scene:update(screen, dt)

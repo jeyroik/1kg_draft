@@ -67,17 +67,15 @@ function HookFullscreen:getIcon()
     end
 
     local icon = game.assets:getImage(imgName)
-    icon.sx = VisibleObject.globalScale
-    icon.sy = VisibleObject.globalScale
     icon:stickToRight(
-            {
+            VisibleObject({
                 x = 0,
                 y = 0,
                 sx = 1,
                 sy = 1,
                 width = width,
                 height = height
-            },
+            }),
             'inside'
     )
 

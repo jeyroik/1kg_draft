@@ -53,22 +53,22 @@ function InitializerPlayer:initGems(player)
 
             player.gems[name] = MagicGem({
                 amount = 0,
-                amountText = Text({ body = '0', x = magicX+40*sx, y = magicY, radian = 0, sx = 2*sx, sy = 2*sx }),
+                amountText = Text({ body = '0', x = magicX+40, y = magicY }),
                 mana = plMagic.mana,
                 power = plMagic.power,
                 magic = magic,
                 image = {
                     x = magicX,
                     y = magicY,
-                    sx = 0.5*sx,
-                    sy = 0.5*sx,
+                    sx = sx,
+                    sy = sx,
                     path = gem.path
                 },
                 text = {
                     x = 0,
                     y = 0,
-                    sx = 1,
-                    sy = 1,
+                    sx = sx,
+                    sy = sy,
                     body = magic:getTitle() .. ': mana = '..plMagic.mana..', power = '..plMagic.power,
                     overlay_mode = 'fill',
                     overlay_color = {1,1,1,0.6},

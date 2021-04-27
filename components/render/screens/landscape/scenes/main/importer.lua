@@ -3,10 +3,6 @@ LandscapeMainImporter = AssetImporter:extend()
 function LandscapeMainImporter:new()
     LandscapeMainImporter.super.new(self)
 
-    self.images = {
-
-    }
-
     self.maps = {
         main = {
             path = 'map_0.png',
@@ -115,17 +111,6 @@ function LandscapeMainImporter:new()
             },
             renderPath = {'terrain', 'nature', 'constructions', 'characters'}
         }
-    }
-    self.quads = {
-
-    }
-
-    self.cursors = {
-        hand = "hand"
-    }
-
-    self.buttons = {
-
     }
 
     --self.menu = {} --pack of buttons?

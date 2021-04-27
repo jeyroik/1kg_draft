@@ -1,15 +1,11 @@
 require "components/render/screens/landscape/data"
-require "components/render/screens/landscape/scenes/main"
 
 LandscapeScreen = Screen:extend()
 
 function LandscapeScreen:new(config)
-    LandscapeScreen.super.new(self, config)
+    config.initializer = config.initializer or 'components/render/screens/landscape/initializer'
 
-    self.scene = 'main'
-    self.scenes = {
-        main = SceneMain()
-    }
+    LandscapeScreen.super.new(self, config)
 
     self:setDataLayer(LandscapeLayerData(config))
 end
@@ -17,3 +13,5 @@ end
 function LandscapeScreen:getProfile()
     return self.layers.data:getProfile()
 end
+
+return LandscapeScreen

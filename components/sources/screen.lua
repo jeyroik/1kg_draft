@@ -16,65 +16,63 @@ function Screen:new(config)
 	self.background = 'background'
 	self.theEnd = 'theEnd'
 	self.tip = {}
-	self.scenes = {}
-	self.scene = ''
 	self.freeze = {
-		mouseMoved = false,
-		mousePressed = false,
+		mouseMoved    = false,
+		mousePressed  = false,
 		mouseReleased = false,
-		keyPressed = false
+		keyPressed 	  = false
 	}
 	self.layers = {
 		views = {
-			scene_before = {},
+			scene_before  = {},
 			scene_current = {},
-			scene_after = {},
-			system = {}
+			scene_after   = {},
+			system        = {}
 		},
 		data = {}
 	}
 	self.hooks = {
 		fullscreen = {
-			path = 'components/hooks/render/after/fullscreen',
+			path   = 'components/hooks/render/after/fullscreen',
 			events = {
-				mouseMoved = { 'after' },
+				mouseMoved   = { 'after' },
 				mousePressed = { 'after' },
-				render = { 'after' },
+				render       = { 'after' },
 			}
 		}
 	}
 	self.events = {
 		init = {
 			before = {},
-			after = {}
+			after  = {}
 		},
 		update = {
 			before = {},
-			after = {}
+			after  = {}
 		},
 		mouseMoved = {
 			before = {},
-			after = {}
+			after  = {}
 		},
 		mousePressed = {
 			before = {},
-			after = {}
+			after  = {}
 		},
 		mouseReleased = {
 			before = {},
-			after = {}
+			after  = {}
 		},
 		keyPressed = {
 			before = {},
-			after = {}
+			after  = {}
 		},
 		render = {
 			before = {},
-			after = {}
+			after  = {}
 		},
 		changeSceneTo = {
 			before = {},
-			after = {}
+			after  = {}
 		}
 	}
 
@@ -90,14 +88,15 @@ end
 
 function Screen:init()
 	if not self.initialized then
+		Screen.super.init(self)
+
 		self:initHooks()
 		self:runHooks('init', 'before')
 
 		self.layers.data:init()
-		self:changeSceneTo(self.scene)
+		self:changeStateTo(self.__state__)
 
 		self:runHooks('init', 'after')
-		self.initialized = true
 	end
 end
 
@@ -137,7 +136,7 @@ end
 function Screen:update(dt)
 	self:runHooks('update', 'before', {dt = dt})
 
-	local currentScene = self:getCurrentScene()
+	local currentScene = self:getCurrentState()
 	currentScene:update(self, dt)
 
 	self:runHooks('update', 'after', {dt = dt})
@@ -150,7 +149,7 @@ function Screen:mouseMoved(x, y, dx, dy, isTouch)
 
 	self:runHooks('mouseMoved', 'before', {x=x, y=y, dx=dx, dy=dy, isTouch=isTouch})
 
-	local currentScene = self:getCurrentScene()
+	local currentScene = self:getCurrentState()
 	currentScene:mouseMoved(self, x, y, dx, dy, isTouch)
 
 	self:runHooks('mouseMoved', 'after', {x=x, y=y, dx=dx, dy=dy, isTouch=isTouch})
@@ -163,7 +162,7 @@ function Screen:mousePressed(x, y, button, isTouch, presses)
 
 	self:runHooks('mousePressed', 'before', {x=x, y=y, button=button, isTouch=isTouch, presses=presses})
 
-	local currentScene = self:getCurrentScene()
+	local currentScene = self:getCurrentState()
 	currentScene:mousePressed(self, x, y, button, isTouch, presses)
 
 	self:runHooks('mousePressed', 'after', {x=x, y=y, button=button, isTouch=isTouch, presses=presses})
@@ -176,7 +175,7 @@ function Screen:mouseReleased(x, y, button, isTouch, presses)
 
 	self:runHooks('mouseReleased', 'before', {x=x, y=y, button=button, isTouch=isTouch, presses=presses})
 
-	local currentScene = self:getCurrentScene()
+	local currentScene = self:getCurrentState()
 	currentScene:mouseReleased(self, x, y, button, isTouch, presses)
 
 	self:runHooks('mouseReleased', 'after', {x=x, y=y, button=button, isTouch=isTouch, presses=presses})
@@ -189,7 +188,7 @@ function Screen:keyPressed(key)
 
 	self:runHooks('keyPressed', 'before', {key=key})
 
-	local currentScene = self:getCurrentScene()
+	local currentScene = self:getCurrentState()
 	currentScene:keyPressed(self, key)
 
 	self:runHooks('keyPressed', 'after', {key=key})
@@ -200,7 +199,7 @@ end
 function Screen:render()
 	self:runHooks('render', 'before')
 
-	local currentScene = self:getCurrentScene()
+	local currentScene = self:getCurrentState()
 
 	for i = 1, #self.layers.views.scene_before do
 		local layer = self.layers.views.scene_before[i]
@@ -252,21 +251,17 @@ function Screen:getScene(sceneName)
 	return self.scenes[sceneName]
 end
 
-function Screen:getCurrentScene()
-	return self:getScene(self.scene)
-end
-
 function Screen:isScene(sceneName)
-	return self.scene == sceneName
+	return self.__state__ == sceneName
 end
 
-function Screen:changeSceneTo(sceneName)
+function Screen:changeStateTo(sceneName)
 	self:runHooks('changeSceneTo', 'before', {sceneName = sceneName})
 
 	self.scene = sceneName
 
-	local currentScene = self:getCurrentScene()
-	currentScene:init(self)
+	Screen.super.changeStateTo(self, sceneName)
+	local currentScene = self:getCurrentState()
 	self:setViewLayers(currentScene:getViews(), 'scene_current')
 
 	self:runHooks('changeSceneTo', 'after', {sceneName = sceneName})

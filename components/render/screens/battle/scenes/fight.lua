@@ -165,3 +165,5 @@ end
 function SceneFight:addStone(layerData)
     self.fx = layerData.board:addStone(layerData) or 'none'
 end
+
+return SceneFight

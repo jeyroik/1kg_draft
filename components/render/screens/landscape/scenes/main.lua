@@ -1,5 +1,4 @@
 require "components/render/screens/landscape/scenes/main/view_map"
---require "components/render/screens/landscape/scenes/main/view_cities"
 
 SceneMain = Scene:extend()
 
@@ -14,18 +13,14 @@ function SceneMain:new(config)
     self.selected = ''
 end
 
-function SceneMain:init(screen)
-
-end
-
 function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 
     if game.translate.move then
-        game.translate.x = game.translate.x + (game.translate.start.x - x)
-        game.translate.start.x = game.translate.start.x-(game.translate.start.x - x)
+        game.translate.x       = game.translate.x       + (game.translate.start.x - x)
+        game.translate.start.x = game.translate.start.x - (game.translate.start.x - x)
 
-        game.translate.y = game.translate.y + (game.translate.start.y - y)
-        game.translate.start.y = game.translate.start.y-(game.translate.start.y - y)
+        game.translate.y       = game.translate.y       + (game.translate.start.y - y)
+        game.translate.start.y = game.translate.start.y - (game.translate.start.y - y)
     end
 
     local map = game.assets:getMap('main')
@@ -54,9 +49,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                 y = y+5-game.translate.y,
                 overlay_mode = 'fill',
                 overlay_color = {0,0,0,0.3},
-                overlay_offset = 5,
-                sx = 2,
-                sy = 2
+                overlay_offset = 5
             })
             self.selected = mapObject.name
             return false
@@ -67,7 +60,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 end
 
 function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
-    game.translate.move = true
+    game.translate.move    = true
     game.translate.start.x = x
     game.translate.start.y = y
 
@@ -101,3 +94,5 @@ end
 function SceneMain:update(screen)
 
 end
+
+return SceneMain

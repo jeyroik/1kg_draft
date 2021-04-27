@@ -38,14 +38,12 @@ require "components/render/screens/screen_landscape"
 Game = GameObject:extend()
 
 function Game:new(config)
-	self.profile = Profile(config.profile)
-	self.assets = config.assets
-	self.screens = config.screens
-	self.state = 'auth'
+	self.profile = {}
+	self.assets = {}
 	self.translate = {
 		x=0,
 		y=0,
-		start = {x=0,y=0},
+		start = { x=0, y=0 },
 		move = false
 	}
 
@@ -54,51 +52,46 @@ end
 
 function Game:init()
 
+	Game.super.init(self)
+
 	self:initializeOne('assets')
 	self.assets:init()
 
-	self.screens = {
-		battle = BattleScreen(self.screens.battle),
-		landscape = LandscapeScreen(self.screens.landscape)
-	}
+	self:initializeOne('profile')
 
-	local currentScreen = self:getCurrentScreen()
+	local currentScreen = self:getCurrentState()
 	currentScreen:init()
 end
 
 function Game:update(dt)
 	VisibleObject.updateGlobals(self)
-	self:getCurrentScreen():update(dt)
+	self:getCurrentState():update(dt)
 end
 
 function Game:render()
-	self:getCurrentScreen():render()
+	VisibleObject.updateGlobals()
+	love.graphics.scale(VisibleObject.globalSX, VisibleObject.globalSY)
+	self:getCurrentState():render()
 end
 
 function Game:mouseMoved(x, y, dx, dy, isTouch)
-	game:getCurrentScreen():mouseMoved(x, y, dx, dy, isTouch)
+	game:getCurrentState():mouseMoved(x, y, dx, dy, isTouch)
 end
 
 function Game:mousePressed(x, y, button, isTouch, presses)
-	game:getCurrentScreen():mousePressed(x, y, button, isTouch, presses)
+	game:getCurrentState():mousePressed(x, y, button, isTouch, presses)
 end
 
 function Game:mouseReleased(x, y, button, isTouch, presses)
-	game:getCurrentScreen():mouseReleased(x, y, button, isTouch, presses)
+	game:getCurrentState():mouseReleased(x, y, button, isTouch, presses)
 end
 
 function Game:keyPressed(key)
-	game:getCurrentScreen():keyPressed(key)
-end
-
-function Game:changeStateTo(stateName)
-	self.state = stateName
-	local currentScreen = self:getCurrentScreen()
-	currentScreen:init()
+	game:getCurrentState():keyPressed(key)
 end
 
 function Game:getScreen(name)
-	return self.screens[name]
+	return self.__states__[name]
 end
 
 function Game:getScreenData(screenName)
@@ -113,18 +106,4 @@ end
 
 function Game:getCurrentScreenLayerData()
 	return self:getScreenData(self.state)
-end
-
-function Game:export()
-	local cfg = {
-		state = self.state,
-		assets = self.assets__config,
-		screens = {}
-	}
-
-	for alias, screen in pairs(self.screens) do
-		cfg.screens[alias] = screen:export()
-	end
-
-	return cfg
 end

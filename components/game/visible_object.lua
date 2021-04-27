@@ -1,5 +1,7 @@
 VisibleObject = GameObject:extend()
-VisibleObject.globalScale = love.graphics.getWidth()/1920
+
+VisibleObject.globalSX = love.graphics.getWidth()/800
+VisibleObject.globalSY = love.graphics.getHeight()/600
 
 -- @param table config
 -- @return void
@@ -22,7 +24,19 @@ function VisibleObject:new(config)
 end
 
 function VisibleObject:updateGlobals()
-	VisibleObject.globalScale = love.graphics.getWidth()/1920
+	VisibleObject.globalSX = love.graphics.getWidth()/800
+	VisibleObject.globalSY = love.graphics.getHeight()/600
+end
+
+function VisibleObject:getWidth()
+	if not self.sx then
+		love.filesystem.append('log.txt', '\n[VisibleObject:getWidth] missed sx: '..json.encode(self))
+	end
+	return self.width * self.sx
+end
+
+function VisibleObject:getHeight()
+	return self.height * self.sy
 end
 
 -- Checks is mouse currently point to the current object
@@ -102,12 +116,12 @@ end
 
 function VisibleObject:getEdges()
 	local top = {
-		left = {x=self.x+ game.translate.x, y=self.y+game.translate.y},
-		right = {x=self.x+ game.translate.x+self.width*self.sx, y=self.y+game.translate.y}
+		left  = { x = self.x + game.translate.x, 						y = self.y + game.translate.y },
+		right = { x = self.x + game.translate.x + self.width * self.sx, y = self.y + game.translate.y }
 	}
 	local bottom = {
-		left = {x=self.x+ game.translate.x, y=self.y+game.translate.y+self.height*self.sy},
-		right = {x=self.x+ game.translate.x+self.width*self.sx, y=self.y+game.translate.y+self.height*self.sy}
+		left  = { x = self.x + game.translate.x,                        y = self.y + game.translate.y + self.height * self.sy },
+		right = { x = self.x + game.translate.x + self.width * self.sx, y = self.y + game.translate.y + self.height * self.sy }
 	}
 	
 	return top, bottom
@@ -118,42 +132,38 @@ end
 -- @param number dy delta y for a frame, may be skiped
 -- @return {left={x,y}, right={x,y}} top, {left={x,y}, right={x,y}} bottom
 function VisibleObject:getEdgesFrame(dx, dy)
+	dx = dx or 1
 	dy = dy or dx
+
+	local selfTop, selfBottom = self:getEdges()
+
 	local top = {
-		left = {x=self.x-dx, y=self.y-dy},
-		right = {x=self.x+self.width+dx, y=self.y-dy},
-		width = self.width + dx*2,
-		height = self.height + dy*2
+		left   = { x = selfTop.left.x  - dx, y = selfTop.left.y  - dy },
+		right  = { x = selfTop.right.x + dx, y = selfTop.right.y - dy }
 	}
 	local bottom = {
-		left = {x=self.x-dx, y=self.y+self.height+dy},
-		right = {x=self.x+self.width+dx, y=self.y+self.height+dy},
-		width = self.width + dx*2,
-		height = self.height + dy*2
+		left   = {x = selfBottom.left.x  - dx, y = selfBottom.left.y  + dy },
+		right  = {x = selfBottom.right.x + dx, y = selfBottom.right.y + dy }
 	}
 	local size = {
-		width = self.width + dx*2,
-		height = self.height + dy*2
+		width  = self:getWidth()  + dx * 2,
+		height = self:getHeight() + dy * 2
 	}
 	
 	return top, bottom, size
 end
 
-function VisibleObject:getWidth()
-	return self.width
-end
-
-function VisibleObject:getHeight()
-	return self.height
-end
-
 function VisibleObject:setToCenter(xAxis, yAxis)
-	self:setToPart(xAxis and 3 or nil, yAxis and 3 or nil, 4)
+	self:setToPart(
+		xAxis and 1 or nil,
+		yAxis and 1 or nil, 
+		2
+	)
 end
 
 function VisibleObject:setToPart(xNum, yNum, slice)
-	local w = self.width * self.sx
-	local h = self.height * self.sy
+	local w = self:getWidth()
+	local h = self.getHeight()
 
 	local sw = love.graphics.getWidth()
 	local sh = love.graphics.getHeight()
@@ -182,79 +192,75 @@ function VisibleObject:stickToTop(obj, inside)
 	inside = inside or false
 
 	self.xSource = self.x
-	self.x = obj.x
+	self.x       = obj.x
 
 	self.ySource = self.y
-	self.y = obj.y + (inside and self.height*self.sy or -self.height*self.sy)
+	self.y       = obj.y + (inside and self:getHeight() or -self:getHeight())
 end
 
 function VisibleObject:stickToBottom(obj, inside)
 	inside = inside or false
 
 	self.xSource = self.x
-	self.x = obj.x
+	self.x       = obj.x
 
 	self.ySource = self.y
-	self.y = obj.y + (inside and obj.height*obj.sy-self.height*self.sx or obj.height*obj.sy)
+	self.y       = obj.y + (inside and obj:getHeight()-self:getHeight() or obj:getHeight())
 end
 
 function VisibleObject:stickToLeft(obj, inside)
 	inside = inside or false
 
 	self.xSource = self.x
-	self.x = obj.x+(inside and 0 or -self.width*self.sx)
+	self.x       = obj.x + (inside and 0 or -self:getWidth())
 
 	self.ySource = self.y
-	self.y = obj.y
+	self.y       = obj.y
 end
 
 function VisibleObject:stickToRight(obj, inside)
 	inside = inside or false
 
 	self.xSource = self.x
-	self.x = obj.x+(inside and obj.width*obj.sx-self.width*self.sx or obj.width*obj.sx)
+	self.x       = obj.x + (inside and obj:getWidth()-self:getWidth() or obj:getWidth())
 
 	self.ySource = self.y
-	self.y = obj.y
+	self.y       = obj.y
 end
 
 function VisibleObject:setToCenterOfObject(obj, xAxis, yAxis)
-	local w = self.width * self.sx
-	local h = self.height * self.sy
+	local w = self:getWidth()
+	local h = self:getHeight()
 
-	local sw = obj:getWidth() * obj.sx
-	local sh = obj:getHeight() * obj.sy
+	local sw = obj:getWidth()
+	local sh = obj:getHeight()
 
 	local center = { x = obj.x + sw/2, y = obj.y + sh/2 }
 
 	if xAxis then
 		self.xSource = self.x
-		self.x = center.x - w/2
+		self.x       = center.x - w/2
 	end
 
 	if yAxis then
 		self.ySource = self.y
-		self.y = center.y - h*0.75
+		self.y       = center.y - h/2
 	end
 end
 
 function VisibleObject:scaleTo(object, ds)
-	local sx = (object:getWidth()*object.sx) / (self.width*self.sx)
-	local sy = (object:getHeight()*object.sy) / (self.height*self.sy)
-	ds = ds or 1
-
-	self.sx = sx*ds
-	self.sy = sy*ds
+	self.sx = (object:getWidth()  / self:getWidth())  * ds
+	self.sy = (object:getHeight() / self:getHeight()) * ds
 end
 
 function VisibleObject:stepByX(dx)
 	self.xSource = self.x
-	self.x = self.x + self.width + dx
+	self.x = self.x + dx
 end
 
 function VisibleObject:stepByY(dy)
 	self.xSource = self.x
-	self.y = self.y + self.height + dy
+	self.y = self.y + dy
 end
 
 function VisibleObject:restoreCoords(x, y)

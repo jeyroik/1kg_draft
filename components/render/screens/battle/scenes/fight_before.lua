@@ -150,3 +150,5 @@ end
 function SceneFightBefore:update(screen)
 
 end
+
+return SceneFightBefore

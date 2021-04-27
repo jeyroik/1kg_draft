@@ -1,7 +1,7 @@
 SourceHasInitializer = Object:extend()
 SourceHasInitializer.initializers = {}
 
-function SourceHasInitializer:init()
+function SourceHasInitializer:initByInitializer()
     if not SourceHasInitializer.initializers[self.initializer] then
         local i = require (self.initializer)
         SourceHasInitializer.initializers[self.initializer] = i()

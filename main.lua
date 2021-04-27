@@ -15,7 +15,7 @@ end
 function love.draw()
 	game:render()
 
-	love.graphics.print(mouse.x..', '..mouse.y..' scale: '..VisibleObject.globalScale, mouse.x + 3, mouse.y-10)
+	love.graphics.print('['..love.graphics.getWidth()..','..love.graphics.getHeight()..'] '..mouse.x..', '..mouse.y..' scale: '..VisibleObject.globalSX..','..VisibleObject.globalSY, mouse.x + 3, mouse.y-10)
 	
 	
 end

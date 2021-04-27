@@ -231,3 +231,5 @@ end
 function SceneFightCards:update(screen)
 
 end
+
+return SceneFightCards

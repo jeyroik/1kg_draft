@@ -11,3 +11,5 @@ function SceneFightAfter:new(config)
         BattleFightAfterViewStatistics()
     }
 end
+
+return SceneFightAfter
