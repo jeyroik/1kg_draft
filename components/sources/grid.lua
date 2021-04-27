@@ -113,13 +113,12 @@ function Grid:forEach(dispatcher, itemClass)
     loop()
 end
 
-function Grid:render(dx, dy, radian, sx, sy)
-    dx = dx or 0
-    dy = dy or 0
-    radian = radian or 0
-    sx = sx or 1
-    sy = sy or 1
-
+function Grid:draw(dx, dy, radian, sx, sy)
+    dx     = dx     + self.x
+    dy     = dy     + self.y
+    radian = radian * self.radian
+    sx     = sx     * self.sx
+    sy     = sy     * self.sy
 
     local x = self.x + self.margin.left + dx
     local y = self.y + self.margin.top + dy
@@ -128,17 +127,18 @@ function Grid:render(dx, dy, radian, sx, sy)
     local row = 0
     local column = 0
 
-    for index, item in pairs(self.collection) do
+    for _, item in pairs(self.collection) do
         if column == self.columns then
             row = row + 1
             column = 0
         end
 
-        item.sx = self.itemScale == 'auto' and (itemWidth/item:getWidth()) * sx or self.sx
-        item.sy = self.itemScale == 'auto' and (itemHeight/item:getHeight()) * sy or self.sy
-        item.x = x + self.cell.width*column + self.padding.left + dx
-        item.y = y + self.cell.height*row   + self.padding.top  + dy
+        item.sx     = self.itemScale == 'auto' and (itemWidth/item:getWidth()) * sx or self.sx
+        item.sy     = self.itemScale == 'auto' and (itemHeight/item:getHeight()) * sy or self.sy
+        item.x      = x + self.cell.width*column + self.padding.left + dx
+        item.y      = y + self.cell.height*row   + self.padding.top  + dy
         item.radian = radian
+
         item:reload()
         item:render()
         column = column + 1

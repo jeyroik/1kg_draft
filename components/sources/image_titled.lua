@@ -16,13 +16,19 @@ function ImageTitled:new(config)
     self.sy = self.image.sy
 end
 
-function ImageTitled:render(mode, dx, dy)
+function ImageTitled:render(mode)
+    local render = Render(self.renderConfig)
+    render:draw(self, mode)
+end
+
+function ImageTitled:draw(dx, dy, radian, sx, sy, mode)
+
     if mode == 'image' then
-        self.image:render(dx, dy)
+        self.image:draw(dx, dy, radian, sx, sy)
     elseif mode == 'title' then
-        self.text:render(dx, dy)
+        self.text:draw(dx, dy, radian, sx, sy)
     else
-        self.image:render(dx, dy)
-        self.text:render(dx, dy)
+        self.image:draw(dx, dy, radian, sx, sy)
+        self.text:render(dx, dy, radian, sx, sy)
     end
 end

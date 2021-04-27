@@ -60,11 +60,14 @@ function Board:calculateStoneParameters()
 	}
 end
 
-function Board:render(dx, dy)
-	dx = dx or 0
-	dy = dy or 0
+function Board:draw(dx, dy, radian, sx, sy)
+	dx     = dx     + self.x
+	dy     = dy     + self.y
+	radian = radian * self.radian
+	sx     = sx     * self.sx
+	sy     = sy     * self.sy
 
-	love.graphics.rectangle('line', self.x+dx, self.y+dy, self.width, self.height)
+	love.graphics.rectangle('line', dx, dy, self.width, self.height, radian, sx, sy)
 
 	for _, columns in pairs(self.cells) do
 		for _,stone in pairs(columns) do

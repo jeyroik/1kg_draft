@@ -19,8 +19,24 @@ function VisibleObject:new(config)
 		width = love.graphics.getWidth(),
 		height = love.graphics.getHeight()
 	}
+	self.renderConfig = {
+		scale = 'scale', -- size | position | none
+		origin = {
+			w = 800,
+			h = 600
+		}
+	}
 
 	VisibleObject.super.new(self, config)
+end
+
+function VisibleObject:render()
+	local render = Render(self.renderConfig)
+	render:draw(self)
+end
+
+function VisibleObject:draw(dx, dy, radian, sx, sy)
+	self:addDbg('Missed draw implementation')
 end
 
 function VisibleObject:updateGlobals()

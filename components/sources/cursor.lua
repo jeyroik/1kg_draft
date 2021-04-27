@@ -8,6 +8,10 @@ function Cursor:new(config)
     Cursor.super.new(self, config)
 end
 
+function Cursor:render()
+    self:setOn('self.render')
+end
+
 function Cursor:setOn(setter)
     love.mouse.setCursor(self.source)
     self.isSet = true

@@ -15,7 +15,7 @@ end
 -- @param number dx delta for the x
 -- @param number dy delta for the y
 -- @return void
-function Icon:render(dx, dy)
-	self.image:render(dx, dy)
-	self.text:render(dx+self.image.x, dy+self.image.y)
+function Icon:draw(dx, dy, radian, sx, sy)
+	self.image:draw(dx, dy, radian, sx, sy)
+	self.text:draw(dx+self.image.x, dy+self.image.y, radian, sx, sy)
 end

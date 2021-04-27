@@ -21,17 +21,17 @@ function Map:new(config)
     self.totalHeight = self.height * self.rows
 end
 
-function Map:render(dx, dy, radian, sx, sy)
-    dx = dx or 0
-    dy = dy or 0
-    radian = radian or 0
-    sx = sx or self.sx
-    sy = sy or self.sy
+function Map:draw(dx, dy, radian, sx, sy)
+    dx     = dx     + self.x
+    dy     = dy     + self.y
+    radian = radian * self.radian
+    sx     = sx     * self.sx
+    sy     = sy     * self.sy
 
     for i=1,#self.renderPath do
         local layerName = self.renderPath[i]
         self:forEach(layerName, function(cell)
-            Map.super.render(self, cell.number, cell.x+dx, cell.y+dy, radian, sx, sy)
+            Map.super.draw(self, cell.number, cell.x+dx, cell.y+dy, radian, sx, sy)
             return true
         end)
     end

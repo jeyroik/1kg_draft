@@ -22,17 +22,18 @@ function Button:new(config)
             if self.pressed then
                 love.graphics.setColor(self.color)
             end
-            text:render(dx, dy, radian, sx, sy)
+            text:draw(dx, dy, radian, sx, sy)
             if self.pressed then
                 love.graphics.setColor({1,1,1})
             end
         end,
-        position = function (text, dx, dy, radian, sx, sy) text:render(dx, self.pressed and dy+self.border or dy-self.border) end,
+        position = function (text, dx, dy, radian, sx, sy)
+            text:draw(dx, self.pressed and dy+self.border or dy-self.border, radian, sx, sy)
+        end,
         scale = function (text, dx, dy, radian, sx, sy)
-            local sx = text.sx*sx
-            local sy = text.sy*sy
-            local dx = dx
-            local dy = dy
+            sx = text.sx*sx
+            sy = text.sy*sy
+
             if self.pressed then
                 if self.scale.mode == 'in' then
                     sx = text.sx*2 or text.sx
@@ -47,7 +48,7 @@ function Button:new(config)
                 end
 
             end
-            text:render(dx, dy, 0, sx, sy)
+            text:draw(dx, dy, radian, sx, sy)
         end
     }
 
@@ -59,14 +60,14 @@ function Button:reload()
     ini:initSource(self)
 end
 
-function Button:render(dx, dy, radina, sx, sy)
-    dx = dx or 0
-    dy = dy or 0
-    radian = radian or 0
-    sx = sx or 1
-    sy = sy or 1
+function Button:draw(dx, dy, radian, sx, sy)
+    dx     = dx     + self.x
+    dy     = dy     + self.y
+    radian = radian * self.radian
+    sx     = sx     * self.sx
+    sy     = sy     * self.sy
 
-    self.source.images[self.state]:render(dx, dy, radian, sx, sy)
+    self.source.images[self.state]:draw(dx, dy, radian, sx, sy)
     self.effects[self.effect](self.source.text, dx, dy, radian, sx, sy)
 end
 
@@ -77,7 +78,7 @@ end
 
 function Button:hover()
     self.state = 'hovered'
-    game.assets:getCursor('hand'):setOn()
+    game.assets:getCursor('hand'):render()
     self.pressed = true
 end
 

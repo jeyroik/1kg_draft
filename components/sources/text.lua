@@ -20,14 +20,14 @@ end
 -- @param number dx delta for the x
 -- @param number dy delta for the y
 -- @return void
-function Text:render(dx, dy, radian, sx, sy)
-	dx = dx or 0
-	dy = dy or 0
-	radian = radian or 0
-	sx = sx and sx*self.sx or self.sx
-	sy = sy and sy*self.sy or self.sy
+function Text:draw(dx, dy, radian, sx, sy)
+	dx     = dx     + self.x
+	dy     = dy     + self.y
+	radian = radian * self.radian
+	sx     = sx     * self.sx
+	sy     = sy     * self.sy
 
-	love.graphics.draw(self.source, dx + self.x, dy + self.y, radian, sx, sy)
+	love.graphics.draw(self.source, dx, dy, radian, sx, sy)
 end
 
 function Text:setBody(text)

@@ -9,6 +9,10 @@ function Fx:new(config)
     Fx.super.new(self, config)
 end
 
+function Fx:render()
+    self:play()
+end
+
 function Fx:play()
     love.audio.stop(self.source)
     love.audio.play(self.source)

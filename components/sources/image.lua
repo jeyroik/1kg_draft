@@ -13,15 +13,12 @@ end
 -- @param number dx delta for the x
 -- @param number dy delta for the y
 -- @return void
-function Image:render(dx, dy, radian, sx, sy)
-	dx = dx or 0
-	dy = dy or 0
-	radian = radian or self.radian
-	sx = sx or 1
-	sy = sy or 1
+function Image:draw(dx, dy, radian, sx, sy)
+	dx     = dx     + self.x
+	dy     = dy     + self.y
+	radian = radian * self.radian
+	sx     = sx     * self.sx
+	sy     = sy     * self.sy
 
-	sx = self.sx * sx
-	sy = self.sx * sy
-
-	love.graphics.draw(self.source, self.x+dx, self.y+dy, radian, sx, sy)
+	love.graphics.draw(self.source, dx, dy, radian, sx, sy)
 end

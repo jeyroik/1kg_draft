@@ -11,9 +11,7 @@ function TextOverlay:new(config)
     TextOverlay.super.new(self, config)
 end
 
-function TextOverlay:render(dx, dy, radian, sx, sy)
-    dx, dy, radian, sx, sy = self:validateParams(dx, dy, radian, sx, sy)
-
+function TextOverlay:draw(dx, dy, radian, sx, sy)
     local top = self.overlay:getEdges()
 
     if top.right.x+dx > self.love.width then
@@ -32,17 +30,17 @@ function TextOverlay:render(dx, dy, radian, sx, sy)
         dy = 0 - (top.left.y+dy)
     end
 
-    self.overlay:render(dx, dy)
-    TextOverlay.super.render(self, dx, dy, radian, sx, sy)
+    self.overlay:draw(dx, dy, radian, sx, sy)
+    TextOverlay.super.draw(self, dx, dy, radian, sx, sy)
 end
 
 function TextOverlay:resetOverlay()
     self.overlay = Rectangle({
-        mode = self.overlay_mode,
-        x = self.x - self.overlay_offset,
-        y = self.y - self.overlay_offset,
-        width = self:getWidth() * self.sx + self.overlay_offset*2,
-        height = self:getHeight() * self.sy + self.overlay_offset*2,
-        color = self.overlay_color
+        mode   = self.overlay_mode,
+        x      = self.x - self.overlay_offset,
+        y      = self.y - self.overlay_offset,
+        width  = self:getWidth() + self.overlay_offset*2,
+        height = self:getHeight() + self.overlay_offset*2,
+        color  = self.overlay_color
     })
 end
