@@ -22,7 +22,10 @@ function Card:new(config)
 end
 
 function Card:draw()
-	game.assets:getQuads(self.avatar.path):draw(self.avatar.frame)
+	local card = game.assets:getQuads(self.avatar.path)
+	card.x = self.x
+	card.y = self.y
+	card:draw(self.avatar.frame)
 
 	local top, bottom = self:getEdges()
 
@@ -36,9 +39,10 @@ function Card:renderAttack(bottom)
 		body = self.defense, 
 		sx = 1.5*self.sx, 
 		sy = 1.5*self.sy,
-		x = bottom.left.x+2,
-		y = bottom.left.y - attack:getHeight()*1.5*self.sy
+		x = bottom.left.x+2
 	})
+	attack.y = bottom.left.y - attack:getHeight()*1.5*self.sy
+
 	local overlay = Rectangle({
 		mode   = 'fill',
 		x      = bottom.left.x,
@@ -56,10 +60,11 @@ function Card:renderDefense(bottom)
 	local defense = Text({ 
 		body = self.defense, 
 		sx = 1.5*self.sx, 
-		sy = 1.5*self.sy,
-		x = bottom.right.x - defense:getWidth()*1.5*self.sx,
-		y = bottom.right.y - defense:getHeight()*1.5*self.sy
+		sy = 1.5*self.sy
 	})
+	defense.x = bottom.right.x - defense:getWidth()*1.5*self.sx
+	defense.y = bottom.right.y - defense:getHeight()*1.5*self.sy
+
 	local overlay = Rectangle({
 		mode   = 'fill',
 		x      = bottom.right.x - defense:getWidth()*1.5*self.sx-2,
@@ -73,14 +78,15 @@ function Card:renderDefense(bottom)
 	defense:draw()
 end
 
-function Card:renderHealth(top, dx, dy, radian, sx, sy)
+function Card:renderHealth(top)
 	local health = Text({ 
 		body = self.health, 
 		sx = 1.5*self.sx, 
 		sy = 1.5*self.sy,
-		x = top.right.x - health:getWidth()*1.5*self.sx,
 		y = top.right.y
 	})
+	health.x = top.right.x - health:getWidth()*1.5*self.sx
+
 	local overlay = Rectangle({
 		mode   = 'fill',
 		x      = top.right.x - health:getWidth()*1.5*self.sx-2,

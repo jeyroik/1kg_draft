@@ -18,5 +18,6 @@ function Image:draw()
 end
 
 function Image:reload()
+	self.initialized = false
 	self:init()
 end

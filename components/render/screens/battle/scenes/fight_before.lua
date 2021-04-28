@@ -87,7 +87,8 @@ function SceneFightBefore:mousePressed(screen, x, y, button, isTouch, presses)
 
     if modeIsChosen then
         game.assets:getCursor('hand'):reset()
-        screen:changeSceneTo('fight_cards')
+
+        screen:changeStateTo('fight_cards')
     end
 end
 

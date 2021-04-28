@@ -104,8 +104,9 @@ function SceneFightCards:mouseMoved(screen, x, y, dx, dy, isTouch)
             cursor:setOn('card')
 
             local icons = {}
-            local top = card:getEdgesFrame(3)
+            local top, _, size = card:getEdgesFrame(3)
             local iconCounter = 0
+
             for magicName, amount in pairs(card.skill.active.cost) do
                 local magic = game.assets:getMisc('magic'):getByName(magicName)
                 table.insert(
@@ -113,8 +114,8 @@ function SceneFightCards:mouseMoved(screen, x, y, dx, dy, isTouch)
                         {
                             image=game.assets:getImagePack('gems'):get(magic:getType()),
                             text=amount,
-                            xd=120 + iconCounter*60,
-                            yd=220
+                            xd=150 + iconCounter*60,
+                            yd=200
                         }
                 )
                 iconCounter = iconCounter+1
@@ -133,8 +134,8 @@ function SceneFightCards:mouseMoved(screen, x, y, dx, dy, isTouch)
             layerData.selection = {
                 x = top.left.x,
                 y = top.left.y,
-                width = top.width*card.sx,
-                height = top.height*card.sy,
+                width = size.width*card.sx,
+                height = size.height*card.sy,
                 color = selectionColor,
                 line_width = 5
             }
@@ -202,7 +203,7 @@ function SceneFightCards:mousePressed(screen, x, y, button, isTouch, presses)
             elseif btn.name == 'submit' then
                 if layerData.mode == 'vs PC' then
                     layerData.players[1]:addCards(self.addedCards.collection)
-                    screen:changeSceneTo('fight')
+                    screen:changeStateTo('fight')
                 else
                     layerData.players[self.player]:addCards(self.addedCards.collection)
 
@@ -211,7 +212,7 @@ function SceneFightCards:mousePressed(screen, x, y, button, isTouch, presses)
                         self.grid:fillFrom(self.addedCards)
                     else
                         self.player = 1
-                        screen:changeSceneTo('fight')
+                        screen:changeStateTo('fight')
                     end
                 end
 

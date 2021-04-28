@@ -15,7 +15,6 @@ function BattleFightCardsViewDeck:render(screen, scene)
     head:setToPart(5, 2, 8)
     head:render()
 
-    scene.grid:setToCenter(true, true)
     scene.grid:render()
     scene.addedCards:render()
 
