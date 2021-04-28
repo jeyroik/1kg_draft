@@ -46,7 +46,7 @@ function BattleFightViewPlayers:renderPlayerGems(player)
     for _,name in pairs(order) do
         local gem = player.gems[name]
 
-        gem:render('image+amount', 0, 0, 0, VisibleObject.globalScale, VisibleObject.globalScale)
+        gem:render('image+amount')
         if gem.isHovered then
             gem:render('title')
         end

@@ -181,7 +181,7 @@ end
 
 function VisibleObject:setToPart(xNum, yNum, slice)
 	local w = self:getWidth()
-	local h = self.getHeight()
+	local h = self:getHeight()
 
 	local sw = love.graphics.getWidth()
 	local sh = love.graphics.getHeight()

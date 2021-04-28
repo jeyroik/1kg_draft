@@ -27,10 +27,10 @@ function SceneFightCards:new(config)
 			bottom = 100
 		},
         padding = {
-            top    = 50  * VisibleObject.globalScale,
-            bottom = 50  * VisibleObject.globalScale,
-            left   = 100 * VisibleObject.globalScale,
-            right  = 100 * VisibleObject.globalScale
+            top    = 50,
+            bottom = 50,
+            left   = 100,
+            right  = 100
         }
     })
     self.grid:fill(game.assets.cards)
@@ -53,15 +53,15 @@ function SceneFightCards:new(config)
 			bottom = 10
 		},
         padding = {
-            top    = 50  * VisibleObject.globalScale,
-            bottom = 50  * VisibleObject.globalScale,
+            top    = 50,
+            bottom = 50,
             left   = 0,
             right  = 0
         }
     })
 
     self.buttonsGrid = Grid({
-        width   = 800*VisibleObject.globalScale,
+        width   = 800,
         height  = 100,
         columns = 2,
         rows    = 1,
@@ -113,8 +113,8 @@ function SceneFightCards:mouseMoved(screen, x, y, dx, dy, isTouch)
                         {
                             image=game.assets:getImagePack('gems'):get(magic:getType()),
                             text=amount,
-                            xd=120*VisibleObject.globalScale + iconCounter*60*VisibleObject.globalScale,
-                            yd=220*VisibleObject.globalScale
+                            xd=120 + iconCounter*60,
+                            yd=220
                         }
                 )
                 iconCounter = iconCounter+1
@@ -125,8 +125,8 @@ function SceneFightCards:mouseMoved(screen, x, y, dx, dy, isTouch)
             layerData.tip = {
                 x = x,
                 y = y,
-                sx = VisibleObject.globalScale,
-                sy = VisibleObject.globalScale,
+                sx = 1,
+                sy = 1,
                 text = 'Title: '..card.name .. '\n\nDescription:\n'..card.skill.active.description..'\n\nCost: ',
                 icons = icons
             }

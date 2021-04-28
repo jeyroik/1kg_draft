@@ -8,7 +8,7 @@ end
 
 function BattleFightBeforeViewSettingsMode:render(data, scene)
     --local dx = 0+
-    local title = Text({ body = 'Choose mode', sx = 2*VisibleObject.globalScale, sy = 2*VisibleObject.globalScale })
+    local title = Text({ body = 'Choose mode', sx = 2, sy = 2 })
     local titleGrid = Grid({
         width   = love.graphics.getWidth(),
         height  = love.graphics.getHeight(),
@@ -22,10 +22,10 @@ function BattleFightBeforeViewSettingsMode:render(data, scene)
 			bottom = 10
 		},
         padding = {
-            top    = 100  * VisibleObject.globalScale,
-            bottom = 50  * VisibleObject.globalScale,
-            left   = 100 * VisibleObject.globalScale,
-            right  = 100 * VisibleObject.globalScale
+            top    = 100,
+            bottom = 50,
+            left   = 100,
+            right  = 100
         }
     })
     titleGrid:addCollection({ title})

@@ -37,6 +37,9 @@ end
 function GameObject:changeStateTo(stateName)
     self.__state__ = stateName
     local current = self:getCurrentState()
+    if not current then
+        love.filesystem.append('log.txt', '\n[GameObject:changeStateTo] stateName = '..stateName)
+    end
     current:init(self)
 end
 

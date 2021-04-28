@@ -24,10 +24,10 @@ function SceneFightBefore:new(config)
 			bottom = 10
 		},
         padding = {
-            top    = 100  * VisibleObject.globalScale,
-            bottom = 50  * VisibleObject.globalScale,
-            left   = 100 * VisibleObject.globalScale,
-            right  = 100 * VisibleObject.globalScale
+            top    = 100,
+            bottom = 50,
+            left   = 100,
+            right  = 100
         }
     })
 

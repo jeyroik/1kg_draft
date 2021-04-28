@@ -9,8 +9,8 @@ function BattleFightCardsViewDeck:render(screen, scene)
     
     local head = Text({
         body = 'Player '..scene.player..'. Choose cards',
-        sx = 2*VisibleObject.globalScale,
-        sy = 2*VisibleObject.globalScale
+        sx = 2,
+        sy = 2
     })
     head:setToPart(5, 2, 8)
     head:render()
@@ -27,10 +27,10 @@ function BattleFightCardsViewDeck:render(screen, scene)
     exit:stepByY(50)
     exit:stepByY(20)
 
-    scene.buttonsGrid.width  = 800*VisibleObject.globalScale
+    scene.buttonsGrid.width  = 800
     scene.buttonsGrid:setToPart(5,7,8)
-    scene.buttonsGrid.sx = VisibleObject.globalScale
-    scene.buttonsGrid.sy = VisibleObject.globalScale
+    scene.buttonsGrid.sx = 1
+    scene.buttonsGrid.sy = 1
     scene.buttonsGrid:reload()
     scene.buttonsGrid:render()
 end
