@@ -3,7 +3,7 @@ Cursor = Source:extend()
 function Cursor:new(config)
     self.isSet = false
     self.setter = ''
-    config.initializer = 'components/sources/initializers/cursor'
+    config.initializer = config.initializer or 'components/sources/initializers/cursor'
 
     Cursor.super.new(self, config)
 end

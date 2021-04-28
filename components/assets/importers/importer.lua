@@ -3,18 +3,19 @@ AssetImporter = GameObject:extend()
 -- @param table config
 -- @return void
 function AssetImporter:new(config)
-    self.fxs = {}
-    self.images = {}
+    self.fxs         = {}
+    self.images      = {}
     self.imagesPacks = {}
-    self.quads = {}
-    self.misc = {}
-    self.cursors = {}
-    self.mutators = {}
-    self.buttons = {}
-    self.maps = {}
-    self.cards = {}
-    self.texts = {}
-    self.grids = {}
+    self.quads       = {}
+    self.misc        = {}
+    self.cursors     = {}
+    self.mutators    = {}
+    self.buttons     = {}
+    self.maps        = {}
+    self.cards       = {}
+    self.texts       = {}
+    self.grids       = {}
+    self.groups      = {}
 
     AssetImporter.super.new(self, config)
 end
@@ -68,5 +69,9 @@ function AssetImporter:importAssets(assetsManager)
 
     for alias, grid in pairs(self.grids) do
         assetsManager:addGrid(alias, grid)
+    end
+
+    for alias, group in pairs(self.groups) do
+        assetsManager:addGroup(alias, group)
     end
 end

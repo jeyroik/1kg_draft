@@ -15,6 +15,9 @@ return {
             { path = 'components/render/screens/landscape/scenes/main/importer'      }
         }
     },
+    sources = {
+        image = { path = 'components/sources/image' } -- game:newSource('image', {...})
+    },
     profile = {
         path    = 'components/game/profile',
         name    = 'Player1', 

@@ -6,7 +6,7 @@ function MapCell:new(config)
     self.number = 0
     self.previous = 0
 
-    config.initializer = 'components/sources/initializers/map/cell'
+    config.initializer = config.initializer or 'components/sources/initializers/map/cell'
     MapCell.super.new(self, config)
 end
 

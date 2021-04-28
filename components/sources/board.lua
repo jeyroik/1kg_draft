@@ -18,7 +18,7 @@ function Board:new(config)
 	self.ultraDeathStoneDamage = 5
 	self.ready = false
 
-	config.initializer = 'components/sources/initializers/board'
+	config.initializer = config.initializer or 'components/sources/initializers/board'
 
 	Board.super.new(self, config)
 end

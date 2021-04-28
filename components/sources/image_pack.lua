@@ -2,7 +2,7 @@ ImagePack = Source:extend()
 
 function ImagePack:new(config)
     self.name = ''
-    config.initializer = 'components/sources/initializers/image_pack'
+    config.initializer = config.initializer or 'components/sources/initializers/image_pack'
 
     ImagePack.super.new(self, config)
 end

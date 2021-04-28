@@ -14,7 +14,7 @@ function BattleFightBeforeImporter:new()
                 }
             } 
         },
-        board_background = { path = "board.png", initializer = "components/render/screens/battle/scenes/fight_before/background_initializer" },
+        board_background = { path = "board.png", initializer = "components/render/screens/battle/scenes/fight_before/initializer_background" },
         fs__btn = { path = "menu_btn.png" },
         fs__btn_pressed = { path = "menu_btn_pressed.png" },
     }
@@ -22,7 +22,7 @@ function BattleFightBeforeImporter:new()
         hand = "hand"
     }
     self.texts = {
-        before_fight_header = { body = 'Choose mode', sx = 2, sy = 2, initializer = "components/render/screens/battle/scenes/fight_before/header_initializer"}
+        before_fight_header = { body = 'Choose mode', sx = 2, sy = 2, initializer = "components/render/screens/battle/scenes/fight_before/initializer_header"}
     }
 
     self.buttons = {

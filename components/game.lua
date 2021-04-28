@@ -24,6 +24,7 @@ require "components/sources/cursor"
 require "components/sources/button"
 require "components/sources/grid"
 require "components/sources/grids/deck"
+require "components/sources/group"
 
 require "components/hooks/hook"
 require "components/mutators/mutator"

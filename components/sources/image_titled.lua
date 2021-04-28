@@ -4,7 +4,7 @@ function ImageTitled:new(config)
     self.text = {}
     self.image = {}
 
-    config.initializer = 'components/sources/initializers/image_titled'
+    config.initializer = config.initializer or 'components/sources/initializers/image_titled'
 
     ImageTitled.super.new(self, config)
 

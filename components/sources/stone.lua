@@ -11,7 +11,7 @@ function MagicStone:new(config)
 	self.scale = 1
 
 	config.path = 'gems'
-	config.initializer = 'components/sources/initializers/stone'
+	config.initializer = config.initializer or 'components/sources/initializers/stone'
 
 	MagicStone.super.new(self, config)
 end

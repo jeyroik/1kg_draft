@@ -19,17 +19,8 @@ function BattleFightCardsViewDeck:render(screen, scene)
     scene.addedCards:render()
 
     local submit = game.assets:getButton('submitCards')
-    submit:setToPart(5, 7, 8)
-
     local exit = game.assets:getButton('exitFight')
-    exit:setToPart(5, 7, 8)
-    exit:stepByY(50)
-    exit:stepByY(20)
 
-    scene.buttonsGrid.width  = 800
-    scene.buttonsGrid:setToPart(5,7,8)
-    scene.buttonsGrid.sx = 1
-    scene.buttonsGrid.sy = 1
-    scene.buttonsGrid:reload()
-    scene.buttonsGrid:render()
+    submit:render()
+    --exit:render()
 end

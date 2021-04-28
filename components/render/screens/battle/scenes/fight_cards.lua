@@ -59,30 +59,6 @@ function SceneFightCards:new(config)
             right  = 0
         }
     })
-
-    self.buttonsGrid = Grid({
-        width   = 800,
-        height  = 100,
-        columns = 2,
-        rows    = 1,
-        itemScale = 'fixed',
-		margin = {
-			top = 0,
-			left = 0,
-			right = 0,
-			bottom = 0
-		},
-        padding = {
-            top    = 10,
-            bottom = 10,
-            left   = 10,
-            right  = 10
-        }
-    })
-    self.buttonsGrid:addCollection({
-        game.assets:getButton('submitCards'),
-        game.assets:getButton('exitFight'),
-    })
 end
 
 function SceneFightCards:init(screen)
@@ -149,10 +125,11 @@ function SceneFightCards:mouseMoved(screen, x, y, dx, dy, isTouch)
         end
     end
 
-    self.buttonsGrid:forEach(function(btn, index)
+    game.assets:getGroup('fight_cards_buttons'):forEach(function(alias, btn) 
         if btn:isMouseOn(x, y) then
             if btn.state == 'default' then
                 btn:hover()
+                self:addDbg(btn.x..','..btn.y..'; '..btn:getWidth()..','..btn:getHeight())
                 return false
             end
         else
@@ -190,14 +167,14 @@ function SceneFightCards:mousePressed(screen, x, y, button, isTouch, presses)
         end
     end
 
-    self.buttonsGrid:forEach(function(btn) 
+    game.assets:getGroup('fight_cards_buttons'):forEach(function(alias, btn) 
         if btn:isMouseOn(x, y) then
             self:addDbg('Click on "'..btn.name..'"')
             game.assets:getCursor('hand'):reset()
 
             if btn.name == 'exit' then
                 self.grid:fillFrom(self.addedCards)
-                screen:changeSceneTo('fight_before')
+                screen:changeStateTo('fight_before')
                 game:changeStateTo('landscape')
                 
             elseif btn.name == 'submit' then

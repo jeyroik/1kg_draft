@@ -12,7 +12,7 @@ function Button:new(config)
     }
     self.color = {1,1,1}
 
-    config.initializer = 'components/sources/initializers/button'
+    config.initializer = config.initializer or 'components/sources/initializers/button'
 
     Button.super.new(self, config)
 
@@ -48,9 +48,8 @@ function Button:new(config)
             text:draw()
         end
     }
-
-    self:setSize(self.source.images.default:getWidth(), self.source.images.default:getHeight())
 end
+
 
 function Button:reload()
     local ini = InitializerButton({})

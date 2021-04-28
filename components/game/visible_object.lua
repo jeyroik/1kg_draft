@@ -136,7 +136,7 @@ end
 function VisibleObject:getEdges()
 	local top = {
 		left  = { x = self.x + game.translate.x, 						y = self.y + game.translate.y },
-		right = { x = self.x + game.translate.x + self.width * self.sx, y = self.y + game.translate.y }
+		right = { x = self.x + game.translate.x + self:getWidth(), y = self.y + game.translate.y }
 	}
 	local bottom = {
 		left  = { x = self.x + game.translate.x,                        y = self.y + game.translate.y + self.height * self.sy },

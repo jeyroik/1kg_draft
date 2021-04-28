@@ -51,7 +51,7 @@ end
 function getGameConfig()
 	local config = nil--love.filesystem.read('config.json')
 	
-	--love.filesystem.append('log.txt', '\n[Start]\n')
+	--love.filesystem.append('log.txt', '\n[Start] ')
 	
 	if not config then
 		config = require "resources/game"

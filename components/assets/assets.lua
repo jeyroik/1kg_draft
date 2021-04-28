@@ -20,6 +20,7 @@ function Assets:new(config)
 	self.cards = {}
 	self.grids = {}
 	self.texts = {}
+	self.groups = {}
 
 	self:applyConfig(config)
 end
@@ -96,6 +97,14 @@ end
 
 function Assets:getGrid(name)
 	return self.grids[name]
+end
+
+function Assets:getGroup(name)
+	return self.groups[name]
+end
+
+function Assets:addGroup(alias, group)
+	self.groups[alias] = Group(group)
 end
 
 function Assets:addText(alias, text)

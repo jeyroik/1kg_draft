@@ -6,7 +6,7 @@ function Rectangle:new(config)
     self.color = {1,1,1,1}
     self.mode = 'line'
 
-    config.initializer = 'components/sources/initializers/rectangle'
+    config.initializer = config.initializer or 'components/sources/initializers/rectangle'
 
     Rectangle.super.new(self, config)
 end

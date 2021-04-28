@@ -14,7 +14,7 @@ function Map:new(config)
     self.totalWidth = 0
     self.totalHeight = 0
 
-    config.initializer = 'components/sources/initializers/map'
+    config.initializer = config.initializer or 'components/sources/initializers/map'
     config.renderConfig = {
         scale = 'size_position',
         origin = {

@@ -22,7 +22,7 @@ function Render:draw(object, ...)
     local args = {...}
     local scale = {
         size = function ()
-            self:assignParameters(object, 0, 0, 0, self.windowWidth/self.origin.w, self.windowHeight/self.origin.h)
+            self:assignParameters(object, object.x, object.y, object.radian, self.windowWidth/self.origin.w, self.windowHeight/self.origin.h)
         end,
         position = function ()
             local sx = self.windowWidth/self.origin.w
@@ -30,7 +30,7 @@ function Render:draw(object, ...)
             local dx = sx * self.origin.x
             local dy = sy * self.origin.y
 
-            self:assignParameters(object, dx, dy, 0, sx, sy)
+            self:assignParameters(object, dx, dy, object.radian, sx, sy)
         end,
         size_position = function ()
             local sx = self.windowWidth/self.origin.w
@@ -38,10 +38,10 @@ function Render:draw(object, ...)
             local dx = sx * self.origin.x
             local dy = sy * self.origin.y
 
-            self:assignParameters(object, dx, dy, 0, sx, sy)
+            self:assignParameters(object, dx, dy, object.radian, sx, sy)
         end,
         none = function()
-            self:assignParameters(object, 0, 0, 0, 1, 1)
+            self:assignParameters(object, object.x, object.y, object.radian, object.sx, object.sy)
         end
     }
 
