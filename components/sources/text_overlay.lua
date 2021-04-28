@@ -11,27 +11,29 @@ function TextOverlay:new(config)
     TextOverlay.super.new(self, config)
 end
 
-function TextOverlay:draw(dx, dy, radian, sx, sy)
+function TextOverlay:draw()
+    self.overlay:draw()
+    TextOverlay.super.draw(self)
+end
+
+function TextOverlay:reload()
     local top = self.overlay:getEdges()
 
     if top.right.x+dx > self.love.width then
-        dx = self.love.width - (top.right.x+dx)
+        self.overlay.x = self.love.width - self.overlay.width*self.sx
     end
 
     if top.left.x+dx < 0 then
-        dx = 0 - (top.left.x+dx)
+        self.overlay.x = 5
     end
 
     if top.left.y+dy > self.love.height then
-        dy = self.love.height - (top.left.y+dy)
+        self.overlay.y = self.love.height - self.overlay.height*self.sy
     end
 
     if top.left.y+dy < 0 then
-        dy = 0 - (top.left.y+dy)
+        self.overlay.y = 5
     end
-
-    self.overlay:draw(dx, dy, radian, sx, sy)
-    TextOverlay.super.draw(self, dx, dy, radian, sx, sy)
 end
 
 function TextOverlay:resetOverlay()

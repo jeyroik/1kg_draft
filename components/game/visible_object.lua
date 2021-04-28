@@ -37,7 +37,7 @@ function VisibleObject:render()
 	render:draw(self)
 end
 
-function VisibleObject:draw(dx, dy, radian, sx, sy)
+function VisibleObject:draw(...)
 	self:addDbg('Missed draw implementation')
 end
 
@@ -295,6 +295,6 @@ function VisibleObject:drawSelection(dx, dy, color, mode)
 	local top, _, size = self:getEdgesFrame(dx, dy)
 
 	love.graphics.setColor(color)
-	love.graphics.rectangle(mode, top.left.x, top.left.y, size.width, size.height)
+	love.graphics.rectangle(mode, top.left.x, top.left.y, size.width*self.sx, size.height*self.sy)
 	love.graphics.setColor({1,1,1,1})
 end

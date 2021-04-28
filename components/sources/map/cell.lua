@@ -10,8 +10,15 @@ function MapCell:new(config)
     MapCell.super.new(self, config)
 end
 
-function MapCell:draw(dx, dy, radian, sx, sy)
-    game.assets:getQuads(self.path):draw(dx, dy, radian, sx, sy, self.number)
+function MapCell:draw()
+    local cell = game.assets:getQuads(self.path)
+    cell.x = self.x
+    cell.y = self.y
+    cell.width = self.width
+    cell.height = self.height
+    cell.sx = self.sx
+    cell.sy = self.sy
+    cell:draw(self.number)
 end
 
 function MapCell:changeNumberTo(number)

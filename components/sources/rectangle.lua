@@ -11,23 +11,17 @@ function Rectangle:new(config)
     Rectangle.super.new(self, config)
 end
 
-function Rectangle:draw(dx, dy, radian, sx, sy)
-    dx     = dx     + self.x
-    dy     = dy     + self.y
-    radian = radian * self.radian
-    sx     = sx     * self.sx
-    sy     = sy     * self.sy
-
+function Rectangle:draw()
     love.graphics.setColor(self.color)
     love.graphics.rectangle(
         self.mode,
-        dx,
-        dy,
+        self.x,
+        self.y,
         self.width,
         self.height,
-        radian,
-        sx,
-        sy
+        self.radian,
+        self.sx,
+        self.sy
     )
     love.graphics.setColor({1,1,1,1})
 end

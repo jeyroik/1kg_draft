@@ -34,7 +34,6 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
             return false
         else
             char:restoreNumber()
-            game.assets:getCursor('hand'):reset()
             return true
         end
     end)
@@ -45,8 +44,8 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
         if mapObject:isMouseOn(x, y) then
             self.label = TextOverlay({
                 body = mapObject.title..'\n'..mapObject.description,
-                x = x+5-game.translate.x,
-                y = y+5-game.translate.y,
+                x = x+15-game.translate.x,
+                y = y-game.translate.y,
                 overlay_mode = 'fill',
                 overlay_color = {0,0,0,0.3},
                 overlay_offset = 5

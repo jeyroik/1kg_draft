@@ -21,14 +21,14 @@ function ImageTitled:render(mode)
     render:draw(self, mode)
 end
 
-function ImageTitled:draw(dx, dy, radian, sx, sy, mode)
+function ImageTitled:draw(mode)
 
     if mode == 'image' then
-        self.image:draw(dx, dy, radian, sx, sy)
+        self.image:draw()
     elseif mode == 'title' then
-        self.text:draw(dx, dy, radian, sx, sy)
+        self.text:draw()
     else
-        self.image:draw(dx, dy, radian, sx, sy)
-        self.text:render(dx, dy, radian, sx, sy)
+        self.image:draw()
+        self.text:render()
     end
 end

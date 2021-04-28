@@ -16,15 +16,9 @@ function MagicGem:render(mode)
     render:draw(self, mode)
 end
 
-function MagicGem:draw(dx, dy, radian, sx, sy, mode)
-    dx     = dx     + self.x
-    dy     = dy     + self.y
-    radian = radian * self.radian
-    sx     = sx     * self.sx
-    sy     = sy     * self.sy
-
+function MagicGem:draw(mode)
     if mode == 'image+amount' then
-        MagicGem.super.draw(self, dx, dy, radian, sx, sy, 'image')
+        MagicGem.super.draw('image')
         local amountText = Text({
             x = self.amountText.x,
             y = self.amountText.y,
@@ -32,10 +26,10 @@ function MagicGem:draw(dx, dy, radian, sx, sy, mode)
             sy = self.amountText.sy,
             body = self.amount
         })
-        amountText:draw(dx, dy, radian, sx, sy)
+        amountText:draw()
     elseif mode == 'title' then
         local x, y = love.mouse.getPosition()
-        MagicGem.super.draw(self, x+20+dx, y+dy, 0, sx, sy, 'title')
+        MagicGem.super.draw(self, 'title')
     end
 end
 

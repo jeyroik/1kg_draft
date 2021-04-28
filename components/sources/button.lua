@@ -18,37 +18,34 @@ function Button:new(config)
 
     self.pressed = false
     self.effects = {
-        color = function (text, dx, dy, radian, sx, sy)
+        color = function (text)
             if self.pressed then
                 love.graphics.setColor(self.color)
             end
-            text:draw(dx, dy, radian, sx, sy)
+            text:draw()
             if self.pressed then
                 love.graphics.setColor({1,1,1})
             end
         end,
-        position = function (text, dx, dy, radian, sx, sy)
-            text:draw(dx, self.pressed and dy+self.border or dy-self.border, radian, sx, sy)
+        position = function (text)
+            text:draw()
         end,
-        scale = function (text, dx, dy, radian, sx, sy)
-            sx = text.sx*sx
-            sy = text.sy*sy
-
+        scale = function (text)
             if self.pressed then
                 if self.scale.mode == 'in' then
-                    sx = text.sx*2 or text.sx
-                    sy = text.sx*2 or text.sy
-                    dx = dx-text.width
-                    dy = dy-text.height
+                    text.sx = text.sx*2 or text.sx
+                    text.sy = text.sx*2 or text.sy
+                    text.x = self.x-text.width
+                    text.y = self.y-text.height
                 else
-                    sx = text.sx/2 or text.sx
-                    sy = text.sx/2 or text.sy
-                    dx = dx+text.width/2
-                    dy = dy+text.height/2
+                    text.sx = text.sx/2 or text.sx
+                    text.sy = text.sx/2 or text.sy
+                    text.x = dx+text.width/2
+                    text.y = dy+text.height/2
                 end
 
             end
-            text:draw(dx, dy, radian, sx, sy)
+            text:draw()
         end
     }
 
@@ -60,15 +57,9 @@ function Button:reload()
     ini:initSource(self)
 end
 
-function Button:draw(dx, dy, radian, sx, sy)
-    dx     = dx     + self.x
-    dy     = dy     + self.y
-    radian = radian * self.radian
-    sx     = sx     * self.sx
-    sy     = sy     * self.sy
-
-    self.source.images[self.state]:draw(dx, dy, radian, sx, sy)
-    self.effects[self.effect](self.source.text, dx, dy, radian, sx, sy)
+function Button:draw()
+    self.source.images[self.state]:draw()
+    self.effects[self.effect](self.source.text)
 end
 
 function Button:click()

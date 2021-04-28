@@ -20,8 +20,8 @@ function Map:new(config)
         origin = {
             x = 1,
             y = 1,
-            w = 200,
-            h = 150
+            w = 400,
+            h = 300
         }
     }
     Map.super.new(self, config)
@@ -30,13 +30,7 @@ function Map:new(config)
     self.totalHeight = self.height * self.rows
 end
 
-function Map:draw(dx, dy, radian, sx, sy)
-    dx     = dx     + self.x
-    dy     = dy     + self.y
-    radian = radian * self.radian
-    sx     = sx     * self.sx
-    sy     = sy     * self.sy
-
+function Map:draw()
     for i=1,#self.renderPath do
         local layerName = self.renderPath[i]
         self:forEach(layerName, function(cell)
@@ -46,8 +40,7 @@ function Map:draw(dx, dy, radian, sx, sy)
         end)
     end
 
-    love.graphics.print('dx = '..dx..', dy = '..dy..', sx = '..sx..', sy = '..sy, 50, 50)
-    love.graphics.print('dx = '..dx..', dy = '..dy..', sx = '..self.sx..', sy = '..self.sy, 50, 80)
+    love.graphics.print('dx = '..self.x..', dy = '..self.y..', sx = '..self.sx..', sy = '..self.sy, 50, 50)
 end
 
 function Map:forEach(layerName, dispatcher)
@@ -99,4 +92,9 @@ function Map:isMouseOnObject(x, y, objectName)
     end
 
     return false
+end
+
+function Map:reload()
+    local initializer = InitializerMap()
+    initializer:initSource(self)
 end

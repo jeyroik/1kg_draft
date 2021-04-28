@@ -16,18 +16,18 @@ function MagicStone:new(config)
 	MagicStone.super.new(self, config)
 end
 
-function MagicStone:draw(dx, dy, radian, sx, sy)
+function MagicStone:draw()
 	local pack = game.assets:getImagePack(self.path)
 	local image = pack:get(self:getMask())
 
-	dx     = dx     + self.x
-	dy     = dy     + self.y
-	radian = radian * self.radian
-	sx     = sx     * self.sx
-	sy     = sy     * self.sy
-
 	if image then
-		image:draw(dx, dy, radian, sx, sy)
+		image.x = self.x
+		image.y = self.y
+		image.width = self.width
+		image.height = self.height
+		image.sx = self.sx
+		image.sy = self.sy
+		image:draw()
 	end
 end
 
