@@ -6,16 +6,18 @@ function love.load()
 	game:init()
 	
 	mouse = {x=0,y=0}
+	fps = 1
 end
 
 function love.update(dt)
 	game:update(dt)
+	fps = dt
 end
 
 function love.draw()
 	game:render()
 
-	love.graphics.print('['..love.graphics.getWidth()..','..love.graphics.getHeight()..'] '..mouse.x..', '..mouse.y..' scale: '..game.translate.x..','..game.translate.y, mouse.x + 3, mouse.y-10)
+	love.graphics.print('['..love.graphics.getWidth()..','..love.graphics.getHeight()..'] '..mouse.x..', '..mouse.y..' scale: '..game.translate.x..','..game.translate.y, mouse.x + 3, mouse.y-10)love.graphics.print('[FPS: '..math.floor(60/fps/100)..']', 5, 5)
 	
 	
 end

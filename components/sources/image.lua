@@ -3,7 +3,7 @@ Image = Source:extend()
 -- @param image source
 -- @return void
 function Image:new(config)
-	config.initializer = 'components/sources/initializers/image'
+	config.initializer = config.initializer or 'components/sources/initializers/image'
 
 	Image.super.new(self, config)
 
@@ -15,4 +15,8 @@ end
 -- @return void
 function Image:draw()
 	love.graphics.draw(self.source, self.x, self.y, self.radian, self.sx, self.sy)
+end
+
+function Image:reload()
+	self:init()
 end
