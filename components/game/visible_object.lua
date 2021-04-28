@@ -295,6 +295,6 @@ function VisibleObject:drawSelection(dx, dy, color, mode)
 	local top, _, size = self:getEdgesFrame(dx, dy)
 
 	love.graphics.setColor(color)
-	love.graphics.rectangle(mode, top.left.x, top.left.y, size.width*self.sx, size.height*self.sy)
+	love.graphics.rectangle(mode, top.left.x-game.translate.x, top.left.y-game.translate.y, size.width*self.sx, size.height*self.sy)
 	love.graphics.setColor({1,1,1,1})
 end
