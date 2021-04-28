@@ -22,5 +22,5 @@ function BattleFightCardsViewDeck:render(screen, scene)
     local exit = game.assets:getButton('exitFight')
 
     submit:render()
-    --exit:render()
+    exit:render()
 end

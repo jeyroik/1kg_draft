@@ -46,7 +46,17 @@ function BattleFightCardsImporter:new()
             text_scale = 0.7,
             border = 15,
             effect = 'color',
-            color = {0, 0.5, 0}
+            color = {0, 0.5, 0},
+            initializer = 'components/render/screens/battle/scenes/fight_cards/initializer_exit',
+            renderConfig = {
+                scale = 'size',
+                origin = {
+                    w = 1920,
+                    h = 1080,
+                    x = 100,
+                    y = 100
+                }
+            }
         }
     }
 end
