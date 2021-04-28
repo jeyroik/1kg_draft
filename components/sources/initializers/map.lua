@@ -9,6 +9,7 @@ function InitializerMap:initSource(map)
             map.map[layerName][row] = {}
             for column, number in pairs(columns) do
                 map.map[layerName][row][column] = MapCell({
+                    alias = 'map_cell',
                     path = map.alias,
                     x = (column-1)*map.width*map.sx,
                     y = (row-1)*map.width*map.sy,

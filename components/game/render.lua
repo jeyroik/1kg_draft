@@ -47,7 +47,7 @@ function Render:draw(object, ...)
 
     local currentResolution = love.graphics.getWidth()..'x'..love.graphics.getHeight()
 
-    if Render.previousResolution ~= currentResolution then
+    if object.previousResolution ~= currentResolution then
         if scale[self.scale] then
             scale[self.scale]()
         elseif object.renderConfig.render then
@@ -55,17 +55,16 @@ function Render:draw(object, ...)
         end
 
         object:reload()
-        Render.previousResolution = currentResolution
-        self:addDbg('Recalculation')
+        object.previousResolution = currentResolution
     end
 
     object:draw(args)
 end
 
 function Render:assignParameters(object, dx, dy, radian, sx, sy)
-    object.x      = object.x + dx
-    object.y      = object.y + dy
+    object.x      = dx
+    object.y      = dy
     object.radian = radian
-    object.sx     = object.sx * sx
-    object.sy     = object.sy * sy
+    object.sx     = sx
+    object.sy     = sy
 end

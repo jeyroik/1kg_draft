@@ -12,6 +12,9 @@ function BattleFightBeforeImporter:new()
     self.cursors = {
         hand = "hand"
     }
+    self.texts = {
+        before_fight_header = { body = 'Choose mode', sx = 2, sy = 2, initializer = "components/render/screens/battle/scenes/fight_before/header_initializer"}
+    }
 
     self.buttons = {
         pl1 = {

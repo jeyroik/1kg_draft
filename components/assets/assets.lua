@@ -18,6 +18,8 @@ function Assets:new(config)
 	self.buttons = {}
 	self.maps = {}
 	self.cards = {}
+	self.grids = {}
+	self.texts = {}
 
 	self:applyConfig(config)
 end
@@ -86,6 +88,22 @@ end
 -- @return Card
 function Assets:getCard(name)
 	return self.cards[name]
+end
+
+function Assets:getText(name)
+	return self.texts[name]
+end
+
+function Assets:getGrid(name)
+	return self.grids[name]
+end
+
+function Assets:addText(alias, text)
+	self.texts[alias] = Text(text)
+end
+
+function Assets:addGrid(alias, grid)
+	self.grids[alias] = Grid(grid)
 end
 
 -- @param string alias

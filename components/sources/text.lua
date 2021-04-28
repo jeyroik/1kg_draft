@@ -28,3 +28,9 @@ function Text:setBody(text)
 	self.body = text
 	self.source:set(text)
 end
+
+function Text:reload()
+	local initializerClass = require (self.initializer)
+	local initializer = initializerClass()
+	initializer:initSource(self)
+end

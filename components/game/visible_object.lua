@@ -28,6 +28,7 @@ function VisibleObject:new(config)
 			h = 600
 		}
 	}
+	self.previousResolution = '0x0'
 
 	VisibleObject.super.new(self, config)
 end

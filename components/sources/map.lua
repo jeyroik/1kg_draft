@@ -35,7 +35,6 @@ function Map:draw()
         local layerName = self.renderPath[i]
         self:forEach(layerName, function(cell)
             cell:render()
-            --Map.super.draw(self, cell.x+dx, cell.y+dy, radian, sx, sy, cell.number)
             return true
         end)
     end

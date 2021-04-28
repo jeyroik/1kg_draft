@@ -19,19 +19,19 @@ end
 function TextOverlay:reload()
     local top = self.overlay:getEdges()
 
-    if top.right.x+dx > self.love.width then
+    if top.right.x > self.love.width then
         self.overlay.x = self.love.width - self.overlay.width*self.sx
     end
 
-    if top.left.x+dx < 0 then
+    if top.left.x < 0 then
         self.overlay.x = 5
     end
 
-    if top.left.y+dy > self.love.height then
+    if top.left.y > self.love.height then
         self.overlay.y = self.love.height - self.overlay.height*self.sy
     end
 
-    if top.left.y+dy < 0 then
+    if top.left.y < 0 then
         self.overlay.y = 5
     end
 end

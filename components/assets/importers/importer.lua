@@ -13,6 +13,8 @@ function AssetImporter:new(config)
     self.buttons = {}
     self.maps = {}
     self.cards = {}
+    self.texts = {}
+    self.grids = {}
 
     AssetImporter.super.new(self, config)
 end
@@ -22,6 +24,10 @@ end
 function AssetImporter:importAssets(assetsManager)
     for alias, fx in pairs(self.fxs) do
         assetsManager:addFx(alias, fx)
+    end
+
+    for alias, text in pairs(self.texts) do
+        assetsManager:addText(alias, text)
     end
 
     for alias, image in pairs(self.images) do
@@ -58,5 +64,9 @@ function AssetImporter:importAssets(assetsManager)
 
     for alias, path in pairs(self.cards) do
         assetsManager:addCard(alias, path)
+    end
+
+    for alias, grid in pairs(self.grids) do
+        assetsManager:addGrid(alias, grid)
     end
 end
