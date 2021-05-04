@@ -14,9 +14,7 @@ function BattleLayerData:new(config)
         ultraDeathPerc = 20,
         stonesPerRound = 3,
         width = love.graphics.getHeight()*0.6,
-        height = love.graphics.getHeight()*0.6,
-        x = 270,
-        y = 20
+        height = love.graphics.getHeight()*0.6
     }
     self.statistics = {
         {

@@ -174,8 +174,8 @@ end
 
 function VisibleObject:setToCenter(xAxis, yAxis)
 	self:setToPart(
-		xAxis and 1 or nil,
-		yAxis and 1 or nil, 
+		xAxis and 2 or nil,
+		yAxis and 2 or nil, 
 		2
 	)
 end

@@ -52,7 +52,7 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
         for _, card in pairs(pl.cards) do
             if card:isMouseOn(x, y) and card.skill.active.cost then
                 local icons = {}
-                local top = card:getEdgesFrame(3)
+                local top, _, size = card:getEdgesFrame(3)
                 local iconCounter = 0
                 for magicName, amount in pairs(card.skill.active.cost) do
                     local magic = game.assets:getMisc('magic'):getByName(magicName)
@@ -94,8 +94,8 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
                 layerData.selection = {
                     x = top.left.x,
                     y = top.left.y,
-                    width = top.width*card.sx,
-                    height = top.height*card.sy,
+                    width = size.width*card.sx,
+                    height = size.height*card.sy,
                     color = selectionColor,
                     line_width = 5
                 }
@@ -137,8 +137,8 @@ end
 
 function SceneFight:update(screen)
     local layerData = screen:getData()
-    layerData.board:setToCenter(true, true)
-    layerData.board:update()
+    --layerData.board:update()
+
     for _, player in pairs(layerData.players) do
         player:update()
     end
@@ -155,15 +155,19 @@ function SceneFight:update(screen)
         screen:changeSceneTo('fight_the_end')
     end
 
-    game.assets:getFx(self.fx):play()
+    if self.fx ~= '' then
+        game.assets:getFx(self.fx):play()
+    end
 
     self:addStone(layerData)
 
-    game.assets:getFx(self.fx):play()
+    if self.fx ~= '' then
+        game.assets:getFx(self.fx):play()
+    end
 end
 
 function SceneFight:addStone(layerData)
-    self.fx = layerData.board:addStone(layerData) or 'none'
+    self.fx = layerData.board:addStone(layerData) or ''
 end
 
 return SceneFight

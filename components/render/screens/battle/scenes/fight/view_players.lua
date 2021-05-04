@@ -31,6 +31,7 @@ function BattleFightViewPlayers:renderCards(data)
         local player = data.players[i]
         for j=1,#player.cards do
             local card = player.cards[j]
+            card.y = card.y + (j-1)*50
             card:render()
         end
     end

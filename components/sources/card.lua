@@ -27,7 +27,7 @@ function Card:draw()
 	card.y = self.y
 	card:draw(self.avatar.frame)
 
-	local top, bottom = self:getEdges()
+	local top, bottom = card:getEdges()
 
 	self:renderHealth(top)
 	self:renderAttack(bottom)
@@ -49,11 +49,19 @@ function Card:renderAttack(bottom)
 		y      = bottom.left.y - attack:getHeight()*1.5*self.sx,
 		width  = attack:getWidth()*1.5*self.sx+2,
 		height = attack:getHeight()*1.5*self.sx,
-		color  = {0,0,0,0.3}
+		color  = {0,0,0,0.3},
+		renderConfig = {
+			scale = 'size',
+			origin = {
+				w = 200,
+				h = 150
+			}
+		}
 	})
 
-	overlay:draw()
-	attack:draw()
+	overlay:render()
+	love.graphics.print(overlay.sx..','..overlay.sy, overlay.x + overlay:getWidth()+5, overlay.y)
+	attack:render()
 end
 
 function Card:renderDefense(bottom)
@@ -74,8 +82,8 @@ function Card:renderDefense(bottom)
 		color  = {0,0,0,0.3}
 	})
 
-	overlay:draw()
-	defense:draw()
+	overlay:render()
+	defense:render()
 end
 
 function Card:renderHealth(top)
@@ -96,12 +104,12 @@ function Card:renderHealth(top)
 		color  = {0,0,0,0.3}
 	})
 
-	overlay:draw()
-	health:draw()
+	overlay:render()
+	health:render()
 end
 
 function Card:takeDamage(damage)
-	local data = game:getCurrentScreen():getData()
+	local data = game:getCurrentState():getData()
 	local c = data:getCurrentPlayer()
 	local n = data:getNextPlayer()
 

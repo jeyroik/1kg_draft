@@ -21,6 +21,8 @@ function Board:new(config)
 	config.initializer = config.initializer or 'components/sources/initializers/board'
 
 	Board.super.new(self, config)
+
+	self.alias = 'board'
 end
 
 function Board:update()
@@ -38,6 +40,10 @@ function Board:update()
 			stone.y = (i-1) * s.height + self.y
 		end
 	end
+end
+
+function Board:reload()
+	self:update()
 end
 
 function Board:calculateStoneParameters()
@@ -112,7 +118,6 @@ function Board:addStone(layerData)
 	if stopped == math.pow(self.size, 2) then
 		for row, columns in pairs(self.cells) do
 			for column, stone in pairs(columns) do
-				self:setFree(row, column)
 				self:decExisted()
 				stopped = stopped - 1
 			end
@@ -141,7 +146,7 @@ function Board:addStone(layerData)
 		end
 	end
 
-	return 'move'
+	return ''
 end
 
 function Board:merge(layerData, stone, nextRow, nextColumn)
@@ -149,7 +154,7 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 	local currentMagic = stone:getMagic()
 	local source = 'merge'
 
-	self:setFree(nextRow, nextColumn)
+	self:setVolume(nextRow, nextColumn, 1)
 
 	local currentPlayer = layerData:getCurrentPlayer()
 	local nextPlayer = layerData:getNextPlayer()
@@ -174,7 +179,7 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 	if currentMagic.isCanBeMerged then
 		self.cells[stone.row][stone.column]:upgrade()
 	else
-		self:setFree(stone.row, stone.column)
+		self:setVolume(stone.row, stone.column, 1)
 		self:decExisted()
 	end
 	layerData.statistics[currentPlayer.number].stones = layerData.statistics[currentPlayer.number].stones + 2
@@ -185,16 +190,16 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 end
 
 function Board:move(layerData)
-	local fx = 'move'
+	local fx = ''
 
 	if self.gravity == 'down' then
-		fx = self:moveDown(layerData) or fx
+		fx = self:moveDown(layerData)
 	elseif self.gravity == 'up' then
-		fx = self:moveUp(layerData) or fx
+		fx = self:moveUp(layerData)
 	elseif self.gravity == 'left' then
-		fx = self:moveLeft(layerData) or fx
+		fx = self:moveLeft(layerData)
 	elseif self.gravity == 'right' then
-		fx = self:moveRight(layerData) or fx
+		fx = self:moveRight(layerData)
 	end
 
 	return fx
@@ -219,7 +224,7 @@ function Board:moveDown(layerData)
 		end
 	end
 
-	return nil
+	return ''
 end
 
 function Board:moveUp(layerData)
@@ -241,7 +246,7 @@ function Board:moveUp(layerData)
 		end
 	end
 
-	return nil
+	return ''
 end
 
 function Board:moveLeft(layerData)
@@ -263,7 +268,7 @@ function Board:moveLeft(layerData)
 		end
 	end
 
-	return nil
+	return ''
 end
 
 function Board:moveRight(layerData)
@@ -285,7 +290,11 @@ function Board:moveRight(layerData)
 		end
 	end
 
-	return nil
+	return ''
+end
+
+function Board:setVolume(row, column, volume)
+	self.cells[row][column].volume = volume
 end
 
 function Board:setFree(row, column)
@@ -293,17 +302,7 @@ function Board:setFree(row, column)
 
 	self.cells[row][column] = MagicStone({
 		row = row,
-		column = column,
-
-		deltaX = self.x,
-		deltaY = self.y,
-		boardSize = self.rows,
-		sx = s.sx,
-		sy = s.sy,
-		x = (column-1) * s.width + self.x,
-		y = (row-1) * s.height + self.y,
-		width = s.width,
-		height = s.height
+		column = column
 	})
 end
 
@@ -339,4 +338,8 @@ end
 
 function Board:decExisted()
 	self.existed = self.existed - 1
+end
+
+function Board:getCell(row, column)
+	return self.cells[row][column]
 end

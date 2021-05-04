@@ -3,9 +3,9 @@ MagicStone = Source:extend{}
 function MagicStone:new(config)
 	self.row = 1
 	self.column = 1
-	self.deltaX = 285--570
+	self.deltaX = 285
 	self.deltaY = 0
-	self.size = 61 --122
+	self.size = 61
 	self.volume = 1
 	self.state = 0
 	self.scale = 1
@@ -14,28 +14,26 @@ function MagicStone:new(config)
 	config.initializer = config.initializer or 'components/sources/initializers/stone'
 
 	MagicStone.super.new(self, config)
+
+	self.alias = 'stone'
 end
 
 function MagicStone:draw()
 	local pack = game.assets:getImagePack(self.path)
 	local image = pack:get(self:getMask())
 
-	if image then
-		image.x = self.x
-		image.y = self.y
-		image.width = self.width
-		image.height = self.height
-		image.sx = self.sx
-		image.sy = self.sy
-		image:draw()
-	end
+	image.x = self.x
+	image.y = self.y
+	image.width = self.width
+	image.height = self.height
+	image.sx = self.sx
+	image.sy = self.sy
+	image:draw()
 end
 
 function MagicStone:update(board)
 	local nextRow = self.row
 	local nextColumn = self.column
-
-	board:setFree(self.row, self.column)
 	
 	if board:isGravity('down') then
 		nextRow = board:isOnEdge('down', self) and self.row or self.row + 1
@@ -63,18 +61,15 @@ function MagicStone:update(board)
 	else
 	end
 
-	if board:isReserved(nextRow, nextColumn) then
-		nextRow = self.row
-		nextColumn = self.column
+	if not board:isReserved(nextRow, nextColumn) then
+		local nextStone = board:getCell(nextRow, nextColumn)
+		
+		nextStone.state = self.state
+		nextStone.volume = self.volume
+		
+		self.volume = 1
+		self.state  = 0
 	end
-	
-	self.row = nextRow
-	self.column = nextColumn
-	
-	self.x = (self.column-1) * self.width + self.deltaX
-	self.y = (self.row-1) * self.height + self.deltaY
-
-	board:setStone(self)
 end
 
 function MagicStone:getMask()
