@@ -2,6 +2,7 @@ require "components/render/screens/scenes/scene"
 require "components/render/screens/layers/layer"
 require "components/render/screens/layers/layer_view"
 require "components/render/screens/layers/layer_data"
+require "components/screens/views/grid"
 require "components/render/screens/layers/layer_view_tip"
 require "components/render/screens/layers/layer_view_debug"
 require "components/render/screens/layers/layer_view_single_selection"
@@ -66,6 +67,10 @@ function Screen:new(config)
 			before = {},
 			after  = {}
 		},
+		textInput = {
+			before = {},
+			after  = {}
+		},
 		render = {
 			before = {},
 			after  = {}
@@ -81,7 +86,7 @@ function Screen:new(config)
 	Screen.super.new(self, config)
 
 	self:addViewLayers(
-		{ LayerViewDebug() },
+		{ LayerViewDebug(), GridView() },
 		'system'
 	)
 end
@@ -126,6 +131,10 @@ function Screen:releaseEvent(event, stage, hookAlias)
 end
 
 function Screen:runHooks(event, stage, args)
+	if not self.events[event] or not self.events[event][stage] then
+		return
+	end
+
 	for alias,available in pairs(self.events[event][stage]) do
 		if available then
 			self.hooks[alias]:catch(self, args, event, stage)
@@ -194,6 +203,19 @@ function Screen:keyPressed(key)
 	self:runHooks('keyPressed', 'after', {key=key})
 end
 
+function Screen:textInput(text)
+	if self.freeze.keyPressed then
+		return
+	end
+
+	self:runHooks('textInput', 'before', {text=text})
+
+	local currentScene = self:getCurrentState()
+	currentScene:textInput(self, text)
+
+	self:runHooks('textInput', 'after', {text=text})
+end
+
 -- @param Game game
 -- @return void
 function Screen:render()
@@ -222,6 +244,19 @@ function Screen:render()
 	end
 
 	self:runHooks('render', 'after')
+end
+
+function Screen:runEvent(name, ...)
+	if self.freeze.keyPressed then
+		return
+	end
+
+	self:runHooks(name, 'before', ...)
+
+	local currentScene = self:getCurrentState()
+	currentScene:runEvent(self, name, ...)
+
+	self:runHooks(name, 'after', ...)
 end
 
 -- @param LayerView[] layers

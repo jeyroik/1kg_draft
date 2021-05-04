@@ -6,6 +6,7 @@ return {
         importers = {
             { path = 'components/magic/importer'                                     },
             { path = 'components/mutators/importer'                                  },
+            { path = 'components/characters/importer'                         },
             { path = 'components/render/cards/importer'                              },
             { path = 'components/render/screens/battle/scenes/fight_before/importer' },
             { path = 'components/render/screens/battle/scenes/fight_cards/importer'  },
@@ -15,21 +16,33 @@ return {
             { path = 'components/render/screens/landscape/scenes/main/importer'      }
         }
     },
+    graphics = {
+        width = 800,
+        height = 600,
+        onResize = 'change size',
+        item = {
+            width = 32,
+            height = 32
+        }
+    },
     sources = {
         image = { path = 'components/sources/image' } -- game:newSource('image', {...})
     },
     profile = {
         path    = 'components/game/profile',
-        name    = 'Player1', 
-        health  = 50,
-        attack  = 2,
-        defense = 1,
+        name    = 'player@funcraft.ru',
+        title   = 'Player1',
+        description = 'Game creator',
+        level   = 1,
+        health  = 5,
+        attack  = 1,
+        defense = 0,
         magic   = {
-            air         = { power = 1, mana = 5 },
-            water       = { power = 1, mana = 5 },
-            tree        = { power = 1, mana = 5 },
-            fire        = { power = 1, mana = 5 },
-            life        = { power = 1, mana = 5 },
+            air         = { power = 1, mana = 3 },
+            water       = { power = 1, mana = 3 },
+            tree        = { power = 1, mana = 3 },
+            fire        = { power = 1, mana = 3 },
+            life        = { power = 1, mana = 3 },
             air_ultra   = { power = 1, mana = 2 },
             water_ultra = { power = 1, mana = 2 },
             tree_ultra  = { power = 1, mana = 2 },
@@ -45,13 +58,10 @@ return {
             }
         }
     },
-    __state__ = 'landscape', -- choose start screen
+    __state__ = 'player', -- choose start screen
     __states__ = {
         { alias = 'battle',    path = 'components/render/screens/screen_battle'    },
-        { alias = 'landscape', path = 'components/render/screens/screen_landscape' }
-    },
-    screens = {
-        battle = {},
-        landscape = {}
+        { alias = 'landscape', path = 'components/render/screens/screen_landscape' },
+        { alias = 'player',    path = 'components/screens/player' }
     }
 }

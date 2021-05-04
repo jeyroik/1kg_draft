@@ -55,9 +55,6 @@ function Render:draw(object, ...)
         end
 
         object:reload()
-        if object.alias == 'stone' then
-           -- love.filesystem.append('log.txt', '\n[Render:draw] '..object.row..'x'..object.column..' = '..object.volume..' '..object.id)
-        end
         object.previousResolution = currentResolution
     end
 

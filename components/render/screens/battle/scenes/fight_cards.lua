@@ -33,14 +33,11 @@ function SceneFightCards:new(config)
             right  = 100
         }
     })
-    self.grid:fill(game.assets.cards)
-    self.grid.blankConfig = {width = self.grid.collection[1]:getWidth(), height = self.grid.collection[1]:getHeight()}
 
     self.addedCards = Deck({
         name = 'added cards',
         count = 3,
         blank = Rectangle,
-        blankConfig = {width = self.grid.collection[1]:getWidth(), height = self.grid.collection[1]:getHeight()},
         width   = love.graphics.getWidth()/5,
         height  = love.graphics.getHeight(),
         columns = 1,
@@ -69,6 +66,10 @@ function SceneFightCards:init(screen)
         },
         'scene_after'
     )
+
+    for _, model in pairs(game.assets.characters) do
+        self.grid:add(Card(model))
+    end
 end
 
 function SceneFightCards:mouseMoved(screen, x, y, dx, dy, isTouch)

@@ -13,6 +13,7 @@ function AssetImporter:new(config)
     self.buttons     = {}
     self.maps        = {}
     self.cards       = {}
+    self.characters  = {}
     self.texts       = {}
     self.grids       = {}
     self.groups      = {}
@@ -61,6 +62,10 @@ function AssetImporter:importAssets(assetsManager)
 
     for alias, path in pairs(self.mutators) do
         assetsManager:addMutator(alias, path)
+    end
+
+    for alias, model in pairs(self.characters) do
+        assetsManager:addCharacter(alias, model)
     end
 
     for alias, path in pairs(self.cards) do

@@ -44,6 +44,10 @@ function love.keypressed(key)
 	game:keyPressed(key)
 end
 
+function love.textinput( text )
+	game:textInput(text)
+end
+
 function love.quit()
 	
 end

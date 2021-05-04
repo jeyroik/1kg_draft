@@ -6,6 +6,18 @@ function InitializerCard:initSource(card)
     card.height = cardDefault:getHeight()
     card.sx = love.graphics.getHeight()/1080
     card.sy = card.sx
+
+    self:initSkills(card)
+end
+
+function InitializerCard:initSkills(card)
+    local active = require(card.skill.active.path)
+    card.skill.active = active(card.skill.active)
+    
+    for alias,skill in pairs(card.skill.passive) do
+        local passive = require(skill.path)
+        card.skill.passive[alias] = passive(skill)
+    end
 end
 
 return InitializerCard

@@ -2,6 +2,9 @@ require "components/game/object"
 require "components/game/visible_object"
 require "components/game/render"
 
+require "components/models/character"
+require "components/models/player"
+
 require "components/game/profile"
 require "components/sources/source"
 require "components/sources/empty"
@@ -37,6 +40,8 @@ require "components/assets/assets"
 require "components/render/screens/screen_battle"
 require "components/render/screens/screen_landscape"
 
+require "components/graphics/graphics"
+
 Game = GameObject:extend()
 
 function Game:new(config)
@@ -48,11 +53,14 @@ function Game:new(config)
 		start = { x=0, y=0 },
 		move = false
 	}
+	self.graphics = {}
 
 	Game.super.new(self, config)
 end
 
 function Game:init()
+
+	self.graphics = Graphics(self.graphics)
 
 	Game.super.init(self)
 
@@ -67,6 +75,7 @@ end
 
 function Game:update(dt)
 	VisibleObject.updateGlobals(self)
+	self.graphics:update()
 	self:getCurrentState():update(dt)
 end
 
@@ -88,6 +97,14 @@ end
 
 function Game:keyPressed(key)
 	game:getCurrentState():keyPressed(key)
+end
+
+function Game:textInput(text)
+	game:getCurrentState():textInput(text)
+end
+
+function Game:runEvent(name, ...)
+	game:getCurrentState():runEvent(name, ...)
 end
 
 function Game:getScreen(name)

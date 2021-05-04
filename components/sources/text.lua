@@ -32,3 +32,14 @@ function Text:reload()
 	local initializer = initializerClass()
 	initializer:initSource(self)
 end
+
+function Text:append(text)
+	self:setBody(self.body .. text)
+    self:setSize(self.source:getWidth(), self.source:getHeight())
+end
+
+function Text:pop(lettersCount)
+	lettersCount = lettersCount or 1
+	self:setBody(self.body:sub(1, #self.body-lettersCount))
+	self:setSize(self.source:getWidth(), self.source:getHeight())
+end

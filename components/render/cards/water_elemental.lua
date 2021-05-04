@@ -4,7 +4,7 @@ CardWaterElemental = Card:extend()
 
 function CardWaterElemental:new(config)
     config = config or {}
-    config.path = 'components/render/cards/tree_elemental'
+    config.path = 'components/render/cards/water_elemental'
     config.name = 'Water elemental'
     config.description = 'In the age of Tratabor fury water elemental was born'
     config.health = 2

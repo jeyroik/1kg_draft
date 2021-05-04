@@ -210,18 +210,12 @@ end
 function VisibleObject:stickToTop(obj, inside)
 	inside = inside or false
 
-	self.xSource = self.x
-	self.x       = obj.x
-
 	self.ySource = self.y
 	self.y       = obj.y + (inside and self:getHeight() or -self:getHeight())
 end
 
 function VisibleObject:stickToBottom(obj, inside)
 	inside = inside or false
-
-	self.xSource = self.x
-	self.x       = obj.x
 
 	self.ySource = self.y
 	self.y       = obj.y + (inside and obj:getHeight()-self:getHeight() or obj:getHeight())
@@ -232,9 +226,6 @@ function VisibleObject:stickToLeft(obj, inside)
 
 	self.xSource = self.x
 	self.x       = obj.x + (inside and 0 or -self:getWidth())
-
-	self.ySource = self.y
-	self.y       = obj.y
 end
 
 function VisibleObject:stickToRight(obj, inside)
@@ -242,9 +233,6 @@ function VisibleObject:stickToRight(obj, inside)
 
 	self.xSource = self.x
 	self.x       = obj.x + (inside and obj:getWidth()-self:getWidth() or obj:getWidth())
-
-	self.ySource = self.y
-	self.y       = obj.y
 end
 
 function VisibleObject:setToCenterOfObject(obj, xAxis, yAxis)
@@ -268,8 +256,9 @@ function VisibleObject:setToCenterOfObject(obj, xAxis, yAxis)
 end
 
 function VisibleObject:scaleTo(object, ds)
-	self.sx = (object:getWidth()  / self:getWidth())  * ds
-	self.sy = (object:getHeight() / self:getHeight()) * ds
+	ds = ds or 1
+	self.sx = (object.width  / self.width)  * ds
+	self.sy = (object.height / self.height) * ds
 end
 
 function VisibleObject:stepByX(dx)

@@ -24,6 +24,7 @@ function HookFullscreen:mousePressed(args)
     if icon:isMouseOn(args.x, args.y) then
         width, height, flags = love.window.getMode( )
         love.window.setFullscreen( not flags.fullscreen )
+        game:runEvent('fullscreenChanged', self:getMode())
     end
 end
 
@@ -56,20 +57,20 @@ function HookFullscreen:render()
 end
 
 function HookFullscreen:getIcon()
-    local imgName = 'fullscreen_'
+    local imgName = 'fullscreen_'..self:getMode()
 
-    width, height, flags = love.window.getMode( )
-
-    if flags.fullscreen then
-        imgName = imgName..'out'
-    else
-        imgName = imgName..'in'
-    end
+    width, height = love.window.getMode( )
 
     local icon = game.assets:getImage(imgName)
     icon:stickToRight(VisibleObject({width = width, height = height}), 'inside')
 
     return icon
+end
+
+function HookFullscreen:getMode()
+    _, _, flags = love.window.getMode( )
+
+    return flags.fullscreen and 'out' or 'in'
 end
 
 return HookFullscreen

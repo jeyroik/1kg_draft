@@ -18,6 +18,7 @@ function Assets:new(config)
 	self.buttons = {}
 	self.maps = {}
 	self.cards = {}
+	self.characters = {}
 	self.grids = {}
 	self.texts = {}
 	self.groups = {}
@@ -91,6 +92,12 @@ function Assets:getCard(name)
 	return self.cards[name]
 end
 
+-- @param string name
+-- @return ModelCharacter
+function Assets:getCharacter(name)
+	return self.characters[name]
+end
+
 function Assets:getText(name)
 	return self.texts[name]
 end
@@ -157,6 +164,10 @@ end
 function Assets:addCard(alias, path)
 	local card = require(path)
 	self.cards[alias] = card()
+end
+
+function Assets:addCharacter(alias, model)
+	self.characters[alias] = ModelCharacter(model)
 end
 
 return Assets

@@ -3,6 +3,7 @@ Scene = GameObject:extend()
 function Scene:new(config)
     self.id = self:getId()
     self.views = {}
+    self.events = {}
     Scene.super.new(self, config)
 end
 
@@ -32,4 +33,14 @@ end
 
 function Scene:keyPressed(screen, key)
 
+end
+
+function Scene:textInput(screen, text)
+
+end
+
+function Scene:runEvent(screen, name, ...)
+    if self[name] then
+        self[name](self, screen, ...)
+    end
 end
