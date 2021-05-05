@@ -48,14 +48,11 @@ function VisibleObject:updateGlobals()
 end
 
 function VisibleObject:getWidth()
-	if not self.sx then
-		love.filesystem.append('log.txt', '\n[VisibleObject:getWidth] missed sx: '..json.encode(self))
-	end
-	return self.width * self.sx
+	return self.width*self.sx
 end
 
 function VisibleObject:getHeight()
-	return self.height * self.sy
+	return self.height*self.sy
 end
 
 -- Checks is mouse currently point to the current object
@@ -135,7 +132,7 @@ end
 
 function VisibleObject:getEdges()
 	local top = {
-		left  = { x = self.x + game.translate.x, 						y = self.y + game.translate.y },
+		left  = { x = self.x + game.translate.x, 				   y = self.y + game.translate.y },
 		right = { x = self.x + game.translate.x + self:getWidth(), y = self.y + game.translate.y }
 	}
 	local bottom = {
@@ -285,6 +282,6 @@ function VisibleObject:drawSelection(dx, dy, color, mode)
 	local top, _, size = self:getEdgesFrame(dx, dy)
 
 	love.graphics.setColor(color)
-	love.graphics.rectangle(mode, top.left.x-game.translate.x, top.left.y-game.translate.y, size.width*self.sx, size.height*self.sy)
+	love.graphics.rectangle(mode, top.left.x-game.translate.x, top.left.y-game.translate.y, size.width, size.height, 10, 10, 10)
 	love.graphics.setColor({1,1,1,1})
 end

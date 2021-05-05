@@ -1,6 +1,8 @@
 ModelPlayer = ModelCharacter:extend()
 
 function ModelPlayer:new(config)
+    config = config or {}
+    
     self.name = ''
     self.magic = {
         air         = { power = 1, mana = 3 },

@@ -8,7 +8,6 @@ require "components/models/player"
 require "components/game/profile"
 require "components/sources/source"
 require "components/sources/empty"
-require "components/sources/screen"
 require "components/sources/rectangle"
 require "components/sources/image"
 require "components/sources/image_pack"
@@ -37,14 +36,12 @@ require "components/assets/importers/importer"
 require "components/assets/asset_magic"
 require "components/assets/assets"
 
-require "components/render/screens/screen_battle"
-require "components/render/screens/screen_landscape"
-
 require "components/graphics/graphics"
 
 Game = GameObject:extend()
 
 function Game:new(config)
+	self.profiles = {}
 	self.profile = {}
 	self.assets = {}
 	self.translate = {
@@ -54,6 +51,7 @@ function Game:new(config)
 		move = false
 	}
 	self.graphics = {}
+	self.mouse = { x = 0, y = 0 }
 
 	Game.super.new(self, config)
 end
@@ -67,7 +65,7 @@ function Game:init()
 	self:initializeOne('assets')
 	self.assets:init()
 
-	self:initializeOne('profile')
+	--self:initializeOne('profile')
 
 	local currentScreen = self:getCurrentState()
 	currentScreen:init()
@@ -84,6 +82,8 @@ function Game:render()
 end
 
 function Game:mouseMoved(x, y, dx, dy, isTouch)
+	self.mouse.x, self.mouse.y = x,y
+
 	game:getCurrentState():mouseMoved(x, y, dx, dy, isTouch)
 end
 

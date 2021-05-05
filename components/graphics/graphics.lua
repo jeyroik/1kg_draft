@@ -30,12 +30,11 @@ function Graphics:getItem(row, column)
 end
 
 function Graphics:forEach(dispatcher)
-    local screenWidth  = love.graphics.getWidth()
-    local screenHeight = love.graphics.getHeight()
+    local columns, rows = self:getCount()
 
     local loop = function ()
-        for i=1,screenHeight/self.current.height do
-            for j=1,screenWidth/self.current.width do
+        for i=1,rows do
+            for j=1,columns do
                 local continue = dispatcher(self:getItem(i, j), i, j)
                 if not continue then
                     return
@@ -55,4 +54,11 @@ function Graphics:update()
         self.current.width  = self.item.width
         self.current.height = self.item.height
     end
+end
+
+function Graphics:getCount()
+    local screenWidth  = love.graphics.getWidth()
+    local screenHeight = love.graphics.getHeight()
+
+    return screenWidth/self.current.width, screenHeight/self.current.height
 end

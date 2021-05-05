@@ -18,6 +18,13 @@ function Button:new(config)
 
     self.pressed = false
     self.effects = {
+        frame = function(text)
+            if self.pressed then
+                self:drawSelection()
+            end
+
+            text:draw()
+        end,
         color = function (text)
             if self.pressed then
                 love.graphics.setColor(self.color)

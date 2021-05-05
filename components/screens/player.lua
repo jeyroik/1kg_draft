@@ -1,4 +1,5 @@
 local PlayerLayerData = require "components/screens/player/data"
+local Screen = require "components/screens/screen"
 
 PlayerScreen = Screen:extend()
 

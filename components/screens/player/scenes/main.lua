@@ -1,4 +1,4 @@
-require "components/screens/player/scenes/main/view"
+local PlayerSceneMainView = require "components/screens/player/scenes/main/view"
 
 PlayerSceneMain = Scene:extend()
 
@@ -13,17 +13,21 @@ function PlayerSceneMain:new(config)
     self.selected = ''
 
     self.back = {}
+    self.header = {}
     self.playerName = {}
     self.inputCursor = {}
     self.inputField = {}
+    self.submit = {}
     
-    self.textCursor = false
+    self.textCursor = true
     self.textCursorTimer = 0
 end
 
 function PlayerSceneMain:init()
-    self.inputField = Image({path = 'notice.png'})
-    self.playerName = Text({body = ''})
+    self.inputField = game.assets:getImage('inputField')
+    self.submit     = game.assets:getButton('submit')
+    self.playerName = Text({ body = '' })
+    self.header     = Text({ body = 'Enter your name' })
 
     self.back = Image({ path = 'board_stone.png'})
     self.back.x = 0
@@ -38,6 +42,35 @@ function PlayerSceneMain:textInput(screen, text)
     end
 end
 
+function PlayerSceneMain:mouseMoved(screen, x, y)
+    if self.submit:isMouseOn(x, y) then
+        self.submit:hover()
+    elseif self.submit.state ~= 'default' then
+        self.submit:released()
+    end
+end
+
+function PlayerSceneMain:mousePressed(screen, x, y)
+    if self.submit:isMouseOn(x, y) then
+        local playerName = self.playerName.body
+        local player = {}
+
+        if game.profiles[playerName] then
+            player = ModelPlayer(game.profiles[playerName])
+        else
+            player = ModelPlayer({
+                name = playerName,
+                title = playerName,
+                description = playerName
+            })
+        end
+
+        game.profile = player
+
+        game:changeStateTo('landscape')
+    end
+end
+
 function PlayerSceneMain:keyPressed(screen, key)
     if key == 'backspace' then
         self.playerName:pop(1)
@@ -47,7 +80,7 @@ end
 function PlayerSceneMain:update(screen, dt)
     if self.textCursorTimer >= 0.3 then
         self.textCursorTimer = 0
-        self.textCursor = not self.textCursor
+        self.textCursor = (#self.playerName.body < 11) and not self.textCursor or false
     else
         self.textCursorTimer = self.textCursorTimer + dt
     end
@@ -73,6 +106,19 @@ function PlayerSceneMain:updateUI()
     self.playerName:setToCenterOfObject(self.inputField, true, true)
     self.playerName.x = math.floor(self.playerName.x)
     self.playerName.y = math.floor(self.playerName.y)
+
+    pos = game.graphics:getItem(4,10)
+    self.header.x = pos.x
+    self.header.y = pos.y
+    self.header.sx = (pos.width*7) / self.header.width
+    self.header.sy = (pos.height) / self.header.height
+
+    pos = game.graphics:getItem(10,11)
+    self.submit.x = pos.x
+    self.submit.y = pos.y
+    self.submit.sx = (pos.width*5) / self.submit.width
+    self.submit.sy = (pos.height*2) / self.submit.height
+    self.submit:reload()
 
     self.inputCursor = Text({ 
         body = '|', 
