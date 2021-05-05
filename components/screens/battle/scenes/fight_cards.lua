@@ -1,4 +1,4 @@
-require "components/screens/battle/scenes/fight_cards/view_deck"
+local BattleFightCardsViewDeck = require "components/screens/battle/scenes/fight_cards/view_deck"
 
 SceneFightCards = Scene:extend()
 

@@ -1,8 +1,8 @@
 InitializerImage = require "components/sources/initializers/image"
 
-InitializerFightBeforeBackground = SourceInitializer:extend()
+InitializerModeBackground = SourceInitializer:extend()
 
-function InitializerFightBeforeBackground:initSource(background)
+function InitializerModeBackground:initSource(background)
     local imageInitializer = InitializerImage()
     imageInitializer:initSource(background)
 
@@ -10,4 +10,4 @@ function InitializerFightBeforeBackground:initSource(background)
     background.sy = love.graphics.getHeight() / background.source:getHeight()
 end
 
-return InitializerFightBeforeBackground
+return InitializerModeBackground

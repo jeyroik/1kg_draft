@@ -1,5 +1,5 @@
-require "components/screens/battle/scenes/fight/view_board"
-require "components/screens/battle/scenes/fight/view_players"
+local BattleFightViewBoard   = require "components/screens/battle/scenes/fight/view_board"
+local BattleFightViewPlayers = require "components/screens/battle/scenes/fight/view_players"
 
 SceneFight = Scene:extend()
 

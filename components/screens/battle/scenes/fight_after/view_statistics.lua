@@ -39,3 +39,5 @@ function BattleFightAfterViewStatistics:render(data)
         spells:render()
     end
 end
+
+return BattleFightAfterViewStatistics

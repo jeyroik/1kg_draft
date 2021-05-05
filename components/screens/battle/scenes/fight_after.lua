@@ -1,5 +1,5 @@
-require "components/screens/battle/scenes/fight_after/view_the_end"
-require "components/screens/battle/scenes/fight_after/view_statistics"
+local BattleFightAfterViewTheEnd     = require "components/screens/battle/scenes/fight_after/view_the_end"
+local BattleFightAfterViewStatistics = require "components/screens/battle/scenes/fight_after/view_statistics"
 
 SceneFightAfter = Scene:extend()
 

@@ -1,13 +1,13 @@
 local LayerView = require "components/screens/layers/layer_view"
 
-LandscapeMainViewMap = LayerView:extend()
+CampaignMapMainViewMap = LayerView:extend()
 
-function LandscapeMainViewMap:new(config)
+function CampaignMapMainViewMap:new(config)
     self.map_name = 'main'
-    LandscapeMainViewMap.super.new(self, config)
+    CampaignMapMainViewMap.super.new(self, config)
 end
 
-function LandscapeMainViewMap:render(data, scene)
+function CampaignMapMainViewMap:render(data, scene)
     local map = game.assets:getMap(self.map_name)
     love.graphics.translate(game.translate.x, game.translate.y)
     map:render()
@@ -22,4 +22,4 @@ function LandscapeMainViewMap:render(data, scene)
     love.graphics.translate(-game.translate.x, -game.translate.y)
 end
 
-return LandscapeMainViewMap
+return CampaignMapMainViewMap

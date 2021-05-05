@@ -1,13 +1,13 @@
-local PlayerSceneMainView = require "components/screens/player/scenes/main/view"
+local CampaignAuthSceneMainView = require "components/screens/campaign_auth/scenes/main/view"
 
-PlayerSceneMain = Scene:extend()
+CampaignAuthSceneMain = Scene:extend()
 
-function PlayerSceneMain:new(config)
-    PlayerSceneMain.super.new(self, config)
+function CampaignAuthSceneMain:new(config)
+    CampaignAuthSceneMain.super.new(self, config)
 
     self.name = 'main'
     self.views = {
-        PlayerSceneMainView()
+        CampaignAuthSceneMainView()
     }
     self.label = {}
     self.selected = ''
@@ -23,7 +23,7 @@ function PlayerSceneMain:new(config)
     self.textCursorTimer = 0
 end
 
-function PlayerSceneMain:init()
+function CampaignAuthSceneMain:init()
     self.inputField = game.assets:getImage('inputField')
     self.submit     = game.assets:getButton('submit')
     self.playerName = Text({ body = '' })
@@ -36,13 +36,13 @@ function PlayerSceneMain:init()
     self:updateUI()
 end
 
-function PlayerSceneMain:textInput(screen, text)
+function CampaignAuthSceneMain:textInput(screen, text)
     if #self.playerName.body < 11 then
         self.playerName:append(text)
     end
 end
 
-function PlayerSceneMain:mouseMoved(screen, x, y)
+function CampaignAuthSceneMain:mouseMoved(screen, x, y)
     if self.submit:isMouseOn(x, y) then
         self.submit:hover()
     elseif self.submit.state ~= 'default' then
@@ -50,7 +50,7 @@ function PlayerSceneMain:mouseMoved(screen, x, y)
     end
 end
 
-function PlayerSceneMain:mousePressed(screen, x, y)
+function CampaignAuthSceneMain:mousePressed(screen, x, y)
     if self.submit:isMouseOn(x, y) then
         local playerName = self.playerName.body
         local player = {}
@@ -67,17 +67,17 @@ function PlayerSceneMain:mousePressed(screen, x, y)
 
         game.profile = player
 
-        game:changeStateTo('landscape')
+        game:changeStateTo('campaign_map')
     end
 end
 
-function PlayerSceneMain:keyPressed(screen, key)
+function CampaignAuthSceneMain:keyPressed(screen, key)
     if key == 'backspace' then
         self.playerName:pop(1)
     end
 end
 
-function PlayerSceneMain:update(screen, dt)
+function CampaignAuthSceneMain:update(screen, dt)
     if self.textCursorTimer >= 0.3 then
         self.textCursorTimer = 0
         self.textCursor = (#self.playerName.body < 11) and not self.textCursor or false
@@ -88,18 +88,17 @@ function PlayerSceneMain:update(screen, dt)
     self:updateUI()
 end
 
-function PlayerSceneMain.fullscreenChanged(this, screen, mode)
+function CampaignAuthSceneMain.fullscreenChanged(this, screen, mode)
     
     this.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 end
 
-function PlayerSceneMain:updateUI()
+function CampaignAuthSceneMain:updateUI()
     local pos = game.graphics:getItem(6, 10)
 
     self.inputField.x = pos.x
     self.inputField.y = pos.y
-    self.inputField.sx = (pos.width*7) / self.inputField.width
-    self.inputField.sy = (pos.height*2) / self.inputField.height
+    game.graphics:setScale(self.inputField, 7, 2)
 
     self.playerName.sx = ((pos.width/2) * #self.playerName.body) / self.playerName.width
     self.playerName.sy = (pos.height/2) / self.playerName.height
@@ -110,14 +109,13 @@ function PlayerSceneMain:updateUI()
     pos = game.graphics:getItem(4,10)
     self.header.x = pos.x
     self.header.y = pos.y
-    self.header.sx = (pos.width*7) / self.header.width
-    self.header.sy = (pos.height) / self.header.height
+    game.graphics:setScale(self.header, 7, 1)
+
 
     pos = game.graphics:getItem(10,11)
     self.submit.x = pos.x
     self.submit.y = pos.y
-    self.submit.sx = (pos.width*5) / self.submit.width
-    self.submit.sy = (pos.height*2) / self.submit.height
+    game.graphics:setScale(self.submit, 5, 2)
     self.submit:reload()
 
     self.inputCursor = Text({ 
@@ -129,4 +127,4 @@ function PlayerSceneMain:updateUI()
     })
 end
 
-return PlayerSceneMain
+return CampaignAuthSceneMain

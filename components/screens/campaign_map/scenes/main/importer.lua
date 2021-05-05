@@ -1,6 +1,6 @@
-LandscapeMainImporter = AssetImporter:extend()
+CampaignMapMainImporter = AssetImporter:extend()
 
-function LandscapeMainImporter:new()
+function CampaignMapMainImporter:new()
     LandscapeMainImporter.super.new(self)
 
     self.quads = {
@@ -123,4 +123,4 @@ function LandscapeMainImporter:new()
     --self.menu = {} --pack of buttons?
 end
 
-return LandscapeMainImporter
+return CampaignMapMainImporter

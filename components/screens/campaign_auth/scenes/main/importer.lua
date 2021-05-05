@@ -1,7 +1,7 @@
-PlayerMainImporter = AssetImporter:extend()
+CampaignAuthMainImporter = AssetImporter:extend()
 
-function PlayerMainImporter:new()
-    PlayerMainImporter.super.new(self)
+function CampaignAuthMainImporter:new()
+    CampaignAuthMainImporter.super.new(self)
 
     self.images = {
         inputField = { path = "notice.png" },
@@ -23,4 +23,4 @@ function PlayerMainImporter:new()
     }
 end
 
-return PlayerMainImporter
+return CampaignAuthMainImporter

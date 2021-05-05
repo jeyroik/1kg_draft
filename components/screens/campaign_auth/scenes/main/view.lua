@@ -1,14 +1,12 @@
 local LayerView = require "components/screens/layers/layer_view"
 
-PlayerSceneMainView = LayerView:extend()
+CampaignAuthSceneMainView = LayerView:extend()
 
-function PlayerSceneMainView:new(config)
-    PlayerSceneMainView.super.new(self, config)
-
-    self.isOn = false
+function CampaignAuthSceneMainView:new(config)
+    CampaignAuthSceneMainView.super.new(self, config)
 end
 
-function PlayerSceneMainView:render(data, scene)
+function CampaignAuthSceneMainView:render(data, scene)
     scene.back:draw()
     scene.header:draw()
     scene.inputField:draw()
@@ -20,4 +18,4 @@ function PlayerSceneMainView:render(data, scene)
     end
 end
 
-return PlayerSceneMainView
+return CampaignAuthSceneMainView

@@ -7,12 +7,12 @@ return {
             { path = 'components/magic/importer'                              },
             { path = 'components/mutators/importer'                           },
             { path = 'components/characters/importer'                         },
-            { path = 'components/screens/player/scenes/main/importer'         },
-            { path = 'components/screens/battle/scenes/fight_before/importer' },
+            { path = 'components/screens/mode/scenes/main/importer'           },
+            { path = 'components/screens/campaign_auth/scenes/main/importer'  },
             { path = 'components/screens/battle/scenes/fight_cards/importer'  },
             { path = 'components/screens/battle/scenes/fight/importer'        },
             { path = 'components/screens/battle/scenes/fight_after/importer'  },
-            { path = 'components/screens/landscape/scenes/main/importer'      },
+            { path = 'components/screens/campaign_map/scenes/main/importer'   },
             { path = 'components/hooks/fullscreen/importer'                   }
         }
     },
@@ -60,10 +60,17 @@ return {
             }
         }
     },
-    __state__ = 'player', -- choose start screen
+    __state__ = 'mode', -- choose start screen
     __states__ = {
-        { alias = 'battle',    path = 'components/screens/battle'    },
-        { alias = 'landscape', path = 'components/screens/landscape' },
-        { alias = 'player',    path = 'components/screens/player'    }
+        { alias = 'mode',                   path = 'components/screens/mode'                    }, -- +
+        { alias = 'campaign_auth',          path = 'components/screens/campaign_auth'           }, -- +
+        { alias = 'campaign_map',           path = 'components/screens/campaign'                }, -- +
+        { alias = 'campaign_before_battle', path = 'components/screens/campaign_before_battle'  },
+
+        { alias = 'arena_auth',             path = 'components/screens/arena_auth'              },
+        { alias = 'arena_before_battle',    path = 'components/screens/arena_before_battle'     },
+        
+        { alias = 'battle',                 path = 'components/screens/battle'                  }
+        
     }
 }

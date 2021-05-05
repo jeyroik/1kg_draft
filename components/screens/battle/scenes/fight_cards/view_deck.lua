@@ -26,3 +26,5 @@ function BattleFightCardsViewDeck:render(screen, scene)
     submit:render()
     exit:render()
 end
+
+return BattleFightCardsViewDeck

@@ -1,3 +1,5 @@
+local InitializerGrid = require "components/sources/initializers/grid"
+
 InitializerDeck = SourceInitializer:extend()
 
 function InitializerDeck:initSource(deck)

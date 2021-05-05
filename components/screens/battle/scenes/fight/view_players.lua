@@ -55,3 +55,5 @@ function BattleFightViewPlayers:renderPlayerGems(player)
         end
     end
 end
+
+return BattleFightViewPlayers

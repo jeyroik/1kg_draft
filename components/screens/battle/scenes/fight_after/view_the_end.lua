@@ -20,3 +20,5 @@ function BattleFightAfterViewTheEnd:render(data)
     text:setToCenterOfObject(endImg, true, true)
     text:render()
 end
+
+return BattleFightAfterViewTheEnd

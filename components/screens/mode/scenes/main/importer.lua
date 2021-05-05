@@ -1,7 +1,7 @@
-BattleFightBeforeImporter = AssetImporter:extend()
+ModeImporter = AssetImporter:extend()
 
-function BattleFightBeforeImporter:new()
-    BattleFightBeforeImporter.super.new(self)
+function ModeImporter:new()
+    ModeImporter.super.new(self)
 
     self.images = {
         tip = { 
@@ -14,15 +14,15 @@ function BattleFightBeforeImporter:new()
                 }
             } 
         },
-        board_background = { path = "board.png", initializer = "components/screens/battle/scenes/fight_before/initializer_background" },
-        fs__btn = { path = "menu_btn.png" },
-        fs__btn_pressed = { path = "menu_btn_pressed.png" },
+        board_background = { path = "board.png", initializer = "components/screens/mode/scenes/main/initializer_background" },
+        btn = { path = "menu_btn.png" },
+        btn_pressed = { path = "menu_btn_pressed.png" },
     }
     self.cursors = {
         hand = "hand"
     }
     self.texts = {
-        before_fight_header = { body = 'Choose mode', sx = 2, sy = 2, initializer = "components/screens/battle/scenes/fight_before/initializer_header"}
+        before_fight_header = { body = 'Choose mode', sx = 2, sy = 2, initializer = "components/screens/mode/scenes/main/initializer_header"}
     }
 
     self.buttons = {
@@ -31,10 +31,10 @@ function BattleFightBeforeImporter:new()
                 default = 'menu_btn.png',
                 clicked = 'menu_btn_pressed.png'
             },
-            text = '1 player',
-            text_scale = 0.7,
+            text = 'Campaign',
+            text_scale = 0.4,
             border = 15,
-            effect = 'color',
+            effect = 'frame',
             color = {0, 0.5, 0}
         },
         pl2 = {
@@ -42,13 +42,13 @@ function BattleFightBeforeImporter:new()
                 default = 'menu_btn.png',
                 clicked = 'menu_btn_pressed.png'
             },
-            text = '2 players',
-            text_scale = 0.7,
+            text = 'Arena',
+            text_scale = 0.4,
             border = 15,
-            effect = 'color',
+            effect = 'frame',
             color = {0, 0.5, 0}
         }
     }
 end
 
-return BattleFightBeforeImporter
+return ModeImporter

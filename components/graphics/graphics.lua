@@ -29,6 +29,23 @@ function Graphics:getItem(row, column)
     }
 end
 
+function Graphics:setScale(object, widthCellAmount, heightCellAmount)
+    object.sx = (self.current.width*widthCellAmount) / object.width
+    object.sy = (self.current.height*heightCellAmount) / object.height
+end
+
+function Graphics:moveTo(object, row, column)
+    local c = self:getItem(row, column)
+    object.x = c.x
+    object.y = c.y
+end
+
+function Graphics:put(object, row, column, width, height)
+    self:moveTo(object, row, column)
+    self:setScale(object, width, height)
+    object:reload()
+end
+
 function Graphics:forEach(dispatcher)
     local columns, rows = self:getCount()
 

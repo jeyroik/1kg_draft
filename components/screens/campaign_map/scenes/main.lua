@@ -1,4 +1,4 @@
-local LandscapeMainViewMap = require "components/screens/landscape/scenes/main/view_map"
+local CampaignMapMainViewMap = require "components/screens/campaign_map/scenes/main/view_map"
 
 SceneMain = Scene:extend()
 
@@ -66,7 +66,7 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
     game.assets:getMap('main'):forEachObject(function(mapObject)
         if mapObject.name == 'city1' and mapObject:isMouseOn(x, y) then
             game.assets:getCursor('hand'):reset()
-            game:changeStateTo('battle')
+            game:changeStateTo('campaign_before_battle')
             return false
         else
             return true
