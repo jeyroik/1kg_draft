@@ -1,21 +1,21 @@
-local BattleLayerData = require "components/screens/battle/data"
+local Data = require "components/screens/battle/data"
 local Screen = require "components/screens/screen"
 
-BattleScreen = Screen:extend()
+Battle = Screen:extend()
 
-function BattleScreen:new(config)
+function Battle:new(config)
 	config.initializer = config.initializer or 'components/screens/battle/initializer'
-	BattleScreen.super.new(self, config)
+	Battle.super.new(self, config)
 
-	self:setDataLayer(BattleLayerData(config))
+	self:setDataLayer(Data(config))
 end
 
-function BattleScreen:getCurrentPlayer()
+function Battle:getCurrentPlayer()
 	return self.layers.data:getCurrentPlayer()
 end
 
-function BattleScreen:getNextPlayer()
+function Battle:getNextPlayer()
 	return self.layers.data:getNextPlayer()
 end
 
-return BattleScreen
+return Battle

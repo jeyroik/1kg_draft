@@ -3,15 +3,6 @@ BattleFightCardsImporter = AssetImporter:extend()
 function BattleFightCardsImporter:new()
     BattleFightCardsImporter.super.new(self)
 
-    self.groups = {
-        fight_cards_buttons = {
-            fromAssets = true,
-            items = {
-                buttons = {'submitCards', 'exitFight'}
-            }
-        }
-    }
-
     self.buttons = {
         submitCards = {
             alias = 'fight_cards_submit_btn',
@@ -23,7 +14,9 @@ function BattleFightCardsImporter:new()
             text = 'Submit',
             text_scale = 0.7,
             border = 15,
-            effect = 'color',
+            effect = {
+                path = 'components/sources/buttons/effects/frame'
+            },
             color = {0, 0.5, 0},
             initializer = 'components/screens/battle/scenes/fight_cards/initializer_submit',
             renderConfig = {
@@ -45,7 +38,9 @@ function BattleFightCardsImporter:new()
             text = 'Exit fight',
             text_scale = 0.7,
             border = 15,
-            effect = 'color',
+            effect = {
+                path = 'components/sources/buttons/effects/frame'
+            },
             color = {0, 0.5, 0},
             initializer = 'components/screens/battle/scenes/fight_cards/initializer_exit',
             renderConfig = {

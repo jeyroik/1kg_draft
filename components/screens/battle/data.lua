@@ -1,10 +1,10 @@
 local LayerData = require "components/screens/layers/layer_data"
 
-BattleLayerData = LayerData:extend()
+Data = LayerData:extend()
 
 -- @param table config
 -- @return void
-function BattleLayerData:new(config)
+function Data:new(config)
     self.board = {
         size = 5,
         deathPerc = 10,
@@ -37,34 +37,34 @@ function BattleLayerData:new(config)
     self.theEndFlag = false
     self.fx = 'none'
 
-    BattleLayerData.super.new(self, config)
+    Data.super.new(self, config)
 end
 
--- @param Game game
 -- @return void
-function BattleLayerData:init()
-    BattleLayerData.super.init(self)
+function Data:init(args)
+    --self.players = args.players
+    Data.super.init(self)
 end
 
 -- @return Player
-function BattleLayerData:getCurrentPlayer()
+function Data:getCurrentPlayer()
     return self.players[self.current]
 end
 
 -- @return Player
-function BattleLayerData:getNextPlayer()
+function Data:getNextPlayer()
     return self.players[self.next]
 end
 
 -- @param Player player
 -- @return boolean
-function BattleLayerData:isCurrentPlayer(player)
+function Data:isCurrentPlayer(player)
     return player.id == self:getCurrentPlayer().id
 end
 
 -- Changes current and next player with each other
 -- @return void
-function BattleLayerData:nextTurn()
+function Data:nextTurn()
     local c = self.current
     self.current = self.next
     self.next = c
@@ -75,4 +75,4 @@ function BattleLayerData:nextTurn()
     end
 end
 
-return BattleLayerData
+return Data

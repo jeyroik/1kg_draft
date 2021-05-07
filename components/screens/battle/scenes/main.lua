@@ -1,21 +1,21 @@
-local BattleFightViewBoard   = require "components/screens/battle/scenes/fight/view_board"
-local BattleFightViewPlayers = require "components/screens/battle/scenes/fight/view_players"
+local ViewBoard   = require "components/screens/battle/scenes/main/view_board"
+local ViewPlayers = require "components/screens/battle/scenes/main/view_players"
 
-SceneFight = Scene:extend()
+SceneMain = Scene:extend()
 
-function SceneFight:new(config)
+function SceneMain:new(config)
     self.fx = ''
     self.ready = false
 
-    SceneFight.super.new(self, config)
+    SceneMain.super.new(self, config)
 
     self.views = {
-        BattleFightViewBoard(),
-        BattleFightViewPlayers(),
+        ViewBoard(),
+        ViewPlayers(),
     }
 end
 
-function SceneFight:init(screen)
+function SceneMain:init(screen)
     if not self.ready then
         self:addSceneAfterViews(screen)
 
@@ -27,7 +27,7 @@ function SceneFight:init(screen)
     end
 end
 
-function SceneFight:addSceneAfterViews(screen)
+function SceneMain:addSceneAfterViews(screen)
     screen:addViewLayers(
         {
             LayerViewSingleSelection(),
@@ -37,7 +37,7 @@ function SceneFight:addSceneAfterViews(screen)
     )
 end
 
-function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
+function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
     local layerData = screen:getData()
 
     for i=1,2 do
@@ -110,7 +110,7 @@ function SceneFight:mouseMoved(screen, x, y, dx, dy, isTouch)
     end
 end
 
-function SceneFight:mousePressed(screen, x, y, button, isTouch, presses)
+function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
     local layerData = screen:getData()
     local currentPlayer = layerData:getCurrentPlayer()
 
@@ -126,7 +126,7 @@ function SceneFight:mousePressed(screen, x, y, button, isTouch, presses)
     end
 end
 
-function SceneFight:keyPressed(screen, key)
+function SceneMain:keyPressed(screen, key)
     local gr = {down = true, up=true, left=true, right=true}
 
     if gr[key] then
@@ -135,7 +135,7 @@ function SceneFight:keyPressed(screen, key)
     end
 end
 
-function SceneFight:update(screen)
+function SceneMain:update(screen)
     local layerData = screen:getData()
     --layerData.board:update()
 
@@ -166,8 +166,8 @@ function SceneFight:update(screen)
     end
 end
 
-function SceneFight:addStone(layerData)
+function SceneMain:addStone(layerData)
     self.fx = layerData.board:addStone(layerData) or ''
 end
 
-return SceneFight
+return SceneMain

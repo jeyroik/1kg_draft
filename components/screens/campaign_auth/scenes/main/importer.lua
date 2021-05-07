@@ -17,7 +17,9 @@ function CampaignAuthMainImporter:new()
             text = 'submit',
             text_scale = 0.4,
             border = 15,
-            effect = 'frame',
+            effect = {
+                path = 'components/sources/buttons/effects/frame'
+            },
             color = {0, 0.5, 0}
         },
     }

@@ -1,14 +1,14 @@
 local LayerView = require "components/screens/layers/layer_view"
 
-BattleFightViewPlayers = LayerView:extend()
+ViewPlayers = LayerView:extend()
 
-function BattleFightViewPlayers:render(data)
+function ViewPlayers:render(data)
     self:renderCards(data)
     self:renderFrameCurrentPlayer(data)
     self:renderMagic(data)
 end
 
-function BattleFightViewPlayers:renderFrameCurrentPlayer(data)
+function ViewPlayers:renderFrameCurrentPlayer(data)
     local current = data.players[data.current]
     local avatar = current.cards[1]
     local turn = game.assets:getImage('turn')
@@ -28,7 +28,7 @@ function BattleFightViewPlayers:renderFrameCurrentPlayer(data)
     turn_enemy:render()
 end
 
-function BattleFightViewPlayers:renderCards(data)
+function ViewPlayers:renderCards(data)
     for i=1,2 do
         local player = data.players[i]
         for j=1,#player.cards do
@@ -39,12 +39,12 @@ function BattleFightViewPlayers:renderCards(data)
     end
 end
 
-function BattleFightViewPlayers:renderMagic(data)
+function ViewPlayers:renderMagic(data)
     self:renderPlayerGems(data.players[1])
     self:renderPlayerGems(data.players[2])
 end
 
-function BattleFightViewPlayers:renderPlayerGems(player)
+function ViewPlayers:renderPlayerGems(player)
     local order = game.assets:getMisc('magic').namesOrder
     for _,name in pairs(order) do
         local gem = player.gems[name]
@@ -56,4 +56,4 @@ function BattleFightViewPlayers:renderPlayerGems(player)
     end
 end
 
-return BattleFightViewPlayers
+return ViewPlayers

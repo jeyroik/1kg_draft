@@ -34,6 +34,7 @@ function InitializerButton:initSource(button)
 
     button.source.text.sx = (btnWidthInCells*c.width) / button.source.text.width
     button.source.text.sy = c.height / button.source.text.height
+    
 end
 
 return InitializerButton

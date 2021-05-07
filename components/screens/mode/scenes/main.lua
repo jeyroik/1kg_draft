@@ -4,7 +4,7 @@ local ModeViewSettingsMode = require "components/screens/mode/scenes/main/view_s
 SceneMain = Scene:extend()
 
 function SceneMain:new(config)
-    SceneFightBefore.super.new(self, config)
+    SceneMain.super.new(self, config)
 
     self.name = 'fight_before'
     self.views = {
@@ -49,68 +49,8 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
         game:changeStateTo('campaign_auth')
     elseif self.vsPlayerBtn:isMouseOn(x, y) then
         self.vsPlayerBtn:click()
-        data.mode = 2
-        modeIsChosen = true
-        self:prepare2Players(data)
-        data.mode = 'arena'
+        game:changeStateTo('arena_auth')
     end
-
-    if modeIsChosen then
-        game.assets:getCursor('hand'):reset()
-        if data.mode == 'campaign' then
-            game:changeStateTo('auth')
-        else
-            game:changeStateTo('arena')
-        end
-    end
-end
-
-function SceneMain:prepare1Player(layerData)
-    layerData.players[1] = Player({
-        name = game.profile.name,
-        isHuman = true,
-        magic = game.profile.magic,
-        number = 1,
-        health = game.profile.health,
-        attack = game.profile.attack,
-        defense = game.profile.defense
-    })
-
-    layerData.players[2] = Player({
-        name = 'Computer',
-        isHuman = false,
-        magic = game.profile.magic,
-        number = 2,
-        health = game.profile.health,
-        attack = game.profile.attack,
-        defense = game.profile.defense
-    })
-end
-
-function SceneMain:prepare2Players(layerData)
-    layerData.players[1] = Player({
-        name = game.profile.name,
-        isHuman = true,
-        magic = game.profile.magic,
-        number = 1,
-        health = game.profile.health,
-        attack = game.profile.attack,
-        defense = game.profile.defense
-    })
-
-    layerData.players[2] = Player({
-        name = game.profile.name .. ' (2)',
-        isHuman = true,
-        magic = game.profile.magic,
-        number = 2,
-        health = game.profile.health,
-        attack = game.profile.attack,
-        defense = game.profile.defense
-    })
-end
-
-function SceneMain:mouseReleased(screen, x, y, button, isTouch, presses)
-
 end
 
 function SceneMain:update(screen)

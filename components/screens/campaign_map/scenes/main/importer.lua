@@ -1,7 +1,7 @@
 CampaignMapMainImporter = AssetImporter:extend()
 
 function CampaignMapMainImporter:new()
-    LandscapeMainImporter.super.new(self)
+    CampaignMapMainImporter.super.new(self)
 
     self.quads = {
         main_map = {
@@ -98,7 +98,8 @@ function CampaignMapMainImporter:new()
                         { 4,2 },{ 4,3 },{ 4,4 },{ 4,5 },{ 4,6 },{ 4,7 },{ 4,8 },
                         { 5,2 },{ 5,3 },{ 5,4 },{ 5,5 },{ 5,6 },{ 5,7 },{ 5,8 },
                                 { 6,3 },{ 6,4 },{ 6,5 },{ 6,6 },{ 6,7 },{ 6,8 },
-                    }
+                    },
+                    dispatcher = {}
                 },
                 city1 = {
                     title = 'Pervograd',
@@ -113,6 +114,9 @@ function CampaignMapMainImporter:new()
                         { 10,18 },{ 10,19 },{ 10,20 },{ 10,21 },{ 10,22 },{ 10,23 },{ 10,24 },
                         { 11,18 },{ 11,19 },{ 11,20 },{ 11,21 },{ 11,22 },{ 11,23 },{ 11,24 },
                                   { 12,19 },{ 12,20 },{ 12,21 },{ 12,22 },{ 12,23 }
+                    },
+                    dispatcher = {
+                        path = 'components/screens/campaign_map/objects/pervograd'
                     }
                 }
             },

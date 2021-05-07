@@ -7,6 +7,7 @@ function MapObject:new(config)
     self.schema = {}
     self.map = {}
     self.layer = ''
+    self.dispatcher = {}
 
     config.initializer = config.initializer or 'components/sources/initializers/map/object'
 
@@ -22,4 +23,11 @@ function MapObject:isMouseOn(x, y)
     end
 
     return false
+end
+
+function MapObject:mousePressed(screen, scene)
+    if dispatcher.path then
+        self:initializeOne('dispatcher')
+        self.dispatcher:run(screen, scene)
+    end
 end

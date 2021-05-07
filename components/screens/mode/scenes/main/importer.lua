@@ -34,7 +34,9 @@ function ModeImporter:new()
             text = 'Campaign',
             text_scale = 0.4,
             border = 15,
-            effect = 'frame',
+            effect = {
+                path = 'components/sources/buttons/effects/frame'
+            },
             color = {0, 0.5, 0}
         },
         pl2 = {
@@ -45,7 +47,9 @@ function ModeImporter:new()
             text = 'Arena',
             text_scale = 0.4,
             border = 15,
-            effect = 'frame',
+            effect = {
+                path = 'components/sources/buttons/effects/frame'
+            },
             color = {0, 0.5, 0}
         }
     }

@@ -1,13 +1,11 @@
-InitializerScreenBattle = SourceInitializer:extend()
+Initializer = SourceInitializer:extend()
 
-function InitializerScreenBattle:initSource(screen)
-    screen.__state__ = 'fight_before'
+function Initializer:initSource(screen)
+    screen.__state__ = 'main'
 	screen.__states__ = {
-		{ alias = 'fight_before', path = 'components/screens/battle/scenes/fight_before' },
-		{ alias = 'fight_cards',  path = 'components/screens/battle/scenes/fight_cards'  },
-		{ alias = 'fight',        path = 'components/screens/battle/scenes/fight'        },
-		{ alias = 'fight_after',  path = 'components/screens/battle/scenes/fight_after'  }
+		{ alias = 'main',        path = 'components/screens/battle/scenes/main'         },
+		{ alias = 'fight_after', path = 'components/screens/battle/scenes/fight_after'  }
 	}
 end
 
-return InitializerScreenBattle
+return Initializer

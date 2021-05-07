@@ -1,60 +1,29 @@
 Button = Source:extend()
 
 function Button:new(config)
+    config = config or {}
+
     self.name = ''
     self.text = ''
     self.text_scale = 1
     self.state = 'default'
     self.border = 0
-    self.effect = 'position'
     self.scale = {
         mode = 'out'
     }
     self.color = {1,1,1}
+    self.effect = {
+        path = 'components/sources/buttons/effects/frame'
+    }
 
+    config.alias = config.alias or 'button'
     config.initializer = config.initializer or 'components/sources/initializers/button'
 
     Button.super.new(self, config)
 
+    self:initializeOne('effect')
+
     self.pressed = false
-    self.effects = {
-        frame = function(text)
-            if self.pressed then
-                self:drawSelection()
-            end
-
-            text:draw()
-        end,
-        color = function (text)
-            if self.pressed then
-                love.graphics.setColor(self.color)
-            end
-            text:draw()
-            if self.pressed then
-                love.graphics.setColor({1,1,1})
-            end
-        end,
-        position = function (text)
-            text:draw()
-        end,
-        scale = function (text)
-            if self.pressed then
-                if self.scale.mode == 'in' then
-                    text.sx = text.sx*2 or text.sx
-                    text.sy = text.sx*2 or text.sy
-                    text.x = self.x-text.width
-                    text.y = self.y-text.height
-                else
-                    text.sx = text.sx/2 or text.sx
-                    text.sy = text.sx/2 or text.sy
-                    text.x = dx+text.width/2
-                    text.y = dy+text.height/2
-                end
-
-            end
-            text:draw()
-        end
-    }
 end
 
 
@@ -65,7 +34,7 @@ end
 
 function Button:draw()
     self.source.images[self.state]:draw()
-    self.effects[self.effect](self.source.text)
+    self.effect:draw(self)
 end
 
 function Button:click()

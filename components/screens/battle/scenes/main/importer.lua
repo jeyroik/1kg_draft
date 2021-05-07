@@ -1,7 +1,7 @@
-BattleFightImporter = AssetImporter:extend()
+Importer = AssetImporter:extend()
 
-function BattleFightImporter:new()
-    BattleFightImporter.super.new(self)
+function Importer:new()
+    Importer.super.new(self)
 
     self.images = {
         turn = { path = "turn.png" },
@@ -23,4 +23,4 @@ function BattleFightImporter:new()
     end
 end
 
-return BattleFightImporter
+return Importer

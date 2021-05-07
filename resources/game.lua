@@ -9,8 +9,8 @@ return {
             { path = 'components/characters/importer'                         },
             { path = 'components/screens/mode/scenes/main/importer'           },
             { path = 'components/screens/campaign_auth/scenes/main/importer'  },
-            { path = 'components/screens/battle/scenes/fight_cards/importer'  },
-            { path = 'components/screens/battle/scenes/fight/importer'        },
+            --{ path = 'components/screens/battle/scenes/fight_cards/importer'  },
+            { path = 'components/screens/battle/scenes/main/importer'         },
             { path = 'components/screens/battle/scenes/fight_after/importer'  },
             { path = 'components/screens/campaign_map/scenes/main/importer'   },
             { path = 'components/hooks/fullscreen/importer'                   }
@@ -64,13 +64,13 @@ return {
     __states__ = {
         { alias = 'mode',                   path = 'components/screens/mode'                    }, -- +
         { alias = 'campaign_auth',          path = 'components/screens/campaign_auth'           }, -- +
-        { alias = 'campaign_map',           path = 'components/screens/campaign'                }, -- +
-        { alias = 'campaign_before_battle', path = 'components/screens/campaign_before_battle'  },
+        { alias = 'campaign_map',           path = 'components/screens/campaign_map'            }, -- +
+        { alias = 'campaign_before_battle', path = 'components/screens/campaign_before_battle'  }, -- + no graphics [nog]
 
-        { alias = 'arena_auth',             path = 'components/screens/arena_auth'              },
-        { alias = 'arena_before_battle',    path = 'components/screens/arena_before_battle'     },
+        { alias = 'arena_auth',             path = 'components/screens/arena_auth'              }, -- + nog
+        { alias = 'arena_before_battle',    path = 'components/screens/arena_before_battle'     }, -- + nog
         
-        { alias = 'battle',                 path = 'components/screens/battle'                  }
+        { alias = 'battle',                 path = 'components/screens/battle'                  }  -- + 
         
     }
 }

@@ -1,6 +1,9 @@
 Initializer = Object:extend()
 
 function Initializer:initializeOne(name)
+    if not self[name].path then
+        love.filesystem.append('log.txt', '\n[Initializer:initializeOne] '..name..': '..json.encode(self.text)..' - '..json.encode(self.effect))
+    end
     local class = require(self[name].path)
     self[name .. '__config'] = self[name]
     self[name] = class(self[name])

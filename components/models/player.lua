@@ -4,6 +4,7 @@ function ModelPlayer:new(config)
     config = config or {}
     
     self.name = ''
+    self.isHuman = true
     self.magic = {
         air         = { power = 1, mana = 3 },
         water       = { power = 1, mana = 3 },

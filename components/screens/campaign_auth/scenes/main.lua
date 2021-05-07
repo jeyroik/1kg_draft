@@ -1,9 +1,9 @@
 local CampaignAuthSceneMainView = require "components/screens/campaign_auth/scenes/main/view"
 
-CampaignAuthSceneMain = Scene:extend()
+SceneMain = Scene:extend()
 
-function CampaignAuthSceneMain:new(config)
-    CampaignAuthSceneMain.super.new(self, config)
+function SceneMain:new(config)
+    SceneMain.super.new(self, config)
 
     self.name = 'main'
     self.views = {
@@ -23,7 +23,7 @@ function CampaignAuthSceneMain:new(config)
     self.textCursorTimer = 0
 end
 
-function CampaignAuthSceneMain:init()
+function SceneMain:init()
     self.inputField = game.assets:getImage('inputField')
     self.submit     = game.assets:getButton('submit')
     self.playerName = Text({ body = '' })
@@ -36,13 +36,13 @@ function CampaignAuthSceneMain:init()
     self:updateUI()
 end
 
-function CampaignAuthSceneMain:textInput(screen, text)
+function SceneMain:textInput(screen, text)
     if #self.playerName.body < 11 then
         self.playerName:append(text)
     end
 end
 
-function CampaignAuthSceneMain:mouseMoved(screen, x, y)
+function SceneMain:mouseMoved(screen, x, y)
     if self.submit:isMouseOn(x, y) then
         self.submit:hover()
     elseif self.submit.state ~= 'default' then
@@ -50,7 +50,7 @@ function CampaignAuthSceneMain:mouseMoved(screen, x, y)
     end
 end
 
-function CampaignAuthSceneMain:mousePressed(screen, x, y)
+function SceneMain:mousePressed(screen, x, y)
     if self.submit:isMouseOn(x, y) then
         local playerName = self.playerName.body
         local player = {}
@@ -71,13 +71,13 @@ function CampaignAuthSceneMain:mousePressed(screen, x, y)
     end
 end
 
-function CampaignAuthSceneMain:keyPressed(screen, key)
+function SceneMain:keyPressed(screen, key)
     if key == 'backspace' then
         self.playerName:pop(1)
     end
 end
 
-function CampaignAuthSceneMain:update(screen, dt)
+function SceneMain:update(screen, dt)
     if self.textCursorTimer >= 0.3 then
         self.textCursorTimer = 0
         self.textCursor = (#self.playerName.body < 11) and not self.textCursor or false
@@ -88,12 +88,12 @@ function CampaignAuthSceneMain:update(screen, dt)
     self:updateUI()
 end
 
-function CampaignAuthSceneMain.fullscreenChanged(this, screen, mode)
+function SceneMain.fullscreenChanged(this, screen, mode)
     
     this.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 end
 
-function CampaignAuthSceneMain:updateUI()
+function SceneMain:updateUI()
     local pos = game.graphics:getItem(6, 10)
 
     self.inputField.x = pos.x
@@ -127,4 +127,4 @@ function CampaignAuthSceneMain:updateUI()
     })
 end
 
-return CampaignAuthSceneMain
+return SceneMain
