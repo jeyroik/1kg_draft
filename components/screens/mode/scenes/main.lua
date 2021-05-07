@@ -10,9 +10,7 @@ function SceneMain:new(config)
     self.views = {
         ModeViewSettingsMode()
     }
-
-    self.vsPCBtn     = game.assets:getButton('pl1')
-    self.vsPlayerBtn = game.assets:getButton('pl2')
+    
     self.header      = Text({ body = 'Choose mode' })
 end
 
@@ -21,36 +19,46 @@ function SceneMain:init(screen)
         { ModeViewBackground( {image = 'board_background'} ) },
         'scene_before'
     )
+
+    self.vsPCBtn = Button({
+        name = 'campaign',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'Campaign',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        color = {0, 0.5, 0}
+    })
+    self.vsPlayerBtn = Button({
+        name = 'arena',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'Arena',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        color = {0, 0.5, 0},
+        parent = screen
+    })
     self:updateUI()
 end
 
-function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
-
-    if self.vsPCBtn:isMouseOn(x, y) then
-        self.vsPCBtn:hover()
-    elseif self.vsPCBtn.state ~= 'default' then
-        self.vsPCBtn:released()
-    end
-
-    if self.vsPlayerBtn:isMouseOn(x, y) then
-        self.vsPlayerBtn:hover()
-    elseif self.vsPlayerBtn.state ~= 'default' then
-        self.vsPlayerBtn:released()
-    end
+function SceneMain.campaignButtonPressed()
+    game:changeStateTo('campaign_auth')
 end
 
-function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
-
-    local data = screen:getData()
-    local modeIsChosen = false
-
-    if self.vsPCBtn:isMouseOn(x, y) then
-        self.vsPCBtn:click()
-        game:changeStateTo('campaign_auth')
-    elseif self.vsPlayerBtn:isMouseOn(x, y) then
-        self.vsPlayerBtn:click()
-        game:changeStateTo('arena_auth')
-    end
+function SceneMain.arenaButtonPressed()
+    game:changeStateTo('arena_auth')
 end
 
 function SceneMain:update(screen)

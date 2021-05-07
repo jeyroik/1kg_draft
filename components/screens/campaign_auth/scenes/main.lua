@@ -23,9 +23,23 @@ function SceneMain:new(config)
     self.textCursorTimer = 0
 end
 
-function SceneMain:init()
+function SceneMain:init(screen)
     self.inputField = game.assets:getImage('inputField')
-    self.submit     = game.assets:getButton('submit')
+    self.submit     = Button({
+        name = 'submit',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'submit',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        color = {0, 0.5, 0},
+        parent = screen
+    })
     self.playerName = Text({ body = '' })
     self.header     = Text({ body = 'Enter your name' })
 
@@ -42,33 +56,22 @@ function SceneMain:textInput(screen, text)
     end
 end
 
-function SceneMain:mouseMoved(screen, x, y)
-    if self.submit:isMouseOn(x, y) then
-        self.submit:hover()
-    elseif self.submit.state ~= 'default' then
-        self.submit:released()
+function SceneMain.submitButtonPressed(this)
+    local playerName = this.playerName.body
+    local player = {}
+
+    if game.profiles[playerName] then
+        player = ModelPlayer(game.profiles[playerName])
+    else
+        player = ModelPlayer({
+            name = playerName,
+            title = playerName,
+            description = playerName
+        })
     end
-end
 
-function SceneMain:mousePressed(screen, x, y)
-    if self.submit:isMouseOn(x, y) then
-        local playerName = self.playerName.body
-        local player = {}
-
-        if game.profiles[playerName] then
-            player = ModelPlayer(game.profiles[playerName])
-        else
-            player = ModelPlayer({
-                name = playerName,
-                title = playerName,
-                description = playerName
-            })
-        end
-
-        game.profile = player
-
-        game:changeStateTo('campaign_map')
-    end
+    game.profile = player
+    game:changeStateTo('campaign_map')
 end
 
 function SceneMain:keyPressed(screen, key)
@@ -89,7 +92,6 @@ function SceneMain:update(screen, dt)
 end
 
 function SceneMain.fullscreenChanged(this, screen, mode)
-    
     this.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 end
 

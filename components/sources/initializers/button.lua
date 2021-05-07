@@ -34,7 +34,17 @@ function InitializerButton:initSource(button)
 
     button.source.text.sx = (btnWidthInCells*c.width) / button.source.text.width
     button.source.text.sy = c.height / button.source.text.height
-    
+
+    if button.parent.layers then
+        self:setHooks(button)
+    end
+end
+
+function InitializerButton:setHooks(button)
+    local screen = button.parent
+    local hook = require 'components/sources/buttons/hooks/default'
+    screen:catchEvent('mousePressed', 'before', hook({button = button, alias = button.name..'Button'}))
+    screen:catchEvent('mouseMoved', 'before', hook({button = button, alias = button.name..'Button'}))
 end
 
 return InitializerButton

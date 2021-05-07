@@ -15,6 +15,7 @@ function Button:new(config)
     self.effect = {
         path = 'components/sources/buttons/effects/frame'
     }
+    self.parent = {}
 
     config.alias = config.alias or 'button'
     config.initializer = config.initializer or 'components/sources/initializers/button'
