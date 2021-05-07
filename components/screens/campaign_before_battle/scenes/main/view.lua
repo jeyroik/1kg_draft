@@ -7,7 +7,10 @@ function MainView:new(config)
 end
 
 function MainView:render(data, scene)
-    
+    scene.back:draw()
+    scene.header:draw()
+    scene.playerTeam:draw()
+    scene.enemyTeam:draw()
 end
 
 return MainView

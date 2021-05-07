@@ -18,9 +18,9 @@ function Source:new(config)
     end
 end
 
-function Source:init()
+function Source:init(...)
     self:initByInitializer()
-    Source.super.init(self)
+    Source.super.init(self, ...)
 end
 
 function Source:reload()

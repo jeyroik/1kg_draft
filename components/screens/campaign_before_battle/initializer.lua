@@ -1,9 +1,9 @@
 Initializer = SourceInitializer:extend()
 
 function Initializer:initSource(screen)
-    screen.__state__ = 'main'
+    screen.__state__ = 'main_'
     screen.__states__ = {
-        { alias = 'main', path = 'components/screens/campaign_before_battle/scenes/main' }
+        { alias = 'main_', path = 'components/screens/campaign_before_battle/scenes/main' }
     }
 end
 

@@ -45,7 +45,7 @@ function love.textinput( text )
 end
 
 function love.quit()
-	
+	--love.filesystem.append('log.txt', '\n\n')
 end
 
 function getGameConfig()

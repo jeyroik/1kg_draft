@@ -58,19 +58,17 @@ end
 
 function SceneMain.submitButtonPressed(this)
     local playerName = this.playerName.body
-    local player = {}
 
     if game.profiles[playerName] then
-        player = ModelPlayer(game.profiles[playerName])
+        game.profile = ModelPlayer(game.profiles[playerName])
     else
-        player = ModelPlayer({
+        game.profile = ModelPlayer({
             name = playerName,
             title = playerName,
             description = playerName
         })
     end
 
-    game.profile = player
     game:changeStateTo('campaign_map')
 end
 

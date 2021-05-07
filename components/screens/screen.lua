@@ -92,17 +92,17 @@ function Screen:new(config)
 	)
 end
 
-function Screen:init()
+function Screen:init(game, ...)
 	if not self.initialized then
 		Screen.super.init(self)
 
 		self:initHooks()
-		self:runHooks('init', 'before')
+		self:runHooks('init', 'before', ...)
 
-		self.layers.data:init()
-		self:changeStateTo(self.__state__)
-
-		self:runHooks('init', 'after')
+		self.layers.data:init(...)
+		self:changeStateTo(self.__state__, ...)
+		
+		self:runHooks('init', 'after', ...)
 	end
 end
 

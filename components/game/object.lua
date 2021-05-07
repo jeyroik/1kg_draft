@@ -21,21 +21,19 @@ end
 
 function GameObject:init(...)
     if not self.initialized then
-        self:initStates()
+        self:initStates(...)
         self.initialized = true
     end
 end
 
-function GameObject:initStates()
-    self:initializeMany('__states__', true)
+function GameObject:initStates(...)
+    self:initializeMany('__states__', true, ...)
 end
 
 function GameObject:changeStateTo(stateName, ...)
     self.__state__ = stateName
     local current = self:getCurrentState()
-    if not current then
-        love.filesystem.append('log.txt', '\n[GameObject:changeStateTo] stateName = '..stateName)
-    end
+
     current:init(self, ...)
 end
 
