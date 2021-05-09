@@ -1,3 +1,5 @@
+local Skill = require "components/skills/skill"
+
 SkillSelfHealthInc = Skill:extend()
 
 function SkillSelfHealthInc:new(config)
@@ -10,3 +12,5 @@ function SkillSelfHealthInc:new(config)
         self_health = {amount = self.amount}
     }
 end
+
+return SkillSelfHealthInc

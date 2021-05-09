@@ -19,3 +19,7 @@ function Quads:draw(num)
         love.graphics.draw(self.image.source, self.source[num], self.x, self.y, self.radian, self.sx, self.sy)
     end
 end
+
+function Quads:count()
+    return #self.source
+end

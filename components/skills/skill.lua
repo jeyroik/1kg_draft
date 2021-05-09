@@ -26,3 +26,5 @@ function Skill:use(layerData)
 		end
 	end
 end
+
+return Skill

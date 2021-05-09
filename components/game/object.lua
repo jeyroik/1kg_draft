@@ -40,3 +40,7 @@ end
 function GameObject:getCurrentState()
     return self.__states__[self.__state__]
 end
+
+function GameObject:getCurrentStateName()
+    return self.__state__
+end

@@ -118,6 +118,14 @@ function Screen:initHooks()
 	end
 end
 
+function Screen:getHook(alias)
+	return self.hooks[alias]
+end
+
+function Screen:hasHook(alias)
+	return self.hooks[alias] and true or false
+end
+
 function Screen:catchEvent(event, stage, hook)
 	if not self.hooks[hook:getAlias()] then
 		self.hooks[hook:getAlias()] = hook

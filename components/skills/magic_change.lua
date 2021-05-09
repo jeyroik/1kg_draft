@@ -1,4 +1,5 @@
-require 'components/hooks/magic_select'
+local Skill = require "components/skills/skill"
+local HookMagicSelect = require 'components/hooks/magic_select'
 
 SkillMagicChange = Skill:extend()
 
@@ -47,3 +48,5 @@ function SkillMagicChange:magicSelected(layerData, magic)
     layerData.magic_select_skill = nil
     SkillMagicChange.super.use(self, layerData)
 end
+
+return SkillMagicChange

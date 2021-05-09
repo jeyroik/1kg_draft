@@ -42,9 +42,15 @@ end
 
 function InitializerButton:setHooks(button)
     local screen = button.parent
-    local hook = require 'components/sources/buttons/hooks/default'
-    screen:catchEvent('mousePressed', 'before', hook({button = button, alias = button.name..'Button'}))
-    screen:catchEvent('mouseMoved', 'before', hook({button = button, alias = button.name..'Button'}))
+
+    if not screen:hasHook('buttons') then
+        local hook = require 'components/sources/buttons/hooks/default'
+        screen:catchEvent('mousePressed', 'before', hook({alias = 'buttons'}))
+        screen:catchEvent('mouseMoved', 'before', hook({alias = 'buttons'}))
+    end
+    
+    local hook = screen:getHook('buttons')
+    hook:addButton(button.screenName, button.sceneName, button)
 end
 
 return InitializerButton

@@ -24,30 +24,35 @@ function SceneMain:new(config)
 end
 
 function SceneMain:init(screen)
-    self.inputField = game.assets:getImage('inputField')
-    self.submit     = Button({
-        name = 'submit',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'submit',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        color = {0, 0.5, 0},
-        parent = screen
-    })
-    self.playerName = Text({ body = '' })
-    self.header     = Text({ body = 'Enter your name' })
+    if not self.initialized then
+        self.inputField = game.assets:getImage('inputField')
+        self.submit     = Button({
+            name = 'submit',
+            path = {
+                default = 'menu_btn.png',
+                clicked = 'menu_btn_pressed.png'
+            },
+            text = 'submit',
+            text_scale = 0.4,
+            border = 15,
+            effect = {
+                path = 'components/sources/buttons/effects/frame'
+            },
+            color = {0, 0.5, 0},
+            parent = screen,
+            screenName = 'campaign_auth',
+            sceneName = 'main'
+        })
+        self.playerName = Text({ body = '' })
+        self.header     = Text({ body = 'Enter your name' })
 
-    self.back = Image({ path = 'board_stone.png'})
-    self.back.x = 0
-    self.back.y = 0
-    self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
-    self:updateUI()
+        self.back = Image({ path = 'board_stone.png'})
+        self.back.x = 0
+        self.back.y = 0
+        self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+        self:updateUI()
+        self.initialized = true
+    end
 end
 
 function SceneMain:textInput(screen, text)
@@ -75,6 +80,8 @@ end
 function SceneMain:keyPressed(screen, key)
     if key == 'backspace' then
         self.playerName:pop(1)
+    elseif key == 'return' then
+        self.submitButtonPressed(self)
     end
 end
 
@@ -125,6 +132,7 @@ function SceneMain:updateUI()
         sx   = self.playerName.sx, 
         sy   = self.playerName.sy 
     })
+    
 end
 
 return SceneMain

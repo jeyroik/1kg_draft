@@ -1,3 +1,5 @@
+local Skill = require "components/skills/skill"
+
 SkillStoneConvert = Skill:extend()
 
 function SkillStoneConvert:new(config)
@@ -16,3 +18,5 @@ function SkillStoneConvert:new(config)
         stone_converter = {target = self.target, mustBe = self.mustBe}
     }
 end
+
+return SkillStoneConvert

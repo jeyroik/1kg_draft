@@ -30,7 +30,6 @@ require "components/sources/group"
 
 require "components/hooks/hook"
 require "components/mutators/mutator"
-require "components/skills/skill"
 
 require "components/assets/importers/importer"
 require "components/assets/asset_magic"

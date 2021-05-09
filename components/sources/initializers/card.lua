@@ -11,8 +11,10 @@ function InitializerCard:initSource(card)
 end
 
 function InitializerCard:initSkills(card)
-    local active = require(card.skill.active.path)
-    card.skill.active = active(card.skill.active)
+    if card.skill.active.path then
+        local active = require(card.skill.active.path)
+        card.skill.active = active(card.skill.active)
+    end
     
     for alias,skill in pairs(card.skill.passive) do
         local passive = require(skill.path)

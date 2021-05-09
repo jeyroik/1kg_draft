@@ -34,6 +34,20 @@ function Card:draw()
 	self:renderDefense(bottom)
 end
 
+function Card:drawPart(part, rows, columns)
+	rows = rows or 3
+	columns = columns or 1
+
+	local q = Quads({ path = self.avatar.path .. '/'..self.avatar.frame..'.jpg', rows = rows, columns = columns}) -- jpg !? wtf...
+
+	q.x = self.x
+	q.y = self.y
+	q.sx = self.sx * (self.width/q.width)
+	q.sy = self.sy * (self.height/q.height)
+	q:draw(part)
+	q:drawSelection()
+end
+
 function Card:renderAttack(bottom)
 	local attack = Text({ 
 		body = self.defense, 

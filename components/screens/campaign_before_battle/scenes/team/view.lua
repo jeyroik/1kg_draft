@@ -9,7 +9,7 @@ end
 function MainView:render(data, scene)
     scene.back:draw()
     scene.header:draw()
-    
+
     scene.playerTeam:draw()
     scene.playerCard:drawPart(1)
 
@@ -17,16 +17,9 @@ function MainView:render(data, scene)
         card:drawPart(3)
     end
 
-    scene.enemyTeam:draw()
-    scene.enemyCard:drawPart(3)
-
-    for _,card in pairs(scene.enemyCharacters) do
-        card:drawPart(3)
-    end
-
-    scene.changeBtn:draw()
     scene.submitBtn:draw()
     scene.cancelBtn:draw()
+
 end
 
 return MainView

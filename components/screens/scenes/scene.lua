@@ -45,3 +45,5 @@ function Scene:runEvent(screen, name, ...)
         self[name](self, screen, ...)
     end
 end
+
+return Scene

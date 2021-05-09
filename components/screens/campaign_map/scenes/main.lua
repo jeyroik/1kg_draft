@@ -66,8 +66,16 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
     game.assets:getMap('main'):forEachObject(function(mapObject)
         if mapObject.name == 'city1' and mapObject:isMouseOn(x, y) then
             game.assets:getCursor('hand'):reset()
-            game:changeStateTo('campaign_before_battle',  
-                'Pervograd', {} )
+            local enemy = ModelPlayer(game.assets:getCharacter('fire_elemental'))
+            for i=1,3 do
+                table.insert(enemy.characters, game.assets:getCharacter('fire_elemental'))
+            end
+            
+            game:changeStateTo(
+                'campaign_before_battle',  
+                'Pervograd', 
+                enemy
+            )
             return false
         else
             return true

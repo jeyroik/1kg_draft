@@ -80,3 +80,5 @@ function AssetImporter:importAssets(assetsManager)
         assetsManager:addGroup(alias, group)
     end
 end
+
+return AssetImporter
