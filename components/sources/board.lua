@@ -1,4 +1,5 @@
-require "components/sources/stone"
+local MagicStone = require "components/sources/stone"
+local Source     = require 'components/sources/source'
 
 Board = Source:extend()
 
@@ -343,3 +344,5 @@ end
 function Board:getCell(row, column)
 	return self.cells[row][column]
 end
+
+return Board

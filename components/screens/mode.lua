@@ -1,13 +1,21 @@
-local ModeLayerData = require "components/screens/mode/data"
+local Data = require "components/screens/mode/data"
 local Screen = require "components/screens/screen"
 
-ModeScreen = Screen:extend()
+Mode = Screen:extend()
 
-function ModeScreen:new(config)
-	config.initializer = config.initializer or 'components/screens/mode/initializer'
-	ModeScreen.super.new(self, config)
+function Mode:new(config)
+	self.name = 'screen.mode'
 
-	self:setDataLayer(ModeLayerData(config))
+	Mode.super.new(self, config)
 end
 
-return ModeScreen
+function Mode:initState()
+	self:setDataLayer(Data(config))
+	self.__state__ = 'main'
+    self.__states__ = {
+        { alias = 'main', path = 'components/screens/mode/scenes/main' }
+    }
+	Mode.super.initState(self)
+end
+
+return Mode

@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 ModeImporter = AssetImporter:extend()
 
 function ModeImporter:new()

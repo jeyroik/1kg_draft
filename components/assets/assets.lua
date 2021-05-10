@@ -1,7 +1,20 @@
-Assets = Object:extend()
-Assets:implement(Config)
-Assets:implement(Printer)
-Assets:implement(Initializer)
+local GameObject = require 'components/game/object'
+
+local Fx 		= require 'components/sources/fx'
+local Image 	= require 'components/sources/image'
+local ImagePack = require 'components/sources/image_pack'
+local Quads 	= require 'components/sources/quads'
+local Cursor 	= require 'components/sources/cursor'
+local Button 	= require 'components/sources/button'
+local Map 		= require 'components/sources/map'
+local Card 		= require 'components/sources/card'
+local Grid 		= require 'components/sources/grid'
+local Text 		= require 'components/sources/text'
+local Group 	= require 'components/sources/group'
+
+local Character = require 'components/models/character' -- @deprecated
+
+Assets = GameObject:extend()
 
 -- @param string basePath base path for assets
 -- @return void
@@ -23,7 +36,7 @@ function Assets:new(config)
 	self.texts = {}
 	self.groups = {}
 
-	self:applyConfig(config)
+	Assets.super.new(self, config)
 end
 
 -- @return void

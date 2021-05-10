@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 CampaignMapMainImporter = AssetImporter:extend()
 
 function CampaignMapMainImporter:new()

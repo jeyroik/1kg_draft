@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 MutatorsImporter = AssetImporter:extend()
 
 function MutatorsImporter:new()

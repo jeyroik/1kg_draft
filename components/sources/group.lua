@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Group = Source:extend()
 
 function Group:new(config)
@@ -41,3 +43,5 @@ function Group:forEach(dispather)
 
     loop()
 end
+
+return Group

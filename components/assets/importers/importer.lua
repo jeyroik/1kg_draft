@@ -1,3 +1,5 @@
+local GameObject = require 'components/game/object'
+
 AssetImporter = GameObject:extend()
 
 -- @param table config

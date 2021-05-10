@@ -1,10 +1,9 @@
-Hook = Object:extend()
-Hook:implement(Config)
-Hook:implement(Printer)
+local GameObject = require 'components/game/object'
+
+Hook = GameObject:extend()
 
 function Hook:new(config)
-    self.alias = ''
-    self:applyConfig(self, config)
+    Hook.super.new(self, config)
 end
 
 function Hook:getAlias()
@@ -14,3 +13,5 @@ end
 function Hook:catch(screen, args, event, stage)
 
 end
+
+return Hook

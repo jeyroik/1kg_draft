@@ -1,4 +1,4 @@
 Object = require "vendor/rxi/classic"
-json = require "vendor/rxi/json"
+json   = require "vendor/rxi/json"
 
-require "components/game"
+require "components/game/game"

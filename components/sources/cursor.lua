@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Cursor = Source:extend()
 
 function Cursor:new(config)
@@ -31,3 +33,5 @@ end
 function Cursor:isSetter(name)
     return self.setter == name
 end
+
+return Cursor

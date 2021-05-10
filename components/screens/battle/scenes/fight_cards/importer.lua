@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 BattleFightCardsImporter = AssetImporter:extend()
 
 function BattleFightCardsImporter:new()

@@ -25,13 +25,15 @@ function Card:draw()
 	local card = game.assets:getQuads(self.avatar.path)
 	card.x = self.x
 	card.y = self.y
+	card.sx = self.sx
+	card.sy = self.sy
 	card:draw(self.avatar.frame)
 
-	local top, bottom = card:getEdges()
+	--local top, bottom = card:getEdges()
 
-	self:renderHealth(top)
-	self:renderAttack(bottom)
-	self:renderDefense(bottom)
+	--self:renderHealth(top)
+	--self:renderAttack(bottom)
+	--self:renderDefense(bottom)
 end
 
 function Card:drawPart(part, rows, columns)
@@ -74,7 +76,7 @@ function Card:renderAttack(bottom)
 	})
 
 	overlay:render()
-	love.graphics.print(overlay.sx..','..overlay.sy, overlay.x + overlay:getWidth()+5, overlay.y)
+	--love.graphics.print(overlay.sx..','..overlay.sy, overlay.x + overlay:getWidth()+5, overlay.y)
 	attack:render()
 end
 

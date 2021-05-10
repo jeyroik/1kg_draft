@@ -6,3 +6,5 @@ Config:implement(Recombine)
 function Config:applyConfig(config)
 	self:recombineTable(self, config)
 end
+
+return Config

@@ -1,3 +1,5 @@
+local Hook = require 'components/hooks/hook'
+
 HookGraphics = Hook:extend()
 
 function HookGraphics:new(config)

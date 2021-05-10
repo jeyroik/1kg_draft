@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Text = Source:extend()
 
 -- @param string body
@@ -43,3 +45,5 @@ function Text:pop(lettersCount)
 	self:setBody(self.body:sub(1, #self.body-lettersCount))
 	self:setSize(self.source:getWidth(), self.source:getHeight())
 end
+
+return Text

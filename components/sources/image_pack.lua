@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 ImagePack = Source:extend()
 
 function ImagePack:new(config)
@@ -12,3 +14,5 @@ end
 function ImagePack:get(alias)
     return self.source[alias]
 end
+
+return ImagePack

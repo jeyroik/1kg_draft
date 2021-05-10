@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 BattleFightAfterImporter = AssetImporter:extend()
 
 function BattleFightAfterImporter:new()

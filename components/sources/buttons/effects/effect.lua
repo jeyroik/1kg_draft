@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 ButtonEffect = Source:extend()
 
 function ButtonEffect:new(config)

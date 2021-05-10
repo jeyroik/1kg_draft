@@ -1,25 +1,20 @@
-VisibleObject = GameObject:extend()
+local GameObject = require 'components/game/object'
 
-VisibleObject.globalSX = love.graphics.getWidth()/800
-VisibleObject.globalSY = love.graphics.getHeight()/600
+VisibleObject = GameObject:extend()
 
 -- @param table config
 -- @return void
 function VisibleObject:new(config)
 	self.x = 0
-	self.xSource = self.x
+	self.xSource = self.x -- @deprecated
 	self.y = 0
-	self.ySource = self.y
+	self.ySource = self.y -- @deprecated
 	self.width = 0
 	self.height = 0
 	self.radian = 0
 	self.sx = 1
 	self.sy = 1
-	self.love = {
-		width = love.graphics.getWidth(),
-		height = love.graphics.getHeight()
-	}
-	self.renderConfig = {
+	self.renderConfig = { -- @deprecated
 		scale = 'scale', -- size | position | none
 		origin = {
 			x = 0,
@@ -28,14 +23,13 @@ function VisibleObject:new(config)
 			h = 600
 		}
 	}
-	self.previousResolution = '0x0'
+	self.previousResolution = '0x0' -- @deprecated
 
 	VisibleObject.super.new(self, config)
 end
 
 function VisibleObject:render()
-	local render = Render(self.renderConfig)
-	render:draw(self)
+	self:draw()
 end
 
 function VisibleObject:draw(...)
@@ -285,3 +279,5 @@ function VisibleObject:drawSelection(dx, dy, color, mode)
 	love.graphics.rectangle(mode, top.left.x-game.translate.x, top.left.y-game.translate.y, size.width, size.height, 10, 10, 10)
 	love.graphics.setColor({1,1,1,1})
 end
+
+return VisibleObject

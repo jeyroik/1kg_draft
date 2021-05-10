@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 CampaignAuthMainImporter = AssetImporter:extend()
 
 function CampaignAuthMainImporter:new()

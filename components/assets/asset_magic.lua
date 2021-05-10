@@ -1,7 +1,6 @@
-require "components/magic/magic"
+local Magic = require "components/magic/magic"
 
 MagicAsset = Object:extend()
-MagicAsset:implement(Printer)
 
 function MagicAsset:new()
     self.items = {
@@ -57,3 +56,5 @@ end
 function MagicAsset:getByName(name)
     return self.items[self.names[name]]
 end
+
+return MagicAsset

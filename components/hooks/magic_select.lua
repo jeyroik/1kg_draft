@@ -1,3 +1,5 @@
+local Hook = require 'components/hooks/hook'
+
 HookMagicSelect = Hook:extend()
 
 function HookMagicSelect:new(config)
@@ -76,3 +78,5 @@ function HookMagicSelect:mouseMoved(screen, args)
         end
     end)
 end
+
+return HookMagicSelect

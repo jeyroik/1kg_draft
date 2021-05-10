@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 MagicStone = Source:extend{}
 
 function MagicStone:new(config)

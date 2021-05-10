@@ -1,3 +1,6 @@
+local Rectangle = require 'components/sources/rectangle'
+local Text      = require 'components/sources/text'
+
 TextOverlay = Text:extend()
 
 function TextOverlay:new(config)
@@ -64,3 +67,5 @@ function TextOverlay:resetOverlay()
         color  = self.overlay_color
     })
 end
+
+return TextOverlay

@@ -1,8 +1,10 @@
-Model = Object:extend()
-Model:implement(Config)
+local GameObject = require 'components/game/object'
+
+Model = GameObject:extend()
 
 function Model:new(config)
-    self:applyConfig(config)
+    self.name = ''
+    Model.super.new(self, config)
 end
 
 return Model

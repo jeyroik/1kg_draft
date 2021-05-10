@@ -42,3 +42,5 @@ function Initializer:initializePack(name)
     self[name .. '__config'] = self[name]
     self[name] = initialized
 end
+
+return Initializer

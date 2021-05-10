@@ -1,16 +1,16 @@
 local LayerView = require "components/screens/layers/layer_view"
 
-ModeViewBackground = LayerView:extend()
+Background = LayerView:extend()
 
-function ModeViewBackground:new(config)
+function Background:new(config)
     self.image = ''
-    ModeViewBackground.super.new(self, config)
+    Background.super.new(self, config)
 end
 
-function ModeViewBackground:render()
+function Background:render()
     local background = game.assets:getImage(self.image)
 
     background:render()
 end
 
-return ModeViewBackground
+return Background

@@ -1,3 +1,5 @@
+local Mutator = require 'components/mutators/mutator'
+
 MutatorEnemyHealth = Mutator:extend()
 
 function MutatorEnemyHealth:new(config)

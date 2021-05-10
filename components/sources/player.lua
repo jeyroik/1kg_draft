@@ -1,3 +1,5 @@
+local Card = require 'components/sources/card'
+
 Player = Card:extend{}
 
 function Player:new(config)

@@ -1,3 +1,5 @@
+local Mutator = require 'components/mutators/mutator'
+
 MutatorStoneConverter = Mutator:extend()
 
 function MutatorStoneConverter:new(config)

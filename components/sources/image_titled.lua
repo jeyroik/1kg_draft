@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 ImageTitled = Source:extend()
 
 function ImageTitled:new(config)
@@ -32,3 +34,5 @@ function ImageTitled:draw(mode)
         self.text:render()
     end
 end
+
+return ImageTitled

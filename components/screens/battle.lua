@@ -1,13 +1,20 @@
-local Data = require "components/screens/battle/data"
+local Data   = require "components/screens/battle/data"
 local Screen = require "components/screens/screen"
 
 Battle = Screen:extend()
 
 function Battle:new(config)
-	config.initializer = config.initializer or 'components/screens/battle/initializer'
 	Battle.super.new(self, config)
+end
 
+function Battle:initState(...)
 	self:setDataLayer(Data(config))
+	self.__state__ = 'main'
+	self.__states__ = {
+		{ alias = 'main',        path = 'components/screens/battle/scenes/main'         },
+		{ alias = 'fight_after', path = 'components/screens/battle/scenes/fight_after'  }
+	}
+	Battle.super.initState(self, ...)
 end
 
 function Battle:getCurrentPlayer()

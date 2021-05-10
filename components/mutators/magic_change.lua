@@ -1,3 +1,5 @@
+local Mutator = require 'components/mutators/mutator'
+
 MutatorMagicChange = Mutator:extend()
 
 function MutatorMagicChange:new(config)

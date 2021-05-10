@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Button = Source:extend()
 
 function Button:new(config)
@@ -75,3 +77,5 @@ function Button:stepByY(dy)
 
     self.source.text:setToCenterOfObject(self.source.images.default, true, true)
 end
+
+return Button

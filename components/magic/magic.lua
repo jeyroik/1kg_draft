@@ -1,5 +1,6 @@
-Magic = Object:extend{}
-Magic:implement(Config)
+local GameObject = require 'components/game/object'
+
+Magic = GameObject:extend{}
 
 function Magic:new(config)
 	self.volume = 0
@@ -9,7 +10,7 @@ function Magic:new(config)
 	self.isCanBeMerged = true
 	self.isDestroyable = true
 
-	self:applyConfig(config)
+	Magic.super.new(self, config)
 end
 
 function Magic:getName()
@@ -23,3 +24,5 @@ end
 function Magic:getType()
 	return self.type
 end
+
+return Magic

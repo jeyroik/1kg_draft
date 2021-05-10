@@ -1,3 +1,5 @@
+local ImageTitled = require 'components/sources/image_titled'
+
 MagicGem = ImageTitled:extend()
 
 function MagicGem:new(config)
@@ -66,3 +68,5 @@ function MagicGem:incMagicParameter(parameter, inc)
 
     self.text:setBody(self.magic:getTitle() .. ': mana = '..self.mana..', power = '..self.power)
 end
+
+return MagicGem

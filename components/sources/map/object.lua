@@ -31,3 +31,5 @@ function MapObject:mousePressed(screen, scene)
         self.dispatcher:run(screen, scene)
     end
 end
+
+return MapObject

@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Image = Source:extend()
 
 -- @param image source
@@ -21,3 +23,5 @@ function Image:reload()
 	self.initialized = false
 	self:init()
 end
+
+return Image

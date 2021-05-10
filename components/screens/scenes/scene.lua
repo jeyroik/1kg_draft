@@ -1,7 +1,8 @@
-Scene = GameObject:extend()
+local State = require 'components/states/state'
+
+Scene = State:extend()
 
 function Scene:new(config)
-    self.id = self:getId()
     self.views = {}
     self.arguments = {}
 
@@ -12,8 +13,8 @@ function Scene:getViews()
     return self.views
 end
 
-function Scene:init(screen)
-    Scene.super.init(self)
+function Scene:initState(screen)
+    
 end
 
 function Scene:update(screen, dt)

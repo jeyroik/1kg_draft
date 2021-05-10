@@ -43,7 +43,7 @@ function SceneMain:init(screen)
             screenName = 'campaign_auth',
             sceneName = 'main'
         })
-        self.playerName = Text({ body = '' })
+        self.playerName = Text({ body = 'Unknown' })
         self.header     = Text({ body = 'Enter your name' })
 
         self.back = Image({ path = 'board_stone.png'})
@@ -72,6 +72,9 @@ function SceneMain.submitButtonPressed(this)
             title = playerName,
             description = playerName
         })
+        for i=1,15 do
+            table.insert(game.profile.characters, game.assets:getCharacter('fire_elemental'))
+        end
     end
 
     game:changeStateTo('campaign_map')

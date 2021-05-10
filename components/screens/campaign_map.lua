@@ -1,18 +1,23 @@
-local CampaignMapLayerData = require "components/screens/campaign_map/data"
+local Data   = require "components/screens/campaign_map/data"
 local Screen = require "components/screens/screen"
 
-CampaignMapScreen = Screen:extend()
+CampaignMap = Screen:extend()
 
-function CampaignMapScreen:new(config)
-    config.initializer = config.initializer or 'components/screens/campaign_map/initializer'
-
-    CampaignMapScreen.super.new(self, config)
-
-    self:setDataLayer(CampaignMapLayerData(config))
+function CampaignMap:new(config)
+    CampaignMap.super.new(self, config)
 end
 
-function CampaignMapScreen:getProfile()
+function CampaignMap:initState(...)
+    self:setDataLayer(Data(config))
+    self.__state__ = 'main'
+    self.__states__ = {
+        { alias = 'main', path = 'components/screens/campaign_map/scenes/main' }
+    }
+    CampaignMap.super.initState(self, ...)
+end
+
+function CampaignMap:getProfile()
     return self.layers.data:getProfile()
 end
 
-return CampaignMapScreen
+return CampaignMap

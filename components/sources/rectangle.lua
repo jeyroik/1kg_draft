@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Rectangle = Source:extend()
 
 function Rectangle:new(config)
@@ -25,3 +27,5 @@ function Rectangle:draw()
     )
     love.graphics.setColor({1,1,1,1})
 end
+
+return Rectangle

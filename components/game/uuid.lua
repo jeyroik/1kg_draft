@@ -11,3 +11,5 @@ end
 function Uuid:getId()
 	return uuid()
 end
+
+return Uuid

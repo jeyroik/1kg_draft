@@ -1,5 +1,6 @@
-Graphics = Object:extend()
-Graphics:implement(Config)
+local GameObject = require 'components/game/object'
+
+Graphics = GameObject:extend()
 
 function Graphics:new(config)
     self.width = love.graphics.getWidth()
@@ -11,7 +12,7 @@ function Graphics:new(config)
         height = 16
     }
     
-    self:applyConfig(config)
+    Graphics.super.new(self, config)
 
     self.current = {
         width  = 16,
@@ -79,3 +80,5 @@ function Graphics:getCount()
 
     return screenWidth/self.current.width, screenHeight/self.current.height
 end
+
+return Graphics

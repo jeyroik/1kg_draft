@@ -1,9 +1,9 @@
 local LayerData = require "components/screens/layers/layer_data"
 
-ModeLayerData = LayerData:extend()
+Data = LayerData:extend()
 
-function ModeLayerData:new(config)
-    ModeLayerData.super.new(self, config)
+function Data:new(config)
+    Data.super.new(self, config)
 end
 
-return ModeLayerData
+return Data

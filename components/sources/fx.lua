@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Fx = Source:extend()
 
 function Fx:new(config)
@@ -17,3 +19,5 @@ function Fx:play()
     love.audio.stop(self.source)
     love.audio.play(self.source)
 end
+
+return Fx

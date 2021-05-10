@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 MapCell = Source:extend()
 
 function MapCell:new(config)
@@ -29,3 +31,5 @@ end
 function MapCell:restoreNumber()
     self.number = self.previous
 end
+
+return MapCell

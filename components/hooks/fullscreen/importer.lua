@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 HookFullScreenImporter = AssetImporter:extend()
 
 function HookFullScreenImporter:new()

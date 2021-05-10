@@ -90,7 +90,8 @@ function SceneMain:init(screen, ...)
         self.back.y = 0
         self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 
-        for _, char in pairs(game.profile.characters) do
+        local team = game.profile:getCurrentTeam()
+        for _, char in pairs(team) do
             table.insert(
                 self.playerCharacters,
                 Card(char)

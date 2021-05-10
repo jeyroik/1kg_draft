@@ -1,5 +1,6 @@
 require "components/sources/initializers/has_initializer"
 require "components/sources/initializers/initializer"
+local VisibleObject = require 'components/game/visible_object'
 
 Source = VisibleObject:extend()
 Source:implement(SourceHasInitializer)
@@ -20,8 +21,9 @@ end
 
 function Source:init(...)
     self:initByInitializer()
-    Source.super.init(self, ...)
 end
 
 function Source:reload()
 end
+
+return Source

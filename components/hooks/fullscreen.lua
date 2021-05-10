@@ -1,3 +1,6 @@
+local Hook        = require 'components/hooks/hook'
+local TextOverlay = require 'components/sources/text_overlay'
+
 HookFullscreen = Hook:extend()
 
 function HookFullscreen:new(config)
@@ -30,7 +33,6 @@ end
 
 function HookFullscreen:mouseMoved(args)
     local icon = self:getIcon()
-    Printer.flushDbg(self)
 
     if icon:isMouseOn(args.x, args.y) then
         self.tip = TextOverlay({

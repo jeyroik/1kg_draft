@@ -1,13 +1,19 @@
-local CampaignAuthLayerData = require "components/screens/campaign_auth/data"
+local Data = require "components/screens/campaign_auth/data"
 local Screen = require "components/screens/screen"
 
-CampaignAuthScreen = Screen:extend()
+CampaignAuth = Screen:extend()
 
-function CampaignAuthScreen:new(config)
-	config.initializer = config.initializer or 'components/screens/campaign_auth/initializer'
-	CampaignAuthScreen.super.new(self, config)
-
-	self:setDataLayer(CampaignAuthLayerData(config))
+function CampaignAuth:new(config)
+	CampaignAuth.super.new(self, config)
 end
 
-return CampaignAuthScreen
+function CampaignAuth:initState(...)
+	self:setDataLayer(Data(config))
+	self.__state__ = 'main'
+    self.__states__ = {
+        { alias = 'main', path = 'components/screens/campaign_auth/scenes/main' }
+    }
+	CampaignAuth.super.initState(self, ...)
+end
+
+return CampaignAuth

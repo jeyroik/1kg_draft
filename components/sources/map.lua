@@ -1,5 +1,7 @@
 require "components/sources/map/cell"
 require "components/sources/map/object"
+local Quads = require 'components/sources/quads'
+
 
 Map = Quads:extend()
 
@@ -97,3 +99,5 @@ function Map:reload()
     local initializer = InitializerMap()
     initializer:initSource(self)
 end
+
+return Map

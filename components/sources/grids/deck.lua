@@ -1,3 +1,5 @@
+local Grid = require 'components/sources/grid'
+
 Deck = Grid:extend()
 
 function Deck:new(config)
@@ -65,3 +67,5 @@ function Deck:reset()
         self.collection[i] = self.blank(self.blankConfig)
     end
 end
+
+return Deck

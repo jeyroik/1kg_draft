@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Quads = Source:extend()
 
 function Quads:new(config)
@@ -23,3 +25,5 @@ end
 function Quads:count()
     return #self.source
 end
+
+return Quads

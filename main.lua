@@ -1,17 +1,12 @@
 function love.load()
 	require "bootstrap"
-	
-	gw = love.graphics.getWidth()
+
 	game = Game(getGameConfig())
 	game:init()
-	
-	mouse = {x=0,y=0}
-	fps = 1
 end
 
 function love.update(dt)
 	game:update(dt)
-	fps = dt
 end
 
 function love.draw()
@@ -19,8 +14,6 @@ function love.draw()
 end
 
 function love.mousemoved( x, y, dx, dy, isTouch )
-	mouse.x, mouse.y = x,y
-
 	game:mouseMoved(x, y, dx, dy, isTouch)
 end
 

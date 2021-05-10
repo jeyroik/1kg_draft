@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Grid = Source:extend()
 
 function Grid:new(config)
@@ -146,3 +148,5 @@ end
 function Grid:reload()
     InitializerGrid.initSource(self, self)
 end
+
+return Grid

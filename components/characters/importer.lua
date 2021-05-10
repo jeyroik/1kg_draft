@@ -1,3 +1,5 @@
+local AssetImporter = require 'components/assets/importers/importer'
+
 CharactersImporter = AssetImporter:extend()
 
 function CharactersImporter:new()

@@ -1,17 +1,11 @@
-require "components/screens/scenes/scene"
-local GridView 		 = require "components/screens/views/grid"
-local LayerViewDebug = require "components/screens/layers/layer_view_debug"
+local GridView  = require "components/screens/views/grid"
+local StateWith = require "components/states/state_with"
 
-Screen = Source:extend()
-Screen:implement(Printer)
+Screen = StateWith:extend()
 
 -- @param table config
 -- @return void
 function Screen:new(config)
-	self.initialized = false
-	self.background = 'background'
-	self.theEnd = 'theEnd'
-	self.tip = {}
 	self.freeze = {
 		mouseMoved    = false,
 		mousePressed  = false,
@@ -82,28 +76,21 @@ function Screen:new(config)
 		}
 	}
 
-	config.autoInit = false
-
 	Screen.super.new(self, config)
 
-	self:addViewLayers(
-		{ LayerViewDebug(), GridView() },
-		'system'
-	)
+	self:addViewLayers({ GridView() }, 'system')
 end
 
-function Screen:init(game, ...)
-	if not self.initialized then
-		Screen.super.init(self)
+function Screen:initState(game, ...)
+	Screen.super.init(self)
 
-		self:initHooks()
-		self:runHooks('init', 'before', ...)
+	self:initHooks()
+	self:runHooks('init', 'before', ...)
 
-		self.layers.data:init(...)
-		self:changeStateTo(self.__state__, ...)
-		
-		self:runHooks('init', 'after', ...)
-	end
+	self.layers.data:init(...)
+	self:changeStateTo('main', ...)
+
+	self:runHooks('init', 'after', ...)
 end
 
 function Screen:initHooks()
@@ -302,9 +289,8 @@ end
 function Screen:changeStateTo(sceneName)
 	self:runHooks('changeSceneTo', 'before', {sceneName = sceneName})
 
-	self.scene = sceneName
-
 	Screen.super.changeStateTo(self, sceneName)
+	
 	local currentScene = self:getCurrentState()
 	self:setViewLayers(currentScene:getViews(), 'scene_current')
 

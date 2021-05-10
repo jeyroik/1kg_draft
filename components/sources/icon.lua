@@ -1,3 +1,5 @@
+local Source = require 'components/sources/source'
+
 Icon = Source:extend()
 
 -- @param Image image
@@ -19,3 +21,5 @@ function Icon:draw()
 	self.image:draw()
 	self.text:draw()
 end
+
+return Icon
