@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerText = SourceInitializer:extend()
 
 function InitializerText:initSource(text)

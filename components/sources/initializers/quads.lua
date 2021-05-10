@@ -1,4 +1,6 @@
-require 'components/sources/initializers/image'
+local SourceInitializer = require 'components/sources/initializers/initializer'
+local Image             = require 'components/sources/image'
+local InitializerImage  = require 'components/sources/initializers/image'
 
 InitializerQuads = InitializerImage:extend()
 

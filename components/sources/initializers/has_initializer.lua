@@ -9,3 +9,5 @@ function SourceHasInitializer:initByInitializer()
 
     SourceHasInitializer.initializers[self.initializer]:initSource(self)
 end
+
+return SourceHasInitializer

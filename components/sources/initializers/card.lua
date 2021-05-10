@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerCard = SourceInitializer:extend()
 
 function InitializerCard:initSource(card)

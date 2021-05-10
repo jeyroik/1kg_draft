@@ -1,3 +1,7 @@
+local InitializerImage = require 'components/sources/initializers/image'
+local Image            = require 'components/sources/image'
+local Text             = require 'components/sources/text'
+
 InitializerButton = InitializerImage:extend()
 
 function InitializerButton:initSource(button)

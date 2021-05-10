@@ -15,16 +15,12 @@ function SceneMain:new(config)
     }
 end
 
-function SceneMain:init(screen)
-    if not self.ready then
-        self:addSceneAfterViews(screen)
+function SceneMain:initState(screen)
+    self:addSceneAfterViews(screen)
 
-        local layerData = screen:getData()
-        layerData.board = Board(layerData.board)
-        layerData.board:setToCenter(true, true)
-
-        self.ready = true
-    end
+    local layerData = screen:getData()
+    layerData.board = Board(layerData.board)
+    layerData.board:setToCenter(true, true)
 end
 
 function SceneMain:addSceneAfterViews(screen)

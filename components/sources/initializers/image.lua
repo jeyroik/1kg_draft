@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerImage = SourceInitializer:extend()
 
 function InitializerImage:initSource(image)

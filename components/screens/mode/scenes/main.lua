@@ -34,7 +34,7 @@ function SceneMain:initState(screen)
             path = 'components/sources/buttons/effects/frame'
         },
         parent = screen,
-        screenName = 'mode',
+        screenName = 'main',
         sceneName = 'main',
         color = {0, 0.5, 0}
     })
@@ -52,7 +52,7 @@ function SceneMain:initState(screen)
         },
         color = {0, 0.5, 0},
         parent = screen,
-        screenName = 'mode',
+        screenName = 'main',
         sceneName = 'main'
     })
 end

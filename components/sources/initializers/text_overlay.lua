@@ -1,3 +1,7 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+local Rectangle         = require 'components/sources/rectangle'
+local InitializerText   = require 'components/sources/initializers/text'
+
 InitializerTextOverlay = SourceInitializer:extend()
 
 function InitializerTextOverlay:initSource(text)

@@ -1,3 +1,8 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+local InitializerQuads  = require 'components/sources/initializers/quads'
+local MapCell           = require 'components/sources/map/cell'
+local MapObject         = require 'components/sources/map/object'
+
 InitializerMap = SourceInitializer:extend()
 
 function InitializerMap:initSource(map)

@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerFx = SourceInitializer:extend()
 
 function InitializerFx:initSource(fx)

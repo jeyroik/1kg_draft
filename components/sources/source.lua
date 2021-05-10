@@ -1,6 +1,5 @@
-require "components/sources/initializers/has_initializer"
-require "components/sources/initializers/initializer"
-local VisibleObject = require 'components/game/visible_object'
+local SourceHasInitializer = require "components/sources/initializers/has_initializer"
+local VisibleObject        = require 'components/game/visible_object'
 
 Source = VisibleObject:extend()
 Source:implement(SourceHasInitializer)

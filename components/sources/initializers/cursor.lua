@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerCursor = SourceInitializer:extend()
 
 function InitializerCursor:initSource(cursor)

@@ -1,4 +1,6 @@
-require "components/sources/initializers/card"
+local SourceInitializer = require 'components/sources/initializers/initializer'
+local InitializerCard   = require 'components/sources/initializers/card'
+local MagicGem          = require 'components/sources/magic_gem'
 
 InitializerPlayer = SourceInitializer:extend()
 

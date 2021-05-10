@@ -12,8 +12,7 @@ function Quads:new(config)
 end
 
 function Quads:render(num)
-    local render = Render(self.renderConfig)
-    render:draw(self, num)
+    self:draw(num)
 end
 
 function Quads:draw(num)

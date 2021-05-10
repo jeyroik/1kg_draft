@@ -26,6 +26,7 @@ function love.mousereleased( x, y, button, istouch, presses )
 end
 
 function love.keypressed(key)
+	-- todo: move to game
 	if key == 'escape' then
 		love.event.quit() 
 	end

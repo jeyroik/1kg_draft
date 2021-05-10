@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerGroup = SourceInitializer:extend()
 
 function InitializerGroup:initSource(group)

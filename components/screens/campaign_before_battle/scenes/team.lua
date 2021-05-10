@@ -28,101 +28,96 @@ function SceneTeam:new(config)
     self.scroolPageMax = 1
 end
 
-function SceneTeam:init(screen)
-    if not self.initialized then
-        self.back = Image({ path = 'board_stone.png'})
-        self.back.x = 0
-        self.back.y = 0
-        self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+function SceneTeam:initState(screen)
+    self.back = Image({ path = 'board_stone.png'})
+    self.back.x = 0
+    self.back.y = 0
+    self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 
-        self.scrollUp   = Button({
-            name = 'scrollUp',
-            path = {
-                default = 'scroll_up.png',
-                clicked = 'scroll_up.png'
-            },
-            text = ' ',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            parent = screen,
-            screenName = 'campaign_before_battle',
-            sceneName = 'team',
-            color = {0, 0.5, 0}
-        })
-        self.scrollDown = Button({
-            name = 'scrollDown',
-            path = {
-                default = 'scroll_down.png',
-                clicked = 'scroll_down.png'
-            },
-            text = ' ',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            parent = screen,
-            screenName = 'campaign_before_battle',
-            sceneName = 'team',
-            color = {0, 0.5, 0}
-        })
+    self.scrollUp   = Button({
+        name = 'scrollUp',
+        path = {
+            default = 'scroll_up.png',
+            clicked = 'scroll_up.png'
+        },
+        text = ' ',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        screenName = 'campaign_before_battle',
+        sceneName = 'team',
+        color = {0, 0.5, 0}
+    })
+    self.scrollDown = Button({
+        name = 'scrollDown',
+        path = {
+            default = 'scroll_down.png',
+            clicked = 'scroll_down.png'
+        },
+        text = ' ',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        screenName = 'campaign_before_battle',
+        sceneName = 'team',
+        color = {0, 0.5, 0}
+    })
 
-        self.playerName = Text({ body = game.profile.title })
-        local team = game.profile:getCurrentTeam()
-        for name, char in pairs(team) do
-            self.playerTeam[name] = Card(char)
-        end
-
-        self.scrollPageMax = math.floor(#game.profile.characters/6)
-        if math.fmod(#game.profile.characters,6) > 0 then
-            self.scrollPageMax = self.scrollPageMax + 1
-        end
-
-        for name, char in pairs(game.profile.characters) do
-            self.playerCharacters[name] = Card(char)
-        end
-
-        self.submitBtn = Button({
-            name = 'ready',
-            path = {
-                default = 'menu_btn.png',
-                clicked = 'menu_btn_pressed.png'
-            },
-            text = 'Submit',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            parent = screen,
-            screenName = 'campaign_before_battle',
-            sceneName = 'team',
-            color = {0, 0.5, 0}
-        })
-        self.cancelBtn = Button({
-            name = 'cancel',
-            path = {
-                default = 'menu_btn.png',
-                clicked = 'menu_btn_pressed.png'
-            },
-            text = 'Cancel',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            parent = screen,
-            screenName = 'campaign_before_battle',
-            sceneName = 'team',
-            color = {0, 0.5, 0}
-        })
-
-        self.initialized = true
-        self:updateUI()
+    self.playerName = Text({ body = game.profile.title })
+    local team = game.profile:getCurrentTeam()
+    for name, char in pairs(team) do
+        self.playerTeam[name] = Card(char)
     end
+
+    self.scrollPageMax = math.floor(#game.profile.characters/6)
+    if math.fmod(#game.profile.characters,6) > 0 then
+        self.scrollPageMax = self.scrollPageMax + 1
+    end
+
+    for name, char in pairs(game.profile.characters) do
+        self.playerCharacters[name] = Card(char)
+    end
+
+    self.submitBtn = Button({
+        name = 'ready',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'Submit',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        screenName = 'campaign_before_battle',
+        sceneName = 'team',
+        color = {0, 0.5, 0}
+    })
+    self.cancelBtn = Button({
+        name = 'cancel',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'Cancel',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        screenName = 'campaign_before_battle',
+        sceneName = 'team',
+        color = {0, 0.5, 0}
+    })
 end
 
 function SceneTeam.scrollUpButtonPressed(this)

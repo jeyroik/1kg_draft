@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerMapObject = SourceInitializer:extend()
 
 function InitializerMapObject:initSource(mapObject)

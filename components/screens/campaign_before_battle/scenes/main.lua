@@ -25,89 +25,86 @@ function SceneMain:new(config)
     self.cancelBtn = {}
 end
 
-function SceneMain:init(screen, ...)
-    if not self.initialized then
-        self.header = Text({ body = screen:getData().location })
-        self.playerTeam = Text({ body = game.profile.title })
+function SceneMain:initState(screen, ...)
+    self.header = Text({ body = screen:getData().location })
+    self.playerTeam = Text({ body = game.profile.title })
 
-        self.enemyTeam = Text({ body = screen:getData().enemy.title })
-        self.enemyCard = Card(screen:getData().enemy)
+    self.enemyTeam = Text({ body = screen:getData().enemy.title })
+    self.enemyCard = Card(screen:getData().enemy)
 
-        self.changeBtn = Button({
-            name = 'change',
-            path = {
-                default = 'menu_btn.png',
-                clicked = 'menu_btn_pressed.png'
-            },
-            text = 'Change team',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            parent = screen,
-            screenName = 'campaign_before_battle',
-            sceneName = 'main',
-            color = {0, 0.5, 0}
-        })
-        self.submitBtn = Button({
-            name = 'fight',
-            path = {
-                default = 'menu_btn.png',
-                clicked = 'menu_btn_pressed.png'
-            },
-            text = 'Start fight',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            parent = screen,
-            screenName = 'campaign_before_battle',
-            sceneName = 'main',
-            color = {0, 0.5, 0}
-        })
-        self.cancelBtn = Button({
-            name = 'exit',
-            path = {
-                default = 'menu_btn.png',
-                clicked = 'menu_btn_pressed.png'
-            },
-            text = 'Exit fight',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            parent = screen,
-            screenName = 'campaign_before_battle',
-            sceneName = 'main',
-            color = {0, 0.5, 0}
-        })
+    self.changeBtn = Button({
+        name = 'change',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'Change team',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        screenName = 'campaign_before_battle',
+        sceneName = 'main',
+        color = {0, 0.5, 0}
+    })
+    self.submitBtn = Button({
+        name = 'fight',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'Start fight',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        screenName = 'campaign_before_battle',
+        sceneName = 'main',
+        color = {0, 0.5, 0}
+    })
+    self.cancelBtn = Button({
+        name = 'exit',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'Exit fight',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        parent = screen,
+        screenName = 'campaign_before_battle',
+        sceneName = 'main',
+        color = {0, 0.5, 0}
+    })
 
-        self.back = Image({ path = 'board_stone.png'})
-        self.back.x = 0
-        self.back.y = 0
-        self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+    self.back = Image({ path = 'board_stone.png'})
+    self.back.x = 0
+    self.back.y = 0
+    self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 
-        local team = game.profile:getCurrentTeam()
-        for _, char in pairs(team) do
-            table.insert(
-                self.playerCharacters,
-                Card(char)
-            )
-        end
-
-        for _, char in pairs(screen:getData().enemy.characters) do
-            table.insert(
-                self.enemyCharacters,
-                Card(char)
-            )
-        end
-
-        self:updateUI()
-        self.initialized = true
+    local team = game.profile:getCurrentTeam()
+    for _, char in pairs(team) do
+        table.insert(
+            self.playerCharacters,
+            Card(char)
+        )
     end
+
+    for _, char in pairs(screen:getData().enemy.characters) do
+        table.insert(
+            self.enemyCharacters,
+            Card(char)
+        )
+    end
+
+    self:updateUI()
 end
 
 function SceneMain.changeButtonPressed()

@@ -1,5 +1,4 @@
 SourceInitializer = Object:extend()
-SourceInitializer:implement(Printer)
 
 -- @param Source source
 -- @return void
@@ -17,3 +16,5 @@ end
 function SourceInitializer:getPath(source)
     return ''
 end
+
+return SourceInitializer

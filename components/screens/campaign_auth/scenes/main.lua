@@ -5,7 +5,7 @@ SceneMain = Scene:extend()
 function SceneMain:new(config)
     SceneMain.super.new(self, config)
 
-    self.name = 'main'
+    self.name = 'campaign_auth.main'
     self.views = {
         CampaignAuthSceneMainView()
     }
@@ -23,36 +23,33 @@ function SceneMain:new(config)
     self.textCursorTimer = 0
 end
 
-function SceneMain:init(screen)
-    if not self.initialized then
-        self.inputField = game.assets:getImage('inputField')
-        self.submit     = Button({
-            name = 'submit',
-            path = {
-                default = 'menu_btn.png',
-                clicked = 'menu_btn_pressed.png'
-            },
-            text = 'submit',
-            text_scale = 0.4,
-            border = 15,
-            effect = {
-                path = 'components/sources/buttons/effects/frame'
-            },
-            color = {0, 0.5, 0},
-            parent = screen,
-            screenName = 'campaign_auth',
-            sceneName = 'main'
-        })
-        self.playerName = Text({ body = 'Unknown' })
-        self.header     = Text({ body = 'Enter your name' })
+function SceneMain:initState(screen)
+    self.inputField = game.assets:getImage('inputField')
+    self.submit     = Button({
+        name = 'submit',
+        path = {
+            default = 'menu_btn.png',
+            clicked = 'menu_btn_pressed.png'
+        },
+        text = 'submit',
+        text_scale = 0.4,
+        border = 15,
+        effect = {
+            path = 'components/sources/buttons/effects/frame'
+        },
+        color = {0, 0.5, 0},
+        parent = screen,
+        screenName = 'campaign_auth',
+        sceneName = 'main'
+    })
+    self.playerName = Text({ body = 'Unknown' })
+    self.header     = Text({ body = 'Enter your name' })
 
-        self.back = Image({ path = 'board_stone.png'})
-        self.back.x = 0
-        self.back.y = 0
-        self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
-        self:updateUI()
-        self.initialized = true
-    end
+    self.back = Image({ path = 'board_stone.png'})
+    self.back.x = 0
+    self.back.y = 0
+    self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+    self:updateUI()
 end
 
 function SceneMain:textInput(screen, text)
@@ -62,7 +59,8 @@ function SceneMain:textInput(screen, text)
 end
 
 function SceneMain.submitButtonPressed(this)
-    local playerName = this.playerName.body
+    local playerName  = this.playerName.body
+    local ModelPlayer = require 'components/models/player'
 
     if game.profiles[playerName] then
         game.profile = ModelPlayer(game.profiles[playerName])

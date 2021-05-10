@@ -1,3 +1,5 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+
 InitializerStone = SourceInitializer:extend()
 
 function InitializerStone:initSource(stone)

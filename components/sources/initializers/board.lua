@@ -1,3 +1,6 @@
+local SourceInitializer = require 'components/sources/initializers/initializer'
+local MagicStone        = require 'components/sources/stone'
+
 InitializerBoard = SourceInitializer:extend()
 
 function InitializerBoard:initSource(board)

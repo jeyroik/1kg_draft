@@ -58,7 +58,7 @@ function SceneFightCards:new(config)
     })
 end
 
-function SceneFightCards:init(screen)
+function SceneFightCards:initState(screen)
     screen:addViewLayers(
         {
             LayerViewSingleSelection(),

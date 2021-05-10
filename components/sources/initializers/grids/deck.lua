@@ -1,4 +1,5 @@
-local InitializerGrid = require "components/sources/initializers/grid"
+local SourceInitializer = require 'components/sources/initializers/initializer'
+local InitializerGrid   = require "components/sources/initializers/grid"
 
 InitializerDeck = SourceInitializer:extend()
 
