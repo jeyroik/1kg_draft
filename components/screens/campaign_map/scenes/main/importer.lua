@@ -101,6 +101,8 @@ function CampaignMapMainImporter:new()
                         { 5,2 },{ 5,3 },{ 5,4 },{ 5,5 },{ 5,6 },{ 5,7 },{ 5,8 },
                                 { 6,3 },{ 6,4 },{ 6,5 },{ 6,6 },{ 6,7 },{ 6,8 },
                     },
+                    width = 7,
+                    height = 6,
                     dispatcher = {}
                 },
                 city1 = {
@@ -117,6 +119,8 @@ function CampaignMapMainImporter:new()
                         { 11,18 },{ 11,19 },{ 11,20 },{ 11,21 },{ 11,22 },{ 11,23 },{ 11,24 },
                                   { 12,19 },{ 12,20 },{ 12,21 },{ 12,22 },{ 12,23 }
                     },
+                    width = 7,
+                    height = 8,
                     dispatcher = {
                         path = 'components/screens/campaign_map/objects/pervograd'
                     }

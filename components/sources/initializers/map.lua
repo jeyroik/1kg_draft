@@ -13,28 +13,20 @@ function InitializerMap:initSource(map)
         for row, columns in pairs(layer) do
             map.map[layerName][row] = {}
             for column, number in pairs(columns) do
+                local cell = game.graphics:getItem(row, column)
+
                 map.map[layerName][row][column] = MapCell({
                     alias = 'map_cell',
                     path = map.alias,
-                    x = (column-1)*map.width*map.sx,
-                    y = (row-1)*map.width*map.sy,
+                    x = cell.x,
+                    y = cell.y,
                     width = map.width,
                     height = map.height,
-                    sx = map.sx,
-                    sy = map.sy,
                     number = number,
                     row = row,
-                    column = column,
-                    renderConfig = {
-                        scale = 'size_position',
-                        origin = {
-                            x = (column-1)*map.width,
-                            y = (row-1)*map.width,
-                            w = 400,
-                            h = 300
-                        }
-                    }
+                    column = column
                 })
+                game.graphics:setScale(map.map[layerName][row][column], 1, 1)
             end
         end
     end
@@ -50,7 +42,9 @@ function InitializerMap:initObjects(map)
             description = mapObject.description,
             schema = mapObject.schema,
             layer = mapObject.layer,
-            map = map
+            map = map,
+            width = mapObject.width,
+            height = mapObject.height
         })
     end
 end
