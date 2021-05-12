@@ -16,15 +16,15 @@ function InitializerMap:initSource(map)
                 local cell = game.graphics:getItem(row, column)
 
                 map.map[layerName][row][column] = MapCell({
-                    alias = 'map_cell',
-                    path = map.alias,
-                    x = cell.x,
-                    y = cell.y,
-                    width = map.width,
-                    height = map.height,
-                    number = number,
-                    row = row,
-                    column = column
+                    alias   = 'map_cell',
+                    path    = map.alias,
+                    x       = cell.x,
+                    y       = cell.y,
+                    width   = map.width,
+                    height  = map.height,
+                    number  = number,
+                    row     = row,
+                    column  = column
                 })
                 game.graphics:setScale(map.map[layerName][row][column], 1, 1)
             end
@@ -37,14 +37,14 @@ end
 function InitializerMap:initObjects(map)
     for name, mapObject in pairs(map.objects) do
         map.mapObjects[name] = MapObject({
-            name = name,
-            title = mapObject.title,
+            name        = name,
+            map         = map,
+            title       = mapObject.title,
             description = mapObject.description,
-            schema = mapObject.schema,
-            layer = mapObject.layer,
-            map = map,
-            width = mapObject.width,
-            height = mapObject.height
+            schema      = mapObject.schema,
+            layer       = mapObject.layer,
+            width       = mapObject.width,
+            height      = mapObject.height
         })
     end
 end
