@@ -16,6 +16,7 @@ function Player:new(config)
 	Player.super.new(self, config)
 end
 
+-- @deprecated
 function Player:update()
 	InitializerPlayer:initCoords(self)
 	for i, card in pairs(self.cards) do

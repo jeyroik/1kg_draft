@@ -118,6 +118,7 @@ function SceneTeam:initState(screen)
         sceneName = 'team',
         color = {0, 0.5, 0}
     })
+    self:updateUI()
 end
 
 function SceneTeam.scrollUpButtonPressed(this)
@@ -130,8 +131,10 @@ function SceneTeam.scrollDownButtonPressed(this)
     this:updateUI()
 end
 
-function SceneTeam.readyButtonPressed()
-    game:getCurrentState():changeStateTo('main')
+function SceneTeam.readyButtonPressed(this)
+    game:getCurrentState():changeStateTo('main', {
+        playerTeam = this.playerTeam
+    })
 end
 
 function SceneTeam.cancelButtonPressed(this)

@@ -14,15 +14,9 @@ end
 function State:onActive(...)
 end
 
-function State:setActive(...)
-    if not self.stateInitialized then
-        self:initState(...)
-        self.stateInitialized = true
-
-        self:setActive(...)
-    else
-        self:onActive()
-    end
+function State:setActive(parent)
+    self:initState(parent)
+    self:onActive()
 end
 
 return State

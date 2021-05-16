@@ -26,11 +26,11 @@ function SceneMain:new(config)
 end
 
 function SceneMain:initState(screen, ...)
-    self.header = Text({ body = screen:getData().location })
+    self.header = Text({ body = screen.location })
     self.playerTeam = Text({ body = game.profile.title })
 
-    self.enemyTeam = Text({ body = screen:getData().enemy.title })
-    self.enemyCard = Card(screen:getData().enemy)
+    self.enemyTeam = Text({ body = screen.enemy.title })
+    self.enemyCard = Card(screen.enemy)
 
     self.changeBtn = Button({
         name = 'change',
@@ -50,12 +50,12 @@ function SceneMain:initState(screen, ...)
         color = {0, 0.5, 0}
     })
     self.submitBtn = Button({
-        name = 'fight',
+        name = 'battle',
         path = {
             default = 'menu_btn.png',
             clicked = 'menu_btn_pressed.png'
         },
-        text = 'Start fight',
+        text = 'Start battle',
         text_scale = 0.4,
         border = 15,
         effect = {
@@ -97,7 +97,7 @@ function SceneMain:initState(screen, ...)
         )
     end
 
-    for _, char in pairs(screen:getData().enemy.characters) do
+    for _, char in pairs(screen.enemy.characters) do
         table.insert(
             self.enemyCharacters,
             Card(char)
@@ -105,6 +105,17 @@ function SceneMain:initState(screen, ...)
     end
 
     self:updateUI()
+end
+
+function SceneMain.battleButtonPressed()
+    -- Start battle
+    game:changeStateTo('battle', {
+        players = {
+            game.profile,
+            game:getCurrentState().enemy,
+        },
+        next = 'campaign_map'
+    })
 end
 
 function SceneMain.changeButtonPressed()

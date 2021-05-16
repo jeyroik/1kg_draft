@@ -22,8 +22,6 @@ end
 function Game:init()
 	self.graphics = Graphics(self.graphics)
 
-	Game.super.init(self)
-
 	self:initializeOne('assets')
 	self.assets:init()
 

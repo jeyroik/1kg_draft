@@ -1,5 +1,10 @@
 local ViewBoard   = require "components/screens/battle/scenes/main/view_board"
 local ViewPlayers = require "components/screens/battle/scenes/main/view_players"
+local Scene       = require "components/screens/scenes/scene"
+local Board       = require "components/sources/board"
+
+local LayerViewSingleSelection = require "components/screens/layers/layer_view_single_selection"
+local LayerViewTip             = require "components/screens/layers/layer_view_tip"
 
 SceneMain = Scene:extend()
 
@@ -18,9 +23,8 @@ end
 function SceneMain:initState(screen)
     self:addSceneAfterViews(screen)
 
-    local layerData = screen:getData()
-    layerData.board = Board(layerData.board)
-    layerData.board:setToCenter(true, true)
+    screen.board = Board(screen.board)
+    screen.board:setToCenter(true, true) -- @deprecated
 end
 
 function SceneMain:addSceneAfterViews(screen)
@@ -34,10 +38,8 @@ function SceneMain:addSceneAfterViews(screen)
 end
 
 function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
-    local layerData = screen:getData()
-
     for i=1,2 do
-        pl = layerData.players[i]
+        pl = screen.players[i]
         for _,magicGem in pairs(pl.gems) do
             if magicGem:isMouseOn(x,y) then
                 magicGem.isHovered = true
@@ -67,7 +69,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                 local canUse = ''
                 local selectionColor = {0.5, 0.5, 0.5}
 
-                if layerData:isCurrentPlayer(pl) then
+                if screen:isCurrentPlayer(pl) then
                     if not pl:isEnoughMagic(card) then
                         canUse = 'Not enough magic'
                         selectionColor = {1, 0, 0}
@@ -79,7 +81,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                     selectionColor = {0.5, 0.5, 0.5}
                 end
 
-                layerData.tip = {
+                screen.tip = {
                     x = x,
                     y = y,
                     sx = card.sx,
@@ -87,7 +89,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                     text = canUse .. '\n'..'Title: '..card.name .. '\n\nDescription:\n'..card.skill.active.description..'\n\nCost: ',
                     icons = icons
                 }
-                layerData.selection = {
+                screen.selection = {
                     x = top.left.x,
                     y = top.left.y,
                     width = size.width*card.sx,
@@ -98,8 +100,8 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                 game.assets:getCursor('hand'):setOn()
                 return
             else
-                layerData.tip = {}
-                layerData.selection = {}
+                screen.tip = {}
+                screen.selection = {}
                 game.assets:getCursor('hand'):reset()
             end
         end
@@ -107,14 +109,13 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 end
 
 function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
-    local layerData = screen:getData()
-    local currentPlayer = layerData:getCurrentPlayer()
+    local currentPlayer = screen:getCurrentPlayer()
 
     for _, card in pairs(currentPlayer.cards) do
         if card:isMouseOn(x,y) and card.skill.active.cost then
             if currentPlayer:isEnoughMagic(card) then
-                layerData.statistics[layerData.current].spells = layerData.statistics[layerData.current].spells + 1
-                currentPlayer:useCard(layerData, card)
+                screen.statistics[screen.current].spells = screen.statistics[screen.current].spells + 1
+                currentPlayer:useCard(screen, card)
             else
                 game.assets:getFx('skill_not'):play()
             end
@@ -127,43 +128,40 @@ function SceneMain:keyPressed(screen, key)
 
     if gr[key] then
         game.assets:getFx('move'):play()
-        screen:getData().board.gravity = key
+        screen.board.gravity = key
     end
 end
 
 function SceneMain:update(screen)
-    local layerData = screen:getData()
-    --layerData.board:update()
-
-    for _, player in pairs(layerData.players) do
-        player:update()
+    for _, player in pairs(screen.players) do
+        --player:update() @deprecated
     end
-    self.fx = layerData.board:move(layerData)
+    self.fx = screen.board:move(screen)
 
-    local current = layerData:getCurrentPlayer()
-    local nextPlayer = layerData:getNextPlayer()
+    local current    = screen:getCurrentPlayer()
+    local nextPlayer = screen:getNextPlayer()
 
     if nextPlayer:isDead() or current:isDead() then
         self.fx = 'the_end'
-        layerData.statistics[current.number].win = not current:isDead()
-        layerData.statistics[nextPlayer.number].win = not nextPlayer:isDead()
+        screen.statistics[current.number].win = not current:isDead()
+        screen.statistics[nextPlayer.number].win = not nextPlayer:isDead()
         screen:setViewLayers({}, 'scene_after')
-        screen:changeSceneTo('fight_the_end')
+        screen:changeSceneTo('fight_the_end', {})
     end
 
     if self.fx ~= '' then
         game.assets:getFx(self.fx):play()
     end
 
-    self:addStone(layerData)
+    self:addStone(screen)
 
     if self.fx ~= '' then
         game.assets:getFx(self.fx):play()
     end
 end
 
-function SceneMain:addStone(layerData)
-    self.fx = layerData.board:addStone(layerData) or ''
+function SceneMain:addStone(screen)
+    self.fx = screen.board:addStone(screen) or ''
 end
 
 return SceneMain

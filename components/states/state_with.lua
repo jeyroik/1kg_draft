@@ -10,17 +10,21 @@ function StateWith:new(config)
     StateWith.super.new(self, config)
 end
 
-function StateWith:init(...)
-    self:initializeMany('__states__', true)
-end
-
-function StateWith:changeStateTo(stateName, ...)
+function StateWith:changeStateTo(stateName, context)
     if not self.__states__[stateName] then
         return
     end
 
     self.__state__ = stateName
-    self.__states__[stateName]:setActive(self, ...)
+
+    local statePath = self.__states__[stateName].path
+    local state = require(statePath)
+    
+    context = context or {}
+
+    self.__states__[stateName] = state(context)
+    self.__states__[stateName].path = statePath
+    self.__states__[stateName]:setActive(self)
 end
 
 function StateWith:getCurrentState()

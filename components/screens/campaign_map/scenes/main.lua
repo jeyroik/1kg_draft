@@ -73,8 +73,10 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
             
             game:changeStateTo(
                 'campaign_before_battle',  
-                'Pervograd', 
-                enemy
+                {
+                    location = 'Pervograd', 
+                    enemy    = enemy
+                }
             )
             return false
         else

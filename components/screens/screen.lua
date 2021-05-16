@@ -18,8 +18,7 @@ function Screen:new(config)
 			scene_current = {},
 			scene_after   = {},
 			system        = {}
-		},
-		data = {}
+		}
 	}
 	self.hooks = {
 		fullscreen = {
@@ -82,12 +81,10 @@ function Screen:new(config)
 end
 
 function Screen:initState(game, ...)
-	Screen.super.init(self)
-
 	self:initHooks()
+	
 	self:runHooks('init', 'before', ...)
 
-	self.layers.data:init(...)
 	self:changeStateTo('main', ...)
 
 	self:runHooks('init', 'after', ...)
@@ -267,17 +264,6 @@ function Screen:setViewLayers(layers, stage)
 	self.layers.views[stage] = layers
 end
 
--- @param LayerData layer
--- @return void
-function Screen:setDataLayer(layer)
-	self.layers.data = layer
-end
-
--- @return LayerData
-function Screen:getData()
-	return self.layers.data
-end
-
 function Screen:getScene(sceneName)
 	return self.scenes[sceneName]
 end
@@ -295,10 +281,6 @@ function Screen:changeStateTo(sceneName)
 	self:setViewLayers(currentScene:getViews(), 'scene_current')
 
 	self:runHooks('changeSceneTo', 'after', {sceneName = sceneName})
-end
-
-function Screen:export()
-	return self.layers.data
 end
 
 function Screen:freezeEvent(eventName)

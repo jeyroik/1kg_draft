@@ -62,15 +62,14 @@ return {
     },
     __state__ = 'main', -- choose start screen
     __states__ = {
-        { alias = 'main',                   path = 'components/screens/mode'                    }, -- +
-        { alias = 'campaign_auth',          path = 'components/screens/campaign_auth'           }, -- +
-        { alias = 'campaign_map',           path = 'components/screens/campaign_map'            }, -- +
-        { alias = 'campaign_before_battle', path = 'components/screens/campaign_before_battle'  }, -- + 
+        main                   = { path = 'components/screens/mode'                   }, -- +
+        campaign_auth          = { path = 'components/screens/campaign_auth'          }, -- +
+        campaign_map           = { path = 'components/screens/campaign_map'           }, -- +
+        campaign_before_battle = { path = 'components/screens/campaign_before_battle' }, -- + 
 
-        { alias = 'arena_auth',             path = 'components/screens/arena_auth'              }, -- + nog
-        { alias = 'arena_before_battle',    path = 'components/screens/arena_before_battle'     }, -- + nog
+        arena_auth             = { path = 'components/screens/arena_auth'             }, -- + nog
+        arena_before_battle    = { path = 'components/screens/arena_before_battle'    }, -- + nog
         
-        { alias = 'battle',                 path = 'components/screens/battle'                  }  -- + 
-        
+        battle                 = { path = 'components/screens/battle'                 }  -- + 
     }
 }
