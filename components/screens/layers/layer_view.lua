@@ -8,7 +8,7 @@ function LayerView:new(config)
     self.mode = 'view'
 end
 
-function LayerView:needRender(data)
+function LayerView:needRender(screen)
     return true
 end
 

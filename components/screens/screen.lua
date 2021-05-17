@@ -12,14 +12,14 @@ function Screen:new(config)
 		mouseReleased = false,
 		keyPressed 	  = false
 	}
-	self.layers = {
-		views = {
-			scene_before  = {},
-			scene_current = {},
-			scene_after   = {},
-			system        = {}
-		}
+
+	self.views = {
+		scene_before  = {},
+		scene_current = {},
+		scene_after   = {},
+		system        = {}
 	}
+
 	self.hooks = {
 		fullscreen = {
 			path   = 'components/hooks/fullscreen',
@@ -216,24 +216,24 @@ function Screen:render()
 
 	local currentScene = self:getCurrentState()
 
-	for i = 1, #self.layers.views.scene_before do
-		local layer = self.layers.views.scene_before[i]
-		layer:render(self.layers.data, currentScene)
+	for i = 1, #self.views.scene_before do
+		local layer = self.views.scene_before[i]
+		layer:render(self, currentScene)
 	end
 
-	for i = 1, #self.layers.views.scene_current do
-		local layer = self.layers.views.scene_current[i]
-		layer:render(self.layers.data, currentScene)
+	for i = 1, #self.views.scene_current do
+		local layer = self.views.scene_current[i]
+		layer:render(self, currentScene)
 	end
 
-	for i = 1, #self.layers.views.scene_after do
-		local layer = self.layers.views.scene_after[i]
-		layer:render(self.layers.data, currentScene)
+	for i = 1, #self.views.scene_after do
+		local layer = self.views.scene_after[i]
+		layer:render(self, currentScene)
 	end
 
-	for i = 1, #self.layers.views.system do
-		local layer = self.layers.views.system[i]
-		layer:render(self.layers.data, currentScene)
+	for i = 1, #self.views.system do
+		local layer = self.views.system[i]
+		layer:render(self, currentScene)
 	end
 
 	self:runHooks('render', 'after')
@@ -256,12 +256,12 @@ end
 -- @return void
 function Screen:addViewLayers(layers, stage)
 	for i=1,#layers do
-		table.insert(self.layers.views[stage], layers[i])
+		table.insert(self.views[stage], layers[i])
 	end
 end
 
 function Screen:setViewLayers(layers, stage)
-	self.layers.views[stage] = layers
+	self.views[stage] = layers
 end
 
 function Screen:getScene(sceneName)
