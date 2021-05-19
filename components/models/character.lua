@@ -11,6 +11,8 @@ function ModelCharacter:new(config)
     self.health = 1
     self.attack = 0
     self.defense = 0
+    self.conviction = 0 -- убеждение
+    self.will = 0 -- воля
 
     self.skill = {
 		active = {},
