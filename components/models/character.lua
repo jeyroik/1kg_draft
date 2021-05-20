@@ -13,6 +13,7 @@ function ModelCharacter:new(config)
     self.defense = 0
     self.conviction = 0 -- убеждение
     self.will = 0 -- воля
+    self.captured = {} -- <name> = <times>
 
     self.skill = {
 		active = {},
@@ -57,6 +58,42 @@ function ModelCharacter:getMergeExp(character)
     end
 
     return exp
+end
+
+function ModelCharacter:capture(character)
+    if self.conviction > character.will then
+        local prev          = self.captured[character.name] or 0
+        local mx            = self.captured[character.name] and prev+1 or 1
+        local tryes         = (self.conviction-character.will) * mx
+        local max, success  = self:getMaxAndSuccess((100*character.rank-tryes*self.rank)*2)
+
+        for i=0,tryes do
+            local captured = love.random(0, max)
+
+            if captured == success then
+                self.captured[character.name] = prev + 1
+                return true
+            end
+
+            max, success = self:getMaxAndSuccess(max)
+        end
+    end
+        
+    return false
+end
+
+function ModelCharacter:getMaxAndSuccess(max)
+    local success = 0
+
+    if max > 2 then
+        max = max - 1
+        success = math.floor(max/2)+1
+    else
+        max = 1
+        success = 1
+    end
+
+    return max, success
 end
 
 return ModelCharacter

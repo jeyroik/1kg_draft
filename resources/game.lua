@@ -38,6 +38,9 @@ return {
             health  = 5,
             attack  = 1,
             defense = 0,
+            conviction = 5,
+            will = 10,
+            captured = {},
             magic   = {
                 air         = { power = 1, mana = 3 },
                 water       = { power = 1, mana = 3 },
