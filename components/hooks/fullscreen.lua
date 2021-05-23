@@ -27,7 +27,7 @@ function HookFullscreen:mousePressed(args)
     if icon:isMouseOn(args.x, args.y) then
         width, height, flags = love.window.getMode( )
         love.window.setFullscreen( not flags.fullscreen )
-        game:runEvent('fullscreenChanged', self:getMode())
+        game:buttonPressed('fullscreen')
     end
 end
 

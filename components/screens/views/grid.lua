@@ -24,7 +24,7 @@ function GridView:render(data, scene)
     end
 
     if scene.arguments['graphics__fps'] then
-        love.graphics.print('[FPS: '..math.floor(60/fps/100)..']', 5, 5)
+        love.graphics.print('[FPS: '..math.floor(60/game.fps/100)..']', 5, 5)
     end
 end
 

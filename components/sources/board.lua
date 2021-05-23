@@ -26,51 +26,18 @@ function Board:new(config)
 	self.alias = 'board'
 end
 
-function Board:update()
-	self.width = love.graphics.getHeight()*0.6
-	self.height = love.graphics.getHeight()*0.6
-	local s = self:calculateStoneParameters()
-
+function Board:reload()
 	for i, columns in pairs(self.cells) do
 		for j,stone in pairs(columns) do
-			stone.deltaX = self.x
-			stone.deltaY = self.y
-			stone.sx = s.sx
-			stone.sy = s.sy
-			stone.x = (j-1) * s.width + self.x
-			stone.y = (i-1) * s.height + self.y
+			game.graphics:put(stone, self.gridRow+(i-1)*2,self.gridColumn+(j-1)*2, 2,2)
 		end
 	end
 end
 
-function Board:reload()
-	self:update()
-end
-
-function Board:calculateStoneParameters()
-	-- нужна картинка камня для понимания его исходных размеров
-	local stoneImg = game.assets:getImagePack('gems'):get('c2')
-	local stoneOriginW = stoneImg:getWidth()
-	local stoneOriginH = stoneImg:getHeight()
-
-	local stonesW = self:getWidth() / self.columns
-	local stonesH = self:getHeight() / self.rows
-
-	local wScale = stonesW / stoneOriginW
-	local hScale = stonesH / stoneOriginH
-
-	return {
-		sx = wScale,
-		sy = hScale,
-		width = stonesW,
-		height = stonesH
-	}
-end
-
 function Board:draw()
+	love.graphics.rectangle('line', self.x, self.y, self.width*self.sx, self.height*self.sy, self.radian)
 
-	love.graphics.rectangle('line', self.x, self.y, self.width, self.height, self.radian, self.sx, self.sy)
-
+	self:reload()
 	for _, columns in pairs(self.cells) do
 		for _,stone in pairs(columns) do
 			if stone.volume > 1 then

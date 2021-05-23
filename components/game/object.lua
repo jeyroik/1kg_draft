@@ -10,6 +10,8 @@ GameObject:implement(Initializer)
 function GameObject:new(config)
     self.alias = 'unknown'
     self.id = self:getId()
+    self.gridRow = 0
+    self.gridColumn = 0
 
     self:applyConfig(config)
 end

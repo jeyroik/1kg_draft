@@ -15,6 +15,7 @@ function Game:new(config)
 	}
 	self.graphics = {}
 	self.mouse = { x = 0, y = 0 }
+	self.fps = 1
 
 	Game.super.new(self, config)
 end
@@ -29,6 +30,7 @@ function Game:init()
 end
 
 function Game:update(dt)
+	self.fps = dt
 	self.graphics:update()
 	self:getCurrentState():update(dt)
 end
@@ -57,6 +59,10 @@ end
 
 function Game:textInput(text)
 	game:getCurrentState():textInput(text)
+end
+
+function Game:buttonPressed(buttonName, button)
+	game:getCurrentState():buttonPressed(buttonName, button)
 end
 
 function Game:runEvent(name, ...)

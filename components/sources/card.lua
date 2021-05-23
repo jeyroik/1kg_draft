@@ -1,3 +1,6 @@
+local Source = require 'components/sources/source'
+local InitializerCard = require 'components/sources/initializers/card'
+
 Card = Source:extend{}
 
 function Card:new(config)
@@ -15,6 +18,7 @@ function Card:new(config)
 		frame = 1
 	}
 	self.path = 'components/render/cards/card'
+	self.initialized = false
 
 	config.initializer = config.initializer or 'components/sources/initializers/card'
 
@@ -139,6 +143,11 @@ end
 
 function Card:isDead()
 	return self.health == 0
+end
+
+function Card:reload()
+	local ini = InitializerCard({})
+    ini:initSource(self)
 end
 
 return Card

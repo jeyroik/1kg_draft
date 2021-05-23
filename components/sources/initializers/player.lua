@@ -18,16 +18,13 @@ function InitializerPlayer:initCoords(player)
     if player.number == 1 then
         player.x = love.graphics.getWidth()*0.1
         player.y = love.graphics.getHeight()*0.1
-        player.sx = love.graphics.getWidth()/960
-        player.sy = love.graphics.getHeight()/540
     else
         player.x = love.graphics.getWidth()*0.85
         player.y = love.graphics.getHeight()*0.1
-        player.sx = love.graphics.getWidth()/960
-        player.sy = love.graphics.getHeight()/540
     end
 
-    InitializerCard.initSource(self, player)
+    local parentInit = InitializerCard({})
+    parentInit:initSource(player)
 end
 
 function InitializerPlayer:initGems(player)

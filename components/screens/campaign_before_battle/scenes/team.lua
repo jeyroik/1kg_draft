@@ -121,28 +121,42 @@ function SceneTeam:initState(screen)
     self:updateUI()
 end
 
-function SceneTeam.scrollUpButtonPressed(this)
-    this.scrollPage = this.scrollPage > 1 and this.scrollPage - 1 or 1
-    this:updateUI()
+function SceneTeam:buttonPressed(screen, name)
+    if name == 'scrollUp' then
+        self:scrollUpButtonPressed()
+    elseif name == 'scrollDown' then
+        self:scrollDownButtonPressed()
+    elseif name == 'ready' then
+        self:readyButtonPressed(screen)
+    elseif name == 'cancel' then
+        self:cancelButtonPressed(screen)
+    elseif name == 'fullscreen' then
+        self:fullscreenButtonPressed()
+    end
 end
 
-function SceneTeam.scrollDownButtonPressed(this)
-    this.scrollPage = this.scrollPage < this.scrollPageMax and this.scrollPage + 1 or this.scrollPageMax
-    this:updateUI()
+function SceneTeam:scrollUpButtonPressed()
+    self.scrollPage = self.scrollPage > 1 and self.scrollPage - 1 or 1
+    self:updateUI()
 end
 
-function SceneTeam.readyButtonPressed(this)
-    game:getCurrentState():changeStateTo('main', {
-        playerTeam = this.playerTeam
+function SceneTeam:scrollDownButtonPressed()
+    self.scrollPage = self.scrollPage < self.scrollPageMax and self.scrollPage + 1 or self.scrollPageMax
+    self:updateUI()
+end
+
+function SceneTeam:readyButtonPressed(screen)
+    screen:changeStateTo('main', {
+        playerTeam = self.playerTeam
     })
 end
 
-function SceneTeam.cancelButtonPressed(this)
-    game:getCurrentState():changeStateTo('main')
+function SceneTeam:cancelButtonPressed(screen)
+    screen:changeStateTo('main')
 end
 
-function SceneTeam.fullscreenChanged(this)
-    this.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+function SceneTeam:fullscreenButtonPressed()
+    self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 end
 
 function SceneTeam:mouseMoved(screen, x, y)

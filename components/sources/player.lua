@@ -22,8 +22,6 @@ function Player:update()
 	for i, card in pairs(self.cards) do
 		card.x = self.x
 		card.y = self.y + card.height * card.sx * (1.2*(i-1))
-		card.sx = love.graphics.getHeight()/1080
-		card.sy = card.sx
 	end
 end
 

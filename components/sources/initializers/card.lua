@@ -1,18 +1,21 @@
 local SourceInitializer = require 'components/sources/initializers/initializer'
+local Image = require 'components/sources/image'
 
 InitializerCard = SourceInitializer:extend()
 
 function InitializerCard:initSource(card)
-    local cardDefault = game.assets:getQuads(card.avatar.path)
-    card.width = cardDefault:getWidth()
+    local cardDefault = Image({path = card.avatar.path..'/'..card.avatar.frame..'.jpg'})
+    card.width  = cardDefault:getWidth()
     card.height = cardDefault:getHeight()
-    card.sx = love.graphics.getHeight()/1080
-    card.sy = card.sx
 
     self:initSkills(card)
 end
 
 function InitializerCard:initSkills(card)
+    if card.initialized then
+        return
+    end
+    
     if card.skill.active.path then
         local active = require(card.skill.active.path)
         card.skill.active = active(card.skill.active)

@@ -50,7 +50,7 @@ function HookDefault:mousePressed(name, button, args)
     if button:isMouseOn(args.x, args.y) then
         button:click()
         button:released()
-        game:runEvent(name..'ButtonPressed', button)
+        game:buttonPressed(name, button)
         return true
     end
 end

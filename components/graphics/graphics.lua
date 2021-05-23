@@ -39,6 +39,9 @@ function Graphics:moveTo(object, row, column)
     local c = self:getItem(row, column)
     object.x = c.x
     object.y = c.y
+    
+    object.gridRow    = row
+    object.gridColumn = column
 end
 
 function Graphics:put(object, row, column, width, height)

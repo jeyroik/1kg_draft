@@ -107,27 +107,40 @@ function SceneMain:initState(screen, ...)
     self:updateUI()
 end
 
-function SceneMain.battleButtonPressed()
+function SceneMain:buttonPressed(screen, name)
+    if name == 'battle' then
+        self:battleButtonPressed(screen)
+    elseif name == 'change' then
+        self:changeButtonPressed(screen)
+    elseif name == 'exit' then
+        self:exitButtonPressed()
+    elseif name == 'fullscreen' then
+        self:fullscreenButtonPressed()
+    end
+end
+
+function SceneMain:battleButtonPressed(screen)
     -- Start battle
     game:changeStateTo('battle', {
         players = {
             game.profile,
-            game:getCurrentState().enemy,
+            screen.enemy,
         },
-        next = 'campaign_map'
+        nextScreen = 'campaign_map'
     })
 end
 
-function SceneMain.changeButtonPressed()
-    game:getCurrentState():changeStateTo('team')
+function SceneMain:changeButtonPressed(screen)
+    screen:changeStateTo('team')
 end
 
-function SceneMain.exitButtonPressed()
+function SceneMain:exitButtonPressed()
     game:changeStateTo('campaign_map')
 end
 
-function SceneMain.fullscreenChanged(this)
-    this.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+function SceneMain:fullscreenButtonPressed()
+    self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+    self:updateUI()
 end
 
 function SceneMain:update()

@@ -1,4 +1,6 @@
 local Screen = require "components/screens/screen"
+local Card   = require "components/sources/card"
+local Player = require "components/sources/player"
 
 Battle = Screen:extend()
 
@@ -8,8 +10,8 @@ function Battle:new(config)
         deathPerc = 10,
         ultraDeathPerc = 20,
         stonesPerRound = 3,
-        width = love.graphics.getHeight()*0.6,
-        height = love.graphics.getHeight()*0.6
+        width  = 16,
+        height = 16
     }
     self.statistics = {
         {
@@ -28,12 +30,18 @@ function Battle:new(config)
         }
     }
     self.players = {}
+    self.playersCards = {}
+    self.playersTeams = {}
+    self.playersTeamsCards = {{}, {}}
+
     self.current = 1
     self.next = 2
+    self.nextScreen = ''
     self.magic = {}
     self.mode = ''
     self.theEndFlag = false
     self.fx = 'none'
+    self.tip = {}
 
 	Battle.super.new(self, config)
 end
@@ -45,14 +53,24 @@ function Battle:initState(...)
 		fight_after = { path = 'components/screens/battle/scenes/fight_after'  }
 	}
 	Battle.super.initState(self, ...)
+
+    for i, player in pairs(self.players) do
+        self.playersCards[i] = Player(player)
+        local team = player:getCurrentTeam()
+        self.playersTeams[i] = team
+
+        for p, char in pairs(team) do
+            table.insert(self.playersTeamsCards[i], Card(char))
+        end
+    end
 end
 
 function Battle:getCurrentPlayer()
-	return self.players[self.current]
+	return self.playersCards[self.current]
 end
 
 function Battle:getNextPlayer()
-	return self.players[self.next]
+	return self.playersCards[self.next]
 end
 
 -- @param Player player

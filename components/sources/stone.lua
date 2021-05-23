@@ -5,8 +5,6 @@ MagicStone = Source:extend{}
 function MagicStone:new(config)
 	self.row = 1
 	self.column = 1
-	self.deltaX = 285
-	self.deltaY = 0
 	self.size = 61
 	self.volume = 1
 	self.state = 0

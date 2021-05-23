@@ -10,7 +10,8 @@ function Screen:new(config)
 		mouseMoved    = false,
 		mousePressed  = false,
 		mouseReleased = false,
-		keyPressed 	  = false
+		keyPressed 	  = false,
+		buttonPressed = false
 	}
 
 	self.views = {
@@ -72,6 +73,10 @@ function Screen:new(config)
 		changeSceneTo = {
 			before = {},
 			after  = {}
+		},
+		buttonPressed = {
+			before = {},
+			after = {}
 		}
 	}
 
@@ -239,6 +244,19 @@ function Screen:render()
 	self:runHooks('render', 'after')
 end
 
+function Screen:buttonPressed(buttonName, button)
+	if self.freeze.buttonPressed then
+		return
+	end
+
+	self:runHooks('buttonPressed', 'before', {buttonName=buttonName, button=button})
+
+	local currentScene = self:getCurrentState()
+	currentScene:buttonPressed(self, buttonName, button)
+
+	self:runHooks('buttonPressed', 'after', {buttonName=buttonName, button=button})
+end
+
 function Screen:runEvent(name, ...)
 	if self.freeze.keyPressed then
 		return
@@ -280,7 +298,7 @@ function Screen:changeStateTo(sceneName)
 	local currentScene = self:getCurrentState()
 	self:setViewLayers(currentScene:getViews(), 'scene_current')
 
-	self:runHooks('changeSceneTo', 'after', {sceneName = sceneName})
+	self:runHooks('changeSceneTo', 'after', {sceneName = sceneName, scene = currentScene})
 end
 
 function Screen:freezeEvent(eventName)

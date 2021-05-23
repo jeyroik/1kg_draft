@@ -58,16 +58,22 @@ function SceneMain:textInput(screen, text)
     end
 end
 
-function SceneMain.submitButtonPressed(this)
-    local playerName  = this.playerName.body
+function SceneMain:buttonPressed(screen, name)
+    if name == 'submit' then
+        self:submitButtonPressed()
+    end
+end
+
+function SceneMain:submitButtonPressed()
+    local playerName  = self.playerName.body
     local ModelPlayer = require 'components/models/player'
 
     if game.profiles[playerName] then
         game.profile = ModelPlayer(game.profiles[playerName])
     else
         game.profile = ModelPlayer({
-            name = playerName,
-            title = playerName,
+            name        = playerName,
+            title       = playerName,
             description = playerName
         })
         for i=1,15 do

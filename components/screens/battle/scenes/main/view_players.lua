@@ -3,9 +3,9 @@ local LayerView = require "components/screens/layers/layer_view"
 ViewPlayers = LayerView:extend()
 
 function ViewPlayers:render(data)
-    self:renderCards(data)
-    self:renderFrameCurrentPlayer(data)
-    self:renderMagic(data)
+    --self:renderCards(data)
+    --self:renderFrameCurrentPlayer(data)
+    --self:renderMagic(data)
 end
 
 function ViewPlayers:renderFrameCurrentPlayer(data)

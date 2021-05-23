@@ -8,20 +8,12 @@ function InitializerBoard:initSource(board)
         self:generate(board)
     end
 
-    local s = board:calculateStoneParameters()
-
     for i=1,board.rows do
         for j=1,board.columns do
             local stone = MagicStone({
-                deltaX = board.x,
-                deltaY = board.y,
                 row = i,
                 column = j,
-                volume = board.cells[i][j],
-                sx = 1,
-                sy = 1,
-                x = (j-1) * s.width + board.x,
-                y = (i-1) * s.height + board.y
+                volume = board.cells[i][j]
             })
             board.cells[i][j] = stone
         end

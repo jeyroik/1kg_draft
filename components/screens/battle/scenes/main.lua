@@ -24,7 +24,12 @@ function SceneMain:initState(screen)
     self:addSceneAfterViews(screen)
 
     screen.board = Board(screen.board)
-    screen.board:setToCenter(true, true) -- @deprecated
+
+    self:updateUI(screen)
+end
+
+function SceneMain:updateUI(screen)
+    game.graphics:put(screen.board, 5,9, 10,10)
 end
 
 function SceneMain:addSceneAfterViews(screen)
@@ -39,7 +44,7 @@ end
 
 function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
     for i=1,2 do
-        pl = screen.players[i]
+        pl = screen.playersCards[i]
         for _,magicGem in pairs(pl.gems) do
             if magicGem:isMouseOn(x,y) then
                 magicGem.isHovered = true
@@ -47,7 +52,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                 magicGem.isHovered = false
             end
         end
-        for _, card in pairs(pl.cards) do
+        for _, card in pairs(screen.playersTeamsCards[i]) do
             if card:isMouseOn(x, y) and card.skill.active.cost then
                 local icons = {}
                 local top, _, size = card:getEdgesFrame(3)
@@ -133,7 +138,7 @@ function SceneMain:keyPressed(screen, key)
 end
 
 function SceneMain:update(screen)
-    for _, player in pairs(screen.players) do
+    for _, player in pairs(screen.playersCards) do
         --player:update() @deprecated
     end
     self.fx = screen.board:move(screen)

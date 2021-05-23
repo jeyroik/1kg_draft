@@ -41,6 +41,10 @@ function Scene:textInput(screen, text)
 
 end
 
+function Scene:buttonPressed(buttonName, button)
+    
+end
+
 function Scene:runEvent(screen, name, ...)
     if self[name] then
         self[name](self, screen, ...)
