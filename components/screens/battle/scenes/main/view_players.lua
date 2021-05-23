@@ -2,13 +2,13 @@ local LayerView = require "components/screens/layers/layer_view"
 
 ViewPlayers = LayerView:extend()
 
-function ViewPlayers:render(data)
-    --self:renderCards(data)
+function ViewPlayers:render(screen)
+    self:renderCards(screen)
     --self:renderFrameCurrentPlayer(data)
     --self:renderMagic(data)
 end
 
-function ViewPlayers:renderFrameCurrentPlayer(data)
+function ViewPlayers:renderFrameCurrentPlayer(screen)
     local current = data.players[data.current]
     local avatar = current.cards[1]
     local turn = game.assets:getImage('turn')
@@ -28,18 +28,18 @@ function ViewPlayers:renderFrameCurrentPlayer(data)
     turn_enemy:render()
 end
 
-function ViewPlayers:renderCards(data)
+function ViewPlayers:renderCards(screen)
     for i=1,2 do
-        local player = data.players[i]
-        for j=1,#player.cards do
-            local card = player.cards[j]
-            card.y = card.y + (j-1)*50
-            card:render()
+        local player = screen.playersCards[i]
+        
+        player:drawPart(1)
+        for i, card in pairs(screen.playersTeamsCards[i]) do
+            card:drawPart(3)
         end
     end
 end
 
-function ViewPlayers:renderMagic(data)
+function ViewPlayers:renderMagic(screen)
     self:renderPlayerGems(data.players[1])
     self:renderPlayerGems(data.players[2])
 end

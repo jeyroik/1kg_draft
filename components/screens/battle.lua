@@ -47,12 +47,16 @@ function Battle:new(config)
 end
 
 function Battle:initState(...)
+    self:initHooks()
+	
+	self:runHooks('init', 'before', ...)
+
+	
 	self.__state__ = 'main'
 	self.__states__ = {
 		main 		= { path = 'components/screens/battle/scenes/main'         },
 		fight_after = { path = 'components/screens/battle/scenes/fight_after'  }
 	}
-	Battle.super.initState(self, ...)
 
     for i, player in pairs(self.players) do
         self.playersCards[i] = Player(player)
@@ -63,6 +67,10 @@ function Battle:initState(...)
             table.insert(self.playersTeamsCards[i], Card(char))
         end
     end
+
+    self:changeStateTo('main', ...)
+
+	self:runHooks('init', 'after', ...)
 end
 
 function Battle:getCurrentPlayer()

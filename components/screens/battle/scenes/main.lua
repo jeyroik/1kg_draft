@@ -29,7 +29,21 @@ function SceneMain:initState(screen)
 end
 
 function SceneMain:updateUI(screen)
-    game.graphics:put(screen.board, 5,9, 10,10)
+    self:put(screen.board, 5,9, 10,10)
+    self:put(screen.playersCards[1], 5,2, 4,2)
+    self:put(screen.playersCards[2], 5,21, 4,2)
+
+    local row = 8
+    for i, card in pairs(screen.playersTeamsCards[1]) do
+        self:put(card, row,2, 4,2)
+        row = row + 3
+    end
+
+    local row = 8
+    for i, card in pairs(screen.playersTeamsCards[2]) do
+        self:put(card, row,21, 4,2)
+        row = row + 3
+    end
 end
 
 function SceneMain:addSceneAfterViews(screen)

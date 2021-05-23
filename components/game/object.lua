@@ -16,4 +16,12 @@ function GameObject:new(config)
     self:applyConfig(config)
 end
 
+function GameObject:put(object, row, column, width, height)
+    game.graphics:put(object, row, column, width, height)
+end
+
+function GameObject:log(message)
+    love.filesystem.append('log.txt', '\n'..message)
+end
+
 return GameObject
