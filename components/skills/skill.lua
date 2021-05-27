@@ -7,6 +7,8 @@ function Skill:new(config)
 	self.description = ''
 	self.cost = {}
 	self.mutators = {}
+	self.level = 1
+	self.scope =  'all'
 
 	self:applyConfig(config)
 end

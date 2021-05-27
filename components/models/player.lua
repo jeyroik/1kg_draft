@@ -21,6 +21,10 @@ function ModelPlayer:new(config)
     self.teams = {
         __current__ = {}
     } -- <team.name> = {<char.name> = true, <char.name> = true, ...}
+    self.valuable = {
+        gold = 0,
+        stones = 0
+    }
 
     config.health = config.health or 5
     config.attack = config.attack or 1

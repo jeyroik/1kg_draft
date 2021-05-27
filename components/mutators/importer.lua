@@ -9,7 +9,8 @@ function MutatorsImporter:new()
         self_health = "components/mutators/self_health",
         enemy_health = "components/mutators/enemy_health",
         stone_converter = "components/mutators/stone_converter",
-        magic_change = "components/mutators/magic_change"
+        magic_change = "components/mutators/magic_change",
+        property_random_inc = "components/mutators/property_random_inc"
     }
 end
 
