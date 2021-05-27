@@ -74,7 +74,12 @@ function SceneMain:submitButtonPressed()
         game.profile = ModelPlayer({
             name        = playerName,
             title       = playerName,
-            description = playerName
+            description = playerName,
+            avatar = {
+                path = 'chars',
+                frame = 1,
+                part = 1
+            }
         })
         for i=1,15 do
             table.insert(game.profile.characters, game.assets:getCharacter('fire_elemental'))

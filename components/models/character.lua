@@ -21,7 +21,8 @@ function ModelCharacter:new(config)
 	}
 	self.avatar = {
 		path = 'chars',
-		frame = 1
+		frame = 1,
+        part = 3
 	}
 
     ModelCharacter.super.new(self, config)
