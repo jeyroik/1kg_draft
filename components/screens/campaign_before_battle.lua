@@ -7,6 +7,8 @@ function CampaignBeforeBattle:new(config)
     self.enemy = {}
 
 	CampaignBeforeBattle.super.new(self, config)
+
+    self.alias = 'campaign_before_battle'
 end
 
 function CampaignBeforeBattle:initState(...)

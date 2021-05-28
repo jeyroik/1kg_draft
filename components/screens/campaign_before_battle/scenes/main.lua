@@ -5,7 +5,7 @@ SceneMain = Scene:extend()
 function SceneMain:new(config)
     SceneMain.super.new(self, config)
 
-    self.name = 'main'
+    self.name  = 'main'
     self.views = {
         MainView()
     }
@@ -13,6 +13,8 @@ function SceneMain:new(config)
     self.back = {}
     self.header = {}
     self.playerTeam = {}
+    game.profile.screenName = game:getCurrentState().alias
+    game.profile.sceneName  = 'main'
     self.playerCard = Card(game.profile)
     self.playerCharacters = {}
 
@@ -26,11 +28,18 @@ function SceneMain:new(config)
 end
 
 function SceneMain:initState(screen, ...)
+    local cardHook = require 'components/screens/campaign_before_battle/hooks/main/card'
+    screen:catchEvent('cardMouseOn', 'self', cardHook({alias = 'cbb_main'}))
+    screen:catchEvent('cardPressed', 'self', cardHook({alias = 'cbb_main'}))
+
     self.header = Text({ body = screen.location })
     self.playerTeam = Text({ body = game.profile.title })
 
     self.enemyTeam = Text({ body = screen.enemy.title })
-    self.enemyCard = Card(screen.enemy)
+    local enemy = screen.enemy
+    enemy.screenName = screen.alias
+    enemy.sceneName = 'main'
+    self.enemyCard = Card(enemy)
 
     self.changeBtn = Button({
         name = 'change',
@@ -91,6 +100,8 @@ function SceneMain:initState(screen, ...)
 
     local team = game.profile:getCurrentTeam()
     for _, char in pairs(team) do
+        char.screenName = screen.alias
+        char.sceneName  = 'main'
         table.insert(
             self.playerCharacters,
             Card(char)
@@ -98,6 +109,8 @@ function SceneMain:initState(screen, ...)
     end
 
     for _, char in pairs(screen.enemy.characters) do
+        char.screenName = screen.alias
+        char.sceneName  = 'main'
         table.insert(
             self.enemyCharacters,
             Card(char)

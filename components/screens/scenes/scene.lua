@@ -5,6 +5,7 @@ Scene = State:extend()
 function Scene:new(config)
     self.views = {}
     self.arguments = {}
+    self.alias = ''
 
     Scene.super.new(self, config)
 end

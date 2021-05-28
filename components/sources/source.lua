@@ -8,6 +8,7 @@ function Source:new(config)
     self.path        = ''
     self.initializer = ''
     self.autoInit    = true
+    self.selected    = false
 
     Source.super.new(self, config)
 

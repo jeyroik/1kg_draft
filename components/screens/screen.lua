@@ -119,6 +119,9 @@ function Screen:catchEvent(event, stage, hook)
 	if not self.hooks[hook:getAlias()] then
 		self.hooks[hook:getAlias()] = hook
 	end
+	
+	self.events[event] = self.events[event] or {}
+	self.events[event][stage] = self.events[event][stage] or {}
 	self.events[event][stage][hook:getAlias()] = true
 end
 
@@ -258,15 +261,12 @@ function Screen:buttonPressed(buttonName, button)
 end
 
 function Screen:runEvent(name, ...)
-	if self.freeze.keyPressed then
+	if self.freeze[name] then
 		return
 	end
 
-	self:runHooks(name, 'before', ...)
-
-	local currentScene = self:getCurrentState()
-	currentScene:runEvent(self, name, ...)
-
+	self:runHooks(name, 'bebfore', ...)
+	self:runHooks(name, 'self', ...)
 	self:runHooks(name, 'after', ...)
 end
 

@@ -20,6 +20,8 @@ function Card:new(config)
 	}
 	self.path = 'components/render/cards/card'
 	self.initialized = false
+	self.screenName  = ''
+	self.sceneName   = ''
 
 	config.initializer = config.initializer or 'components/sources/initializers/card'
 
