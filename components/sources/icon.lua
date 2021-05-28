@@ -14,8 +14,6 @@ function Icon:new(config)
 	Icon.super.new(self, config)
 end
 
--- @param number dx delta for the x
--- @param number dy delta for the y
 -- @return void
 function Icon:draw()
 	self.image:draw()

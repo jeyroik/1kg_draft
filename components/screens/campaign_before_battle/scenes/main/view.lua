@@ -6,7 +6,7 @@ function MainView:new(config)
     MainView.super.new(self, config)
 end
 
-function MainView:render(data, scene)
+function MainView:render(screen, scene)
     local hovered = false
     scene.back:draw()
     scene.header:draw()
@@ -54,6 +54,10 @@ function MainView:render(data, scene)
         game.assets:getCursor('hand'):setOn()
     else
         game.assets:getCursor('hand'):reset()
+    end
+
+    for i, tip in pairs(screen.tips) do
+        tip:draw()
     end
 end
 

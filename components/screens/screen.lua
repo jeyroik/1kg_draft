@@ -1,5 +1,6 @@
-local GridView  = require "components/screens/views/grid"
-local StateWith = require "components/states/state_with"
+local GridView  = require 'components/screens/views/grid'
+local StateWith = require 'components/states/state_with'
+local Window 	= require 'components/sources/window'
 
 Screen = StateWith:extend()
 
@@ -80,6 +81,8 @@ function Screen:new(config)
 		}
 	}
 
+	self.tips = {}
+
 	Screen.super.new(self, config)
 
 	self:addViewLayers({ GridView() }, 'system')
@@ -119,7 +122,7 @@ function Screen:catchEvent(event, stage, hook)
 	if not self.hooks[hook:getAlias()] then
 		self.hooks[hook:getAlias()] = hook
 	end
-	
+
 	self.events[event] = self.events[event] or {}
 	self.events[event][stage] = self.events[event][stage] or {}
 	self.events[event][stage][hook:getAlias()] = true
@@ -307,6 +310,10 @@ end
 
 function Screen:unfreezeEvent(eventName)
 	self.freeze[eventName] = false
+end
+
+function Screen:registerTip(config)
+	table.insert(self.tips, Window(config))
 end
 
 return Screen

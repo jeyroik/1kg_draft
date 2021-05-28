@@ -13,7 +13,20 @@ function CardHook:catch(screen, args, event, stage)
     local sceneName  = screen.__state__
 
     if event == 'cardMouseOn' and stage == 'self' then
-        --todo: show tip
+        screen:registerTip({
+            with = {
+                header = false,
+                body = true
+            },
+            body = {
+                content = {
+                    {
+                        path = 'components/sources/text',
+                        body = args.card.description
+                    }
+                }
+            }
+        })
     elseif event == 'cardPressed' and stage == 'self' then
         --
     end
