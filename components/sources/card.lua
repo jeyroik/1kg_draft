@@ -15,7 +15,8 @@ function Card:new(config)
 	}
 	self.avatar = {
 		path = 'chars',
-		frame = 1
+		frame = 1,
+		part = 1
 	}
 	self.path = 'components/render/cards/card'
 	self.initialized = false

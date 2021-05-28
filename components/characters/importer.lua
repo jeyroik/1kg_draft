@@ -16,7 +16,8 @@ function CharactersImporter:new()
             level = 1,
             avatar = {
                 path = 'chars',
-                frame = 31
+                frame = 31,
+                part = 3
             },
             skill = {
                 active = {
@@ -39,7 +40,8 @@ function CharactersImporter:new()
             level = 1,
             avatar = {
                 path = 'chars',
-                frame = 35
+                frame = 35,
+                part = 3
             },
             skill = {
                 active = {
@@ -67,7 +69,8 @@ function CharactersImporter:new()
             level = 1,
             avatar = {
                 path = 'chars',
-                frame = 30
+                frame = 30,
+                part = 3
             },
             skill = {
                 active = {
@@ -90,7 +93,8 @@ function CharactersImporter:new()
             level = 1,
             avatar = {
                 path = 'chars',
-                frame = 5
+                frame = 5,
+                part = 3
             },
             skill = {
                 active = {

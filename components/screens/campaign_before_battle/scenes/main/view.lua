@@ -11,17 +11,17 @@ function MainView:render(data, scene)
     scene.header:draw()
     
     scene.playerTeam:draw()
-    scene.playerCard:drawPart(1)
+    scene.playerCard:drawPart(scene.playerCard.avatar.part)
 
     for _,card in pairs(scene.playerCharacters) do
         card:drawPart(3)
     end
 
     scene.enemyTeam:draw()
-    scene.enemyCard:drawPart(3)
+    scene.enemyCard:drawPart(scene.enemyCard.avatar.part)
 
     for _,card in pairs(scene.enemyCharacters) do
-        card:drawPart(3)
+        card:drawPart(card.avatar.part)
     end
 
     scene.changeBtn:draw()

@@ -32,9 +32,9 @@ function ViewPlayers:renderCards(screen)
     for i=1,2 do
         local player = screen.playersCards[i]
         
-        player:drawPart(1)
+        player:drawPart(player.avatar.part)
         for i, card in pairs(screen.playersTeamsCards[i]) do
-            card:drawPart(3)
+            card:drawPart(card.avatar.part)
         end
     end
 end
