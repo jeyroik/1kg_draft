@@ -2,7 +2,7 @@ local LayerView = require "components/screens/layers/layer_view"
 
 LayerViewTip = LayerView:extend()
 
-function LayerViewTip:render(data)
+function LayerViewTip:draw(data)
     if data.tip.x then
         local tipImg = game.assets:getImage('tip')
 
@@ -15,7 +15,7 @@ function LayerViewTip:render(data)
         tipImg.y = data.tip.y
         tipImg.alias = 'tip'
 
-        tipImg:render()
+        tipImg:draw()
         love.graphics.print(data.tip.text, data.tip.x+30, data.tip.y+30, 0, 2*tipImg.sx,2*tipImg.sy)
 
         if data.tip.icons then

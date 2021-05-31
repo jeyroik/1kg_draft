@@ -7,13 +7,13 @@ function ViewMap:new(config)
     ViewMap.super.new(self, config)
 end
 
-function ViewMap:render(data, scene)
+function ViewMap:draw(data, scene)
     local map = game.assets:getMap(self.map_name)
     love.graphics.translate(game.translate.x, game.translate.y)
-    map:render()
+    map:draw()
     if scene.label.x then
         game.assets:getCursor('hand'):setOn()
-        scene.label:render()
+        scene.label:draw()
         local selectedObject = map:getObject(scene.selected)
         selectedObject:drawSelection()
     else

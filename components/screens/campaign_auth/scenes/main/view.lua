@@ -6,7 +6,7 @@ function CampaignAuthSceneMainView:new(config)
     CampaignAuthSceneMainView.super.new(self, config)
 end
 
-function CampaignAuthSceneMainView:render(data, scene)
+function CampaignAuthSceneMainView:draw(data, scene)
     scene.back:draw()
     scene.header:draw()
     scene.inputField:draw()

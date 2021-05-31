@@ -11,7 +11,7 @@ function Fx:new(config)
     Fx.super.new(self, config)
 end
 
-function Fx:render()
+function Fx:draw()
     self:play()
 end
 

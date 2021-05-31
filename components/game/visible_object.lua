@@ -6,39 +6,47 @@ VisibleObject = GameObject:extend()
 -- @return void
 function VisibleObject:new(config)
 	self.x = 0
-	self.xSource = self.x -- @deprecated
 	self.y = 0
-	self.ySource = self.y -- @deprecated
 	self.width = 0
 	self.height = 0
 	self.radian = 0
 	self.sx = 1
 	self.sy = 1
-	self.renderConfig = { -- @deprecated
-		scale = 'scale', -- size | position | none
-		origin = {
-			x = 0,
-			y = 0,
-			w = 800,
-			h = 600
-		}
+	self.grid = {
+		row = 0,
+		column = 1,
+		width = 1,
+		height = 1
 	}
-	self.previousResolution = '0x0' -- @deprecated
+	self.position = {
+        row    = 0,
+        column = 0
+    }
+    self.size = {
+        width = 0,
+        height = 0
+    }
 
 	VisibleObject.super.new(self, config)
-end
-
-function VisibleObject:render()
-	self:draw()
 end
 
 function VisibleObject:draw(...)
 	self:addDbg('Missed draw implementation')
 end
 
-function VisibleObject:updateGlobals()
-	VisibleObject.globalSX = love.graphics.getWidth()/800
-	VisibleObject.globalSY = love.graphics.getHeight()/600
+function VisibleObject:setGridPosition(column, row)
+	self.grid.row    = row
+	self.grid.column = column
+end
+
+function VisibleObject:offsetGridPosition(column, row)
+    self.grid.row    = self.grid.row    + row
+    self.grid.column = self.grid.column + column
+end
+
+function VisibleObject:setGridSize(width, height)
+    self.grid.width  = width
+    self.grid.height = height
 end
 
 function VisibleObject:getWidth()

@@ -11,10 +11,6 @@ function Quads:new(config)
     Quads.super.new(self, config)
 end
 
-function Quads:render(num)
-    self:draw(num)
-end
-
 function Quads:draw(num)
     if num > 0 then
         love.graphics.draw(self.image.source, self.source[num], self.x, self.y, self.radian, self.sx, self.sy)

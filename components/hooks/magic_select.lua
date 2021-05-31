@@ -15,8 +15,8 @@ function HookMagicSelect:catch(screen, args, event, stage)
         self:mouseMoved(screen, args)
     elseif event == 'mousePressed' then
         self:mousePressed(screen, args)
-    elseif event == 'render' then
-        self:render()
+    elseif event == 'draw' then
+        self:draw()
     end
 end
 
@@ -34,7 +34,7 @@ function HookMagicSelect:mousePressed(screen, args)
     end)
 end
 
-function HookMagicSelect:render()
+function HookMagicSelect:draw()
     local text = TextOverlay({
         body = 'Please, choose gem',
         sx = 2,
@@ -46,10 +46,10 @@ function HookMagicSelect:render()
     --text:setToCenter(true)
     text:setToPart(5, 2, 8)
     text:resetOverlay()
-    text:render()
+    text:draw()
 
     if self.stoneTip.x then
-        self.stoneTip:render()
+        self.stoneTip:draw()
     end
 end
 

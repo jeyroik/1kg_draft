@@ -10,7 +10,7 @@ function love.update(dt)
 end
 
 function love.draw()
-	game:render()
+	game:draw()
 end
 
 function love.mousemoved( x, y, dx, dy, isTouch )

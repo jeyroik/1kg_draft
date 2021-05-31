@@ -9,7 +9,7 @@ function Empty:new(config)
     Empty.super.new(self, config)
 end
 
-function Empty:render()
+function Empty:draw()
 
 end
 

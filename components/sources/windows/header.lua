@@ -11,11 +11,11 @@ function WindowHeader:new(config)
 end
 
 function WindowHeader:drawSource()
-    self.text:offsetPosition(self.position.column, self.position.row)
+    self.text:offsetPosition(self.grid.column, self.grid.row)
     self.text:draw()
     
     for i, button in pairs(self.buttons) do
-        button:offsetPosition(self.position.column, self.position.row)
+        button:offsetPosition(self.grid.column, self.grid.row)
         button:draw()
     end
 end

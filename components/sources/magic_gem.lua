@@ -13,9 +13,8 @@ function MagicGem:new(config)
     MagicGem.super.new(self, config)
 end
 
-function MagicGem:render(mode)
-    local render = Render(self.renderConfig)
-    render:draw(self, mode)
+function MagicGem:draw(mode)
+    
 end
 
 function MagicGem:draw(mode)

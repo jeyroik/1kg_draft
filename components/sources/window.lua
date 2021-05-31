@@ -19,12 +19,12 @@ end
 
 function Window:draw()
     if self.with.header then
-        self.header:offsetPosition(self.position.column, self.position.row)
+        self.header:offsetPosition(self.grid.column, self.grid.row)
         self.header:draw()
     end
 
     if self.with.body then
-        self.body:offsetPosition(self.position.column, self.position.row)
+        self.body:offsetPosition(self.grid.column, self.grid.row)
         self.body:draw()
     end
 end

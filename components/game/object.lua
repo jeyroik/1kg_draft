@@ -12,6 +12,8 @@ function GameObject:new(config)
     self.id = self:getId()
     self.gridRow = 0
     self.gridColumn = 0
+    self.screenName = ''
+    self.sceneName = ''
 
     self:applyConfig(config)
 end

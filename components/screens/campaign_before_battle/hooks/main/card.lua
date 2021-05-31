@@ -14,11 +14,19 @@ function CardHook:catch(screen, args, event, stage)
 
     if event == 'cardMouseOn' and stage == 'self' then
         screen:registerTip({
+            screenName = screenName,
+            sceneName  = sceneName,
             with = {
                 header = false,
                 body = true
             },
             body = {
+                grid = {
+                    row     = 0,
+                    column  = 0,
+                    width   = 2,
+                    height  = 1
+                },
                 content = {
                     {
                         path = 'components/sources/text',

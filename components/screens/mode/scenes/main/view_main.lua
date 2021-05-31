@@ -6,7 +6,7 @@ function MainView:new(config)
     MainView.super.new(self, config)
 end
 
-function MainView:render(data, scene)
+function MainView:draw(data, scene)
     scene.vsPCBtn:draw()
     scene.vsPlayerBtn:draw()
     scene.header:draw()

@@ -10,7 +10,7 @@ function Cursor:new(config)
     Cursor.super.new(self, config)
 end
 
-function Cursor:render()
+function Cursor:draw()
     self:setOn('self.render')
 end
 

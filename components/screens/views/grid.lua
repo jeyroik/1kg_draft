@@ -6,7 +6,7 @@ function GridView:new(config)
     GridView.super.new(self, config)
 end
 
-function GridView:render(data, scene)
+function GridView:draw(data, scene)
     if scene.arguments['graphics__isOn'] then
         love.graphics.setColor({0.5, 0.5, 0.5})
         game.graphics:forEach(function(item, i, j) 

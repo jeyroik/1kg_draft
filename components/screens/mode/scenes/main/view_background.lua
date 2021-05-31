@@ -7,10 +7,10 @@ function Background:new(config)
     Background.super.new(self, config)
 end
 
-function Background:render()
+function Background:draw()
     local background = game.assets:getImage(self.image)
 
-    background:render()
+    background:draw()
 end
 
 return Background

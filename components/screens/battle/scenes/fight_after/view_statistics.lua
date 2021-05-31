@@ -9,7 +9,7 @@ function BattleFightAfterViewStatistics:new(config)
     self.center = {x = love.graphics.getWidth()/2, y = love.graphics.getHeight()/2}
 end
 
-function BattleFightAfterViewStatistics:render(data)
+function BattleFightAfterViewStatistics:draw(data)
     local stats = data.statistics
 
     for i, player in pairs(stats) do
@@ -20,23 +20,23 @@ function BattleFightAfterViewStatistics:render(data)
         else
             name:setToPart(7, 4, 8)
         end
-        name:render()
+        name:draw()
 
         local damageTaken = Text({ body = 'Damage taken: '..player.damage_taken, sx = 2, sy = 2 })
         damageTaken:stickToBottom(name)
-        damageTaken:render()
+        damageTaken:draw()
 
         local damaged = Text({ body = 'Damaged: '..player.damaged, sx = 2, sy = 2})
         damaged:stickToBottom(damageTaken)
-        damaged:render()
+        damaged:draw()
 
         local stones = Text({ body = 'Stones destroyed: '..player.stones, sx = 2, sy = 2})
         stones:stickToBottom(damaged)
-        stones:render()
+        stones:draw()
 
         local spells = Text({ body = 'Spells casted: '..player.spells, sx = 2, sy = 2})
         spells:stickToBottom(stones)
-        spells:render()
+        spells:draw()
     end
 end
 

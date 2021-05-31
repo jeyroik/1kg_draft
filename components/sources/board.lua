@@ -41,7 +41,7 @@ function Board:draw()
 	for _, columns in pairs(self.cells) do
 		for _,stone in pairs(columns) do
 			if stone.volume > 1 then
-				stone:render()
+				stone:draw()
 			end
 		end
 	end

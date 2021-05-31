@@ -222,32 +222,32 @@ end
 
 -- @param Game game
 -- @return void
-function Screen:render()
-	self:runHooks('render', 'before')
+function Screen:draw()
+	self:runHooks('draw', 'before')
 
 	local currentScene = self:getCurrentState()
 
 	for i = 1, #self.views.scene_before do
 		local layer = self.views.scene_before[i]
-		layer:render(self, currentScene)
+		layer:draw(self, currentScene)
 	end
 
 	for i = 1, #self.views.scene_current do
 		local layer = self.views.scene_current[i]
-		layer:render(self, currentScene)
+		layer:draw(self, currentScene)
 	end
 
 	for i = 1, #self.views.scene_after do
 		local layer = self.views.scene_after[i]
-		layer:render(self, currentScene)
+		layer:draw(self, currentScene)
 	end
 
 	for i = 1, #self.views.system do
 		local layer = self.views.system[i]
-		layer:render(self, currentScene)
+		layer:draw(self, currentScene)
 	end
 
-	self:runHooks('render', 'after')
+	self:runHooks('draw', 'after')
 end
 
 function Screen:buttonPressed(buttonName, button)

@@ -6,7 +6,7 @@ function MainView:new(config)
     MainView.super.new(self, config)
 end
 
-function MainView:render(screen, scene)
+function MainView:draw(screen, scene)
     local hovered = false
     scene.back:draw()
     scene.header:draw()

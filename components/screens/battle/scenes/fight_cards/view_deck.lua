@@ -7,7 +7,7 @@ function BattleFightCardsViewDeck:new(config)
     BattleFightCardsViewDeck.super.new(self, config)
 end
 
-function BattleFightCardsViewDeck:render(screen, scene)
+function BattleFightCardsViewDeck:draw(screen, scene)
     
     local head = Text({
         body = 'Player '..scene.player..'. Choose cards',
@@ -15,16 +15,16 @@ function BattleFightCardsViewDeck:render(screen, scene)
         sy = 2
     })
     head:setToPart(5, 2, 8)
-    head:render()
+    head:draw()
 
-    scene.grid:render()
-    scene.addedCards:render()
+    scene.grid:draw()
+    scene.addedCards:draw()
 
     local submit = game.assets:getButton('submitCards')
     local exit = game.assets:getButton('exitFight')
 
-    submit:render()
-    exit:render()
+    submit:draw()
+    exit:draw()
 end
 
 return BattleFightCardsViewDeck

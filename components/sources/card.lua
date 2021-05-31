@@ -82,9 +82,9 @@ function Card:renderAttack(bottom)
 		}
 	})
 
-	overlay:render()
+	overlay:draw()
 	--love.graphics.print(overlay.sx..','..overlay.sy, overlay.x + overlay:getWidth()+5, overlay.y)
-	attack:render()
+	attack:draw()
 end
 
 function Card:renderDefense(bottom)
@@ -105,8 +105,8 @@ function Card:renderDefense(bottom)
 		color  = {0,0,0,0.3}
 	})
 
-	overlay:render()
-	defense:render()
+	overlay:draw()
+	defense:draw()
 end
 
 function Card:renderHealth(top)
@@ -127,8 +127,8 @@ function Card:renderHealth(top)
 		color  = {0,0,0,0.3}
 	})
 
-	overlay:render()
-	health:render()
+	overlay:draw()
+	health:draw()
 end
 
 function Card:takeDamage(damage)

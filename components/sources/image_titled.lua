@@ -18,9 +18,8 @@ function ImageTitled:new(config)
     self.sy = self.image.sy
 end
 
-function ImageTitled:render(mode)
-    local render = Render(self.renderConfig)
-    render:draw(self, mode)
+function ImageTitled:draw(mode)
+    
 end
 
 function ImageTitled:draw(mode)
@@ -31,7 +30,7 @@ function ImageTitled:draw(mode)
         self.text:draw()
     else
         self.image:draw()
-        self.text:render()
+        self.text:draw()
     end
 end
 

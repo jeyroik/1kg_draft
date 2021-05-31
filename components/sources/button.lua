@@ -49,7 +49,7 @@ end
 
 function Button:hover()
     self.state = 'hovered'
-    game.assets:getCursor('hand'):render()
+    game.assets:getCursor('hand'):draw()
     self.pressed = true
 end
 

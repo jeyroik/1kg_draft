@@ -36,7 +36,7 @@ function Map:draw()
     for i=1,#self.renderPath do
         local layerName = self.renderPath[i]
         self:forEach(layerName, function(cell)
-            cell:render()
+            cell:draw()
             return true
         end)
     end

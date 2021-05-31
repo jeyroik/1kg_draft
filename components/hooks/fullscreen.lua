@@ -12,8 +12,8 @@ function HookFullscreen:new(config)
 end
 
 function HookFullscreen:catch(screen, args, event, stage)
-    if event == 'render' and stage == 'after' then
-        self:render()
+    if event == 'draw' and stage == 'after' then
+        self:draw()
     elseif event == 'mouseMoved' and stage == 'after' then
         self:mouseMoved(args)
     elseif event == 'mousePressed' and stage == 'after' then
@@ -50,11 +50,11 @@ function HookFullscreen:mouseMoved(args)
     end
 end
 
-function HookFullscreen:render()
+function HookFullscreen:draw()
     local icon = self:getIcon()
-    icon:render()
+    icon:draw()
     if self.tip.x then
-        self.tip:render()
+        self.tip:draw()
     end
 end
 

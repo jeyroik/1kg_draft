@@ -137,7 +137,7 @@ function Grid:draw()
         item.radian = self.radian
 
         item:reload()
-        item:render()
+        item:draw()
         column = column + 1
     end
     if self.withBorder then

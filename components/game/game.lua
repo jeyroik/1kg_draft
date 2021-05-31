@@ -35,8 +35,8 @@ function Game:update(dt)
 	self:getCurrentState():update(dt)
 end
 
-function Game:render()
-	self:getCurrentState():render()
+function Game:draw()
+	self:getCurrentState():draw()
 end
 
 function Game:mouseMoved(x, y, dx, dy, isTouch)
