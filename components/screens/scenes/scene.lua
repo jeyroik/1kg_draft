@@ -5,7 +5,7 @@ Scene = State:extend()
 function Scene:new(config)
     self.views = {}
     self.arguments = {}
-    self.alias = ''
+    self.name = ''
 
     Scene.super.new(self, config)
 end
@@ -19,7 +19,8 @@ function Scene:initState(screen)
 end
 
 function Scene:update(screen, dt)
-
+    game.events:riseEvent('update.scene', {dt=dt, screen=screen, scene=self})
+	game.events:riseEvent('update.scene.'..screen.name..'.'..self.name, {dt=dt, screen=screen, scene=self})
 end
 
 function Scene:mouseMoved(screen, x, y, dx, dy, isTouch)
@@ -50,6 +51,14 @@ function Scene:runEvent(screen, name, ...)
     if self[name] then
         self[name](self, screen, ...)
     end
+end
+
+function Screen:createButton(config)
+    config.name = game.__state__ .. '__' .. self.name .. '__' .. config.name .. '_button_'
+    config.screenName = game.__state__
+    config.sceneName  = self.name
+    
+    return Button(config)
 end
 
 return Scene

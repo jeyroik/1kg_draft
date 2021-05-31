@@ -147,12 +147,11 @@ function Screen:runHooks(event, stage, args)
 end
 
 function Screen:update(dt)
-	self:runHooks('update', 'before', {dt = dt})
+	game.events:riseEvent('update.screen', {dt=dt, screen = self})
+	game.events:riseEvent('update.screen.'..self.name, {dt=dt, screen = self})
 
 	local currentScene = self:getCurrentState()
 	currentScene:update(self, dt)
-
-	self:runHooks('update', 'after', {dt = dt})
 end
 
 function Screen:mouseMoved(x, y, dx, dy, isTouch)

@@ -8,12 +8,13 @@ GameObject:implement(Uuid)
 GameObject:implement(Initializer)
 
 function GameObject:new(config)
-    self.alias = 'unknown'
-    self.id = self:getId()
-    self.gridRow = 0
+    self.alias      = 'unknown' -- @deprecated
+    self.name       = 'unknown'
+    self.id         = self:getId()
+    self.gridRow    = 0
     self.gridColumn = 0
     self.screenName = ''
-    self.sceneName = ''
+    self.sceneName  = ''
 
     self:applyConfig(config)
 end
@@ -24,6 +25,10 @@ end
 
 function GameObject:log(message)
     love.filesystem.append('log.txt', '\n'..message)
+end
+
+function GameObject:getEventName(event)
+    return self.name .. event
 end
 
 return GameObject

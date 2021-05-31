@@ -19,6 +19,13 @@ function Graphics:new(config)
         height = 16
     }
     self:update()
+
+    game.events:on(
+        'update', 
+        function() 
+            self:update()
+        end
+    )
 end
 
 function Graphics:getItem(row, column)

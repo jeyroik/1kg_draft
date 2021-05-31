@@ -21,7 +21,7 @@ function SceneMain:initState(screen)
         'scene_before'
     )
 
-    self.vsPCBtn = Button({
+    self.vsPCBtn = self:createButton({
         name = 'campaign',
         path = {
             default = 'menu_btn.png',
@@ -34,11 +34,9 @@ function SceneMain:initState(screen)
             path = 'components/sources/buttons/effects/frame'
         },
         parent = screen,
-        screenName = 'main',
-        sceneName = 'main',
         color = {0, 0.5, 0}
     })
-    self.vsPlayerBtn = Button({
+    self.vsPlayerBtn = self:createButton({
         name = 'arena',
         path = {
             default = 'menu_btn.png',
@@ -51,10 +49,24 @@ function SceneMain:initState(screen)
             path = 'components/sources/buttons/effects/frame'
         },
         color = {0, 0.5, 0},
-        parent = screen,
-        screenName = 'main',
-        sceneName = 'main'
+        parent = screen
     })
+
+    -- 1 - сколько раз реагировать на это событие
+    game.events:on(
+        self.vsPCBtn:getEventName('pressed'), 
+        function () 
+            game:changeStateTo('campaign_auth') 
+        end, 
+        1
+    )
+    game.events:on(
+        self.vsPlayerBtn:getEventName('pressed'),
+        functiton ()
+            game:changeStateTo('arena_auth')
+        end,
+        1
+    )
 end
 
 function SceneMain:onActive(...)

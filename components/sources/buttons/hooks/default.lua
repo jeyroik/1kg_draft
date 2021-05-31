@@ -1,4 +1,5 @@
-local Hook = require 'components/hooks/hook'
+local Event = require 'components/events/event'
+local Hook  = require 'components/hooks/hook'
 
 HookDefault = Hook:extend()
 
@@ -38,10 +39,15 @@ end
 
 function HookDefault:mouseMoved(name, button, args)
     if button:isMouseOn(args.x, args.y) then
+        game.events.mouseMoved.target = button
         button:hover()
+        game:runEvent('buttonHovered', {target = button})
+        game:runEvent(name..'ButtonHovered', {target = button})
         return true
     elseif button.state ~= 'default' then
+
         button:released()
+        game:runEvent('buttonReleased', {target = button})
         return false
     end
 end
