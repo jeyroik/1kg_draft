@@ -11,7 +11,7 @@ end
 
 function WindowBody:drawSource()
     for i, item in pairs(self.content) do
-        item:offsetPosition(self.grid.column, self.grid.row)
+        item:offsetGridPosition(self.grid.column, self.grid.row)
         item:draw()
     end
 end

@@ -21,16 +21,16 @@ function CardHook:catch(screen, args, event, stage)
                 body = true
             },
             body = {
-                grid = {
-                    row     = 0,
-                    column  = 0,
-                    width   = 2,
-                    height  = 1
-                },
                 content = {
                     {
                         path = 'components/sources/text',
-                        body = args.card.description
+                        body = args.card.description,
+                        grid = {
+                            row     = 0,
+                            column  = 0,
+                            width   = 2,
+                            height  = 1
+                        }
                     }
                 }
             }
