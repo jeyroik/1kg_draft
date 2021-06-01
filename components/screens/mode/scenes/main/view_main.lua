@@ -7,8 +7,8 @@ function MainView:new(config)
 end
 
 function MainView:draw(data, scene)
-    scene.vsPCBtn:draw()
-    scene.vsPlayerBtn:draw()
+    scene.campaignBtn:draw()
+    scene.arenaBtn:draw()
     scene.header:draw()
 end
 

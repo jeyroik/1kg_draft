@@ -19,7 +19,11 @@ function Listeners:add(eventName, listener, execTimes)
     })
 end
 
-function Listeners:getListeners(eventName)
+function Listeners:remove(eventName)
+    self.items[eventName] = nil
+end
+
+function Listeners:get(eventName)
     if not self.items[eventName] then
         return {}
     end

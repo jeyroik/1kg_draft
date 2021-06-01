@@ -43,20 +43,28 @@ function Button:draw()
 end
 
 function Button:click()
-    self.state = 'clicked'
-    self.pressed = true
+    if type(self.click) == 'table' then
+        self.click:run(self)
+    else
+        self.click(self)
+    end
 end
 
 function Button:hover()
-    self.state = 'hovered'
-    game.assets:getCursor('hand'):draw()
-    self.pressed = true
+    self:log('[Button:hover] +')
+    if type(self.hover) == 'table' then
+        self.hover:run(self)
+    else
+        self.hover(self)
+    end
 end
 
-function Button:released()
-    self.state = 'default'
-    self.pressed = false
-    game.assets:getCursor('hand'):reset()
+function Button:release()
+    if type(self.release) == 'table' then
+        self.release:run(self)
+    else
+        self.release(self)
+    end
 end
 
 function Button:setToCenter(xAxis, yAxis)

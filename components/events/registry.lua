@@ -1,5 +1,6 @@
 local GameObject = require 'components/game/object'
 local Listeners  = require 'components/events/listeners'
+local Event      = require 'components/events/event'
 
 EventRegistry = GameObject:extend()
 
@@ -11,7 +12,7 @@ function EventRegistry:new(config)
 end
 
 function EventRegistry:setEvent(name, ...)
-    self.events[name] = Event({...})
+    self.events[name] = Event({args = {...}})
 end
 
 function EventRegistry:getEvent(name)
@@ -34,12 +35,26 @@ function EventRegistry:riseEvent(eventName, ...)
 end
 
 function EventRegistry:runEvent(eventName)
-    local listeners = self.listeners:getListeners(eventName)
+    local listeners = self.listeners:get(eventName)
+    local event = self:getEvent(eventName)
+
     for i, listener in pairs(listeners) do
         if type(listener) == 'table' then
-            listener:on(eventName, self:getEvent(eventName))
+            listener:on(eventName, event)
         else
-            listener(eventName, self:getEvent(eventName))
+            listener(eventName, event)
+        end
+    end
+end
+
+function EventRegistry:flush(eventName)
+    self.listeners:remove(eventName)
+end
+
+function EventRegistry:flushLike(text)
+    for name, event in pairs(self.events) do
+        if name.find(text) > 0 then
+            self:flush(name)
         end
     end
 end

@@ -3,7 +3,7 @@ local Screen = require "components/screens/screen"
 Mode = Screen:extend()
 
 function Mode:new(config)
-	self.name = 'screen.mode'
+	config.name = 'mode'
 
 	Mode.super.new(self, config)
 end

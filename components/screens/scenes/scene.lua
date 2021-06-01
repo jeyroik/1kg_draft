@@ -5,7 +5,6 @@ Scene = State:extend()
 function Scene:new(config)
     self.views = {}
     self.arguments = {}
-    self.name = ''
 
     Scene.super.new(self, config)
 end
@@ -15,7 +14,7 @@ function Scene:getViews()
 end
 
 function Scene:initState(screen)
-    
+    game.events:riseEvent('sceneInitialized.'..screen.name..'.'..self.name, { screen=screen, scene=self })
 end
 
 function Scene:update(screen, dt)
@@ -24,41 +23,33 @@ function Scene:update(screen, dt)
 end
 
 function Scene:mouseMoved(screen, x, y, dx, dy, isTouch)
-
+    game.events:riseEvent(
+        'mouseMoved.'..screen.name..'.'..self.name, 
+        { x=x, y=y, dx=dx, dy=dy, isTouch=isTouch, screen=screen, scene=self }
+    )
 end
 
 function Scene:mousePressed(screen, x, y, button, isTouch, presses)
-
+    self:log('[Scene:mousePressed] runEvent "'..'mousePressed.'..screen.name..'.'..self.name..'"')
+    game.events:riseEvent(
+        'mousePressed.'..screen.name..'.'..self.name, 
+        { x=x, y=y, button=button, isTouch=isTouch, presses=presses, screen=screen, scene=self }
+    )
 end
 
 function Scene:mouseReleased(screen, x, y, button, isTouch, presses)
-
+    game.events:riseEvent(
+        'mouseReleased.'..screen.name..'.'..self.name, 
+        { x=x, y=y, button=button, isTouch=isTouch, presses=presses, screen=screen, scene=self }
+    )
 end
 
 function Scene:keyPressed(screen, key)
-
+    game.events:riseEvent('keyPressed.'..screen.name..'.'..self.name, { key=key, screen=screen, scene=self })
 end
 
 function Scene:textInput(screen, text)
-
-end
-
-function Scene:buttonPressed(buttonName, button)
-    
-end
-
-function Scene:runEvent(screen, name, ...)
-    if self[name] then
-        self[name](self, screen, ...)
-    end
-end
-
-function Screen:createButton(config)
-    config.name = game.__state__ .. '__' .. self.name .. '__' .. config.name .. '_button_'
-    config.screenName = game.__state__
-    config.sceneName  = self.name
-    
-    return Button(config)
+    game.events:riseEvent('textInput.'..screen.name..'.'..self.name, { text=text, screen=screen, scene=self })
 end
 
 return Scene

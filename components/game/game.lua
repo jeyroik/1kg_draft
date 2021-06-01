@@ -7,6 +7,7 @@ Game = StateWith:extend()
 function Game:new(config)
 	self.profiles = {}
 	self.profile = {}
+	self.resources = {}
 	self.assets = {}
 	self.translate = {
 		x=0,
@@ -26,6 +27,8 @@ function Game:init()
 	self.graphics = Graphics(self.graphics)
 
 	self:initializeOne('assets')
+	self:initializeOne('resources')
+
 	self.assets:init()
 
 	self:changeStateTo('main')
@@ -39,49 +42,45 @@ function Game:update(dt)
 end
 
 function Game:draw()
-	self.events.draw = Event({name = 'draw'})
+	self.events:riseEvent('draw', {})
 	self:getCurrentState():draw()
 end
 
 function Game:mouseMoved(x, y, dx, dy, isTouch)
 	self.mouse.x, self.mouse.y = x,y
 
-	self.events.mouseMoved = Event({name = 'mouseMoved', args = { x=x, y=y, dx=dx, dy=dy, isTouch=isTouch }})
+	self.events:riseEvent('mouseMoved', { x=x, y=y, dx=dx, dy=dy, isTouch=isTouch })
 	game:getCurrentState():mouseMoved(x, y, dx, dy, isTouch)
 end
 
 function Game:mousePressed(x, y, button, isTouch, presses)
-	self.events.mousePressed = Event({
-		name = 'mousePressed', 
-		args = { x=x, y=y, button=button, isTouch=isTouch, presses=presses }}
+	self.events:riseEvent(
+		'mousePressed', 
+		{ x=x, y=y, button=button, isTouch=isTouch, presses=presses }
 	)
 	game:getCurrentState():mousePressed(x, y, button, isTouch, presses)
 end
 
 function Game:mouseReleased(x, y, button, isTouch, presses)
-	self.events.mouseReleased = Event({
-		name = 'mouseReleased', 
-		args = { x=x, y=y, button=button, isTouch=isTouch, presses=presses }}
+	self.events:riseEvent(
+		'mouseReleased', 
+		{ x=x, y=y, button=button, isTouch=isTouch, presses=presses }
 	)
 	game:getCurrentState():mouseReleased(x, y, button, isTouch, presses)
 end
 
 function Game:keyPressed(key)
-	self.events.keyPressed = Event({name = 'keyPressed', args = { key = key }})
+	self.events:riseEvent('keyPressed', { key = key })
 	game:getCurrentState():keyPressed(key)
 end
 
 function Game:textInput(text)
-	self.events.textInput = Event({name = 'textInput', args = { text = text }})
+	self.events:riseEvent('textInput', { text = text })
 	game:getCurrentState():textInput(text)
 end
 
-function Game:buttonPressed(buttonName, button)
-	game:getCurrentState():buttonPressed(buttonName, button)
-end
-
 function Game:runEvent(name, ...)
-	self.events[name] = Event({name = name, args = {...}})
+	self.events:riseEvent(name, {...})
 	game:getCurrentState():runEvent(name, ...)
 end
 

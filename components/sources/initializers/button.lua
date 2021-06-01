@@ -39,15 +39,17 @@ function InitializerButton:initSource(button)
     button.source.text.sx = (btnWidthInCells*c.width) / button.source.text.width
     button.source.text.sy = c.height / button.source.text.height
 
-    if button.parent.views then
-        self:setHooks(button)
-    end
+    self:setHooks(button)
 end
 
 function InitializerButton:setHooks(button)
     local hook = require 'components/sources/buttons/hooks/default'
 
-    game.events:on('mousePressed.scene.'..button.screenName..'.'..button.sceneName, hook({button = button}))
+    self:log('[InitializerButton:setHooks] set event "'
+        ..'mousePressed.'..button.screenName..'.'..button.sceneName..'"'
+        ..' | '..button.name
+    )
+    game.events:on('mousePressed.'..button.screenName..'.'..button.sceneName, hook({button = button}))
 end
 
 return InitializerButton

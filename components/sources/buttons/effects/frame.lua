@@ -6,7 +6,7 @@ function ButtonFrame:new(config)
 end
 
 function ButtonEffect:draw(button)
-    if button.pressed then
+    if button.state ~= 'default' then
         button:drawSelection()
     end
 

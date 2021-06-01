@@ -4,67 +4,51 @@ local Hook  = require 'components/hooks/hook'
 HookDefault = Hook:extend()
 
 function HookDefault:new(config)
-    self.buttons = {} -- <screen>.<scene>.<button> = button
+    self.button = {}
     
     HookDefault.super.new(self, config)
 
     self.alias = config.alias
 end
 
-function HookDefault:catch(screen, args, event, stage)
-    local screenName = game.__state__
-    local sceneName  = screen.__state__
-
-    if event == 'mouseMoved' and stage == 'after' then
-        if self.buttons[screenName] and self.buttons[screenName][sceneName] then
-            for name, button in pairs(self.buttons[screenName][sceneName]) do
-                local matchButton = self:mouseMoved(name, button, args)
-                if matchButton then
-                    return
-                end
-            end
-        end 
-    elseif event == 'mousePressed' and stage == 'after' then
-        if self.buttons[screenName] and self.buttons[screenName][sceneName] then
-            for name, button in pairs(self.buttons[screenName][sceneName]) do
-                
-                local matchButton = self:mousePressed(name, button, args)
-                if matchButton then
-                    return
-                end
-            end
-        end
+function HookDefault:on(eventName, event)
+    self:log('[HookDdefault:on] '..eventName)
+    if eventName:find('mouseMoved') then
+        self:mouseMoved(event)
+    elseif eventName:find('mousePressed') then
+        self:mousePressed(event)
     end
 end
 
-function HookDefault:mouseMoved(name, button, args)
-    if button:isMouseOn(args.x, args.y) then
-        game.events.mouseMoved.target = button
-        button:hover()
-        game:runEvent('buttonHovered', {target = button})
-        game:runEvent(name..'ButtonHovered', {target = button})
-        return true
-    elseif button.state ~= 'default' then
+function HookDefault:mouseMoved(event)
+    if self.button:isMouseOn(event.args.x, event.args.y) then
+        event.target = self.button
+        self.button:hover()
 
-        button:released()
-        game:runEvent('buttonReleased', {target = button})
+        game.events:riseEvent('buttonHovered', {target = self.button})
+        game.events:riseEvent('buttonHovered.'..self.button.name, {target = self.button})
+        return true
+    elseif self.button.state ~= 'default' then
+        if event.target.name == self.button.name then
+            event.target = {}
+        end
+        self.button:release()
+        game.events:riseEvent('buttonReleased', {target = self.button})
+        game.events:riseEvent('buttonReleased.'..self.button.name, {target = self.button})
         return false
     end
 end
 
-function HookDefault:mousePressed(name, button, args)
-    if button:isMouseOn(args.x, args.y) then
-        button:click()
-        button:released()
-        game:buttonPressed(name, button)
+function HookDefault:mousePressed(event)
+    self:log('[HookDefault:mousePressed] event.args: '..event.args.x..','..event.args.y)
+    if self.button:isMouseOn(event.args.x, event.args.y) then
+        event.target = self.button
+        self.button:click()
+
+        game.events:riseEvent('buttonPressed', {target = self.button})
+        game.events:riseEvent('buttonPressed.'..self.button.name, {target = self.button})
         return true
     end
-end
-
-function HookDefault:addButton(screen, scene, button)
-    self.buttons[screen]                     = self.buttons[screen]        or {}
-    self.buttons[screen][scene]              = self.buttons[screen][scene] or {}
-    self.buttons[screen][scene][button.name] = button
 end
 
 return HookDefault

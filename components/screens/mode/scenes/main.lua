@@ -7,7 +7,7 @@ SceneMain = Scene:extend()
 function SceneMain:new(config)
     SceneMain.super.new(self, config)
 
-    self.name = 'mode.main'
+    self.name = 'main'
     self.views = {
         MainView()
     }
@@ -21,48 +21,20 @@ function SceneMain:initState(screen)
         'scene_before'
     )
 
-    self.vsPCBtn = self:createButton({
-        name = 'campaign',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'Campaign',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        parent = screen,
-        color = {0, 0.5, 0}
-    })
-    self.vsPlayerBtn = self:createButton({
-        name = 'arena',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'Arena',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        color = {0, 0.5, 0},
-        parent = screen
-    })
+    self.campaignBtn = game.resources:create('button_default', { text = 'Campaign' })
+    self.arenaBtn    = game.resources:create('button_default', { text = 'Arena' })
 
     -- 1 - сколько раз реагировать на это событие
     game.events:on(
-        self.vsPCBtn:getEventName('pressed'), 
+        self.campaignBtn:getEventName('buttonPressed'), 
         function () 
             game:changeStateTo('campaign_auth') 
         end, 
         1
     )
     game.events:on(
-        self.vsPlayerBtn:getEventName('pressed'),
-        functiton ()
+        self.arenaBtn:getEventName('buttonPressed'),
+        function ()
             game:changeStateTo('arena_auth')
         end,
         1
@@ -96,9 +68,9 @@ end
 function SceneMain:updateUI()
     local pos = game.graphics:getItem(9,11)
 
-    if pos.x ~= self.vsPCBtn.x then
-        game.graphics:put(self.vsPCBtn, 9, 11, 6, 2)
-        game.graphics:put(self.vsPlayerBtn, 12, 11, 6, 2)
+    if pos.x ~= self.campaignBtn.x then
+        game.graphics:put(self.campaignBtn, 9, 11, 6, 2)
+        game.graphics:put(self.arenaBtn, 12, 11, 6, 2)
         game.graphics:put(self.header, 6, 10, 8, 2)
     end
 end

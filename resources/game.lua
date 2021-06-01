@@ -25,8 +25,34 @@ return {
             height = 32
         }
     },
-    sources = {
-        image = { path = 'components/sources/image' } -- game:newSource('image', {...})
+    resources = {
+        path = 'components/game/resources',
+        items = {
+            board               = { path = 'components/sources/board' },
+            button              = { path = 'components/sources/button' },
+            button_default      = { path = 'components/sources/buttons/default' },
+            card                = { path = 'components/sources/card' },
+            cursor              = { path = 'components/sources/cursor' },
+            fx                  = { path = 'components/sources/fx' },
+            icon                = { path = 'components/sources/icon' },
+            image_pack          = { path = 'components/sources/image_pack' },
+            image_titled        = { path = 'components/sources/image_titled' },
+            image               = { path = 'components/sources/image' },
+            magic_gem           = { path = 'components/sources/magic_gem' },
+            map                 = { path = 'components/sources/map' },
+            map_cell            = { path = 'components/sources/map/cell' },
+            map_object          = { path = 'components/sources/map_object' },
+            player              = { path = 'components/sources/player' },
+            quads               = { path = 'components/sources/quads' },
+            rectangle           = { path = 'components/sources/rectangle' },
+            source_positioned   = { path = 'components/sources/spurce_positioned' },
+            stone               = { path = 'components/sources/stone' },
+            text_overlay        = { path = 'components/sources/text_overlay' },
+            text                = { path = 'componennts/sources/text'},
+            window              = { path = 'components/sources/window' },
+            window_header       = { path = 'components/sources/window/header' },
+            window_body         = { path = 'components/sources/window_body' }
+        }
     },
     profiles = {
         jeyroik = {

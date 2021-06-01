@@ -28,7 +28,7 @@ function GameObject:log(message)
 end
 
 function GameObject:getEventName(event)
-    return self.name .. event
+    return event .. '.' .. self.name
 end
 
 return GameObject

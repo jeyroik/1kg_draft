@@ -1,4 +1,6 @@
-SourceInitializer = Object:extend()
+local GameObject = require 'components/game/object'
+
+SourceInitializer = GameObject:extend()
 
 -- @param Source source
 -- @return void
