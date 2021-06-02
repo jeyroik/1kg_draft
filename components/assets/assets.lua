@@ -128,7 +128,7 @@ function Assets:addGroup(alias, group)
 end
 
 function Assets:addText(alias, text)
-	self.texts[alias] = Text(text)
+	self.texts[alias] = game.resources:create('text', text)
 end
 
 function Assets:addGrid(alias, grid)
@@ -138,27 +138,27 @@ end
 -- @param string alias
 -- @param table fx
 function Assets:addFx(alias, fx)
-	self.fxs[alias] = Fx(fx)
+	self.fxs[alias] = game.resources:create('fx', fx)
 end
 
 function Assets:addImage(alias, image)
-	self.images[alias] = Image(image)
+	self.images[alias] = game.resources:create('image', image)
 end
 
 function Assets:addImagePack(alias, paths)
-	self.imagesPacks[alias] = ImagePack({ path = paths , name = alias})
+	self.imagesPacks[alias] = game.resources:create('image_pack', { path = paths , name = alias})
 end
 
 function Assets:addQuads(alias, path, columnsCount, rowsCount)
-	self.quads[alias] = Quads({ path = path, columns = columnsCount, rows = rowsCount })
+	self.quads[alias] = game.resources:create('quads', { path = path, columns = columnsCount, rows = rowsCount })
 end
 
 function Assets:addMap(alias, config)
-	self.maps[alias] = Map(config)
+	self.maps[alias] = game.resources:create('map', config)
 end
 
 function Assets:addCursor(alias, name)
-	self.cursors[alias] = Cursor({ path = name })
+	self.cursors[alias] = game.resources:create('cursor', { path = name })
 end
 
 function Assets:addMutator(alias, path)
@@ -170,10 +170,12 @@ function Assets:addMisc(alias, misc)
 	self.misc[alias] = misc
 end
 
+-- @deprecated
 function Assets:addButton(alias, button)
-	self.buttons[alias] = Button(button)
+	self.buttons[alias] = game.resources:create('button', button)
 end
 
+-- @deprecated
 function Assets:addCard(alias, path)
 	local card = require(path)
 	self.cards[alias] = card()

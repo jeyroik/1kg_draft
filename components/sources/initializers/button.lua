@@ -47,9 +47,10 @@ function InitializerButton:setHooks(button)
 
     self:log('[InitializerButton:setHooks] set event "'
         ..'mousePressed.'..button.screenName..'.'..button.sceneName..'"'
-        ..' | '..button.name
+        ..' | '..button.name..' - '..button.text
     )
     game.events:on('mousePressed.'..button.screenName..'.'..button.sceneName, hook({button = button}))
+    game.events:on('mouseMoved.'..button.screenName..'.'..button.sceneName, hook({button = button}))
 end
 
 return InitializerButton

@@ -30,10 +30,9 @@ function Scene:mouseMoved(screen, x, y, dx, dy, isTouch)
 end
 
 function Scene:mousePressed(screen, x, y, button, isTouch, presses)
-    self:log('[Scene:mousePressed] runEvent "'..'mousePressed.'..screen.name..'.'..self.name..'"')
     game.events:riseEvent(
         'mousePressed.'..screen.name..'.'..self.name, 
-        { x=x, y=y, button=button, isTouch=isTouch, presses=presses, screen=screen, scene=self }
+        {x=x, y=y, button=button, isTouch=isTouch, presses=presses, screen=screen, scene=self}
     )
 end
 

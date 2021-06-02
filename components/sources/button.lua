@@ -20,6 +20,11 @@ function Button:new(config)
     self.parent = {}
     self.screenName = ''
     self.sceneName = ''
+    self.actions = {
+        hover = {},
+        click = {},
+        release = {}
+    }
 
     config.alias = config.alias or 'button'
     config.initializer = config.initializer or 'components/sources/initializers/button'
@@ -44,26 +49,25 @@ end
 
 function Button:click()
     if type(self.click) == 'table' then
-        self.click:run(self)
+        self.actions.click:run(self)
     else
-        self.click(self)
+        self.actions.click(self)
     end
 end
 
 function Button:hover()
-    self:log('[Button:hover] +')
     if type(self.hover) == 'table' then
-        self.hover:run(self)
+        self.actions.hover:run(self)
     else
-        self.hover(self)
+        self.actions.hover(self)
     end
 end
 
 function Button:release()
     if type(self.release) == 'table' then
-        self.release:run(self)
+        self.actions.release:run(self)
     else
-        self.release(self)
+        self.actions.release(self)
     end
 end
 

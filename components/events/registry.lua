@@ -11,8 +11,8 @@ function EventRegistry:new(config)
     EventRegistry.super.new(self, config)
 end
 
-function EventRegistry:setEvent(name, ...)
-    self.events[name] = Event({args = {...}})
+function EventRegistry:setEvent(name, args)
+    self.events[name] = Event({args = args})
 end
 
 function EventRegistry:getEvent(name)
@@ -23,14 +23,14 @@ function EventRegistry:on(eventName, listener, execTimes)
     self.listeners:add(eventName, listener, execTimes)
 end
 
-function EventRegistry:riseEvent(eventName, ...)
-    self:setEvent('before.'..eventName, ...)
-    self:runEvent('before.'..eventName, ...)
+function EventRegistry:riseEvent(eventName, args)    
+    self:setEvent('before.'..eventName, args)
+    self:runEvent('before.'..eventName, args)
     
-    self:setEvent(eventName, ...)
+    self:setEvent(eventName, args)
     self:runEvent(eventName)
 
-    self:setEvent('after.'..eventName, ...)
+    self:setEvent('after.'..eventName, args)
     self:runEvent('after.'..eventName)
 end
 
@@ -53,7 +53,7 @@ end
 
 function EventRegistry:flushLike(text)
     for name, event in pairs(self.events) do
-        if name.find(text) > 0 then
+        if name:find(text) then
             self:flush(name)
         end
     end

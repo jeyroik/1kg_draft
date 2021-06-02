@@ -12,7 +12,6 @@ function HookDefault:new(config)
 end
 
 function HookDefault:on(eventName, event)
-    self:log('[HookDdefault:on] '..eventName)
     if eventName:find('mouseMoved') then
         self:mouseMoved(event)
     elseif eventName:find('mousePressed') then
@@ -40,7 +39,6 @@ function HookDefault:mouseMoved(event)
 end
 
 function HookDefault:mousePressed(event)
-    self:log('[HookDefault:mousePressed] event.args: '..event.args.x..','..event.args.y)
     if self.button:isMouseOn(event.args.x, event.args.y) then
         event.target = self.button
         self.button:click()

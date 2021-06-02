@@ -14,18 +14,20 @@ function ButtonDefault:new(config)
     config.effect = {
         path = 'components/sources/buttons/effects/frame'
     }
-    config.hover = function () 
-        self.state = 'hovered'
-        game.assets:getCursor('hand'):draw() 
-    end
-    config.click = function () 
-        self.state = 'clicked'
-        self.pressed = true
-    end
-    config.release = function () 
-        self.state = 'default'
-        game.assets:getCursor('hand'):reset() 
-    end
+    config.actions = {
+        hover = function () 
+            self.state = 'hovered'
+            game.assets:getCursor('hand'):draw() 
+        end,
+        click = function () 
+            self.state = 'clicked'
+            self.pressed = true
+        end,
+        release = function () 
+            self.state = 'default'
+            game.assets:getCursor('hand'):reset() 
+        end
+    }
     config.color = {0, 0.5, 0}
 
     ButtonDefault.super.new(self, config)

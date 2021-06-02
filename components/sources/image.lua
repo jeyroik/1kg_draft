@@ -5,7 +5,8 @@ Image = Source:extend()
 -- @param image source
 -- @return void
 function Image:new(config)
-	config.initializer = config.initializer or 'components/sources/initializers/image'
+	config.prefixedName = false
+	config.initializer  = config.initializer or 'components/sources/initializers/image'
 
 	Image.super.new(self, config)
 

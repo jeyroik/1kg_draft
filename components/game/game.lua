@@ -19,6 +19,7 @@ function Game:new(config)
 	self.mouse = { x = 0, y = 0 }
 	self.fps = 1
 	self.events = Events()
+	self.initialized = false
 
 	Game.super.new(self, config)
 end
@@ -29,13 +30,16 @@ function Game:init()
 	self:initializeOne('assets')
 	self:initializeOne('resources')
 
-	self.assets:init()
-
 	self:changeStateTo('main')
 end
 
 function Game:update(dt)
 	self.fps = dt
+
+	if not self.initialized then
+		self.assets:init()
+		self.initialized = true
+	end
 
 	self.events:riseEvent('update', { dt=dt })
 	self:getCurrentState():update(dt)

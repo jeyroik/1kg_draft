@@ -8,13 +8,12 @@ GameObject:implement(Uuid)
 GameObject:implement(Initializer)
 
 function GameObject:new(config)
-    self.alias      = 'unknown' -- @deprecated
-    self.name       = 'unknown'
-    self.id         = self:getId()
-    self.gridRow    = 0
-    self.gridColumn = 0
-    self.screenName = ''
-    self.sceneName  = ''
+    self.name         = 'unknown'
+    self.id           = self:getId()
+    self.gridRow      = 0
+    self.gridColumn   = 0
+    self.screenName   = ''
+    self.sceneName    = ''
 
     self:applyConfig(config)
 end

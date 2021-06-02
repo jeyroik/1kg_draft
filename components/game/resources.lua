@@ -19,9 +19,14 @@ function GameResources:create(name, config)
 
     config.screenName = screen.name
     config.sceneName  = screen:getCurrentState().name
-    config.name       = config.screenName .. '.' .. config.sceneName .. '.' .. name
 
-    return resourceClass(config)
+    local resource = resourceClass(config)
+
+    if resource.prefixedName then
+        resource.name = config.screenName .. '.' .. config.sceneName .. '.' .. name
+    end
+
+    return resource
 end
 
 return GameResources

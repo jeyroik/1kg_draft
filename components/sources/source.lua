@@ -5,10 +5,11 @@ Source = VisibleObject:extend()
 Source:implement(SourceHasInitializer)
 
 function Source:new(config)
-    self.path        = ''
-    self.initializer = ''
-    self.autoInit    = true
-    self.selected    = false
+    self.path         = ''
+    self.initializer  = ''
+    self.autoInit     = true
+    self.selected     = false
+    self.prefixedName = true
 
     Source.super.new(self, config)
 

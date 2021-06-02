@@ -48,7 +48,7 @@ return {
             source_positioned   = { path = 'components/sources/spurce_positioned' },
             stone               = { path = 'components/sources/stone' },
             text_overlay        = { path = 'components/sources/text_overlay' },
-            text                = { path = 'componennts/sources/text'},
+            text                = { path = 'components/sources/text'},
             window              = { path = 'components/sources/window' },
             window_header       = { path = 'components/sources/window/header' },
             window_body         = { path = 'components/sources/window_body' }
