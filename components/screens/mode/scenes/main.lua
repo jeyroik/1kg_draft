@@ -12,8 +12,6 @@ function SceneMain:new(config)
     self.views = {
         MainView()
     }
-    
-    self.header = Text({ body = 'Choose mode' })
 end
 
 function SceneMain:initState(screen)
@@ -22,24 +20,20 @@ function SceneMain:initState(screen)
         'scene_before'
     )
 
-    self.campaignBtn = game.resources:create('button_default', { text = 'Campaign' })
-    self.arenaBtn    = game.resources:create('button_default', { text = 'Arena' })
+    self.header = game:create('text', { body = 'Choose mode'})
 
-    -- 1 - сколько раз реагировать на это событие
-    game.events:on(
-        self.campaignBtn:getEventName('buttonPressed'), 
-        function () 
+    self.campaignBtn = game:create('button_default', { 
+        text = 'Campaign', 
+        mousePressed = function() 
             game:changeStateTo('campaign_auth') 
-        end, 
-        1
-    )
-    game.events:on(
-        self.arenaBtn:getEventName('buttonPressed'),
-        function ()
-            game:changeStateTo('arena_auth')
-        end,
-        1
-    )
+        end
+    })
+    self.arenaBtn = game:create('button_default', { 
+        text = 'Arena', 
+        mousePressed = function() 
+            game:changeStateTo('arena_auth') 
+        end
+    })
 end
 
 function SceneMain:onActive(...)

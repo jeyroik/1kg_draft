@@ -7,7 +7,6 @@ function SceneMain:new(config)
 
     SceneMain.super.new(self, config)
 
-    
     self.views = {
         CampaignAuthSceneMainView()
     }
@@ -27,23 +26,15 @@ end
 
 function SceneMain:initState(screen)
     self.inputField = game.assets:getImage('inputField')
-    self.submit     = game.resources:create('button_default', { text = 'submit' })
+    self.submit     = game:create('button_default', { text = 'submit' })
 
-    self.playerName = game.resources:create('text', { body = 'Unknown' })
-    self.header     = game.resources:create('text', { body = 'Enter your name' })
+    self.playerName = game:create('text', { body = 'Unknown' })
+    self.header     = game:create('text', { body = 'Enter your name' })
 
-    self.back = game.resources:create('image', { path = 'board_stone.png'})
+    self.back = game:create('image', { path = 'board_stone.png'})
     self.back.x = 0
     self.back.y = 0
     self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
-
-    game.events:on(
-        self.submit:getEventName('buttonPressed'), 
-        function () 
-            self:submitButtonPressed()
-        end, 
-        1
-    )
 end
 
 function SceneMain:textInput(screen, text)
@@ -101,11 +92,9 @@ function SceneMain:update(screen, dt)
 end
 
 function SceneMain:updateUI()
-    local pos = game.graphics:getItem(6, 10)
+    local pos = game.graphics:getItem(6,10)
 
-    self.inputField.x = pos.x
-    self.inputField.y = pos.y
-    game.graphics:setScale(self.inputField, 7, 2)
+    game.graphics:put(self.inputField, 6,10, 7,2)
 
     self.playerName.sx = ((pos.width/2) * #self.playerName.body) / self.playerName.width
     self.playerName.sy = (pos.height/2) / self.playerName.height
@@ -113,19 +102,11 @@ function SceneMain:updateUI()
     self.playerName.x = math.floor(self.playerName.x)
     self.playerName.y = math.floor(self.playerName.y)
 
-    pos = game.graphics:getItem(4,10)
-    self.header.x = pos.x
-    self.header.y = pos.y
-    game.graphics:setScale(self.header, 7, 1)
+    game.graphics:put(self.header, 4,10, 7,1)
+    game.graphics:put(self.submit, 10,11, 5,2)
 
 
-    pos = game.graphics:getItem(10,11)
-    self.submit.x = pos.x
-    self.submit.y = pos.y
-    game.graphics:setScale(self.submit, 5, 2)
-    self.submit:reload()
-
-    self.inputCursor = Text({ 
+    self.inputCursor = game:create('text', { 
         body = '|', 
         x    = self.playerName.x + self.playerName.width*self.playerName.sx, 
         y    = self.playerName.y, 

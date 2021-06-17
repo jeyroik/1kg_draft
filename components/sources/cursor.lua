@@ -3,35 +3,35 @@ local Source = require 'components/sources/source'
 Cursor = Source:extend()
 
 function Cursor:new(config)
-    self.isSet = false
-    self.setter = ''
+    self.target = {}
+
     config.initializer = config.initializer or 'components/sources/initializers/cursor'
 
     Cursor.super.new(self, config)
 end
 
 function Cursor:draw()
-    self:setOn('self.render')
+    self:setOn()
 end
 
-function Cursor:setOn(setter)
+function Cursor:setOn()
     love.mouse.setCursor(self.source)
-    self.isSet = true
-    self.setter = setter or 'unknown'
 end
 
 function Cursor:reset()
     love.mouse.setCursor()
-    self.isSet = false
-    self.setter = ''
 end
 
-function Cursor:isSetOn()
-    return self.isSet
+function Cursor:isTarget(gameObject)
+    return self.target.id == gameObject.id
 end
 
-function Cursor:isSetter(name)
-    return self.setter == name
+function Cursor:setTarget(gameObject)
+    self.target = gameObject
+end
+
+function Cursor:releaseTarget()
+    self.target = {}
 end
 
 return Cursor

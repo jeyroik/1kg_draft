@@ -11,7 +11,9 @@ function CampaignAuthSceneMainView:draw(data, scene)
     scene.header:draw()
     scene.inputField:draw()
     scene.playerName:draw()
+    
     scene.submit:draw()
+    self:log('CampaignAuthSceneMainView:draw - drawed submit')
 
     if scene.textCursor then
         scene.inputCursor:draw()

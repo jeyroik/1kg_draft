@@ -12,10 +12,8 @@ function SceneMain:new(config)
     
     self.back = {}
     self.header = {}
+
     self.playerTeam = {}
-    game.profile.screenName = game:getCurrentState().alias
-    game.profile.sceneName  = 'main'
-    self.playerCard = Card(game.profile)
     self.playerCharacters = {}
 
     self.enemyTeam = {}
@@ -29,71 +27,31 @@ end
 
 function SceneMain:initState(screen, ...)
     local cardHook = require 'components/screens/campaign_before_battle/hooks/main/card'
-    screen:catchEvent('cardMouseOn', 'self', cardHook({alias = 'cbb_main'}))
-    screen:catchEvent('cardPressed', 'self', cardHook({alias = 'cbb_main'}))
 
-    self.header = Text({ body = screen.location })
-    self.playerTeam = Text({ body = game.profile.title })
+    game.events:on(
+        screen.name..'.'..self.name..'.cardMouseOn', 
+        cardHook({alias = 'cbb_main'})
+    )
+    game.events:on(
+        screen.name..'.'..self.name..'.cardPressed', 
+        cardHook({alias = 'cbb_main'})
+    )
 
-    self.enemyTeam = Text({ body = screen.enemy.title })
+    self.playerCard = game.resources:create('card', game.profile)
+    self.header     = game.resources:create('text', { body = screen.location })
+    self.playerTeam = game.resources:create('text', { body = game.profile.title })
+
+    self.enemyTeam = game.resources:create('text', { body = screen.enemy.title })
     local enemy = screen.enemy
     enemy.screenName = screen.alias
-    enemy.sceneName = 'main'
-    self.enemyCard = Card(enemy)
+    enemy.sceneName  = 'main'
+    self.enemyCard = game.resources:create('card', enemy)
 
-    self.changeBtn = Button({
-        name = 'change',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'Change team',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        parent = screen,
-        screenName = 'campaign_before_battle',
-        sceneName = 'main',
-        color = {0, 0.5, 0}
-    })
-    self.submitBtn = Button({
-        name = 'battle',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'Start battle',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        parent = screen,
-        screenName = 'campaign_before_battle',
-        sceneName = 'main',
-        color = {0, 0.5, 0}
-    })
-    self.cancelBtn = Button({
-        name = 'exit',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'Exit fight',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        parent = screen,
-        screenName = 'campaign_before_battle',
-        sceneName = 'main',
-        color = {0, 0.5, 0}
-    })
+    self.changeBtn = game.resources:create('button_default', {text = 'Change team'})
+    self.submitBtn = game.resources:create('button_default', {text = 'Start battle',})
+    self.cancelBtn = game.resources:create('button_default', {text = 'Exit fight'})
 
-    self.back = Image({ path = 'board_stone.png'})
+    self.back = game.resources:create('image', { path = 'board_stone.png'})
     self.back.x = 0
     self.back.y = 0
     self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
@@ -117,42 +75,38 @@ function SceneMain:initState(screen, ...)
         )
     end
 
-    self:updateUI()
+    game.events:on(
+        self.changeBtn:getEventName('buttonPressed'), 
+        function () 
+            screen:changeStateTo('team')
+        end, 
+        1
+    )
+
+    game.events:on(
+        self.submitBtn:getEventName('buttonPressed'), 
+        function () 
+            game:changeStateTo('battle', {
+                players = {
+                    game.profile,
+                    screen.enemy,
+                },
+                nextScreen = 'campaign_map'
+            })
+        end, 
+        1
+    )
+
+    game.events:on(
+        self.cancelBtn:getEventName('buttonPressed'), 
+        function () 
+            game:changeStateTo('campaign_map')
+        end, 
+        1
+    )
 end
 
-function SceneMain:buttonPressed(screen, name)
-    if name == 'battle' then
-        self:battleButtonPressed(screen)
-    elseif name == 'change' then
-        self:changeButtonPressed(screen)
-    elseif name == 'exit' then
-        self:exitButtonPressed()
-    elseif name == 'fullscreen' then
-        self:fullscreenButtonPressed()
-    end
-end
-
-function SceneMain:battleButtonPressed(screen)
-    -- Start battle
-    game:changeStateTo('battle', {
-        players = {
-            game.profile,
-            screen.enemy,
-        },
-        nextScreen = 'campaign_map'
-    })
-end
-
-function SceneMain:changeButtonPressed(screen)
-    screen:changeStateTo('team')
-end
-
-function SceneMain:exitButtonPressed()
-    game:changeStateTo('campaign_map')
-end
-
-function SceneMain:fullscreenButtonPressed()
-    self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
+function SceneMain:onActive(...)
     self:updateUI()
 end
 

@@ -7,8 +7,6 @@ function HookDefault:new(config)
     self.button = {}
     
     HookDefault.super.new(self, config)
-
-    self.alias = config.alias
 end
 
 function HookDefault:on(eventName, event)

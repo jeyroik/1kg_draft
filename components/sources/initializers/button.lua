@@ -38,19 +38,6 @@ function InitializerButton:initSource(button)
 
     button.source.text.sx = (btnWidthInCells*c.width) / button.source.text.width
     button.source.text.sy = c.height / button.source.text.height
-
-    self:setHooks(button)
-end
-
-function InitializerButton:setHooks(button)
-    local hook = require 'components/sources/buttons/hooks/default'
-
-    self:log('[InitializerButton:setHooks] set event "'
-        ..'mousePressed.'..button.screenName..'.'..button.sceneName..'"'
-        ..' | '..button.name..' - '..button.text
-    )
-    game.events:on('mousePressed.'..button.screenName..'.'..button.sceneName, hook({button = button}))
-    game.events:on('mouseMoved.'..button.screenName..'.'..button.sceneName, hook({button = button}))
 end
 
 return InitializerButton

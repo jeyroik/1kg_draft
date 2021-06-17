@@ -34,7 +34,7 @@ function SceneTeam:initState(screen)
     self.back.y = 0
     self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 
-    self.scrollUp   = Button({
+    self.scrollUp   = game.resources:create('button', {
         name = 'scrollUp',
         path = {
             default = 'scroll_up.png',
@@ -47,11 +47,9 @@ function SceneTeam:initState(screen)
             path = 'components/sources/buttons/effects/frame'
         },
         parent = screen,
-        screenName = 'campaign_before_battle',
-        sceneName = 'team',
         color = {0, 0.5, 0}
     })
-    self.scrollDown = Button({
+    self.scrollDown = game.resources:create('button', {
         name = 'scrollDown',
         path = {
             default = 'scroll_down.png',
@@ -64,15 +62,13 @@ function SceneTeam:initState(screen)
             path = 'components/sources/buttons/effects/frame'
         },
         parent = screen,
-        screenName = 'campaign_before_battle',
-        sceneName = 'team',
         color = {0, 0.5, 0}
     })
 
-    self.playerName = Text({ body = game.profile.title })
+    self.playerName = game.resources:create('text', { body = game.profile.title })
     local team = game.profile:getCurrentTeam()
     for name, char in pairs(team) do
-        self.playerTeam[name] = Card(char)
+        self.playerTeam[name] = game.resources:create('card', char)
     end
 
     self.scrollPageMax = math.floor(#game.profile.characters/6)
@@ -81,78 +77,47 @@ function SceneTeam:initState(screen)
     end
 
     for name, char in pairs(game.profile.characters) do
-        self.playerCharacters[name] = Card(char)
+        self.playerCharacters[name] = game.resources:create('card', char)
     end
 
-    self.submitBtn = Button({
-        name = 'ready',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'Submit',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        parent = screen,
-        screenName = 'campaign_before_battle',
-        sceneName = 'team',
-        color = {0, 0.5, 0}
-    })
-    self.cancelBtn = Button({
-        name = 'cancel',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'Cancel',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        parent = screen,
-        screenName = 'campaign_before_battle',
-        sceneName = 'team',
-        color = {0, 0.5, 0}
-    })
+    self.submitBtn = game.resources:create('button_default', {text = 'Submit'})
+    self.cancelBtn = game.resources:create('button_default', {text = 'Cancel'})
+
+    game.events:on(
+        self.scrollUp:getEventName('buttonPressed'), 
+        function () 
+            self.scrollPage = self.scrollPage > 1 and self.scrollPage - 1 or 1
+            self:updateUI()
+        end
+    )
+
+    game.events:on(
+        self.scrollDown:getEventName('buttonPressed'), 
+        function () 
+            self.scrollPage = self.scrollPage < self.scrollPageMax and self.scrollPage + 1 or self.scrollPageMax
+            self:updateUI()
+        end
+    )
+
+    game.events:on(
+        self.submitBtn:getEventName('buttonPressed'), 
+        function () 
+            screen:changeStateTo('main', {
+                playerTeam = self.playerTeam
+            })
+        end, 
+        1
+    )
+
+    game.events:on(
+        self.cancelBtn:getEventName('buttonPressed'), 
+        function () 
+            screen:changeStateTo('main')
+        end, 
+        1
+    )
+
     self:updateUI()
-end
-
-function SceneTeam:buttonPressed(screen, name)
-    if name == 'scrollUp' then
-        self:scrollUpButtonPressed()
-    elseif name == 'scrollDown' then
-        self:scrollDownButtonPressed()
-    elseif name == 'ready' then
-        self:readyButtonPressed(screen)
-    elseif name == 'cancel' then
-        self:cancelButtonPressed(screen)
-    elseif name == 'fullscreen' then
-        self:fullscreenButtonPressed()
-    end
-end
-
-function SceneTeam:scrollUpButtonPressed()
-    self.scrollPage = self.scrollPage > 1 and self.scrollPage - 1 or 1
-    self:updateUI()
-end
-
-function SceneTeam:scrollDownButtonPressed()
-    self.scrollPage = self.scrollPage < self.scrollPageMax and self.scrollPage + 1 or self.scrollPageMax
-    self:updateUI()
-end
-
-function SceneTeam:readyButtonPressed(screen)
-    screen:changeStateTo('main', {
-        playerTeam = self.playerTeam
-    })
-end
-
-function SceneTeam:cancelButtonPressed(screen)
-    screen:changeStateTo('main')
 end
 
 function SceneTeam:fullscreenButtonPressed()
@@ -162,19 +127,19 @@ end
 function SceneTeam:mouseMoved(screen, x, y)
     for i, card in pairs(self.playerTeam) do
         if card:isMouseOn(x,y) then
-            game.assets:getCursor('hand'):setOn()
+           -- game.assets:getCursor('hand'):setOn()
             return
         end
     end
 
     for i, card in pairs(self.playerCharacters) do
         if card:isMouseOn(x,y) then
-            game.assets:getCursor('hand'):setOn()
+           -- game.assets:getCursor('hand'):setOn()
             return
         end
     end
 
-    game.assets:getCursor('hand'):reset()
+
 end
 
 function SceneTeam:mousePressed(screen, x,y)

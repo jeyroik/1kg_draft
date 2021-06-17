@@ -18,16 +18,69 @@ function VisibleObject:new(config)
 		width = 1,
 		height = 1
 	}
-	self.position = {
-        row    = 0,
-        column = 0
-    }
-    self.size = {
-        width = 0,
-        height = 0
-    }
+
+	self.type = 'object'
+	self.mouseOn 	  = false
+	self.mouseOut 	  = false
+	self.mousePressed = false
 
 	VisibleObject.super.new(self, config)
+
+	self:subscribeForEvents()
+end
+
+function VisibleObject:subscribeForEvents()
+	local hook = require 'components/hooks/event'
+
+	if self.mousePressed then
+		self:log('[VisibleObject:subscribeForEvents] subscribed for mousePressed by '..self.name)
+		game.events:on('mousePressed.'..game:getSceneFullname(), hook({gameObject = self}))
+	end
+
+	if self.mouseOut or self.mouseOn then
+		self:log('[VisibleObject:subscribeForEvents] subscribed for mouseMoved by '..self.name)
+		game.events:on('mouseMoved.'..game:getSceneFullname(), hook({gameObject = self}))
+	end
+end
+
+function VisibleObject:eventMousePressed(event)
+	if self.mousePressed then
+		if type(self.mousePressed) == 'table' then
+			self.mousePressed:onPressed(event, self)
+		else
+			self.mousePressed(event, self)
+		end
+	end
+end
+
+function VisibleObject:eventMouseMoved(event)
+	if self:isMouseOn(event.args.x, event.args.y) then
+		self:eventMouseOn(event)
+		game.cursor:setTarget(self)
+	elseif game.cursor:isTarget(self) then
+		self:eventMouseOut(event)
+		game.cursor:releaseTarget()
+	end
+end
+
+function VisibleObject:eventMouseOn(event)
+	if self.mouseOn then
+		if type(self.mouseOn) == 'table' then
+			self.mouseOn:onPressed(event, self)
+		else
+			self.mouseOn(event, self)
+		end
+	end
+end
+
+function VisibleObject:eventMouseOut(event)
+	if self.mouseOut then
+		if type(self.mouseOut) == 'table' then
+			self.mouseOut:onPressed(event, self)
+		else
+			self.mouseOut(event, self)
+		end
+	end
 end
 
 function VisibleObject:draw(...)
@@ -268,11 +321,6 @@ end
 function VisibleObject:stepByY(dy)
 	self.xSource = self.x
 	self.y = self.y + dy
-end
-
-function VisibleObject:restoreCoords(x, y)
-	self.x = x and self.xSource or self.x
-	self.y = y and self.ySource or self.y
 end
 
 function VisibleObject:drawSelection(dx, dy, color, mode)

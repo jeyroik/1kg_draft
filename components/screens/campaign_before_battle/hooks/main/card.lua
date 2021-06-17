@@ -4,15 +4,13 @@ CardHook = Hook:extend()
 
 function CardHook:new(config)
     CardHook.super.new(self, config)
-
-    self.alias = config.alias or 'card_hook'
 end
 
-function CardHook:catch(screen, args, event, stage)
+function CardHook:on(eventName, event)
     local screenName = game.__state__
     local sceneName  = screen.__state__
 
-    if event == 'cardMouseOn' and stage == 'self' then
+    if eventName:find('cardMouseOn') then
         screen:registerTip({
             screenName = screenName,
             sceneName  = sceneName,
@@ -24,7 +22,7 @@ function CardHook:catch(screen, args, event, stage)
                 content = {
                     {
                         path = 'components/sources/text',
-                        body = args.card.description,
+                        body = event.args.card.description,
                         grid = {
                             row     = 0,
                             column  = 0,
@@ -35,7 +33,7 @@ function CardHook:catch(screen, args, event, stage)
                 }
             }
         })
-    elseif event == 'cardPressed' and stage == 'self' then
+    elseif eventName:find('cardPressed') then
         --
     end
 end

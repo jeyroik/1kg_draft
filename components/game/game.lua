@@ -1,6 +1,7 @@
-local Graphics  = require 'components/graphics/graphics'
-local StateWith = require 'components/states/state_with'
-local Events 	= require 'components/events/registry'
+local Graphics   = require 'components/graphics/graphics'
+local StateWith  = require 'components/states/state_with'
+local Events 	 = require 'components/events/registry'
+local GameCursor = require 'components/game/cursor'
 
 Game = StateWith:extend()
 
@@ -16,6 +17,7 @@ function Game:new(config)
 		move = false
 	}
 	self.graphics = {}
+	self.cursor = GameCursor({path = 'hand'})
 	self.mouse = { x = 0, y = 0 }
 	self.fps = 1
 	self.events = Events()
@@ -102,8 +104,19 @@ function Game:getCurrentScreen()
 	return self:getScreen(self.state)
 end
 
+function Game:getSceneFullname()
+	local screen = self:getCurrentState()
+	local scene  = screen:getCurrentState()
+
+	return screen.name .. '.' .. scene.name
+end
+
 function Game:getCurrentScreenLayerData()
 	return self:getScreenData(self.state)
+end
+
+function Game:create(objectType, objectConfig)
+	return self.resources:create(objectType, objectConfig)
 end
 
 return Game
