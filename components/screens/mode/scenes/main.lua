@@ -45,22 +45,6 @@ function SceneMain:onActive(...)
     self:updateUI()
 end
 
-function SceneMain:buttonPressed(screen, name)
-    if name == 'campaign' then
-        self:campaignButtonPressed()
-    elseif name == 'arena' then
-        self:arenaButtonPressed()
-    end
-end
-
-function SceneMain:campaignButtonPressed()
-    game:changeStateTo('campaign_auth')
-end
-
-function SceneMain:arenaButtonPressed()
-    game:changeStateTo('arena_auth')
-end
-
 function SceneMain:update()
     self:updateUI()
 end

@@ -25,42 +25,28 @@ end
 
 function SceneMain:initState(screen)
     self.inputField = game.assets:getImage('inputField')
-    self.submit     = Button({
-        name = 'submit',
-        path = {
-            default = 'menu_btn.png',
-            clicked = 'menu_btn_pressed.png'
-        },
-        text = 'submit',
-        text_scale = 0.4,
-        border = 15,
-        effect = {
-            path = 'components/sources/buttons/effects/frame'
-        },
-        color = {0, 0.5, 0},
-        parent = screen,
-        screenName = 'campaign_auth',
-        sceneName = 'main'
-    })
-    self.playerName = Text({ body = 'Unknown' })
-    self.header     = Text({ body = 'Enter your name' })
+    self.submit     = game.resources:create('button_default', { text = 'submit' })
 
-    self.back = Image({ path = 'board_stone.png'})
+    self.playerName = game.resources:create('text', { body = 'Unknown' })
+    self.header     = game.resources:create('text', { body = 'Enter your name' })
+
+    self.back = game.resources:create('image', { path = 'board_stone.png'})
     self.back.x = 0
     self.back.y = 0
     self.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
-    self:updateUI()
+
+    game.events:on(
+        self.submit:getEventName('buttonPressed'), 
+        function () 
+            self:submitButtonPressed()
+        end, 
+        1
+    )
 end
 
 function SceneMain:textInput(screen, text)
     if #self.playerName.body < 11 then
         self.playerName:append(text)
-    end
-end
-
-function SceneMain:buttonPressed(screen, name)
-    if name == 'submit' then
-        self:submitButtonPressed()
     end
 end
 
@@ -95,6 +81,10 @@ function SceneMain:keyPressed(screen, key)
     elseif key == 'return' then
         self.submitButtonPressed(self)
     end
+end
+
+function SceneMain:onActive(...)
+    self:updateUI()
 end
 
 function SceneMain:update(screen, dt)
