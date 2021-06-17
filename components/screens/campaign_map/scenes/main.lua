@@ -3,14 +3,22 @@ local ViewMap = require "components/screens/campaign_map/scenes/main/view_map"
 SceneMain = Scene:extend()
 
 function SceneMain:new(config)
+    config.name = 'main'
+    
     SceneMain.super.new(self, config)
-
-    self.name = 'main'
+    
     self.views = {
         ViewMap()
     }
     self.label = {}
     self.selected = ''
+    self.map = {}
+    
+end
+
+function SceneMain:initState(screen)
+    local map = require 'components/screens/campaign_map/scenes/main/map'
+    self.map = game.resources:create('map', map)
 end
 
 function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
@@ -23,9 +31,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
         game.translate.start.y = game.translate.start.y - (game.translate.start.y - y)
     end
 
-    local map = game.assets:getMap('main')
-
-    map:forEach('characters', function (char)
+    self.map:forEach('characters', function (char)
         if (char.number > 0) and char:isMouseOn(x, y) then
             if char.number ~= 46 then
                 char:changeNumberTo(46)
@@ -40,9 +46,9 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
 
     self.label = {}
 
-    map:forEachObject(function(mapObject)
+    self.map:forEachObject(function(mapObject)
         if mapObject:isMouseOn(x, y) then
-            self.label = TextOverlay({
+            self.label = game.resources:create('text_overlay', {
                 body = mapObject.title..'\n'..mapObject.description,
                 x = x+15-game.translate.x,
                 y = y-game.translate.y,
@@ -63,7 +69,7 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
     game.translate.start.x = x
     game.translate.start.y = y
 
-    game.assets:getMap('main'):forEachObject(function(mapObject)
+    self.map:forEachObject(function(mapObject)
         if mapObject.name == 'city1' and mapObject:isMouseOn(x, y) then
             game.assets:getCursor('hand'):reset()
             local enemy = ModelPlayer(game.assets:getCharacter('fire_elemental'))

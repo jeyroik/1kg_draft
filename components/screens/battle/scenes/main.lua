@@ -9,6 +9,7 @@ local LayerViewTip             = require "components/screens/layers/layer_view_t
 SceneMain = Scene:extend()
 
 function SceneMain:new(config)
+    config.name = 'main'
     self.fx = ''
     self.ready = false
 

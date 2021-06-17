@@ -5,9 +5,10 @@ local Scene      = require 'components/screens/scenes/scene'
 SceneMain = Scene:extend()
 
 function SceneMain:new(config)
+    config.name = 'main'
+    
     SceneMain.super.new(self, config)
 
-    self.name = 'main'
     self.views = {
         MainView()
     }

@@ -4,9 +4,9 @@ local Scene = require 'components/screens/scenes/scene'
 SceneTeam = Scene:extend()
 
 function SceneTeam:new(config)
+    config.name = 'team'
     SceneTeam.super.new(self, config)
 
-    self.name = 'team'
     self.views = {
         MainView()
     }

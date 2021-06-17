@@ -14,10 +14,10 @@ function InitializerMap:initSource(map)
             map.map[layerName][row] = {}
             for column, number in pairs(columns) do
                 local cell = game.graphics:getItem(row, column)
-
-                map.map[layerName][row][column] = MapCell({
+                
+                map.map[layerName][row][column] = game.resources:create('map_cell', {
                     alias   = 'map_cell',
-                    path    = map.alias,
+                    path    = map.alias, -- @deprecated
                     x       = cell.x,
                     y       = cell.y,
                     width   = map.width,

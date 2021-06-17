@@ -12,7 +12,6 @@ return {
             { path = 'components/screens/campaign_before_battle/scenes/main/importer'   },
             { path = 'components/screens/battle/scenes/main/importer'                   },
             { path = 'components/screens/battle/scenes/fight_after/importer'            },
-            { path = 'components/screens/campaign_map/scenes/main/importer'             },
             { path = 'components/hooks/fullscreen/importer'                             }
         }
     },

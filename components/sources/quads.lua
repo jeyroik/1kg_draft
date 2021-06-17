@@ -5,6 +5,7 @@ Quads = Source:extend()
 function Quads:new(config)
     self.columns = 0
     self.rows = 0
+    self.image = {}
 
     config.initializer = config.initializer or 'components/sources/initializers/quads'
 

@@ -3,6 +3,7 @@ local Screen = require "components/screens/screen"
 CampaignMap = Screen:extend()
 
 function CampaignMap:new(config)
+    config.name = 'campaign_map'
     CampaignMap.super.new(self, config)
 end
 

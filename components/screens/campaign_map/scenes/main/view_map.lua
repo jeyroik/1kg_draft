@@ -8,7 +8,7 @@ function ViewMap:new(config)
 end
 
 function ViewMap:draw(data, scene)
-    local map = game.assets:getMap(self.map_name)
+    local map = scene.map
     love.graphics.translate(game.translate.x, game.translate.y)
     map:draw()
     if scene.label.x then

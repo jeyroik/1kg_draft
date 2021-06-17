@@ -3,9 +3,11 @@ local CampaignAuthSceneMainView = require "components/screens/campaign_auth/scen
 SceneMain = Scene:extend()
 
 function SceneMain:new(config)
+    config.name = 'main'
+
     SceneMain.super.new(self, config)
 
-    self.name = 'campaign_auth.main'
+    
     self.views = {
         CampaignAuthSceneMainView()
     }
@@ -96,10 +98,6 @@ function SceneMain:update(screen, dt)
     end
 
     self:updateUI()
-end
-
-function SceneMain.fullscreenChanged(this, screen, mode)
-    this.back:scaleTo(VisibleObject({width = love.graphics.getWidth(), height = love.graphics.getHeight()}))
 end
 
 function SceneMain:updateUI()

@@ -3,6 +3,7 @@ local Screen = require "components/screens/screen"
 CampaignBeforeBattle = Screen:extend()
 
 function CampaignBeforeBattle:new(config)
+    config.name = 'campaign_before_battle'
     self.location = ''
     self.enemy = {}
 

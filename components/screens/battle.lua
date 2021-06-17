@@ -5,6 +5,8 @@ local Player = require "components/sources/player"
 Battle = Screen:extend()
 
 function Battle:new(config)
+    config.name = 'battle'
+    
 	self.board = {
         size = 5,
         deathPerc = 10,

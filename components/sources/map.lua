@@ -15,17 +15,9 @@ function Map:new(config)
     self.renderPath = {}
     self.totalWidth = 0
     self.totalHeight = 0
+    self.source = {}
 
     config.initializer = config.initializer or 'components/sources/initializers/map'
-    config.renderConfig = {
-        scale = 'size_position',
-        origin = {
-            x = 1,
-            y = 1,
-            w = 400,
-            h = 300
-        }
-    }
     Map.super.new(self, config)
 
     self.totalWidth = self.width * self.columns
@@ -36,7 +28,7 @@ function Map:draw()
     for i=1,#self.renderPath do
         local layerName = self.renderPath[i]
         self:forEach(layerName, function(cell)
-            cell:draw()
+            cell:draw(self)
             return true
         end)
     end

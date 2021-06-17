@@ -11,6 +11,10 @@ function EventRegistry:new(config)
     EventRegistry.super.new(self, config)
 end
 
+function EventRegistry:hasEvent(name)
+    return self.listeners:has(name)
+end
+
 function EventRegistry:setEvent(name, args)
     self.events[name] = Event({args = args})
 end

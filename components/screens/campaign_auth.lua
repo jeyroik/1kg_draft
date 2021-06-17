@@ -3,6 +3,7 @@ local Screen = require "components/screens/screen"
 CampaignAuth = Screen:extend()
 
 function CampaignAuth:new(config)
+    config.name = 'campaign_auth'
 	CampaignAuth.super.new(self, config)
 end
 

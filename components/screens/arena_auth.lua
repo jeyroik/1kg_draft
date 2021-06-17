@@ -3,6 +3,8 @@ local Screen = require "components/screens/screen"
 ArenaAuth = Screen:extend()
 
 function ArenaAuth:new(config)
+    config.name = 'arena_auth'
+
 	ArenaAuth.super.new(self, config)
 end
 

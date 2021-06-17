@@ -23,6 +23,10 @@ function Listeners:remove(eventName)
     self.items[eventName] = nil
 end
 
+function Listeners:has(name)
+    return self.items[eventName] and true or false
+end
+
 function Listeners:get(eventName)
     if not self.items[eventName] then
         return {}

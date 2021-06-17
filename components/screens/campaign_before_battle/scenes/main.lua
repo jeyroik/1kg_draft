@@ -3,9 +3,9 @@ local MainView = require "components/screens/campaign_before_battle/scenes/main/
 SceneMain = Scene:extend()
 
 function SceneMain:new(config)
+    config.name = 'main'
     SceneMain.super.new(self, config)
 
-    self.name  = 'main'
     self.views = {
         MainView()
     }

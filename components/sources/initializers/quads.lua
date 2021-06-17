@@ -5,7 +5,7 @@ local InitializerImage  = require 'components/sources/initializers/image'
 InitializerQuads = InitializerImage:extend()
 
 function InitializerQuads:initSource(source)
-    source.image = Image({ path = source.path })
+    source.image = game.resources:create('image', { path = source.path })
     local imageWidth = source.image:getWidth()
     local imageHeight = source.image:getHeight()
 

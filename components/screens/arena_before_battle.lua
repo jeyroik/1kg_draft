@@ -3,6 +3,8 @@ local Screen = require "components/screens/screen"
 ArenaBeforeBattle = Screen:extend()
 
 function ArenaBeforeBattle:new(config)
+    config.name = 'arena_before_battle'
+
 	ArenaBeforeBattle.super.new(self, config)
 end
 

@@ -14,16 +14,18 @@ function GameResources:create(name, config)
     end
 
     local resourceClass = require(self.items[name].path)
-    local name = config.name or self:getId()
+    local resourceName = config.name or self:getId()
     local screen = game:getCurrentState()
+    local scene = screen:getCurrentState()
 
     config.screenName = screen.name
-    config.sceneName  = screen:getCurrentState().name
+    config.sceneName  = scene.name
+
 
     local resource = resourceClass(config)
 
     if resource.prefixedName then
-        resource.name = config.screenName .. '.' .. config.sceneName .. '.' .. name
+        resource.name = config.screenName .. '.' .. config.sceneName .. '.' .. resourceName
     end
 
     return resource

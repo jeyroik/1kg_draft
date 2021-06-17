@@ -7,20 +7,21 @@ function MapCell:new(config)
     self.column = 0
     self.number = 0
     self.previous = 0
+    self.cell = {}
 
     config.initializer = config.initializer or 'components/sources/initializers/map/cell'
     MapCell.super.new(self, config)
 end
 
-function MapCell:draw()
-    local cell = game.assets:getQuads(self.path)
+function MapCell:draw(map)
+    local cell = map
     cell.x = self.x
     cell.y = self.y
     cell.width = self.width
     cell.height = self.height
     cell.sx = self.sx
     cell.sy = self.sy
-    cell:draw(self.number)
+    cell.super.draw(cell, self.number)
 end
 
 function MapCell:changeNumberTo(number)
