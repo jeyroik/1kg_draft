@@ -3,7 +3,6 @@ local Button = require 'components/sources/button'
 ButtonDefault = Button:extend()
 
 function ButtonDefault:new(config)
-    self.cursor = love.mouse.getSystemCursor('hand')
     config.path = {
         default  = 'menu_btn.png',
         hovered  = 'menu_btn.png',
@@ -17,11 +16,11 @@ function ButtonDefault:new(config)
     }
     config.mouseOn = function () 
         self.state = 'hovered'
-        love.mouse.setCursor(self.cursor)
+        game.cursor:setOn()
     end
     config.mouseOut = function () 
         self.state = 'default'
-        love.mouse.setCursor()
+        game.cursor:reset()
     end
    
     config.color = {0, 0.5, 0}

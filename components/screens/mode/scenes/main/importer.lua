@@ -20,9 +20,6 @@ function ModeImporter:new()
         btn = { path = "menu_btn.png" },
         btn_pressed = { path = "menu_btn_pressed.png" },
     }
-    self.cursors = {
-        hand = "hand"
-    }
     self.texts = {
         before_fight_header = { body = 'Choose mode', sx = 2, sy = 2, initializer = "components/screens/mode/scenes/main/initializer_header"}
     }

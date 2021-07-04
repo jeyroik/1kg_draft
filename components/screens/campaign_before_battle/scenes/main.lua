@@ -47,9 +47,39 @@ function SceneMain:initState(screen, ...)
     enemy.sceneName  = 'main'
     self.enemyCard = game.resources:create('card', enemy)
 
-    self.changeBtn = game.resources:create('button_default', {text = 'Change team'})
-    self.submitBtn = game.resources:create('button_default', {text = 'Start battle',})
-    self.cancelBtn = game.resources:create('button_default', {text = 'Exit fight'})
+    self.changeBtn = game.resources:create(
+        'button_default', 
+        {
+            text = 'Change team',
+            mousePressed = function () 
+                screen:changeStateTo('team')
+            end
+        }
+    )
+    self.submitBtn = game.resources:create(
+        'button_default', 
+        {
+            text = 'Start battle',
+            mousePressed = function () 
+                game:changeStateTo('battle', {
+                    players = {
+                        game.profile,
+                        screen.enemy,
+                    },
+                    nextScreen = 'campaign_map'
+                })
+            end
+        }
+    )
+    self.cancelBtn = game.resources:create(
+        'button_default',
+        {
+            text = 'Exit fight',
+            mousePressed = function () 
+                game:changeStateTo('campaign_map')
+            end
+        }
+    )
 
     self.back = game.resources:create('image', { path = 'board_stone.png'})
     self.back.x = 0
@@ -62,7 +92,7 @@ function SceneMain:initState(screen, ...)
         char.sceneName  = 'main'
         table.insert(
             self.playerCharacters,
-            Card(char)
+            game.resources:create('card', char)
         )
     end
 
@@ -71,39 +101,9 @@ function SceneMain:initState(screen, ...)
         char.sceneName  = 'main'
         table.insert(
             self.enemyCharacters,
-            Card(char)
+            game.resources:create('card', char)
         )
     end
-
-    game.events:on(
-        self.changeBtn:getEventName('buttonPressed'), 
-        function () 
-            screen:changeStateTo('team')
-        end, 
-        1
-    )
-
-    game.events:on(
-        self.submitBtn:getEventName('buttonPressed'), 
-        function () 
-            game:changeStateTo('battle', {
-                players = {
-                    game.profile,
-                    screen.enemy,
-                },
-                nextScreen = 'campaign_map'
-            })
-        end, 
-        1
-    )
-
-    game.events:on(
-        self.cancelBtn:getEventName('buttonPressed'), 
-        function () 
-            game:changeStateTo('campaign_map')
-        end, 
-        1
-    )
 end
 
 function SceneMain:onActive(...)

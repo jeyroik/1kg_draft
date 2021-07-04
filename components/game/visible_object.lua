@@ -23,6 +23,8 @@ function VisibleObject:new(config)
 	self.mouseOn 	  = false
 	self.mouseOut 	  = false
 	self.mousePressed = false
+	self.pointable	  = false
+	self.visible	  = true
 
 	VisibleObject.super.new(self, config)
 
@@ -30,15 +32,20 @@ function VisibleObject:new(config)
 end
 
 function VisibleObject:subscribeForEvents()
+	if self.pointable then
+		self.mouseOn  = function() game.cursor:setOn() end
+		self.mouseOut = function() game.cursor:reset() end
+	end
+
 	local hook = require 'components/hooks/event'
 
 	if self.mousePressed then
-		self:log('[VisibleObject:subscribeForEvents] subscribed for mousePressed by '..self.name)
+		self:log('[VisibleObject:subscribeForEvents] subscribed for mousePressed by '..self.name..' (event = '..'mousePressed.'..game:getSceneFullname()..')')
 		game.events:on('mousePressed.'..game:getSceneFullname(), hook({gameObject = self}))
 	end
 
 	if self.mouseOut or self.mouseOn then
-		self:log('[VisibleObject:subscribeForEvents] subscribed for mouseMoved by '..self.name)
+		self:log('[VisibleObject:subscribeForEvents] subscribed for mouseMoved by '..self.name..' (event = '..'mouseMoved.'..game:getSceneFullname()..')')
 		game.events:on('mouseMoved.'..game:getSceneFullname(), hook({gameObject = self}))
 	end
 end
@@ -54,10 +61,13 @@ function VisibleObject:eventMousePressed(event)
 end
 
 function VisibleObject:eventMouseMoved(event)
-	if self:isMouseOn(event.args.x, event.args.y) then
+	if self:isMouseOn(event.args.x, event.args.y) and self.visible then
+		if self.name == 'test' then
+			self:log('test on')
+		end
 		self:eventMouseOn(event)
 		game.cursor:setTarget(self)
-	elseif game.cursor:isTarget(self) then
+	elseif game.cursor:isTarget(self) and self.visible then
 		self:eventMouseOut(event)
 		game.cursor:releaseTarget()
 	end

@@ -26,6 +26,16 @@ function GameObject:log(message)
     love.filesystem.append('log.txt', '\n'..message)
 end
 
+function GameObject:trace(message, data)
+    message = message or ''
+    
+    if data then
+        self:log(message..': '..json.encode(data))
+    end
+
+    self:log(debug.traceback(message))
+end
+
 function GameObject:getEventName(event)
     return event .. '.' .. self.name
 end

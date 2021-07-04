@@ -46,16 +46,6 @@ function MainView:draw(screen, scene)
     scene.submitBtn:draw()
     scene.cancelBtn:draw()
 
-    if scene.changeBtn.pressed or scene.submitBtn.pressed or scene.cancelBtn.pressed then
-        hovered = true
-    end
-
-    if hovered then
-        game.assets:getCursor('hand'):setOn()
-    else
-        game.assets:getCursor('hand'):reset()
-    end
-
     for i, tip in pairs(screen.tips) do
         tip:draw()
     end

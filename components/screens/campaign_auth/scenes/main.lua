@@ -70,7 +70,9 @@ function SceneMain:submitButtonPressed()
             }
         })
         for i=1,15 do
-            table.insert(game.profile.characters, game.assets:getCharacter('fire_elemental'))
+            local fe = game.assets:getCharacter('fire_elemental')
+            fe.id = self:getId()
+            table.insert(game.profile.characters, fe)
         end
     end
 

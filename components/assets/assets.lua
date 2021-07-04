@@ -4,7 +4,6 @@ local Fx 		= require 'components/sources/fx'
 local Image 	= require 'components/sources/image'
 local ImagePack = require 'components/sources/image_pack'
 local Quads 	= require 'components/sources/quads'
-local Cursor 	= require 'components/sources/cursor'
 local Button 	= require 'components/sources/button'
 local Map 		= require 'components/sources/map'
 local Card 		= require 'components/sources/card'
@@ -26,7 +25,6 @@ function Assets:new(config)
 	self.imagesPacks = {}
 	self.quads = {}
 	self.misc = {}
-	self.cursors = {}
 	self.mutators = {}
 	self.buttons = {}
 	self.maps = {}
@@ -79,12 +77,6 @@ end
 -- @return mixed|nil
 function Assets:getMisc(name)
 	return self.misc[name]
-end
-
--- @param string name
--- @return Cursor|nil
-function Assets:getCursor(name)
-	return self.cursors[name]
 end
 
 -- @param string name
@@ -155,10 +147,6 @@ end
 
 function Assets:addMap(alias, config)
 	self.maps[alias] = game.resources:create('map', config)
-end
-
-function Assets:addCursor(alias, name)
-	self.cursors[alias] = game.resources:create('cursor', { path = name })
 end
 
 function Assets:addMutator(alias, path)

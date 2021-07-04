@@ -28,7 +28,8 @@ function CharactersImporter:new()
                     }
                 },
                 passive = {}
-            }
+            },
+            pointable = true
         },
         water_elemental = {
             name = 'Water elemental',
@@ -57,7 +58,8 @@ function CharactersImporter:new()
                     }
                 },
                 passive = {}
-            }
+            },
+            pointable = true
         },
         tree_elemental = {
             name = 'Tree elemental',
@@ -81,7 +83,8 @@ function CharactersImporter:new()
                     }
                 },
                 passive = {}
-            }
+            },
+            pointable = true
         },
         life_elemental = {
             name = 'Life elemental',
@@ -107,7 +110,8 @@ function CharactersImporter:new()
                     }
                 },
                 passive = {}
-            }
+            },
+            pointable = true
         }
     }
 end

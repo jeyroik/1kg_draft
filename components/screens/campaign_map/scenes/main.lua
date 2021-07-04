@@ -36,7 +36,7 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
             if char.number ~= 46 then
                 char:changeNumberTo(46)
             end
-            game.assets:getCursor('hand'):setOn()
+            game.cursor:setOn()
             return false
         else
             char:restoreNumber()
@@ -71,7 +71,7 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
 
     self.map:forEachObject(function(mapObject)
         if mapObject.name == 'city1' and mapObject:isMouseOn(x, y) then
-            game.assets:getCursor('hand'):reset()
+            game.cursor:reset()
             local enemy = ModelPlayer(game.assets:getCharacter('fire_elemental'))
             for i=1,3 do
                 table.insert(enemy.characters, game.assets:getCharacter('fire_elemental'))

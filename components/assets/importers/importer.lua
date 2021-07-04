@@ -10,7 +10,6 @@ function AssetImporter:new(config)
     self.imagesPacks = {}
     self.quads       = {}
     self.misc        = {}
-    self.cursors     = {}
     self.mutators    = {}
     self.buttons     = {}
     self.maps        = {}
@@ -52,10 +51,6 @@ function AssetImporter:importAssets(assetsManager)
 
     for alias, misc in pairs(self.misc) do
         assetsManager:addMisc(alias, misc)
-    end
-
-    for alias, cursor in pairs(self.cursors) do
-        assetsManager:addCursor(alias, cursor)
     end
 
     for alias, button in pairs(self.buttons) do

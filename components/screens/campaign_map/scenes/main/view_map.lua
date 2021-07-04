@@ -12,12 +12,12 @@ function ViewMap:draw(data, scene)
     love.graphics.translate(game.translate.x, game.translate.y)
     map:draw()
     if scene.label.x then
-        game.assets:getCursor('hand'):setOn()
+        game.cursor:setOn() -- @deprecated move cursor control out of the current view
         scene.label:draw()
         local selectedObject = map:getObject(scene.selected)
         selectedObject:drawSelection()
     else
-        game.assets:getCursor('hand'):reset()
+        game.cursor:reset() -- @deprecated move cursor control out of the current view
     end
     love.graphics.translate(-game.translate.x, -game.translate.y)
 end

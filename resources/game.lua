@@ -31,7 +31,7 @@ return {
             button              = { path = 'components/sources/button' },
             button_default      = { path = 'components/sources/buttons/default' },
             card                = { path = 'components/sources/card' },
-            cursor              = { path = 'components/sources/cursor' },
+            character           = { path = 'components/models/character'},
             fx                  = { path = 'components/sources/fx' },
             icon                = { path = 'components/sources/icon' },
             image_pack          = { path = 'components/sources/image_pack' },

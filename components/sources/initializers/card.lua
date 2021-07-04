@@ -9,14 +9,6 @@ function InitializerCard:initSource(card)
     card.height = cardDefault:getHeight()
 
     self:initSkills(card)
-    self:registerHooks(card)
-end
-
-function InitializerCard:registerHooks(card)
-    local hook = require 'components/sources/cards/hooks/default'
-
-    game.events:on('mousePressed.'..card.screenName..'.'..card.sceneName, hook({card = card}))
-    game.events:on('mouseMoved.'..card.screenName..'.'..card.sceneName, hook({card = card}))
 end
 
 function InitializerCard:initSkills(card)
