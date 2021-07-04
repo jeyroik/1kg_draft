@@ -1,5 +1,6 @@
 return {
     alias = 'game.engine',
+    debugOn = false,
     assets = {
         path = 'components/assets/assets',
         base_path = 'assets/',

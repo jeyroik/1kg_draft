@@ -49,11 +49,6 @@ function Battle:new(config)
 end
 
 function Battle:initState(...)
-    self:initHooks()
-	
-	self:runHooks('init', 'before', ...)
-
-	
 	self.__state__ = 'main'
 	self.__states__ = {
 		main 		= { path = 'components/screens/battle/scenes/main'         },
@@ -70,9 +65,7 @@ function Battle:initState(...)
         end
     end
 
-    self:changeStateTo('main', ...)
-
-	self:runHooks('init', 'after', ...)
+    Battle.super.initState(self)
 end
 
 function Battle:getCurrentPlayer()

@@ -117,12 +117,12 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                     color = selectionColor,
                     line_width = 5
                 }
-                game.assets:getCursor('hand'):setOn()
+                game.cursor:setOn()
                 return
             else
                 screen.tip = {}
                 screen.selection = {}
-                game.assets:getCursor('hand'):reset()
+                game.cursor:reset()
             end
         end
     end

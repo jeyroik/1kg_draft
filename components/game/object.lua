@@ -23,7 +23,9 @@ function GameObject:put(object, row, column, width, height)
 end
 
 function GameObject:log(message)
-    love.filesystem.append('log.txt', '\n'..message)
+    if game.debugOn then
+        love.filesystem.append('log.txt', '\n'..message)
+    end
 end
 
 function GameObject:trace(message, data)
