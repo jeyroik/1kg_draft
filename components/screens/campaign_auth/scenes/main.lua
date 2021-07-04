@@ -1,4 +1,5 @@
-local CampaignAuthSceneMainView = require "components/screens/campaign_auth/scenes/main/view"
+local CampaignAuthSceneMainView = require 'components/screens/campaign_auth/scenes/main/view'
+local Scene                     = require 'components/screens/scenes/scene'
 
 SceneMain = Scene:extend()
 
@@ -26,7 +27,15 @@ end
 
 function SceneMain:initState(screen)
     self.inputField = game.assets:getImage('inputField')
-    self.submit     = game:create('button_default', { text = 'submit' })
+    self.submit     = game:create(
+        'button_default', 
+        { 
+            text = 'submit',
+            mousePressed = function () 
+                self:submitButtonPressed()
+            end
+        }
+    )
 
     self.playerName = game:create('text', { body = 'Unknown' })
     self.header     = game:create('text', { body = 'Enter your name' })

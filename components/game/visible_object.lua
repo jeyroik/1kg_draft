@@ -44,7 +44,7 @@ function VisibleObject:subscribeForEvents()
 end
 
 function VisibleObject:eventMousePressed(event)
-	if self.mousePressed then
+	if self.mousePressed and self:isMouseOn(event.args.x, event.args.y) then
 		if type(self.mousePressed) == 'table' then
 			self.mousePressed:onPressed(event, self)
 		else

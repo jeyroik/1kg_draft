@@ -24,7 +24,10 @@ function InitializerButton:initSource(button)
         x = button.x, y = button.y, radian = button.radian, sx = button.sx, sy = button.sy
     })
     
-    button:setSize(button.source.images.default.source:getWidth(), button.source.images.default.source:getHeight())
+    button:setSize(
+        button.source.images.default.source:getWidth(), 
+        button.source.images.default.source:getHeight()
+    )
     
     local c = game.graphics:getItem(1,1)
     local btnWidthInCells = (button.width * button.sx) / c.width - 1
