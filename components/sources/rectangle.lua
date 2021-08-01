@@ -19,11 +19,9 @@ function Rectangle:draw()
         self.mode,
         self.x,
         self.y,
-        self.width,
-        self.height,
-        self.radian,
-        self.sx,
-        self.sy
+        self.width*self.sx,
+        self.height*self.sy,
+        self.radian
     )
     love.graphics.setColor({1,1,1,1})
 end

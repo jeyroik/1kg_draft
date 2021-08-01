@@ -27,6 +27,7 @@ end
 function Text:setBody(text)
 	self.body = text
 	self.source:set(text)
+	self:reload()
 end
 
 function Text:reload()

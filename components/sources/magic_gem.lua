@@ -14,24 +14,29 @@ function MagicGem:new(config)
 end
 
 function MagicGem:draw(mode)
-    
-end
-
-function MagicGem:draw(mode)
-    if mode == 'image+amount' then
-        MagicGem.super.draw('image')
-        local amountText = Text({
-            x = self.amountText.x,
-            y = self.amountText.y,
-            sx = self.amountText.sx,
-            sy = self.amountText.sy,
-            body = self.amount
-        })
-        amountText:draw()
+    if mode == 'image' then
+        MagicGem.super.draw(self, 'image')
     elseif mode == 'title' then
         local x, y = love.mouse.getPosition()
         MagicGem.super.draw(self, 'title')
     end
+
+    local left = self.mana - self.amount
+    local leftPerc = left/self.mana
+
+
+    local overlay = game.resources:create('rectangle', {
+        height = self.image.height * leftPerc,
+        width = self.image.width,
+        mode = 'fill',
+        x = self.image.x,
+        y = self.image.y,
+        color = {0.5,0.5,0.5,0.7},
+        sx = self.image.sx,
+        sy = self.image.sy
+    })
+
+    overlay:draw()
 end
 
 function MagicGem:getName()

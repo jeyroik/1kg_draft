@@ -40,9 +40,9 @@ function Board:draw()
 	self:reload()
 	for _, columns in pairs(self.cells) do
 		for _,stone in pairs(columns) do
-			--if stone.magic ~= 'deck' then
+			if stone.magic ~= 'deck' then
 				stone:draw()
-			--end
+			end
 		end
 	end
 end
@@ -117,15 +117,15 @@ function Board:addStone(screen)
 	return ''
 end
 
-function Board:merge(layerData, stone, nextRow, nextColumn)
+function Board:merge(screen, stone, nextRow, nextColumn)
 
 	local currentMagic = stone:getMagic()
 	local source = 'merge'
 
 	self:setMagic(nextRow, nextColumn, 'deck')
 
-	local currentPlayer = layerData:getCurrentPlayer()
-	local nextPlayer 	= layerData:getNextPlayer()
+	local currentPlayer = screen:getCurrentPlayer()
+	local nextPlayer 	= screen:getNextPlayer()
 
 	if stone:isDeathStone() then
 		local damage = self.deathStoneDamage * currentPlayer.attack - nextPlayer.defense
@@ -150,30 +150,30 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 		self:setMagic(stone.row, stone.column, 'deck')
 		self:decExisted()
 	end
-	layerData.statistics[currentPlayer.number].stones = layerData.statistics[currentPlayer.number].stones + 2
+	screen.statistics[currentPlayer.number].stones = screen.statistics[currentPlayer.number].stones + 2
 
 	self:decExisted()
 	
 	return source
 end
 
-function Board:move(layerData)
+function Board:move(screen)
 	local fx = ''
 
 	if self.gravity == 'down' then
-		fx = self:moveDown(layerData)
+		fx = self:moveDown(screen)
 	elseif self.gravity == 'up' then
-		fx = self:moveUp(layerData)
+		fx = self:moveUp(screen)
 	elseif self.gravity == 'left' then
-		fx = self:moveLeft(layerData)
+		fx = self:moveLeft(screen)
 	elseif self.gravity == 'right' then
-		fx = self:moveRight(layerData)
+		fx = self:moveRight(screen)
 	end
 
 	return fx
 end
 
-function Board:moveDown(layerData)
+function Board:moveDown(screen)
 	for row=self.rows,1,-1 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
@@ -187,7 +187,7 @@ function Board:moveDown(layerData)
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
 			if stone.magic ~= 'deck' and stone.row > 1 and self.cells[stone.row-1][stone.column].magic == stone.magic then
-				return self:merge(layerData, stone, stone.row-1, stone.column)
+				return self:merge(screen, stone, stone.row-1, stone.column)
 			end
 		end
 	end
@@ -195,7 +195,7 @@ function Board:moveDown(layerData)
 	return ''
 end
 
-function Board:moveUp(layerData)
+function Board:moveUp(screen)
 	for row=1,5 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
@@ -209,7 +209,7 @@ function Board:moveUp(layerData)
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
 			if stone.magic ~= 'deck' and stone.row < 5 and self.cells[stone.row+1][stone.column].magic == stone.magic then
-				return self:merge(layerData, stone, stone.row+1, stone.column)
+				return self:merge(screen, stone, stone.row+1, stone.column)
 			end
 		end
 	end
@@ -217,7 +217,7 @@ function Board:moveUp(layerData)
 	return ''
 end
 
-function Board:moveLeft(layerData)
+function Board:moveLeft(screen)
 	for _,columns in pairs(self.cells) do
 		for column=1,5 do
 			local stone = columns[column]
@@ -231,7 +231,7 @@ function Board:moveLeft(layerData)
 		for column=1,4 do
 			local stone = columns[column]
 			if stone.magic ~= 'deck' and stone.column < 5 and self.cells[stone.row][stone.column+1].magic == stone.magic then
-				return self:merge(layerData, stone, stone.row, stone.column+1)
+				return self:merge(screen, stone, stone.row, stone.column+1)
 			end
 		end
 	end
@@ -239,7 +239,7 @@ function Board:moveLeft(layerData)
 	return ''
 end
 
-function Board:moveRight(layerData)
+function Board:moveRight(screen)
 	for _,columns in pairs(self.cells) do
 		for column=5,1,-1 do
 			local stone = columns[column]
@@ -253,7 +253,7 @@ function Board:moveRight(layerData)
 		for column=5,1,-1 do
 			local stone = columns[column]
 			if stone.magic ~= 'deck' and stone.column > 1 and self.cells[stone.row][stone.column-1].magic == stone.magic then
-				return self:merge(layerData, stone, stone.row, stone.column-1)
+				return self:merge(screen, stone, stone.row, stone.column-1)
 			end
 		end
 	end

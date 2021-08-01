@@ -30,7 +30,7 @@ end
 function InitializerPlayer:initMagic(player)
     local magics        = game.assets:getMisc('magic')
     local magicPack     = game.assets:getImagePack('magic')
-    local sx            = player.cards[1].sx
+    local sx            = 0.5--player.cards[1].sx
     local magicX        = player.x - 80*sx
     local magicY        = player.y
     local magicYDelta   = 50*sx
@@ -58,10 +58,6 @@ function InitializerPlayer:initMagic(player)
                 power = plMagic.power,
                 magic = magic,
                 image = {
-                    x = magicX,
-                    y = magicY,
-                    sx = sx,
-                    sy = sx,
                     path = magicImage.path
                 },
                 text = {

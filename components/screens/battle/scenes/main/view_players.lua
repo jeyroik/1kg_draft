@@ -2,30 +2,16 @@ local LayerView = require "components/screens/layers/layer_view"
 
 ViewPlayers = LayerView:extend()
 
-function ViewPlayers:draw(screen)
+function ViewPlayers:draw(screen, scene)
     self:renderCards(screen)
-    --self:renderFrameCurrentPlayer(data)
+    self:renderFrameCurrentPlayer(screen, scene)
     self:renderMagic(screen)
 end
 
-function ViewPlayers:renderFrameCurrentPlayer(screen)
-    local current = data.players[data.current]
-    local avatar = current.cards[1]
-    local turn = game.assets:getImage('turn')
-    turn.sx = 0.2
-    turn.sy = 0.2
-    turn:stickToTop(avatar)
-    turn:setToCenterOfObject(avatar, true)
-    turn:draw()
-
-    local turn_enemy = game.assets:getImage('turn_enemy')
-    local next = data.players[data.next]
-    avatar = next.cards[1]
-    turn_enemy.sx = 0.2
-    turn_enemy.sy = 0.2
-    turn_enemy:stickToTop(avatar)
-    turn_enemy:setToCenterOfObject(avatar, true)
-    turn_enemy:draw()
+function ViewPlayers:renderFrameCurrentPlayer(screen, scene)
+    scene.p1health:draw()
+    scene.p2health:draw()
+    scene.turn:draw()
 end
 
 function ViewPlayers:renderCards(screen)
@@ -61,10 +47,10 @@ function ViewPlayers:renderPlayerMagic(player)
         local m = magic:getByName(name)
         
 
-       -- gem:draw('image+amount')
-      --  if gem.isHovered then
-      --      gem:draw('title')
-      --  end
+        pm:draw('image')
+        if pm.isHovered then
+            pm:draw('title')
+        end
     end
 end
 

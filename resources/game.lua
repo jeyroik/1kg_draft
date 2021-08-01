@@ -62,7 +62,7 @@ return {
             title   = 'Player1',
             description = 'Game creator',
             level   = 1,
-            health  = 5,
+            health  = 15,
             attack  = 1,
             defense = 0,
             conviction = 5,

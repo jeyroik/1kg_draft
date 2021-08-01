@@ -19,11 +19,6 @@ function ImageTitled:new(config)
 end
 
 function ImageTitled:draw(mode)
-    
-end
-
-function ImageTitled:draw(mode)
-
     if mode == 'image' then
         self.image:draw()
     elseif mode == 'title' then

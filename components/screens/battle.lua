@@ -1,5 +1,4 @@
 local Screen = require "components/screens/screen"
-local Player = require "components/sources/player"
 
 Battle = Screen:extend()
 
@@ -59,7 +58,7 @@ end
 
 function Battle:stateChanged()
     for i, player in pairs(self.players) do
-        self.playersCards[i] = Player(player)
+        self.playersCards[i] = game.resources:create('player', player)
         local team = player:getCurrentTeam()
         self.playersTeams[i] = team
 

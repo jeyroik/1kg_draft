@@ -26,7 +26,7 @@ function ModelPlayer:new(config)
         stones = 0
     }
 
-    config.health = config.health or 5
+    config.health = config.health or 15
     config.attack = config.attack or 1
 
     ModelPlayer.super.new(self, config)
