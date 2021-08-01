@@ -1,6 +1,7 @@
 return {
     alias = 'game.engine',
-    debugOn = false,
+    debugOn = true,
+    tip = { path = 'components/dispatchers/tip' },
     assets = {
         path = 'components/assets/assets',
         base_path = 'assets/',

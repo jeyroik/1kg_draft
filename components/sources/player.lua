@@ -9,7 +9,7 @@ function Player:new(config)
 	self.isHuman = false
 	self.magic = {}
 	self.number = 1
-	self.gems = {}
+	self.magic = {}
 
 	config.initializer = 'components/sources/initializers/player'
 
@@ -46,7 +46,7 @@ function Player:addCards(cards)
 end
 
 function Player:getMagic(magicName)
-	return self.gems[magicName]
+	return self.magic[magicName]
 end
 
 function Player:getMagicPower(magicName)
@@ -74,7 +74,7 @@ function Player:decMagicMana(magicName, dec)
 end
 
 function Player:incMagicParameter(magicName, parameter, inc)
-	self.gems[magicName]:incMagicParameter(parameter, inc)
+	self.magic[magicName]:incMagicParameter(parameter, inc)
 end
 
 function Player:decMagicParameter(magicName, parameter, dec)
@@ -85,7 +85,7 @@ end
 -- @param string magicName magic name like 'air'
 -- @return number
 function Player:getMagicAmount(magicName)
-	return self.gems[magicName].amount
+	return self.magic[magicName].amount
 end
 
 -- @param Card card
@@ -119,7 +119,7 @@ end
 -- @param number amount
 -- @return void
 function Player:incMagicAmount(magicName, amount)
-	self.gems[magicName].amount = self.gems[magicName].amount + amount
+	self.magic[magicName].amount = self.magic[magicName].amount + amount
 end
 
 -- @param string magicName magic name like 'air'

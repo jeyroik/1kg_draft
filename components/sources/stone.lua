@@ -6,20 +6,20 @@ function MagicStone:new(config)
 	self.row = 1
 	self.column = 1
 	self.size = 61
-	self.volume = 1
 	self.state = 0
 	self.scale = 1
+	self.magic = 'deck'
 
-	config.path = 'gems'
+	config.path = 'magic'
 	config.initializer = config.initializer or 'components/sources/initializers/stone'
 
 	MagicStone.super.new(self, config)
 end
 
 function MagicStone:draw()
-	local pack = game.assets:getImagePack(self.path)
-	local image = pack:get(self:getMask())
-
+	local pack  = game.assets:getImagePack(self.path)
+	local image = pack:get(self.magic)
+	
 	image.x 	 = self.x
 	image.y 	 = self.y
 	image.width  = self.width
@@ -30,7 +30,7 @@ function MagicStone:draw()
 end
 
 function MagicStone:update(board)
-	local nextRow = self.row
+	local nextRow    = self.row
 	local nextColumn = self.column
 	
 	if board:isGravity('down') then
@@ -63,28 +63,19 @@ function MagicStone:update(board)
 		local nextCell = board:getCell(nextRow, nextColumn)
 
 		nextCell.state  = self.state
-		nextCell.volume = self.volume
+		nextCell.magic = self.magic
 		
-		self.state  = 0
-		self.volume = 1
+		self.state = 0
+		self.magic = 'deck'
 	end
 end
 
-function MagicStone:getMask()
-	return 'c' .. self.volume
-end
-
 function MagicStone:getMagic()
-	return game.assets:getMisc('magic'):getByType(self:getMask())
-end
-
--- @return Magic
-function MagicStone:getMagic()
-	return game.assets:getMisc('magic'):getByType(self:getMask())
+	return game.assets:getMisc('magic'):getByName(self.magic)
 end
 
 function MagicStone:upgrade()
-	self.volume = self.volume * 2
+	self.magic = self:getMagic().mergeTo
 end
 
 function MagicStone:setInAction()
@@ -104,11 +95,11 @@ function MagicStone:isInAction()
 end
 
 function MagicStone:isDeathStone()
-	return self.volume == 2048
+	return self.magic == 'death'
 end
 
 function MagicStone:isUltraDeathStone()
-	return self.volume == 4096
+	return self.magic == 'death_ultra'
 end
 
 function MagicStone:applyDeathMagic(deathPerc, ultraDeathPerc)
@@ -116,11 +107,11 @@ function MagicStone:applyDeathMagic(deathPerc, ultraDeathPerc)
 	ultraDeathPerc = ultraDeathPerc or 20
 
 	if love.math.random(1,deathPerc) == 1 then
-		self.volume = 2048
+		self.magic = 'death'
 	end
 
 	if love.math.random(1,ultraDeathPerc) == 1 then
-		self.volume = 4096
+		self.magic = 'death_ultra'
 	end
 end
 

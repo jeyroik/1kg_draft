@@ -2,6 +2,7 @@ local ViewBoard   = require "components/screens/battle/scenes/main/view_board"
 local ViewPlayers = require "components/screens/battle/scenes/main/view_players"
 local Scene       = require "components/screens/scenes/scene"
 local Board       = require "components/sources/board"
+local Background  = require 'components/screens/mode/scenes/main/view_background'
 
 local LayerViewSingleSelection = require "components/screens/layers/layer_view_single_selection"
 local LayerViewTip             = require "components/screens/layers/layer_view_tip"
@@ -10,8 +11,8 @@ SceneMain = Scene:extend()
 
 function SceneMain:new(config)
     config.name = 'main'
-    self.fx = ''
-    self.ready = false
+    self.fx     = ''
+    self.ready  = false
 
     SceneMain.super.new(self, config)
 
@@ -22,32 +23,36 @@ function SceneMain:new(config)
 end
 
 function SceneMain:initState(screen)
-    self:addSceneAfterViews(screen)
-
+    self:addSceneViews(screen)
+    game.cursor:reset()
     screen.board = Board(screen.board)
 
-    self:updateUI(screen)
+   -- self:updateUI(screen)
 end
 
 function SceneMain:updateUI(screen)
-    self:put(screen.board, 5,9, 10,10)
-    self:put(screen.playersCards[1], 5,2, 4,2)
-    self:put(screen.playersCards[2], 5,21, 4,2)
+    self:put(screen.board, 5,8, 10,10)
+    self:put(screen.playersCards[1], 5,3, 4,2)
+    self:put(screen.playersCards[2], 5,20, 4,2)
 
     local row = 8
     for i, card in pairs(screen.playersTeamsCards[1]) do
-        self:put(card, row,2, 4,2)
+        self:put(card, row,3, 4,2)
         row = row + 3
     end
 
     local row = 8
     for i, card in pairs(screen.playersTeamsCards[2]) do
-        self:put(card, row,21, 4,2)
+        self:put(card, row,20, 4,2)
         row = row + 3
     end
 end
 
-function SceneMain:addSceneAfterViews(screen)
+function SceneMain:addSceneViews(screen)
+    screen:addViewLayers(
+        { Background( {image = 'board_background'} ) },
+        'scene_before'
+    )
     screen:addViewLayers(
         {
             LayerViewSingleSelection(),
@@ -57,7 +62,7 @@ function SceneMain:addSceneAfterViews(screen)
     )
 end
 
-function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
+function SceneMain:mouseMoved2(screen, x, y, dx, dy, isTouch)
     for i=1,2 do
         pl = screen.playersCards[i]
         for _,magicGem in pairs(pl.gems) do
@@ -101,28 +106,10 @@ function SceneMain:mouseMoved(screen, x, y, dx, dy, isTouch)
                     selectionColor = {0.5, 0.5, 0.5}
                 end
 
-                screen.tip = {
-                    x = x,
-                    y = y,
-                    sx = card.sx,
-                    sy = card.sy,
-                    text = canUse .. '\n'..'Title: '..card.name .. '\n\nDescription:\n'..card.skill.active.description..'\n\nCost: ',
-                    icons = icons
-                }
-                screen.selection = {
-                    x = top.left.x,
-                    y = top.left.y,
-                    width = size.width*card.sx,
-                    height = size.height*card.sy,
-                    color = selectionColor,
-                    line_width = 5
-                }
-                game.cursor:setOn()
+  
                 return
             else
-                screen.tip = {}
-                screen.selection = {}
-                game.cursor:reset()
+                
             end
         end
     end
@@ -153,6 +140,8 @@ function SceneMain:keyPressed(screen, key)
 end
 
 function SceneMain:update(screen)
+    self:updateUI(screen)
+
     for _, player in pairs(screen.playersCards) do
         --player:update() @deprecated
     end
@@ -166,7 +155,7 @@ function SceneMain:update(screen)
         screen.statistics[current.number].win = not current:isDead()
         screen.statistics[nextPlayer.number].win = not nextPlayer:isDead()
         screen:setViewLayers({}, 'scene_after')
-        screen:changeSceneTo('fight_the_end', {})
+        screen:changeStateTo('fight_after', {})
     end
 
     if self.fx ~= '' then

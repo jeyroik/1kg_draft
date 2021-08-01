@@ -1,4 +1,5 @@
 local AssetImporter = require 'components/assets/importers/importer'
+local AssetMagic    = require 'components/assets/magic'
 
 Importer = AssetImporter:extend()
 
@@ -16,11 +17,19 @@ function Importer:new()
         skill = { path = "skill.wav", mode = "static" },
         skill_not = { path = "skill_not.wav", mode = "static", volume = 0.5 },
     }
-    self.imagesPacks = { gems = {} }
+    self.imagesPacks = { 
+        magic = {
+            deck        = {path = 'deck.png'},
+            death       = {path = 'death.png'},
+            death_ultra = {path = 'death_ultra.png'}
+        } 
+    }
 
-    for i=0, 12 do
-        self.imagesPacks.gems['c'..math.pow(2, i)] = {
-            path = "gem" .. math.pow(2, i) .. ".png"
+    local magic = AssetMagic()
+    local order = magic.namesOrder
+    for _,name in pairs(order) do
+        self.imagesPacks.magic[name] = {
+            path = name .. ".png"
         }
     end
 end

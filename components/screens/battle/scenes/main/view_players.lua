@@ -5,7 +5,7 @@ ViewPlayers = LayerView:extend()
 function ViewPlayers:draw(screen)
     self:renderCards(screen)
     --self:renderFrameCurrentPlayer(data)
-    --self:renderMagic(data)
+    self:renderMagic(screen)
 end
 
 function ViewPlayers:renderFrameCurrentPlayer(screen)
@@ -29,30 +29,42 @@ function ViewPlayers:renderFrameCurrentPlayer(screen)
 end
 
 function ViewPlayers:renderCards(screen)
+    local cardWithTip = false
     for i=1,2 do
         local player = screen.playersCards[i]
         
         player:drawPart(player.avatar.part)
         for i, card in pairs(screen.playersTeamsCards[i]) do
-            card:drawPart(card.avatar.part)
+            if card.tip.draw then
+                cardWithTip = card
+            else
+                card:drawPart(card.avatar.part)
+            end
         end
+    end
+
+    if cardWithTip then
+        cardWithTip:drawPart(cardWithTip.avatar.part)
     end
 end
 
 function ViewPlayers:renderMagic(screen)
-    self:renderPlayerGems(data.players[1])
-    self:renderPlayerGems(data.players[2])
+    self:renderPlayerMagic(screen.players[1])
+    self:renderPlayerMagic(screen.players[2])
 end
 
-function ViewPlayers:renderPlayerGems(player)
-    local order = game.assets:getMisc('magic').namesOrder
+function ViewPlayers:renderPlayerMagic(player)
+    local magic = game.assets:getMisc('magic')
+    local order = magic.namesOrder
     for _,name in pairs(order) do
-        local gem = player.gems[name]
+        local pm = player.magic[name]
+        local m = magic:getByName(name)
+        
 
-        gem:draw('image+amount')
-        if gem.isHovered then
-            gem:draw('title')
-        end
+       -- gem:draw('image+amount')
+      --  if gem.isHovered then
+      --      gem:draw('title')
+      --  end
     end
 end
 

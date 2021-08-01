@@ -5,7 +5,7 @@ InitializerStone = SourceInitializer:extend()
 function InitializerStone:initSource(stone)
     
     local pack = game.assets:getImagePack(stone.path)
-	local image = pack:get(stone:getMask())
+	local image = pack:get(stone.magic)
 
     stone.width  = image:getWidth()
     stone.height = image:getHeight()

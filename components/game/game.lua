@@ -22,6 +22,8 @@ function Game:new(config)
 	self.fps = 1
 	self.events = Events()
 	self.initialized = false
+	self.debugOn = false
+	self.tip = {}
 
 	Game.super.new(self, config)
 end
@@ -31,6 +33,7 @@ function Game:init()
 
 	self:initializeOne('assets')
 	self:initializeOne('resources')
+	self:initializeOne('tip')
 
 	self:changeStateTo('main')
 end
@@ -108,7 +111,8 @@ function Game:getSceneFullname()
 	local screen = self:getCurrentState()
 	local scene  = screen:getCurrentState()
 
-	return screen.name .. '.' .. scene.name
+	return screen.name .. 
+	'.' .. scene.name
 end
 
 function Game:getCurrentScreenLayerData()

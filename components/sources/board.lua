@@ -40,9 +40,9 @@ function Board:draw()
 	self:reload()
 	for _, columns in pairs(self.cells) do
 		for _,stone in pairs(columns) do
-			if stone.volume > 1 then
+			--if stone.magic ~= 'deck' then
 				stone:draw()
-			end
+			--end
 		end
 	end
 end
@@ -75,7 +75,7 @@ function Board:setToCenter(xAxis, yAxis)
 	end
 end
 
-function Board:addStone(layerData)
+function Board:addStone(screen)
 	local stopped = 0
 	for _, columns in pairs(self.cells) do
 		for _, stone in pairs(columns) do
@@ -94,13 +94,13 @@ function Board:addStone(layerData)
 
 	if stopped == self.existed then
 		self.gravity = 'none'
-		layerData:nextTurn()
+		screen:nextTurn()
 		for _=1, self.stonesPerRound do
 			local row = love.math.random(1,5)
 			local column = love.math.random(1,5)
 
-			if self.cells[row][column].volume < 2 then
-				self.cells[row][column].volume = love.math.random(1,8) == 3 and 4 or 2
+			if self.cells[row][column].magic == 'deck' then
+				self.cells[row][column].magic = love.math.random(1,8) == 3 and 'water' or 'air'
 				self.cells[row][column]:applyDeathMagic(self.deathPerc, self.ultraDeathPerc)
 
 				self:incExisted()
@@ -122,10 +122,10 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 	local currentMagic = stone:getMagic()
 	local source = 'merge'
 
-	self:setVolume(nextRow, nextColumn, 1)
+	self:setMagic(nextRow, nextColumn, 'deck')
 
 	local currentPlayer = layerData:getCurrentPlayer()
-	local nextPlayer = layerData:getNextPlayer()
+	local nextPlayer 	= layerData:getNextPlayer()
 
 	if stone:isDeathStone() then
 		local damage = self.deathStoneDamage * currentPlayer.attack - nextPlayer.defense
@@ -137,7 +137,7 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 		source = 'damage'
 	else
 		local currentMana = currentPlayer:getMagicAmount(currentMagic:getName())
-		local magic = currentPlayer:getMagic(currentMagic:getName())
+		local magic 	  = currentPlayer:getMagic(currentMagic:getName())
 
 		if magic.mana >= currentMana + magic.power then
 			currentPlayer:incMagicAmount(currentMagic:getName(), magic.power)
@@ -147,7 +147,7 @@ function Board:merge(layerData, stone, nextRow, nextColumn)
 	if currentMagic.isCanBeMerged then
 		self.cells[stone.row][stone.column]:upgrade()
 	else
-		self:setVolume(stone.row, stone.column, 1)
+		self:setMagic(stone.row, stone.column, 'deck')
 		self:decExisted()
 	end
 	layerData.statistics[currentPlayer.number].stones = layerData.statistics[currentPlayer.number].stones + 2
@@ -177,7 +177,7 @@ function Board:moveDown(layerData)
 	for row=self.rows,1,-1 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
-			if stone.volume > 1 then
+			if stone.magic ~= 'deck' then
 				stone:update(self)
 			end
 		end
@@ -186,7 +186,7 @@ function Board:moveDown(layerData)
 	for row=self.rows,1,-1 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
-			if stone.volume > 1 and stone.row > 1 and self.cells[stone.row-1][stone.column].volume == stone.volume then
+			if stone.magic ~= 'deck' and stone.row > 1 and self.cells[stone.row-1][stone.column].magic == stone.magic then
 				return self:merge(layerData, stone, stone.row-1, stone.column)
 			end
 		end
@@ -199,7 +199,7 @@ function Board:moveUp(layerData)
 	for row=1,5 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
-			if stone.volume > 1 then
+			if stone.magic ~= 'deck' then
 				stone:update(self)
 			end
 		end
@@ -208,7 +208,7 @@ function Board:moveUp(layerData)
 	for row=1,4 do
 		columns = self.cells[row]
 		for _,stone in pairs(columns) do
-			if stone.volume > 1 and stone.row < 5 and self.cells[stone.row+1][stone.column].volume == stone.volume then
+			if stone.magic ~= 'deck' and stone.row < 5 and self.cells[stone.row+1][stone.column].magic == stone.magic then
 				return self:merge(layerData, stone, stone.row+1, stone.column)
 			end
 		end
@@ -221,7 +221,7 @@ function Board:moveLeft(layerData)
 	for _,columns in pairs(self.cells) do
 		for column=1,5 do
 			local stone = columns[column]
-			if stone.volume > 1 then
+			if stone.magic ~= 'deck' then
 				stone:update(self)
 			end
 		end
@@ -230,7 +230,7 @@ function Board:moveLeft(layerData)
 	for _,columns in pairs(self.cells) do
 		for column=1,4 do
 			local stone = columns[column]
-			if stone.volume > 1 and stone.column < 5 and self.cells[stone.row][stone.column+1].volume == stone.volume then
+			if stone.magic ~= 'deck' and stone.column < 5 and self.cells[stone.row][stone.column+1].magic == stone.magic then
 				return self:merge(layerData, stone, stone.row, stone.column+1)
 			end
 		end
@@ -243,7 +243,7 @@ function Board:moveRight(layerData)
 	for _,columns in pairs(self.cells) do
 		for column=5,1,-1 do
 			local stone = columns[column]
-			if stone.volume > 1 then
+			if stone.magic ~= 'deck' then
 				stone:update(self)
 			end
 		end
@@ -252,7 +252,7 @@ function Board:moveRight(layerData)
 	for _,columns in pairs(self.cells) do
 		for column=5,1,-1 do
 			local stone = columns[column]
-			if stone.volume > 1 and stone.column > 1 and self.cells[stone.row][stone.column-1].volume == stone.volume then
+			if stone.magic ~= 'deck' and stone.column > 1 and self.cells[stone.row][stone.column-1].magic == stone.magic then
 				return self:merge(layerData, stone, stone.row, stone.column-1)
 			end
 		end
@@ -261,16 +261,17 @@ function Board:moveRight(layerData)
 	return ''
 end
 
-function Board:setVolume(row, column, volume)
-	self.cells[row][column].volume = volume
+function Board:setMagic(row, column, magic)
+	self.cells[row][column].magic = magic
 end
 
 function Board:setFree(row, column)
 	local s = self:calculateStoneParameters()
 
 	self.cells[row][column] = MagicStone({
-		row = row,
-		column = column
+		row 	= row,
+		column 	= column,
+		magic 	= 'deck'
 	})
 end
 
@@ -297,7 +298,7 @@ function Board:isOnEdge(edge, stone)
 end
 
 function Board:isReserved(row, column)
-	return self.cells[row][column].volume > 1
+	return self.cells[row][column].magic ~= 'deck'
 end
 
 function Board:incExisted()

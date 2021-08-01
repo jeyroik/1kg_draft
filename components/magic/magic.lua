@@ -9,6 +9,7 @@ function Magic:new(config)
 	self.type = 'c1'
 	self.isCanBeMerged = true
 	self.isDestroyable = true
+	self.mergeTo = ''
 
 	Magic.super.new(self, config)
 end

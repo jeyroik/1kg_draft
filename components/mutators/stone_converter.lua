@@ -14,8 +14,8 @@ function MutatorStoneConverter:apply(layerData, context)
 
     for _, columns in pairs(layerData.board.cells) do
         for _, stone in pairs(columns) do
-            if stone.volume == self.target then
-                stone.volume = self.mustBe
+            if stone.magic == self.target then
+                stone.magic = self.mustBe
             end
         end
     end

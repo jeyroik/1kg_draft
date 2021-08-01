@@ -25,6 +25,8 @@ function StateWith:changeStateTo(stateName, context)
     self.__states__[stateName] = state(context)
     self.__states__[stateName].path = statePath
     self.__states__[stateName]:setActive(self)
+
+    self:stateChanged()
 end
 
 function StateWith:getCurrentState()
@@ -33,6 +35,9 @@ end
 
 function StateWith:getState(name)
     return self.__states__[name]
+end
+
+function StateWith:stateChanged()
 end
 
 return StateWith

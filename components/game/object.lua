@@ -25,6 +25,8 @@ end
 function GameObject:log(message)
     if game.debugOn then
         love.filesystem.append('log.txt', '\n'..message)
+    else
+        love.filesystem.append('log2.txt', '\nDegub is off')
     end
 end
 

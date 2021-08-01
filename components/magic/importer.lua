@@ -1,5 +1,5 @@
 local AssetImporter = require 'components/assets/importers/importer'
-local MagicAsset    = require 'components/assets/asset_magic'
+local AssetMagic    = require 'components/assets/magic'
 
 MagicImporter = AssetImporter:extend()
 
@@ -7,7 +7,7 @@ function MagicImporter:new()
     MagicImporter.super.new(self)
 
     self.misc = {
-        magic = MagicAsset()
+        magic = AssetMagic()
     }
 end
 

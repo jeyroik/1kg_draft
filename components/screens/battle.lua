@@ -1,5 +1,4 @@
 local Screen = require "components/screens/screen"
-local Card   = require "components/sources/card"
 local Player = require "components/sources/player"
 
 Battle = Screen:extend()
@@ -55,17 +54,23 @@ function Battle:initState(...)
 		fight_after = { path = 'components/screens/battle/scenes/fight_after'  }
 	}
 
+    Battle.super.initState(self)
+end
+
+function Battle:stateChanged()
     for i, player in pairs(self.players) do
         self.playersCards[i] = Player(player)
         local team = player:getCurrentTeam()
         self.playersTeams[i] = team
 
         for p, char in pairs(team) do
-            table.insert(self.playersTeamsCards[i], Card(char))
+            char.pointable = true
+            char.label = char.title
+            char.id = self:getId()
+            local card = game.resources:create('card', char)
+            table.insert(self.playersTeamsCards[i], card)
         end
     end
-
-    Battle.super.initState(self)
 end
 
 function Battle:getCurrentPlayer()
@@ -83,9 +88,9 @@ function Battle:isCurrentPlayer(player)
 end
 
 function Battle:nextTurn()
-    local c = self.current
+    local c      = self.current
     self.current = self.next
-    self.next = c
+    self.next    = c
 
     if not self:getCurrentPlayer().isHuman then
         local gr = {'down', 'up', 'left', 'right'}

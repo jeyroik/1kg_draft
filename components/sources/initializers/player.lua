@@ -7,7 +7,7 @@ InitializerPlayer = SourceInitializer:extend()
 function InitializerPlayer:initSource(player)
     self:initCoords(player)
     self:initAvatar(player)
-    self:initGems(player)
+    self:initMagic(player)
 end
 
 function InitializerPlayer:initAvatar(player)
@@ -27,30 +27,31 @@ function InitializerPlayer:initCoords(player)
     parentInit:initSource(player)
 end
 
-function InitializerPlayer:initGems(player)
-    local magics = game.assets:getMisc('magic')
-    local gemsPack = game.assets:getImagePack('gems')
-    local sx = player.cards[1].sx
-    local magicX = player.x - 80*sx
-    local magicY = player.y
-    local magicYDelta = 50*sx
-    local perRow = 1
-    local onRow = 0
+function InitializerPlayer:initMagic(player)
+    local magics        = game.assets:getMisc('magic')
+    local magicPack     = game.assets:getImagePack('magic')
+    local sx            = player.cards[1].sx
+    local magicX        = player.x - 80*sx
+    local magicY        = player.y
+    local magicYDelta   = 50*sx
+    local perRow        = 1
+    local onRow         = 0
 
     for _,name in pairs(magics.namesOrder) do
-        local magic = magics.items[magics.names[name]]
+        
 
-        if gemsPack:get(magic:getType()) then
+        if magicPack:get(name) then
             if onRow == perRow then
                 magicX = player.x - 80*sx
                 magicY = magicY + magicYDelta
                 onRow = 0
             end
 
-            local gem = gemsPack:get(magic:getType())
-            local plMagic = player.magic[magic:getName()]
+            local magic      = magics:getByName(name)
+            local magicImage = magicPack:get(name)
+            local plMagic    = player.magic[name]
 
-            player.gems[name] = MagicGem({
+            player.magic[name] = MagicGem({
                 amount = 0,
                 amountText = Text({ body = '0', x = magicX+40, y = magicY }),
                 mana = plMagic.mana,
@@ -61,7 +62,7 @@ function InitializerPlayer:initGems(player)
                     y = magicY,
                     sx = sx,
                     sy = sx,
-                    path = gem.path
+                    path = magicImage.path
                 },
                 text = {
                     x = 0,

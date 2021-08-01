@@ -25,6 +25,15 @@ function VisibleObject:new(config)
 	self.mousePressed = false
 	self.pointable	  = false
 	self.visible	  = true
+	self.label 		  = 'error# Set label or set tip dispatcher or disable tip drawing'
+	self.tip 		  = {
+		draw = false,
+		x = 0,
+		y = 0,
+		dispatcher = function () 
+			
+		end
+	}
 
 	VisibleObject.super.new(self, config)
 
@@ -32,20 +41,32 @@ function VisibleObject:new(config)
 end
 
 function VisibleObject:subscribeForEvents()
+
 	if self.pointable then
-		self.mouseOn  = function() game.cursor:setOn() end
-		self.mouseOut = function() game.cursor:reset() end
+		self.mouseOn  = function(event, obj) 
+			game.cursor:setOn() 
+			obj.tip = {
+				draw = true,
+				x = event.args.x,
+				y = event.args.y,
+				dispatcher = game.tip
+			}
+		end
+		self.mouseOut = function(event, obj) 
+			game.cursor:reset() 
+			obj.tip = {draw = false}
+		end
 	end
 
 	local hook = require 'components/hooks/event'
 
 	if self.mousePressed then
-		self:log('[VisibleObject:subscribeForEvents] subscribed for mousePressed by '..self.name..' (event = '..'mousePressed.'..game:getSceneFullname()..')')
+		self:log('[VisibleObject:subscribeForEvents] subscribed for mousePressed by '..self.name..' (event = mousePressed.'..game:getSceneFullname()..')')
 		game.events:on('mousePressed.'..game:getSceneFullname(), hook({gameObject = self}))
 	end
 
 	if self.mouseOut or self.mouseOn then
-		self:log('[VisibleObject:subscribeForEvents] subscribed for mouseMoved by '..self.name..' (event = '..'mouseMoved.'..game:getSceneFullname()..')')
+		self:log('[VisibleObject:subscribeForEvents] subscribed for mouseMoved by '..self.name..' (event = mouseMoved.'..game:getSceneFullname()..')')
 		game.events:on('mouseMoved.'..game:getSceneFullname(), hook({gameObject = self}))
 	end
 end
@@ -62,9 +83,6 @@ end
 
 function VisibleObject:eventMouseMoved(event)
 	if self:isMouseOn(event.args.x, event.args.y) and self.visible then
-		if self.name == 'test' then
-			self:log('test on')
-		end
 		self:eventMouseOn(event)
 		game.cursor:setTarget(self)
 	elseif game.cursor:isTarget(self) and self.visible then
@@ -94,7 +112,7 @@ function VisibleObject:eventMouseOut(event)
 end
 
 function VisibleObject:draw(...)
-	self:addDbg('Missed draw implementation')
+	self:drawTip()
 end
 
 function VisibleObject:setGridPosition(column, row)
@@ -344,6 +362,16 @@ function VisibleObject:drawSelection(dx, dy, color, mode)
 	love.graphics.setColor(color)
 	love.graphics.rectangle(mode, top.left.x-game.translate.x, top.left.y-game.translate.y, size.width, size.height, 10, 10, 10)
 	love.graphics.setColor({1,1,1,1})
+end
+
+function VisibleObject:drawTip()
+	if self.tip.draw then 
+		if type(self.tip.dispatcher) == 'table' then
+			self.tip.dispatcher:draw(self.tip, self)
+		else
+			self.tip.dispatcher(self.tip, self) 
+		end
+	end
 end
 
 return VisibleObject

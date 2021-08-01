@@ -36,6 +36,8 @@ function Card:draw()
 	card.sy = self.sy
 	card:draw(self.avatar.frame)
 
+	self:drawTip()
+
 	--local top, bottom = card:getEdges()
 
 	--self:renderHealth(top)
@@ -55,6 +57,8 @@ function Card:drawPart(part, rows, columns)
 	q.sy = self.sy * (self.height/q.height)
 	q:draw(part)
 	q:drawSelection()
+
+	self:drawTip()
 end
 
 function Card:renderAttack(bottom)
@@ -132,14 +136,14 @@ function Card:renderHealth(top)
 end
 
 function Card:takeDamage(damage)
-	local data = game:getCurrentState():getData()
-	local c = data:getCurrentPlayer()
-	local n = data:getNextPlayer()
+	local screen = game:getCurrentState()
+	local c = screen:getCurrentPlayer()
+	local n = screen:getNextPlayer()
 
 	local realDamage = (self.health >= damage) and damage or self.health
 
-	data.statistics[c.number].damaged = data.statistics[c.number].damaged + realDamage
-	data.statistics[n.number].damage_taken = data.statistics[n.number].damage_taken + realDamage
+	screen.statistics[c.number].damaged = screen.statistics[c.number].damaged + realDamage
+	screen.statistics[n.number].damage_taken = screen.statistics[n.number].damage_taken + realDamage
 
 	self.health = self.health - realDamage
 end
