@@ -45,28 +45,25 @@ function VisibleObject:subscribeForEvents()
 	if self.pointable then
 		self.mouseOn  = function(event, obj) 
 			game.cursor:setOn() 
-			obj.tip = {
-				draw = true,
-				x = event.args.x,
-				y = event.args.y,
-				dispatcher = game.tip
-			}
+			obj.tip.draw = true
+			obj.tip.x = event.args.x
+			obj.tip.y = event.args.y
 		end
 		self.mouseOut = function(event, obj) 
 			game.cursor:reset() 
-			obj.tip = {draw = false}
+			obj.tip.draw = false
 		end
 	end
 
 	local hook = require 'components/hooks/event'
 
 	if self.mousePressed then
-		self:log('[VisibleObject:subscribeForEvents] subscribed for mousePressed by '..self.name..' (event = mousePressed.'..game:getSceneFullname()..')')
+		--self:log('[VisibleObject:subscribeForEvents] subscribed for mousePressed by '..self.name..' (event = mousePressed.'..game:getSceneFullname()..')')
 		game.events:on('mousePressed.'..game:getSceneFullname(), hook({gameObject = self}))
 	end
 
 	if self.mouseOut or self.mouseOn then
-		self:log('[VisibleObject:subscribeForEvents] subscribed for mouseMoved by '..self.name..' (event = mouseMoved.'..game:getSceneFullname()..')')
+		--self:log('[VisibleObject:subscribeForEvents] subscribed for mouseMoved by '..self.name..' (event = mouseMoved.'..game:getSceneFullname()..')')
 		game.events:on('mouseMoved.'..game:getSceneFullname(), hook({gameObject = self}))
 	end
 end

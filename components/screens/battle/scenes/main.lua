@@ -141,7 +141,7 @@ function SceneMain:mouseMoved2(screen, x, y, dx, dy, isTouch)
     end
 end
 
-function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
+function SceneMain:mousePressed2(screen, x, y, button, isTouch, presses)
     local currentPlayer = screen:getCurrentPlayer()
 
     for _, card in pairs(currentPlayer.cards) do

@@ -31,6 +31,37 @@ function ViewPlayers:renderCards(screen)
 
     if cardWithTip then
         cardWithTip:drawPart(cardWithTip.avatar.part)
+        if cardWithTip.tip.type == 'details' then
+            cardWithTip.tip.subject:draw()
+            
+            local desc = game:create('text_overlay', {
+                body = cardWithTip.description..'\n\n--------------------------------------------\n\n'..cardWithTip.skill.active.description,
+                overlay_mode = 'fill',
+                overlay_color = {0,0,0,0.8},
+                overlay_offset = 15,
+                x = cardWithTip.tip.subject.x + cardWithTip.tip.subject.width*cardWithTip.tip.subject.sx + 17,
+                y = cardWithTip.tip.subject.y + 15
+            })
+            local overlay = game:create('rectangle', {
+                mode = 'fill',
+                x = desc.x-15,
+                y = desc.y+desc.height+15,
+                width = desc.width+30,
+                height = cardWithTip.tip.subject.height*cardWithTip.tip.subject.sy-desc.height-25,
+                color = {0,0,0,0.8}
+            })
+            local usebtn = game:create('button_default', {
+                text = 'Apply now',
+                mousePressed = function()
+                    cardWithTip.tip.type = 'label'
+                    cardWithTip.tip.draw = false
+                end
+            })
+            game:put(usebtn, 9,14, 5,2)
+            overlay:draw()
+            usebtn:draw()
+            desc:draw()
+        end
     end
 end
 

@@ -123,4 +123,8 @@ function Game:create(objectType, objectConfig)
 	return self.resources:create(objectType, objectConfig)
 end
 
+function Game:put(obj, row,column, width,height)
+	return self.graphics:put(obj, row, column, width, height)
+end
+
 return Game

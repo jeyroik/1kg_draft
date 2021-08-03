@@ -58,15 +58,37 @@ end
 
 function Battle:stateChanged()
     for i, player in pairs(self.players) do
-        self.playersCards[i] = game.resources:create('player', player)
+        self.playersCards[i] = game:create('player', player)
         local team = player:getCurrentTeam()
         self.playersTeams[i] = team
 
         for p, char in pairs(team) do
-            char.pointable = true
+            char.pointable = false
             char.label = char.title
             char.id = self:getId()
-            local card = game.resources:create('card', char)
+            char.tip = {
+                draw = false, 
+                type = 'label',
+                dispatcher = function()
+                    
+                    if char.tip.type == 'details' then
+                        char.tip.subject:draw()
+                    end
+                end , 
+                subject = game:create('card', char)
+            }
+            char.tip.subject.id = self:getId()
+            char.tip.subject.mousePressed = function () 
+                char.tip.draw = false
+                char.tip.type = 'label'
+            end
+            char.mousePressed = function ()
+                game.graphics:put(char.tip.subject, 5,9, 4,6)
+                char.tip.draw = true
+                char.tip.type = 'details'
+            end
+            char.pointable = true
+            local card = game:create('card', char)
             table.insert(self.playersTeamsCards[i], card)
         end
     end

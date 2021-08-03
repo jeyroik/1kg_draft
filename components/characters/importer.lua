@@ -9,7 +9,7 @@ function CharactersImporter:new()
         fire_elemental = {
             name = 'Fire elemental',
             title = 'Fire elemental',
-            description = 'In the age of Tratabor fury fire elemental was born',
+            description = 'In the age of Tratabor \nfury fire elemental was born',
             health = 15,
             attack = 1,
             defense = 0,

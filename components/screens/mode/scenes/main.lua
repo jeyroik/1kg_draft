@@ -48,9 +48,9 @@ function SceneMain:updateUI()
     local pos = game.graphics:getItem(9,11)
 
     if pos.x ~= self.campaignBtn.x then
-        game.graphics:put(self.campaignBtn, 9, 11, 6, 2)
-        game.graphics:put(self.arenaBtn, 12, 11, 6, 2)
-        game.graphics:put(self.header, 6, 10, 8, 2)
+        game:put(self.campaignBtn, 9, 11, 6, 2)
+        game:put(self.arenaBtn, 12, 11, 6, 2)
+        game:put(self.header, 6, 10, 8, 2)
     end
 end
 
