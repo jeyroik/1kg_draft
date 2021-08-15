@@ -53,6 +53,7 @@ end
 function Game:draw()
 	self.events:riseEvent('draw', {})
 	self:getCurrentState():draw()
+	self.graphics:drawSys()
 end
 
 function Game:mouseMoved(x, y, dx, dy, isTouch)

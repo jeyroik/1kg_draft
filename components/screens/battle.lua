@@ -70,9 +70,35 @@ function Battle:stateChanged()
                 draw = false, 
                 type = 'label',
                 dispatcher = function()
-                    
                     if char.tip.type == 'details' then
                         char.tip.subject:draw()
+                        local desc = game:create('text_overlay', {
+                            body = char.description..'\n\n--------------------------------------------\n\n'..char.skill.active.description,
+                            overlay_mode = 'fill',
+                            overlay_color = {0,0,0,0.8},
+                            overlay_offset = 15,
+                            x = char.tip.subject.x + char.tip.subject.width*char.tip.subject.sx + 17,
+                            y = char.tip.subject.y + 15
+                        })
+                        local overlay = game:create('rectangle', {
+                            mode = 'fill',
+                            x = desc.x-15,
+                            y = desc.y+desc.height+15,
+                            width = desc.width+30,
+                            height = char.tip.subject.height*char.tip.subject.sy-desc.height-25,
+                            color = {0,0,0,0.8}
+                        })
+                        local usebtn = game:create('button_default', {
+                            text = 'Apply now',
+                            mousePressed = function()
+                                char.tip.type = 'label'
+                                char.tip.draw = false
+                            end
+                        })
+                        game:put(usebtn, 9,14, 5,2)
+                        overlay:draw()
+                        usebtn:draw()
+                        desc:draw()
                     end
                 end , 
                 subject = game:create('card', char)
@@ -88,6 +114,7 @@ function Battle:stateChanged()
                 char.tip.type = 'details'
             end
             char.pointable = true
+            
             local card = game:create('card', char)
             table.insert(self.playersTeamsCards[i], card)
         end

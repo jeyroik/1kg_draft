@@ -6,6 +6,10 @@ function Graphics:new(config)
     self.width = love.graphics.getWidth()
     self.height = love.graphics.getHeight()
     self.onResize = 'change amount'
+    self.printSys = {
+        grid = { isOn = true, isDraw = false },
+        fps = { isOn = true, isDraw = false }
+    }
 
     self.item = {
         width  = 16,
@@ -24,6 +28,17 @@ function Graphics:new(config)
         'update', 
         function() 
             self:update()
+        end
+    )
+
+    game.events:on(
+        'keyPressed',
+        function(name, event)
+            if event.args.key == 'g' and self.printSys.grid.isOn then
+                self.printSys.grid.isDraw = not self.printSys.grid.isDraw
+            elseif event.args.key == 'f' and self.printSys.fps.isOn then
+                self.printSys.fps.isDraw = not self.printSys.fps.isDraw
+            end
         end
     )
 end
@@ -89,6 +104,29 @@ function Graphics:getCount()
     local screenHeight = love.graphics.getHeight()
 
     return screenWidth/self.current.width, screenHeight/self.current.height
+end
+
+function Graphics:printGrid()
+    self:forEach(
+        function(item, i, j)
+            love.graphics.rectangle('line', item.x,item.y,item.width,item.height)
+            return true
+        end
+    )
+end
+
+function Graphics:printFps()
+    love.graphics.print('[FPS: '..math.floor(60/game.fps/100)..']', 5, 5)
+end
+
+function Graphics:drawSys()
+    if self.printSys.grid.isOn and self.printSys.grid.isDraw then
+        self:printGrid()
+    end
+    
+    if self.printSys.fps.isOn and self.printSys.fps.isDraw then
+        self:printFps()
+    end
 end
 
 return Graphics

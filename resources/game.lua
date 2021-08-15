@@ -24,6 +24,10 @@ return {
         item = {
             width = 32,
             height = 32
+        },
+        printSys = {
+            grid = { isOn = true, isDraw = false },
+            fps = { isOn = true, isDraw = false }
         }
     },
     resources = {
