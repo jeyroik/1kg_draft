@@ -88,59 +88,6 @@ function SceneMain:addSceneViews(screen)
     )
 end
 
-function SceneMain:mouseMoved2(screen, x, y, dx, dy, isTouch)
-    for i=1,2 do
-        pl = screen.playersCards[i]
-        for _,magicGem in pairs(pl.gems) do
-            if magicGem:isMouseOn(x,y) then
-                magicGem.isHovered = true
-            else
-                magicGem.isHovered = false
-            end
-        end
-        for _, card in pairs(screen.playersTeamsCards[i]) do
-            if card:isMouseOn(x, y) and card.skill.active.cost then
-                local icons = {}
-                local top, _, size = card:getEdgesFrame(3)
-                local iconCounter = 0
-                for magicName, amount in pairs(card.skill.active.cost) do
-                    local magic = game.assets:getMisc('magic'):getByName(magicName)
-                    table.insert(
-                            icons,
-                            {
-                                image=game.assets:getImagePack('gems'):get(magic:getType()),
-                                text=amount,
-                                xd=120*card.sx + iconCounter*60*card.sx,
-                                yd=220*card.sy
-                            }
-                    )
-                    iconCounter = iconCounter+1
-                end
-
-                local canUse = ''
-                local selectionColor = {0.5, 0.5, 0.5}
-
-                if screen:isCurrentPlayer(pl) then
-                    if not pl:isEnoughMagic(card) then
-                        canUse = 'Not enough magic'
-                        selectionColor = {1, 0, 0}
-                    else
-                        selectionColor = {0, 0.5, 0}
-                    end
-                else
-                    canUse = 'Restricted to use now'
-                    selectionColor = {0.5, 0.5, 0.5}
-                end
-
-  
-                return
-            else
-                
-            end
-        end
-    end
-end
-
 function SceneMain:mousePressed2(screen, x, y, button, isTouch, presses)
     local currentPlayer = screen:getCurrentPlayer()
 
@@ -158,7 +105,6 @@ end
 
 function SceneMain:keyPressed(screen, key)
     local gr = {down = true, up=true, left=true, right=true}
-
     if gr[key] then
         game.assets:getFx('move'):play()
         screen.board.gravity = key
@@ -201,18 +147,17 @@ function SceneMain:update(screen)
 
     self.fx = screen.board:move(screen)
 
-    
+    if self.fx ~= '' then
+        game.assets:getFx(self.fx):play()
+    end 
 
     if nextPlayer:isDead() or current:isDead() then
         self.fx = 'the_end'
-        screen.statistics[current.number].win = not current:isDead()
-        screen.statistics[nextPlayer.number].win = not nextPlayer:isDead()
+        screen.statistics[screen.current].win = not current:isDead()
+        screen.statistics[screen.next].win = not nextPlayer:isDead()
+
         screen:setViewLayers({}, 'scene_after')
         screen:changeStateTo('fight_after', {})
-    end
-
-    if self.fx ~= '' then
-        game.assets:getFx(self.fx):play()
     end
 
     self:addStone(screen)

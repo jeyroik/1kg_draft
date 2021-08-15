@@ -1,4 +1,5 @@
 local Source = require 'components/sources/source'
+local InitializerButton = require 'components/sources/initializers/button'
 
 Button = Source:extend()
 

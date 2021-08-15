@@ -1,4 +1,3 @@
-local GridView  = require 'components/screens/views/grid'
 local StateWith = require 'components/states/state_with'
 local Window 	= require 'components/sources/window'
 
@@ -25,8 +24,6 @@ function Screen:new(config)
 	self.tips = {}
 
 	Screen.super.new(self, config)
-
-	self:addViewLayers({ GridView() }, 'system')
 end
 
 function Screen:initState(game, ...)	

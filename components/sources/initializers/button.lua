@@ -31,16 +31,18 @@ function InitializerButton:initSource(button)
     
     local c = game.graphics:getItem(1,1)
     local btnWidthInCells = (button.width * button.sx) / c.width - 1
-    local btnHeightInCells = 1
+    local btnHeightInCells = (button.height * button.sy) / c.height - 1 --1
 
     button.source.text = Text({ 
         body = button.text, 
         x = button.x + c.width/2, 
-        y = button.y + c.height/4
+        y = button.y + c.height/5
     })
 
+    btnHeightInCells = btnHeightInCells > 0 and btnHeightInCells or 0.5
+
     button.source.text.sx = (btnWidthInCells*c.width) / button.source.text.width
-    button.source.text.sy = c.height / button.source.text.height
+    button.source.text.sy = (btnHeightInCells*c.height) / button.source.text.height
 end
 
 return InitializerButton

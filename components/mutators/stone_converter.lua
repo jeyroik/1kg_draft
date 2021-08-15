@@ -9,10 +9,10 @@ function MutatorStoneConverter:new(config)
     MutatorStoneConverter.super.new(self, config)
 end
 
-function MutatorStoneConverter:apply(layerData, context)
+function MutatorStoneConverter:apply(screen, context)
     self:applyConfig(context)
 
-    for _, columns in pairs(layerData.board.cells) do
+    for _, columns in pairs(screen.board.cells) do
         for _, stone in pairs(columns) do
             if stone.magic == self.target then
                 stone.magic = self.mustBe

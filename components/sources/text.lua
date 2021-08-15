@@ -8,6 +8,7 @@ Text = Source:extend()
 -- @return void
 function Text:new(config)
 	self.body = ''
+	self.color = {1,1,1,1}
 
 	config.initializer = config.initializer or 'components/sources/initializers/text'
 
@@ -21,7 +22,9 @@ end
 -- @param number dy delta for the y
 -- @return void
 function Text:draw()
+	love.graphics.setColor(self.color)
 	love.graphics.draw(self.source, self.x, self.y, self.radian, self.sx, self.sy)
+	love.graphics.setColor({1,1,1,1})
 end
 
 function Text:setBody(text)

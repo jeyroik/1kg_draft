@@ -22,6 +22,11 @@ function Card:new(config)
 	self.initialized = false
 	self.screenName  = ''
 	self.sceneName   = ''
+	self.selection = {
+		dx = 5, dy = 5,
+		color = {1,1,1,1},
+		lineWidth = 1
+	}
 
 	config.initializer = config.initializer or 'components/sources/initializers/card'
 
@@ -56,7 +61,7 @@ function Card:drawPart(part, rows, columns)
 	q.sx = self.sx * (self.width/q.width)
 	q.sy = self.sy * (self.height/q.height)
 	q:draw(part)
-	q:drawSelection()
+	q:drawSelection(self.selection.dx, self.selection.dy, self.selection.color, self.selection.lineWidth)
 
 	self:drawTip()
 end
@@ -137,13 +142,10 @@ end
 
 function Card:takeDamage(damage)
 	local screen = game:getCurrentState()
-	local c = screen:getCurrentPlayer()
-	local n = screen:getNextPlayer()
-
 	local realDamage = (self.health >= damage) and damage or self.health
 
-	screen.statistics[c.number].damaged = screen.statistics[c.number].damaged + realDamage
-	screen.statistics[n.number].damage_taken = screen.statistics[n.number].damage_taken + realDamage
+	screen.statistics[screen.current].damaged = screen.statistics[screen.current].damaged + realDamage
+	screen.statistics[screen.next].damage_taken = screen.statistics[screen.next].damage_taken + realDamage
 
 	self.health = self.health - realDamage
 end

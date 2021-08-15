@@ -17,7 +17,7 @@ function Pervograd:run(screen, scene)
                 description = 'Something very strange',
                 isHuman = false,
                 level = 1,
-                health = 10,
+                health = 5,
                 attack = 1,
                 defense = 0,
                 magic = {

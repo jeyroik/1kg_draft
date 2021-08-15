@@ -2,6 +2,7 @@ return {
     alias = 'game.engine',
     debugOn = true,
     tip = { path = 'components/dispatchers/tip' },
+    ai = { path = 'components/game/ai'}, -- artificial intelligence
     assets = {
         path = 'components/assets/assets',
         base_path = 'assets/',
@@ -27,7 +28,7 @@ return {
         },
         printSys = {
             grid = { isOn = true, isDraw = false },
-            fps = { isOn = true, isDraw = false }
+            fps = { isOn = true, isDraw = true }
         }
     },
     resources = {
@@ -66,7 +67,7 @@ return {
             title   = 'Player1',
             description = 'Game creator',
             level   = 1,
-            health  = 15,
+            health  = 5,
             attack  = 1,
             defense = 0,
             conviction = 5,

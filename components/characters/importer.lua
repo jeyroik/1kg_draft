@@ -10,7 +10,7 @@ function CharactersImporter:new()
             name = 'Fire elemental',
             title = 'Fire elemental',
             description = 'In the age of Tratabor \nfury fire elemental was born',
-            health = 15,
+            health = 5,
             attack = 1,
             defense = 0,
             level = 1,
@@ -24,7 +24,7 @@ function CharactersImporter:new()
                     path = 'components/skills/enemy_health_dec',
                     amount = 3,
                     cost = {
-                        fire = 2
+                        air = 3
                     }
                 },
                 passive = {}

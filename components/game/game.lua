@@ -24,6 +24,7 @@ function Game:new(config)
 	self.initialized = false
 	self.debugOn = false
 	self.tip = {}
+	self.ai = {}
 
 	Game.super.new(self, config)
 end
@@ -34,6 +35,7 @@ function Game:init()
 	self:initializeOne('assets')
 	self:initializeOne('resources')
 	self:initializeOne('tip')
+	self:initializeOne('ai')
 
 	self:changeStateTo('main')
 end

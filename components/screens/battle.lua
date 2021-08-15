@@ -63,60 +63,114 @@ function Battle:stateChanged()
         self.playersTeams[i] = team
 
         for p, char in pairs(team) do
+            
             char.pointable = false
             char.label = char.title
             char.id = self:getId()
-            char.tip = {
-                draw = false, 
-                type = 'label',
-                dispatcher = function()
-                    if char.tip.type == 'details' then
-                        char.tip.subject:draw()
-                        local desc = game:create('text_overlay', {
-                            body = char.description..'\n\n--------------------------------------------\n\n'..char.skill.active.description,
+
+            if i == 1 then
+                char.mousePressed = function (event, selfCard)
+                    selfCard.tip.draw = true
+                    selfCard.tip.type = 'details'
+                end
+                char.mouseOut = function (event, selfCard)
+                    game.cursor:reset() 
+                    if selfCard.tip.type ~= 'details' then
+                        selfCard.tip.draw = false
+                    end
+                end
+                char.pointable = true
+            else
+                char.mousePressed = function ()
+                    
+                end
+            end
+
+            local card = game:create('card', char)
+            
+            table.insert(self.playersTeamsCards[i], card)
+
+            if i == 1 then
+                local tipImage = game:create('image', {path = card.avatar.path..'/'..card.avatar.frame..'.jpg'}) --todo
+                game:put(tipImage, 5,9, 4,6)
+
+                card.tip = {
+                    draw = false, 
+                    type = 'label',
+                    data = {
+                        image = tipImage,
+                        desc = game:create('text_overlay', {
+                            body = card.description..'\n\n--------------------------------------------\n\n'..card.skill.active.description,
                             overlay_mode = 'fill',
                             overlay_color = {0,0,0,0.8},
                             overlay_offset = 15,
-                            x = char.tip.subject.x + char.tip.subject.width*char.tip.subject.sx + 17,
-                            y = char.tip.subject.y + 15
-                        })
-                        local overlay = game:create('rectangle', {
-                            mode = 'fill',
-                            x = desc.x-15,
-                            y = desc.y+desc.height+15,
-                            width = desc.width+30,
-                            height = char.tip.subject.height*char.tip.subject.sy-desc.height-25,
-                            color = {0,0,0,0.8}
-                        })
-                        local usebtn = game:create('button_default', {
+                            x = tipImage.x + tipImage.width*tipImage.sx + 14,
+                            y = tipImage.y + 15
+                        }),
+                        useBtn = game:create('button_default', {
                             text = 'Apply now',
-                            mousePressed = function()
-                                char.tip.type = 'label'
-                                char.tip.draw = false
+                            mousePressed = function(event, button)
+                                if card.tip.draw and button.visible then
+                                    card.tip.type = 'label'
+                                    card.tip.draw = false
+                                    self.playersCards[i]:useCard(self, card)
+                                end
                             end
                         })
-                        game:put(usebtn, 9,14, 5,2)
-                        overlay:draw()
-                        usebtn:draw()
-                        desc:draw()
+                    },
+                    dispatcher = function()
+                        if card.tip.type == 'details' then
+                            card.tip.data.image:draw()
+                            card.tip.data.overlay:draw()
+                            if self.playersCards[i]:isEnoughMagic(card) then
+                                card.tip.data.useBtn.visible = true
+                                card.tip.data.useBtn:draw()
+                            else
+                                card.tip.data.useBtn.visible = false
+                            end
+                            card.tip.data.desc:draw()
+                            card.tip.data.close:draw()
+                        end
                     end
-                end , 
-                subject = game:create('card', char)
-            }
-            char.tip.subject.id = self:getId()
-            char.tip.subject.mousePressed = function () 
-                char.tip.draw = false
-                char.tip.type = 'label'
+                }
+
+                card.tip.data.overlay = game:create('rectangle', {
+                    mode = 'fill',
+                    x = card.tip.data.desc.x-15,
+                    y = card.tip.data.desc.y+card.tip.data.desc.height+15,
+                    width = card.tip.data.desc.width+30,
+                    height = tipImage.height * tipImage.sy - card.tip.data.desc.height-25,
+                    color = {0,0,0,0.8}
+                })
+                card.tip.data.close = game:create('text', {
+                    body = 'x',
+                    pointable = true,
+                    mousePressed = function (event, btn)
+                        if btn.visible then 
+                            card.tip.draw = false
+                            card.tip.type = 'label'
+                        end
+                    end
+                })
+
+                game:put(card.tip.data.close, 5,19, 0.4,0.4)
+                game:put(card.tip.data.useBtn, 10,15, 3,1)
+      
+                for manaName,amount in pairs(card.skill.active.cost) do
+                    game.events:on(
+                        'magic.inc.'..player.id..'.'..manaName,
+                        function(name, event)
+                            if self.playersCards[i]:isEnoughMagic(card) then
+                                card.selection.color = {0.25, 0.51, 0.42, 1}
+                                card.selection.lineWidth = 2
+                            elseif card.selection.lineWidth == 2 then
+                                card.selection.color = {1, 1, 1, 1}
+                                card.selection.lineWidth = 1
+                            end
+                        end
+                    )
+                end
             end
-            char.mousePressed = function ()
-                game.graphics:put(char.tip.subject, 5,9, 4,6)
-                char.tip.draw = true
-                char.tip.type = 'details'
-            end
-            char.pointable = true
-            
-            local card = game:create('card', char)
-            table.insert(self.playersTeamsCards[i], card)
         end
     end
 end
@@ -140,9 +194,11 @@ function Battle:nextTurn()
     self.current = self.next
     self.next    = c
 
+    local isCurrentHuman = self:getCurrentPlayer().isHuman and 'true' or 'false'
+    local isNextHuman = self:getNextPlayer().isHuman and 'true' or 'false'
+
     if not self:getCurrentPlayer().isHuman then
-        local gr = {'down', 'up', 'left', 'right'}
-        love.event.push('keypressed', gr[love.math.random(1, 4)])
+        game.ai:play(self:getCurrentPlayer())
     end
 end
 

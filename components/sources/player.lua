@@ -97,13 +97,11 @@ end
 -- @param LayerData layerData
 -- @param Card
 -- @return void
-function Player:useCard(layerData, card)
-	if self.cardsAdded[card.id] then
-		game.assets:getFx('skill'):play()
+function Player:useCard(screen, card)
+	game.assets:getFx('skill'):play()
 
-		card.skill.active:use(layerData)
-		self:spendMagic(card)
-	end
+	card.skill.active:use(screen)
+	self:spendMagic(card)
 end
 
 -- @param string magicType magic name like 'air'

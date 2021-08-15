@@ -24,6 +24,10 @@ function MagicGem:draw(mode)
     local left = self.mana - self.amount
     local leftPerc = left/self.mana
 
+    if leftPerc > 1 then
+        leftPerc = 1
+    end
+
 
     local overlay = game.resources:create('rectangle', {
         height = self.image.height * leftPerc,

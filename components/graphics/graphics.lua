@@ -106,26 +106,27 @@ function Graphics:getCount()
     return screenWidth/self.current.width, screenHeight/self.current.height
 end
 
-function Graphics:printGrid()
+function Graphics:drawGrid()
     self:forEach(
         function(item, i, j)
             love.graphics.rectangle('line', item.x,item.y,item.width,item.height)
+            love.graphics.print(i..','..j, item.x, item.y)
             return true
         end
     )
 end
 
-function Graphics:printFps()
+function Graphics:drawFps()
     love.graphics.print('[FPS: '..math.floor(60/game.fps/100)..']', 5, 5)
 end
 
 function Graphics:drawSys()
     if self.printSys.grid.isOn and self.printSys.grid.isDraw then
-        self:printGrid()
+        self:drawGrid()
     end
     
     if self.printSys.fps.isOn and self.printSys.fps.isDraw then
-        self:printFps()
+        self:drawFps()
     end
 end
 

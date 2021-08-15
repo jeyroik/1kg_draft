@@ -18,13 +18,13 @@ function Skill:addMutator(name, context)
 	self.mutators[name] = context
 end
 
-function Skill:use(layerData)
+function Skill:use(screen)
 	for name, context in pairs(self.mutators) do
 		local mutator, err = game.assets:getMutator(name)
 		if err then
 			self:addDbg(err)
 		else
-			mutator:apply(layerData, context)
+			mutator:apply(screen, context)
 		end
 	end
 end

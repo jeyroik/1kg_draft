@@ -21,7 +21,24 @@ function ViewPlayers:renderCards(screen)
         
         player:drawPart(player.avatar.part)
         for i, card in pairs(screen.playersTeamsCards[i]) do
-            card:drawPart(card.avatar.part)   
+            card:drawPart(card.avatar.part)
+            local skill = card.skill.active
+            local totalCost = 0
+            local playerHave = 0
+            for magicName,amount in pairs(skill.cost) do
+                totalCost = totalCost + amount
+                playerHave = playerHave + player:getMagicAmount(magicName)
+            end
+            local havePerc = 1 - playerHave/totalCost
+            if havePerc < 0 then
+                havePerc = 0
+            elseif havePerc > 1 then
+                havePerc = 1
+            end
+
+            love.graphics.setColor(0,0,0,0.4)
+            love.graphics.rectangle('fill', card.x, card.y, card.width*card.sx, card.height*card.sy*havePerc)
+            love.graphics.setColor(1,1,1,1)
         end
     end
 end

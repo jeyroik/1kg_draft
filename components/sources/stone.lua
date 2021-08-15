@@ -40,7 +40,7 @@ function MagicStone:update(board)
 		end
 		
 	elseif board:isGravity('up') then
-		nextRow = board:isOnEdge('up', self) and 1 or self.row - 1
+		nextRow = board:isOnEdge('up', self) and self.row or self.row - 1
 		if (self.row ~= nextRow and board:isReserved(nextRow, nextColumn)) or board:isOnEdge('up', self) then
 			self:setStopped()
 		end
@@ -52,7 +52,7 @@ function MagicStone:update(board)
 		end
 		
 	elseif board:isGravity('left') then
-		nextColumn = board:isOnEdge('left', self) and 1 or self.column - 1
+		nextColumn = board:isOnEdge('left', self) and self.column or self.column - 1
 		if (self.column ~= nextColumn and board:isReserved(nextRow, nextColumn)) or board:isOnEdge('left', self) then
 			self:setStopped()
 		end
@@ -62,10 +62,10 @@ function MagicStone:update(board)
 	if not board:isReserved(nextRow, nextColumn) then
 		local nextCell = board:getCell(nextRow, nextColumn)
 
-		nextCell.state  = self.state
+		nextCell:setInAction()
 		nextCell.magic = self.magic
 		
-		self.state = 0
+		self:setInAction()
 		self.magic = 'deck'
 	end
 end

@@ -9,7 +9,7 @@ function MutatorEnemyHealth:new(config)
     self.toEnemy = true
 end
 
-function MutatorEnemyHealth:apply(layerData, context)
+function MutatorEnemyHealth:apply(screen, context)
     local target = self:getTarget()
 
     self:applyConfig(context)

@@ -11,7 +11,7 @@ function MutatorMagicChange:new(config)
     MutatorMagicChange.super.new(self, config)
 end
 
-function MutatorMagicChange:apply(layerData, context)
+function MutatorMagicChange:apply(screen, context)
     local target = self:getTarget()
 
     self:applyConfig(context)

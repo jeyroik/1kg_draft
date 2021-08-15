@@ -30,9 +30,7 @@ function VisibleObject:new(config)
 		draw = false,
 		x = 0,
 		y = 0,
-		dispatcher = function () 
-			
-		end
+		dispatcher = function () end
 	}
 
 	VisibleObject.super.new(self, config)
@@ -43,13 +41,15 @@ end
 function VisibleObject:subscribeForEvents()
 
 	if self.pointable then
-		self.mouseOn  = function(event, obj) 
-			game.cursor:setOn() 
-			obj.tip.draw = true
-			obj.tip.x = event.args.x
-			obj.tip.y = event.args.y
+		self.mouseOn  = self.mouseOn or function(event, obj) 
+			if obj.visible then
+				game.cursor:setOn() 
+				obj.tip.draw = true
+				obj.tip.x = event.args.x
+				obj.tip.y = event.args.y
+			end
 		end
-		self.mouseOut = function(event, obj) 
+		self.mouseOut = self.mouseOut or function(event, obj) 
 			game.cursor:reset() 
 			obj.tip.draw = false
 		end
@@ -348,16 +348,19 @@ function VisibleObject:stepByY(dy)
 	self.y = self.y + dy
 end
 
-function VisibleObject:drawSelection(dx, dy, color, mode)
+function VisibleObject:drawSelection(dx, dy, color, lineWidth, mode)
 	dx = dx or 5
 	dy = dy or 5
-	mode = mode or 'line'
 	color = color or {1,1,1,1}
+	lineWidth = lineWidth or 1
+	mode = mode or 'line'
 
 	local top, _, size = self:getEdgesFrame(dx, dy)
 
 	love.graphics.setColor(color)
+	love.graphics.setLineWidth(lineWidth)
 	love.graphics.rectangle(mode, top.left.x-game.translate.x, top.left.y-game.translate.y, size.width, size.height, 10, 10, 10)
+	love.graphics.setLineWidth(1)
 	love.graphics.setColor({1,1,1,1})
 end
 

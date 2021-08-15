@@ -73,6 +73,7 @@ function SceneMain:mousePressed(screen, x, y, button, isTouch, presses)
         if mapObject.name == 'city1' and mapObject:isMouseOn(x, y) then
             game.cursor:reset()
             local enemy = ModelPlayer(game.assets:getCharacter('fire_elemental'))
+            enemy.isHuman = false
             for i=1,3 do
                 table.insert(enemy.characters, game.assets:getCharacter('fire_elemental'))
             end

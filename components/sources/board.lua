@@ -79,7 +79,9 @@ function Board:addStone(screen)
 	local stopped = 0
 	for _, columns in pairs(self.cells) do
 		for _, stone in pairs(columns) do
-			if stone:isStopped() then stopped = stopped + 1 end
+			if stone:isStopped() then 
+				stopped = stopped + 1 
+			end
 		end
 	end
 
@@ -96,7 +98,7 @@ function Board:addStone(screen)
 		self.gravity = 'none'
 		screen:nextTurn()
 		for _=1, self.stonesPerRound do
-			local row = love.math.random(1,5)
+			local row    = love.math.random(1,5)
 			local column = love.math.random(1,5)
 
 			if self.cells[row][column].magic == 'deck' then
@@ -141,6 +143,12 @@ function Board:merge(screen, stone, nextRow, nextColumn)
 
 		if magic.mana >= currentMana + magic.power then
 			currentPlayer:incMagicAmount(currentMagic:getName(), magic.power)
+			game.events:riseEvent(
+				'magic.inc.'..currentPlayer.id..'.'..currentMagic:getName(),
+				{
+					amount = magic.power
+				}
+			)
 		end
 	end
 	
@@ -150,7 +158,7 @@ function Board:merge(screen, stone, nextRow, nextColumn)
 		self:setMagic(stone.row, stone.column, 'deck')
 		self:decExisted()
 	end
-	screen.statistics[currentPlayer.number].stones = screen.statistics[currentPlayer.number].stones + 2
+	screen.statistics[screen.current].stones = screen.statistics[screen.current].stones + 2
 
 	self:decExisted()
 	
