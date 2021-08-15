@@ -10,9 +10,9 @@ function BattleFightAfterViewStatistics:draw(screen)
     local stats = screen.statistics
 
     for i, player in pairs(stats) do
-        local name = game:create('text', { body = 'Player '..i})
+        local name = game:create('text', { body = i == 1 and 'You' or 'Enemy'})
         local offset = i-1
-        game:put(name, 7,4+(13*offset), 6,2)
+        game:put(name, 8,5+(13*offset), 3+offset,1)
         name:draw()
 
         local damageTaken = game:create('text', { body = 'Damage taken: '..player.damage_taken })

@@ -13,11 +13,21 @@ function BattleFightAfterViewTheEnd:draw(data)
     game:put(img, 4,6, 15,3)
     img:draw()
 
-    local won = data.statistics[1].win and 1 or 2
+    local won = data.statistics[1].win and 'You won' or 'You loose'
 
-    local text = game:create('text', { body = 'Player '..won..' won' })
-    game:put(text, 5,9, 9,1)
+    local text = game:create('text', { body = won })
+    game:put(text, 5,10, 7,1)
     text:draw()
+
+    local btn = game:create('button_default', {
+        text = 'next',
+        pointable = true,
+        mousePressed = function()
+            game:changeStateTo('campaign_map')
+        end
+    })
+    game:put(btn, 17,12, 3,1)
+    btn:draw()
 end
 
 return BattleFightAfterViewTheEnd
